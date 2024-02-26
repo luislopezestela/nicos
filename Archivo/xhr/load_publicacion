@@ -1,7 +1,0 @@
-<?php 
-if ($f == 'load_publicacion') {
-    $wo['page'] = 'home';
-    $load = sanitize_output(lui_LoadPage('home/load-publicacion'));
-    echo $load;
-    exit();
-}

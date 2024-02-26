@@ -1,1 +1,0 @@
-	<?php $langpl = DatosLang::luis_lang_alls(); ?>
