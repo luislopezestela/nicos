@@ -1,0 +1,72 @@
+.header-logo{
+	position:relative;
+	display:block;
+	width:100%;
+}
+.header-logo a{
+	position:relative;
+	display:block;
+}
+.logo_layshane_page {
+	position:relative;
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:center;
+	width:100%;
+	height:100%;
+}
+.logo_layshane_page_text {
+	display:flex;
+  position: relative;
+
+  justify-content:center;
+  align-items:center;
+}
+.logo_layshane_page_text h2 {
+  z-index: 4;
+  color: #fff;
+  font-size: 35px;
+  white-space: nowrap;
+  position: absolute;
+}
+.logo_layshane_page_text h2:nth-child(1) {
+  color: transparent;
+  -webkit-text-stroke: 2px #fff;
+}
+
+.logo_layshane_page_text h2:nth-child(2) {
+  color: #fff;
+  animation: wave 4s ease-in-out infinite;
+}
+
+@keyframes wave {
+  /* start point */
+  0%,
+  100% {
+    clip-path: polygon(
+      0% 46%,
+      17% 45%,
+      34% 50%,
+      56% 61%,
+      69% 62%,
+      86% 60%,
+      100% 51%,
+      100% 100%,
+      0% 100%
+    );
+  }
+  /* Mid point */
+  50% {
+    clip-path: polygon(
+      0% 59%,
+      16% 64%,
+      33% 65%,
+      52% 61%,
+      70% 52%,
+      85% 47%,
+      100% 48%,
+      100% 100%,
+      0% 100%
+    );
+  }
+}

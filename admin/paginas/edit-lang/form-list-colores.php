@@ -1,0 +1,1 @@
+<input class="form-control" type="color" name="colores" id="colores" style="padding:0;border:0;cursor:pointer;max-width:200px;width:100%;margin:10px auto;" value="<?=$wo['colors']->color;?>">

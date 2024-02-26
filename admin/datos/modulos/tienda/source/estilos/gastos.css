@@ -1,0 +1,37 @@
+.contiene_lineas_montos{
+	display:block;
+	position:relative;
+	background:#fff;
+	border-radius:9px;
+	width:100%;
+	max-width:400px;
+	padding:18px;
+	margin:10px auto;
+	box-shadow:6px 6px 10px -1px rgba(0, 0, 0, 0.1), -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+}
+.sub_lineas_montos{
+	display:block;
+	background:#ddd;
+	padding:17px;
+}
+.sub_lineas_montos label{
+	position:absolute;
+	padding:8.5px;
+}
+
+.monto_init_select_sty{
+	background:#fff;
+	width:100%;
+	padding:10px;
+	outline:none;
+	border:0;
+}
+.sub_lineas_montos .monto_init_input_sty{
+	display:block;
+	width:100%;
+	background:transparent;
+	border:0;
+	border:none;
+	outline:none;
+	padding:10px;
+}

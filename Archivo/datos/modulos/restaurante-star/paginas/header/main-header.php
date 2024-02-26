@@ -1,0 +1,1 @@
+<li><a class="<?php echo($wo['page'] == 'acceder') ? 'current': 'hh';?>" data="acceder" href="<?=lui_SeoLink('index.php?link1=acceder');?>">Acceder</a></li>

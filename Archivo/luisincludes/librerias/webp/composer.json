@@ -1,0 +1,7 @@
+{
+    "name": "luis/e",
+    "description": "convert image",
+    "require": {
+        "rosell-dk/webp-convert": "^2.9"
+    }
+}
