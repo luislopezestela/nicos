@@ -563,6 +563,7 @@ border-radius: 50%;
 					    } 
 				    } 
 				?>
+				
 			</div>
 		</div>
 	</div>

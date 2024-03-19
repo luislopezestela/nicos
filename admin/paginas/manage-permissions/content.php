@@ -359,6 +359,16 @@ else{
                     <div class="clearfix"></div>
                     <hr>
                     <div class="float-left">
+                        <label for="products-sections" class="main-label">Publicar secciones</label>
+                    </div>
+                    <div class="form-group float-right switcher">
+                        <input type="hidden" name="products-sections" value="0" />
+                        <input type="checkbox" name="products-sections" id="chck-products-sections" value="1" <?php if(isset($user_data['permission']['products-sections']) == 1){echo($user_data['permission']['products-sections'] == 1) ? 'checked': '';} ?>>
+                        <label for="chck-products-sections" class="check-trail"><span class="check-handler"></span></label>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr>
+                    <div class="float-left">
                         <label for="manage-colored-posts" class="main-label">Administrar publicaciones en color</label>
                     </div>
                     <div class="form-group float-right switcher">

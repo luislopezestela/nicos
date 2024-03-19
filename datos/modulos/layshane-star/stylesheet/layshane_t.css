@@ -1,0 +1,342 @@
+.header_layshane_tienda{
+	display:flex;
+	flex-wrap:wrap;
+	background:#2c8ce9;
+	justify-content:center;
+	color:#fff;
+	user-select:none;
+	--bs-margin: 0;
+}& h1{
+	width:100%;
+	text-align:center;
+	margin-bottom:0;
+	padding-top:20px;
+}& .text_category{
+	font-size:12px;
+	text-transform:uppercase;
+	text-align:center;
+	padding-bottom:18px;
+}
+.contenido_layshane_items{
+	display:grid;
+	margin:0 auto;
+	margin-top:20px;
+	grid-template-rows:repeat(var(--bs-rows, 1), 1fr);
+	grid-template-columns: repeat(var(--bs-columns, 12), 1fr);
+	gap:var(--bs-gap, 1.5rem);
+	margin: var(--bs-margin, auto);
+}
+:root {
+    --bs-columns: 12;
+    --bs-gap: 24px;
+}
+@media all and (min-width: 1920px),print{
+	:root {
+		--gallery-nav-width: 440px;
+	    --bs-gap: 28px;
+	    --bs-padding: 0 116px;
+	}
+}
+.sidebar_layshane_items{
+	margin:unset;
+	width:unset;
+	padding-right:0;
+	display:block;
+	order:0;
+	grid-column:auto / span 3;
+	box-sizing:border-box;
+	padding:10px;
+}
+@media all and (min-width: 768px),print{
+	.sidebar_layshane_items{
+		float:left;
+	}
+}
+
+/*Buscador */
+/* this is a recreation of twitter search in css */
+.form_search_layshane {
+  --input-text-color: #666;
+  --input-bg-color: #fff;
+  --focus-input-bg-color:#ffff;
+  --text-color: #949faa;
+  --active-color: #1b9bee;
+  --width-of-input: 100%;
+  --inline-padding-of-input: 1.2em;
+  --gap: 0.9rem;
+} 
+/* form style */
+.form_search_layshane {
+  margin-top:20px;
+  font-size: 0.9rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: var(--width-of-input);
+  position: relative;
+  isolation: isolate;
+}
+.form_search_layshane .fancy-bg {
+  position: absolute;
+  width: 100%;
+  inset: 0;
+  border-radius: 30px;
+  height: 100%;
+  z-index: -1;background:#fff;
+  pointer-events: none;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.form_search_layshane label {
+  width:100%;
+  cursor:text;
+  padding:0.8em;
+  height:40px;
+  padding-inline: var(--inline-padding-of-input);
+  display: flex;
+  align-items: center;
+}
+
+.form_search_layshane .search,.close-btn {
+  position: absolute;
+}
+.form_search_layshane .search {
+  fill: var(--text-color);
+  left: var(--inline-padding-of-input);
+}
+.form_search_layshane svg{
+  width: 17px;
+  display: block;
+}
+.form_search_layshane .close-btn {
+  border: none;
+  right: var(--inline-padding-of-input);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  padding: 0.1em;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--active-color);
+  opacity: 0;
+  visibility: hidden;
+}
+.form_search_layshane .input {
+  color: var(--input-text-color);
+  width: 100%;
+  margin-inline: min(2em,calc(var(--inline-padding-of-input) + var(--gap)));
+  background: none;
+  border: none;
+}
+.form_search_layshane .input:focus {
+  outline: none;
+}
+.form_search_layshane .input::placeholder {
+  color: var(--text-color)
+} 
+.form_search_layshane .input:focus ~ .fancy-bg {
+  border: 1px solid var(--active-color);
+  background: var(--focus-input-bg-color);
+} 
+.form_search_layshane .input:focus ~ .search {
+  fill: var(--active-color);
+} 
+.form_search_layshane .input:valid ~ .close-btn {
+  opacity: 1;
+  visibility: visible;
+}
+.form_search_layshane input:-webkit-autofill,
+.form_search_layshane input:-webkit-autofill:hover,
+.form_search_layshane input:-webkit-autofill:focus,
+.form_search_layshane input:-webkit-autofill:active {
+  -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+  -webkit-transition-delay: 9999s;
+}
+.espacio_para_filtrar_y_ordenar{
+	position:relative;
+}
+@media all and (min-width: 920px),print{
+	.espacio_para_filtrar_y_ordenar{
+		text-transform:uppercase;
+	}
+	.dropdown_market_stylin_widget{
+		display:block;
+		position:relative;
+		user-select:none;
+		cursor:default;
+	}
+	.dropdown_market_stylin_widget .m_widget_head{cursor:default;}
+	.dropdown_en_lista_view_productos:not(.notfi-dropdown):not([role=combobox]){
+		opacity:1;
+		visibility:visible;
+		transform:none;
+		box-shadow:initial;
+		width:100%;
+		background:transparent;
+		position:relative;
+	}
+
+	.dropdown_market_stylin_widget .market_categories ul{
+		margin:0;
+		padding:0;
+	}
+	.dropdown_market_stylin_widget .market_categories ul li a{
+		padding:10px;
+		display:flex;
+		align-items:center;
+		gap:0.7rem;
+		position:relative;
+	}
+	.dropdown_market_stylin_widget .market_categories ul li a span{
+		display:flex;
+		align-items:center;
+		position:relative;
+	}
+
+	.dropdown_market_stylin_widget .market_categories ul li a span{
+	  width: 20px;
+	  height:20px;
+	  aspect-ratio: 1;
+	  border-radius: 8px;
+	  border: 2px solid #666;
+	  position: relative;
+	  transition: all 0.2s ease-in-out;
+	}
+	.dropdown_market_stylin_widget .market_categories ul li a span::before{
+	  bottom: -4px;
+	  left: 1px;
+	  content: "✔";
+	  font-size: 30px;
+	  color: #2c8ce9;
+	  transform: scale(0);
+	  transition: all 0.2s ease-in-out;
+	}
+	.dropdown_market_stylin_widget .market_categories ul .active a span{
+	  border: 2px solid #ccc;
+	}
+	.dropdown_market_stylin_widget .market_categories ul .active a span::before{
+	 	animation: zoom 0.5s ease-in-out;
+  		transform: scale(1);
+	}
+
+	@keyframes zoom {
+	  0% {
+	    transform: scale(0);
+	  }
+
+	  20% {
+	    transform: scale(1.5);
+	  }
+
+	  40% {
+	    transform: scale(0.5);
+	  }
+
+	  50% {
+	    transform: scale(1);
+	  }
+
+	  70% {
+	    transform: scale(1.2);
+	  }
+
+	  90% {
+	    transform: scale(0.8);
+	  }
+
+	  100% {
+	    transform: scale(1);
+	  }
+	}
+}
+.contenido_categorias_layshane{
+	display:block;
+	width:100%;
+}
+.titilo_sections_layshane{
+	text-transform:uppercase;
+	display:block;
+	width:100%;
+	padding:10px 0;
+	user-select:none;
+}
+.categories_contenido_layshane{
+	display:block;
+}
+.categories_contenido_layshane ul{
+	margin:0;
+	padding:0;
+}
+.categories_contenido_layshane ul li a{
+	display:flex;
+	padding:10px;
+}
+
+.caja_de_productos_en_lista{
+	padding-top: 10px;
+    position: relative;
+    margin-right:unset;
+    width:unset;
+    float:right;
+    grid-column: 4 / span 9;
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.wo_market .market_bottom .productos_en_cuadros{display:flex;width:100%;position:relative;max-width:100%;box-sizing:border-box;flex-wrap:wrap;}
+.wo_market .market_bottom .productos_en_cuadros .product{width:calc(25% - 20px);display:block;margin:0 10px;margin-bottom:10px}
+
+.wo_market .market_bottom .productos_en_cuadros .product .product-image img{object-fit:contain;width:100%;}
+
+.wo_market .market_bottom .productos_en_cuadros .product .product_info{height: 100%; background-color:#fff;padding:0 3px 5px;border:1px solid #ddd;border-radius: max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;overflow:hidden;transition:all .2s linear}
+
+.wo_market .market_bottom .productos_en_cuadros .product .product_info:hover{box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.wo_my_pages .page_list,.wo_my_products a{-webkit-box-shadow:0 1px 2px rgba(0,0,0,0.2);background:#fff}
+.wo_market .market_bottom .productos_en_cuadros .product .product-links{width:100%;position:absolute;top:0;left:0;padding:0 40px;z-index:8;opacity:0;height:100%;background-color:rgba(0,0,0,.41);transition:opacity .3s cubic-bezier(.33,.66,.66,1);display: flex;align-items: center;justify-content: center;border-radius: 10px 10px 0 0;}
+
+.wo_market .market_bottom .productos_en_cuadros .product .product_info:hover .product-links {opacity:1}
+.wo_market .market_bottom .productos_en_cuadros .product .product-links .more-info{background-color: rgba(255, 255, 255, 0.3);color: #fff;}
+.wo_market .market_bottom .productos_en_cuadros .product .product-links .more-info:hover{background-color:#fff;color:#000 !important;}
+
+.wo_market .market_bottom .productos_en_cuadros .post-container .produc_info,
+.wo_market .market_bottom .productos_en_cuadros .product .produc_info{padding:7px 10px}
+
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod {border: 0;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);border-radius: 10px;transition: all 0.2s;padding: 0;font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;}
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod:hover {box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);}
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .product-image {margin: 0;width: 100%;}
+
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .product-by {position:relative;text-align:left!important;font-size:12px!important;}
+.wo_market .market_bottom .productos_en_cuadros .post-container .panel .producto_stock,
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .product-by a {color:#999!important;text-decoration:none;font-size:12px!important;text-align:left!important;font-weight:initial;}
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .wow_main_prod_foot {text-align: end;position: relative;z-index: 9;}
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .wow_main_prod_foot .btn {width: 40px;height: 40px;min-width: auto;padding: 0;border-radius: 50%;margin: -35px 2px 0;}
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .wow_main_prod_foot .btn svg {margin: 0;width: 19px;height: 19px;}
+
+.wo_market .market_bottom .productos_en_cuadros .post-container .panel .product-title,
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .product-title {text-align:left;font-weight:initial;font-size: 19px;}
+
+.wo_market .market_bottom .productos_en_cuadros .post-container .panel .product-title a,
+.wo_market .market_bottom .productos_en_cuadros .post-container .panel .product-title span,
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .product-title a {text-decoration: none;color:#777;}
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .product-price {font-weight:initial;font-size: 16px;text-align:left;margin:0 0 2px;letter-spacing:normal;color:var(--header-fondo);}
+
+@media (max-width:1050px) {
+	.carousel .carousel__header{padding:10px;}
+	.sidebar_layshane_items{display:none;}
+	.caja_de_productos_en_lista{grid-column:1 / span 12;}
+	.wo_market .market_bottom .productos_en_cuadros .product{width:calc(33.33333333% - 20.33333333px);display:block;margin:0 10px;margin-bottom:10px;}
+}
+@media (max-width:950px) {
+	.wo_market .market_bottom .productos_en_cuadros .product{width: calc(33.33333333% - 20.33333333px);}
+}
+@media (max-width:700px) {
+.wo_market .market_bottom .productos_en_cuadros .product{width:calc(50% - 20px);}
+}
+@media (max-width:420px) {
+	.wo_market .market_bottom .productos_en_cuadros .product {
+	    width: calc(100% - 5px);
+	    margin:5px auto;
+	}
+}

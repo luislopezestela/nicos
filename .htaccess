@@ -73,6 +73,9 @@ RewriteRule ^edit-product/([A-Za-z0-9_]+)$ index.php?link1=edit-product&id=$1 [N
 RewriteRule ^products(/?|)$ index.php?link1=products [NC,QSA]
 RewriteRule ^products/([A-Za-z0-9_-]+)$ index.php?link1=products&c_id=$1 [QSA]
 RewriteRule ^products/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$ index.php?link1=products&c_id=$1&sub_id=$2 [QSA]
+RewriteRule ^tienda(/?|)$ index.php?link1=tienda [NC,QSA]
+RewriteRule ^tienda/([A-Za-z0-9_-]+)$ index.php?link1=tienda&c_id=$1 [QSA]
+RewriteRule ^tienda/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$ index.php?link1=tienda&c_id=$1&sub_id=$2 [QSA]
 RewriteRule ^my-products(/?|)$ index.php?link1=my-products [QSA]
 RewriteRule ^my-products/([A-Za-z0-9_-]+)$ index.php?link1=my-products&c_id=$1 [QSA]
 RewriteRule ^my-products/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$ index.php?link1=my-products&c_id=$1&sub_id=$2 [QSA]
@@ -116,6 +119,8 @@ RewriteRule ^imv_ingredientes(/?|)$ index.php?link1=imv_ingredientes [NC,QSA]
 
 RewriteRule ^purchased(/?|)$ index.php?link1=purchased [NC,QSA]
 RewriteRule ^orders(/?|)$ index.php?link1=orders [NC,QSA]
+RewriteRule ^compras(/?|)$ index.php?link1=compras [NC,QSA]
+RewriteRule ^compras([^\/]+)(\/|)$ index.php?link1=compras&page-id=$1 [NC,QSA]
 RewriteRule ^customer_order/(.*)$ index.php?link1=customer_order&id=$1 [NC,QSA]
 RewriteRule ^order/(.*)$ index.php?link1=order&id=$1 [NC,QSA]
 RewriteRule ^reviews/(.*)$ index.php?link1=reviews&id=$1 [NC,QSA]
@@ -270,7 +275,7 @@ AddType application/x-httpd-php .json
   Header set Keep-Alive timeout=100,max=500
 </ifModule>
 
-<FilesMatch "\.(js|css|svg|woff2|webp|png)$">
+<FilesMatch "\.(js|css|svg|woff2|webp|png|mp3)$">
     Header set Cache-Control "max-age=31536000, public"
 </FilesMatch>
 AddType application/x-httpd-php .json

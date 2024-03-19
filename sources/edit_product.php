@@ -1,14 +1,14 @@
 <?php
 if ($wo['loggedin'] == false) {
-    header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+    header("Location: " . lui_SeoLink('index.php?link1=home'));
     exit();
 }
 if ($wo['config']['classified'] == 0) {
-    header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+    header("Location: " . lui_SeoLink('index.php?link1=home'));
     exit();
 }
 if (!$wo['config']['can_use_market']) {
-    header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+    header("Location: " . lui_SeoLink('index.php?link1=home'));
     exit();
 }
 if (empty($_GET['id']) || !is_numeric($_GET['id'])) {

@@ -735,7 +735,17 @@ function Wo_loadPostMoreComments(post_id,self) {
     }
   });
 }
-
+function Wo_UpdateLocation(position) {
+  if (!position) {
+    return false;
+  }
+  $.post(Wo_Ajax_Requests_File() + '?f=save_user_location', {lat: position.coords.latitude, lng:position.coords.longitude}, function(data, textStatus, xhr) {
+    if (data.status == 200) {
+      return true;
+    }
+  });
+  return false;
+}
 // load all post comments
 function Wo_loadAllComments(post_id,self) {
   main_wrapper = $('#post-' + post_id);
@@ -2274,18 +2284,6 @@ function Wo_OpenLighteBox(self ,event){
   $('#modal_light_box').modal('show').find('.image').attr('src', url);
 }
 
-function Wo_UpdateLocation(position) {
-  if (!position) {
-    return false;
-  }
-  $.post(Wo_Ajax_Requests_File() + '?f=save_user_location', {lat: position.coords.latitude, lng:position.coords.longitude}, function(data, textStatus, xhr) {
-    if (data.status == 200) {
-      return true;
-    }
-  });
-  return false;
-}
-
 var Wo_ElementLoad = function(selector, callback){
     $(selector).each(function(){
         if (this.complete || $(this).height() > 0) {
@@ -2650,4 +2648,161 @@ function Wo_DeleteFund(id) {
             $("#delete-fund").find('.ball-pulse').fadeOut(100);
         }
     });
+}
+
+
+
+function Wo_OpenAlbumLightBox(image_id, type) {
+  $('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+  $.get(Wo_Ajax_Requests_File(), {f:'open_album_lightbox', image_id:image_id, type:type}, function(data) {
+    if (data.status == 200) {
+    document.body.style.overflow = 'hidden';
+      $('.lightbox-container').html(data.html);
+    }
+    if (data.html.length == 0) {
+       document.body.style.overflow = 'auto';
+    }
+  });
+}
+function Wo_CloseLightbox() {
+  $('.lightbox-container').remove();
+  document.body.style.overflow = 'auto';
+}
+function Wo_OpenLightBox(post_id) {
+  $('#contnet').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+  $.get(Wo_Ajax_Requests_File(), {f:'open_lightbox', post_id:post_id}, function(data) {
+    if (data.status == 200) {
+    document.body.style.overflow = 'hidden';
+      $('.lightbox-container').html(data.html);
+    }
+    if (data.html.length == 0) {
+       document.body.style.overflow = 'auto';
+    }
+  });
+}
+function Wo_OpenMultiLightBox(url) {
+  $('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+  $.post(Wo_Ajax_Requests_File() + '?f=open_multilightbox', {url:url}, function(data) {
+    if (data.status == 200) {
+    document.body.style.overflow = 'hidden';
+      $('.lightbox-container').html(data.html);
+    }
+    if (data.html.length == 0) {
+       document.body.style.overflow = 'auto';
+    }
+  });
+}
+function Wo_NextAlbumPicture(post_id, id) {
+  Wo_CloseLightbox();
+  $('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+  $.get(Wo_Ajax_Requests_File(), {f:'get_next_album_image', post_id:post_id, after_image_id:id}, function(data) {
+    if (data.status == 200) {
+  document.body.style.overflow = 'hidden';
+      $('.lightbox-container').html(data.html);
+      $( ".changer").fadeIn(200);
+    }
+    if (data.html.length == 0) {
+       document.body.style.overflow = 'auto';
+    }
+  });
+}
+function Wo_PreviousAlbumPicture(post_id, id) {
+  Wo_CloseLightbox();
+  $('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+  $.get(Wo_Ajax_Requests_File(), {f:'get_previous_album_image', post_id:post_id, before_image_id:id}, function(data) {
+    if (data.status == 200) {
+    document.body.style.overflow = 'hidden';
+      $('.lightbox-container').html(data.html);
+      $( ".changer").fadeIn(200);
+    }
+    if (data.html.length == 0) {
+       document.body.style.overflow = 'auto';
+    }
+  });
+}
+
+function Wo_NextPicture(post_id) {
+  var id = 0;
+  var type = 'none';
+  if(typeof ($('[data-page=timeline]').attr('data-id')) == "string") {
+    id = $('[data-page=timeline]').attr('data-id');
+    type = 'profile';
+  } else if(typeof ($('[data-page=page]').attr('data-id')) == "string") {
+    id = $('[data-page=page]').attr('data-id');
+    type = 'page';
+  } else if (typeof ($('[data-page=group]').attr('data-id')) == "string") {
+    id = $('[data-page=group]').attr('data-id');
+    type = 'group';
+  }
+   Wo_CloseLightbox();
+  $('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+
+  $.get(Wo_Ajax_Requests_File(), {f:'get_next_image', post_id:post_id, type:type, id:id}, function(data) {
+    if (data.status == 200) {
+    document.body.style.overflow = 'hidden';
+      $('.lightbox-container').html(data.html);
+      $( ".changer" ).fadeIn(200);
+    }
+    if (data.html.length == 0) {
+       document.body.style.overflow = 'auto';
+    }
+  });
+}
+
+function Wo_PreviousPicture(post_id) {
+  var id = 0;
+  var type = 'none';
+  if(typeof ($('[data-page=timeline]').attr('data-id')) == "string") {
+    id = $('[data-page=timeline]').attr('data-id');
+    type = 'profile';
+  } else if(typeof ($('[data-page=page]').attr('data-id')) == "string") {
+    id = $('[data-page=page]').attr('data-id');
+    type = 'page';
+  } else if (typeof ($('[data-page=group]').attr('data-id')) == "string") {
+    id = $('[data-page=group]').attr('data-id');
+    type = 'group';
+  }
+  Wo_CloseLightbox();
+  $('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+  $.get(Wo_Ajax_Requests_File(), {f:'get_previous_image', post_id:post_id, type:type, id:id}, function(data) {
+    if (data.status == 200) {
+    document.body.style.overflow = 'hidden';
+      $('.lightbox-container').html(data.html);
+      $( ".changer" ).fadeIn(200);
+    }
+    if (data.html.length == 0) {
+       document.body.style.overflow = 'auto';
+    }
+  });
+}
+
+function Wo_NextProductPicture(product_id, id) {
+  Wo_CloseLightbox();
+  $('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+  $.get(Wo_Ajax_Requests_File(), {f:'get_next_product_image', product_id:product_id, after_image_id:id}, function(data) {
+    if (data.status == 200) {
+    document.body.style.overflow = 'hidden';
+      $('.lightbox-container').html(data.html);
+      $( ".changer").fadeIn(200);
+    }
+    if (data.html.length == 0) {
+       document.body.style.overflow = 'auto';
+    }
+  });
+}
+
+function Wo_PreviousProductPicture(product_id, id) {
+  Wo_CloseLightbox();
+  $('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+  $.get(Wo_Ajax_Requests_File(), {f:'get_previous_product_image', product_id:product_id, before_image_id:id}, function(data) {
+    if (data.status == 200) {
+    document.body.style.overflow = 'hidden';
+      $('.lightbox-container').html(data.html);
+      $( ".changer").fadeIn(200);
+    }
+
+    if (data.html.length == 0) {
+       document.body.style.overflow = 'auto';
+    }
+  });
 }

@@ -138,6 +138,32 @@ if ($f == "order_opcion") {
 			$data['message'] = $error_icon . $wo['lang']['please_check_details'];
 		}
 	}
+	if($s == 'mode_pay'){
+		if(!empty($_POST['pay_mod'])){
+			$coe_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->getOne(T_USERS);
+			$db->where('user_id',$coe_user->user_id)->update(T_USERS,array('mode_pay' => lui_Secure($_POST['pay_mod'])));
+		}else{
+			$data['message'] = $error_icon . $wo['lang']['please_check_details'];
+		}
+	}
+	if($s == 'pays_vie'){
+		$html = '';
+		$couser = $db->where('user_id',lui_Secure($wo['user']['user_id']))->getOne(T_USERS);
+		$wo['total_bux'] = $_GET['tols'];
+		if($couser->mode_pay==0) {
+		}elseif($couser->mode_pay==1) {
+			$html = lui_LoadPage('checkout/pay_one');
+		}elseif($couser->mode_pay==2) {
+			$html = lui_LoadPage('checkout/pay_two');
+		}elseif($couser->mode_pay==3) {
+			$html = lui_LoadPage('checkout/pay_three');
+		}elseif($couser->mode_pay==4) {
+			$html = lui_LoadPage('checkout/pay_four');
+		}elseif($couser->mode_pay==5) {
+			$html = lui_LoadPage('checkout/pay_five');
+		}
+	    echo $html;
+	}
 }
  ?>
  

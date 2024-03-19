@@ -1972,13 +1972,13 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
                         'name' => $_FILES['media_file']['name'],
                         'size' => $_FILES["media_file"]["size"],
                         'type' => $_FILES["media_file"]["type"],
-                        'types' => 'jpg,png,gif,jpeg',
+                        'types' => 'jpg,png,gif,jpeg,webp',
                         'crop' => array(
-                            'width' => 380,
-                            'height' => 390
+                            'width' => 270,
+                            'height' => 270
                         )
                     );
-                    $media    = lui_ShareFile($fileInfo);
+                    $media    = lui_addImages_load($fileInfo);
                 }
                 if($themes=='restaurante-star'){
                     $fileInfo = array(
@@ -1986,7 +1986,7 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
                         'name' => $_FILES['media_file']['name'],
                         'size' => $_FILES["media_file"]["size"],
                         'type' => $_FILES["media_file"]["type"],
-                        'types' => 'jpg,png,gif,jpeg',
+                        'types' => 'jpg,png,gif,jpeg,webp',
                         'crop' => array(
                             'width' => 1080,
                             'height' => 480
@@ -5842,8 +5842,10 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
             $colores_pruducto = $db->where('id_color', $id)->where('id_producto', $producto)->getOne('lui_opcion_de_colores_productos');
             if (!empty($colores_pruducto)) {
                 $wo['precio_adicional'] = $colores_pruducto->precio_adicional;
+                $wo['sku_color'] = $colores_pruducto->sku;
                 $data = array(
                     'precio' => $wo['precio_adicional'],
+                    'sku' => $wo['sku_color'],
                     'status' => 200,
                 );
             }

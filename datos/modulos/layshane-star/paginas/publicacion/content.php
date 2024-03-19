@@ -77,6 +77,7 @@ body{background:#F0F2FD;}
     max-width: 1920px;
     row-gap: 0;
     box-sizing: content-box;
+    margin:auto;
 }
 .grid {
     display: grid;
@@ -117,6 +118,9 @@ body{background:#F0F2FD;}
     grid-column-start: 2;
     grid-column-end: 7;
     padding: 0;
+    position: sticky;
+    top: 125px;
+    height: fit-content;
 }
 .informacion_del_producto, .producto_media_display.media {
     width: unset;
@@ -132,6 +136,7 @@ body{background:#F0F2FD;}
     padding: 0;
 }
 .page-wrapper.grid .grid {
+	font-size:16px;
     --bs-margin: 0;
 }
 .columns{
@@ -296,6 +301,72 @@ border-radius: 50%;
     transform: scale(1, 1);
   }
 }
+@media (max-width:1050px) {
+	.page-wrapper.grid #maincontent .grid .producto_media_display.media{
+		grid-column: auto / span 12;grid-column-start:12;grid-column-end:2;
+	}
+	.page-wrapper.grid #maincontent .grid .informacion_del_producto{
+		grid-column: auto / span 12;
+	}
+}
+@media (max-width:550px){
+	.page-wrapper.grid #maincontent .grid .producto_media_display.media{
+		grid-column: auto / span 12;
+		grid-column-start:auto;
+    	grid-column-end:span 12;
+	}
+}
+</style>
+<style type="text/css">
+.page-wrapper.grid{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.4;}
+strong{font-weight:bold;}
+.mce-content-body{overflow-wrap:break-word;word-wrap:break-word;}
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+table {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: gray;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+td {
+    display: table-cell;
+    vertical-align: inherit;
+}
+.ephox-snooker-resizer-bar {
+    background-color: #b4d7ff;
+    opacity: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
 </style>
 <div class="page-margin page-wrapper grid">
 	<main id="maincontent" class="page-main">
@@ -360,10 +431,10 @@ border-radius: 50%;
 		 ?>
 	<div class="columns">
 		<div class="column main_columnas">
-			<div name="bvSeoContainer" itemscope itemtype="https://schema.org/Product" itemid="<?=$wo['config']['site_url']."/".$wo['itemsdata']['id_publicacion'] ?>">
+			<div name="bvSeoContainer" itemscope itemtype="https://schema.org/Product" itemid="<?=$wo['config']['site_url']."/".$wo['itemsdata']['id_publicacion'] ?>" style="padding:10px;">
 				<meta itemprop="name" content="<?=$wo['itemsdata']['product']['name'] ?>">
 				<meta itemprop="sku" content="<?=$wo['itemsdata']['product']['sku'] ?>">
-				<meta itemprop="GTIN" content="">
+				<meta itemprop="GTIN" content="<?=$wo['itemsdata']['product']['gtin'] ?>">
 				<meta itemprop="mpn" content="<?=$wo['itemsdata']['product']['sku'] ?>">
 				<?php if(!empty($wo['itemsdata']['product']['images'][0]['image_org'])): ?>
 					<link itemprop="image" href="<?php echo $wo['itemsdata']['product']['images'][0]['image_org'];?>">
@@ -402,23 +473,28 @@ border-radius: 50%;
 											$buscar_el_color_por_id = lui_buscar_color_en_colores($color_id['id_color']);
 											$el_colorv = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]);
 											if ($wo['atributo_items']==$el_colorv) {
-												echo  "<img src='" . ($photo['image_org']) ."' alt='".$wo['itemsdata']['product']['name']."' class='image-file pointer' onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"product\");'>";
+												echo '<img decoding="async" src="'. ($photo['image_org']) .'" alt="'.$wo['itemsdata']['product']['name'].'" title="'.$wo['itemsdata']['product']['name'].'" srcset="'. ($photo['image_org']) .' 400w, '. ($photo['image']) .' 700w" sizes="(min-width: 0px) and (max-width: 1050px) 1050px, (min-width: 1050px) 1050px, 100vw" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');">';
 											}
 										}else{
-											echo  "<img src='" . ($photo['image_org']) ."' alt='".$wo['itemsdata']['product']['name']."' class='image-file pointer' onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"product\");'>";
+											echo '<img decoding="async" src="'. ($photo['image_org']) .'" alt="'.$wo['itemsdata']['product']['name'].'" title="'.$wo['itemsdata']['product']['name'].'" srcset="'. ($photo['image_org']) .' 400w, '. ($photo['image']) .' 700w" sizes="(min-width: 0px) and (max-width: 1050px) 1050px, (min-width: 1050px) 1050px, 100vw" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');">';
 										}
 									}
 								?>
 							</div>
 							<div class="wo_post_prod_full_img_slider">
 								<?php
+								$s_photo_color_id = false;
 								$el_colorx = null;
 									foreach($wo['itemsdata']['product']['images'] as $photo){
+
 										$color_id = lui_buscar_color_en_opciones($photo['id_color']);
+
 										if(isset($color_id['id_color'])!=0) {
+
 											$buscar_el_color_por_id = lui_buscar_color_en_colores($color_id['id_color']);
 											$el_colorx = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]);
 											if($wo['atributo_items']==$el_colorx){
+												$s_photo_color_id = $color_id['id_color'];
 												echo  "<div><img src='" . ($photo['image_org']) ."' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
 											}
 										}else{
@@ -438,6 +514,13 @@ border-radius: 50%;
 							</h1>
 							<p><?php echo html_entity_decode($wo['itemsdata']['product']['description']);?></p>
 							<br><br>
+							<?php $sku_colors_product = $db->where('id_producto',$wo['itemsdata']['product']['id'])->where('id_color',$s_photo_color_id)->getOne('lui_opcion_de_colores_productos'); ?>
+							<?php if (isset($sku_colors_product->sku)): ?>
+								<span>SKU: <?=$sku_colors_product->sku;?></span>
+							<?php else: ?>
+								<span>SKU: <?=$wo['itemsdata']['product']['sku'];?></span>
+							<?php endif ?>
+							
 						</div>
 						<?php
 							$stars = '0';
@@ -535,7 +618,7 @@ border-radius: 50%;
 							<div class="product-care-info stellar-body__small">
 								<div class="care-container">
 									<div class="title">
-										<div class="selected-carepack two-lines">Para realizar una compra, es necesario <a href="<?php echo lui_SeoLink('index.php?link1=acceder');?>"> Acceder </a> al sistema, si es nuevo debe <a href="<?php echo lui_SeoLink('index.php?link1=register');?>"> Registrarse </a>. (es requerido por su seguridad al momento de comprar). Hacemos que tus compras sean mas seguras.</div>
+										<div class="selected-carepack two-lines">Para realizar una compra, es necesario <a style="color:var(--boton-fondo);font-weight:700;" href="<?php echo lui_SeoLink('index.php?link1=acceder');?>"> Acceder </a> al sistema, si es nuevo debe <a style="color:var(--boton-fondo);font-weight:700;" href="<?php echo lui_SeoLink('index.php?link1=register');?>"> Registrarse </a>. (es requerido por su seguridad al momento de comprar). Hacemos que tus compras sean mas seguras.</div>
 									</div>
 								</div>
 							</div>
@@ -563,11 +646,40 @@ border-radius: 50%;
 					    } 
 				    } 
 				?>
+				<style type="text/css">
+					.panel-body:after, .panel-body:before{
+						display: table;
+						content: " ";
+					}
+					.product-spec .panel-body{color:#333;
+					    font-size: 16px !important;
+					    line-height: 24px !important;
+					    padding:15px;
+					}
+					.header_detalles_product{}
+				</style>
+
+				<div class="header_detalles_product"></div>
+				<div class="detalles_de_publicacion" style="background:#FFF;display:block;width:100%;margin:auto;margin-top:34px;position:relative;overflow-x:auto;padding:35px;">
+					<?php echo html_entity_decode(lui_EditMarkup(br2nl($wo['itemsdata']['product']['detalles'], true, false, false)));?>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<script>
+<script>
+	function Wo_OpenAlbumLightBox(image_id, type) {
+	  $('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+	  $.get(Wo_Ajax_Requests_File(), {f:'open_album_lightbox', image_id:image_id, type:type}, function(data) {
+	    if (data.status == 200) {
+	    document.body.style.overflow = 'hidden';
+	      $('.lightbox-container').html(data.html);
+	    }
+	    if (data.html.length == 0) {
+	       document.body.style.overflow = 'auto';
+	    }
+	  });
+	}
 	// 1st carousel, main
 	$('.wo_post_prod_full_img').flickity({
 		pageDots: false,

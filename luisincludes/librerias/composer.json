@@ -1,6 +1,7 @@
 {
     "require": {
         "nicolab/php-ftp-client": "^1.4",
-        "rosell-dk/webp-convert": "^2.9"
+        "rosell-dk/webp-convert": "^2.9",
+        "picqer/php-barcode-generator": "^2.4"
     }
 }

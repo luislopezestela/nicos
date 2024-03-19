@@ -28,39 +28,6 @@ if($wo['page']=='maintenance'){ ?>
   <meta name="twitter:title" content="<?php echo $wo['movie']['name']; ?>" />
   <meta name="twitter:description" content="<?php echo $wo['movie']['description']; ?>" />
   <meta name="twitter:image" content="<?php echo $wo['movie']['cover']; ?>" />
-<?php } if($wo['page'] == 'page' && !empty($wo['page_profile'])) { ?>
-  <meta property="og:title" content="<?php echo $wo['page_profile']['page_name']; ?>" />
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="<?php echo $wo['page_profile']['url']; ?>" />
-  <meta property="og:image" content="<?php echo $wo['page_profile']['avatar']; ?>" />
-  <meta property="og:image:secure_url" content="<?php echo $wo['page_profile']['avatar']; ?>" />
-  <meta property="og:description" content="<?php echo $wo['page_profile']['page_description']; ?>" />
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="<?php echo $wo['page_profile']['page_name']; ?>" />
-  <meta name="twitter:description" content="<?php echo $wo['page_profile']['page_description']; ?>" />
-  <meta name="twitter:image" content="<?php echo $wo['page_profile']['avatar']; ?>" />
-<?php } if($wo['page'] == 'group' && !empty($wo['group_profile'])) { ?>
-  <meta property="og:title" content="<?php echo $wo['group_profile']['group_name']; ?>" />
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="<?php echo $wo['group_profile']['url']; ?>" />
-  <meta property="og:image" content="<?php echo $wo['group_profile']['avatar']; ?>" />
-  <meta property="og:image:secure_url" content="<?php echo $wo['group_profile']['avatar']; ?>" />
-  <meta property="og:description" content="<?php echo $wo['group_profile']['about']; ?>" />
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="<?php echo $wo['group_profile']['group_name']; ?>" />
-  <meta name="twitter:description" content="<?php echo $wo['group_profile']['about']; ?>" />
-  <meta name="twitter:image" content="<?php echo $wo['group_profile']['avatar']; ?>" />
-<?php } if($wo['page'] == 'game' && !empty($wo['game'])) { ?>
-  <meta property="og:title" content="<?php echo $wo['game']['game_name']; ?>" />
-  <meta property="og:type" content="game" />
-  <meta property="og:url" content="<?php echo $wo['game']['game_link']; ?>" />
-  <meta property="og:image" content="<?php echo $wo['game']['game_avatar']; ?>" />
-  <meta property="og:image:secure_url" content="<?php echo $wo['game']['game_avatar']; ?>" />
-  <meta property="og:description" content="<?php echo $wo['game']['game_name']; ?>" />
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="<?php echo $wo['game']['game_name']; ?>" />
-  <meta name="twitter:description" content="<?php echo $wo['game']['game_name']; ?>" />
-  <meta name="twitter:image" content="<?php echo $wo['game']['game_avatar']; ?>" />
 <?php } if($wo['page'] == 'welcome') { ?>
   <meta property="og:title" content="<?php echo $wo['title'];?>" />
   <meta property="og:type" content="article" />
@@ -85,42 +52,10 @@ if($wo['page']=='maintenance'){ ?>
 <?php if($wo['user_profile']['share_my_data'] == 0) { ?>
   <meta name="robots" content="noindex,nofollow">
   <meta name="googlebot" content="noindex">
-<?php } } if(!empty($wo['story']['fund'])) {?>
-  <meta property="og:title" content="<?php echo $wo['story']['fund']['fund']['title'];?>" />
-  <meta property="og:type" content="funding" />
-  <meta property="og:image" content="<?php echo $wo['story']['fund']['fund']['image'];?>" />
-  <meta property="og:description" content="<?php echo $wo['story']['fund']['fund']['description'];?>" />
-  <meta name="twitter:title" content="<?php echo $wo['story']['fund']['fund']['title'];?>" />
-  <meta name="twitter:description" content="<?php echo $wo['story']['fund']['fund']['description'];?>" />
-  <meta name="twitter:image" content="<?php echo $wo['story']['fund']['fund']['image'];?>" />
-<?php } if(!empty($wo['story']['fund_data'])){?>
-  <meta property="og:title" content="<?php echo $wo['story']['fund_data']['title'];?>" />
-  <meta property="og:type" content="funding" />
-  <meta property="og:image" content="<?php echo $wo['story']['fund_data']['image'];?>" />
-  <meta property="og:description" content="<?php echo $wo['story']['fund_data']['description'];?>" />
-  <meta name="twitter:title" content="<?php echo $wo['story']['fund_data']['title'];?>" />
-  <meta name="twitter:description" content="<?php echo $wo['story']['fund_data']['description'];?>" />
-  <meta name="twitter:image" content="<?php echo $wo['story']['fund_data']['image'];?>" />
-<?php } if(!empty($wo['story']) && !empty($wo['story']['photo_album'])) {  ?>
+<?php } } if(!empty($wo['story']) && !empty($wo['story']['photo_album'])) {  ?>
   <meta property="og:type" content="album" />
   <meta property="og:image" content="<?php echo $wo['story']['photo_album'][0]['image'];?>" />
   <meta name="twitter:image" content="<?php echo $wo['story']['photo_album'][0]['image'];?>" />
-<?php } if(!empty($wo['fund'])) {  ?>
-  <meta property="og:title" content="<?php echo $wo['fund']['title'];?>" />
-  <meta property="og:type" content="funding" />
-  <meta property="og:image" content="<?php echo $wo['fund']['image'];?>" />
-  <meta property="og:description" content="<?php echo $wo['fund']['description'];?>" />
-  <meta name="twitter:title" content="<?php echo $wo['fund']['title'];?>" />
-  <meta name="twitter:description" content="<?php echo $wo['fund']['description'];?>" />
-  <meta name="twitter:image" content="<?php echo $wo['fund']['image'];?>" />
-<?php } if(!empty($wo['story']['job'])) {  ?>
-  <meta property="og:title" content="<?php echo $wo['story']['job']['title'];?>" />
-  <meta property="og:type" content="job" />
-  <meta property="og:image" content="<?php echo lui_GetMedia($wo['story']['job']['image']);?>" />
-  <meta property="og:description" content="<?php echo $wo['story']['job']['description'];?>" />
-  <meta name="twitter:title" content="<?php echo $wo['story']['job']['title'];?>" />
-  <meta name="twitter:description" content="<?php echo $wo['story']['job']['description'];?>" />
-  <meta name="twitter:image" content="<?php echo lui_GetMedia($wo['story']['job']['image']);?>" />
 <?php } if($wo['page'] == 'read-blog'){?>
   <meta property="og:type" content="article" />
   <meta property="og:image" content="<?php echo $wo['article']['thumbnail']?>" />
@@ -141,14 +76,17 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
   $link_text = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";?>
   <link rel="canonical" href="<?=($link_text)?>"/>
 <?php } ?>
+<link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-3.7.0.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
+<link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-ui.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
+<link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/boots.js?version=<?php echo $wo['config']['version']; ?>" as="script">
+<link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/scripts.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
+<link rel="preload" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
+<link rel="preload" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
 <?php echo (!empty($wo['config']['tagManager_head'])) ? $wo['config']['tagManager_head'] : ''; ?>
   <link rel="shortcut icon" type="image/png" href="<?php echo $wo['config']['theme_url'];?>/img/icon.png"/>
 <?php if($wo['language_type']=='rtl' && $wo['page']!='welcome'){?>
   <link rel="stylesheet" href="<?=$wo['config']['theme_url'].'/stylesheet/bootsrap-rtl.min.css'.$wo['update_cache'].'?version='.$wo['config']['version'];?>">
   <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/style_rtl.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>">
-<?php }
-if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 'edit_product') { ?>
-  <script src="<?php echo $wo['config']['theme_url'];?>/javascript/tinymce2/js/tinymce/tinymce.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
 <?php } ?>
 <link rel="stylesheet" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>">
 <?php if($wo['page'] == 'messages') { ?>
@@ -158,25 +96,34 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
   <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/welcome_rtl.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>">
 <?php } ?>
 
-<script rel="preload" data="scripsjquer" src="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-3.7.0.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+<script data="scripsjquer" src="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-3.7.0.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+<?php if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 'edit_product' || $wo['page'] == 'create_product') { ?>
+  <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/tinymce/tinymce.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
+  <script src="<?php echo $wo['config']['theme_url'];?>/javascript/tinymce/tinymce.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+<?php } ?>
+<script src="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-ui.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
 <?php if ($wo['loggedin'] == true): ?>
-  <script src="<?php echo $wo['config']['theme_url'];?>/javascript/jqueryform.js?version=<?php echo $wo['config']['version']; ?>"></script>
+  <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/jqueryform.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <?php endif ?>
 
 <link rel="manifest" href="<?php echo $wo['config']['theme_url'];?>/manifiesto/manifest.php">
-<?php if ($wo['page'] == 'friends_nearby'): ?>
-  <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/leaflet.css?version=<?php echo $wo['config']['version']; ?>">
-  <script src="<?php echo $wo['config']['theme_url'];?>/javascript/leaflet.js?version=<?php echo $wo['config']['version'];?>"></script>
-<?php endif; ?>
 <?php if($wo['page'] == 'movies' || $wo['page'] == 'watch_movie') { ?>
   <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/movies/style.movies.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" />
 <?php } ?>
-<?php if($wo['page'] == 'publicacion') { ?>
+  <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
   <script id="flikit" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+
+<?php if($wo['page'] == 'tienda') { ?>
+  <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
+  <link id="store_cs" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" />
 <?php } ?>
+<?php if ($wo['page'] != 'welcome') { ?>
+  <script>$(document).ready(function() {$('div.leftcol').theiaStickySidebar({additionalMarginTop:90});});</script>
+  <script type="text/javascript">jQuery(document).ready(function() {jQuery('.custom-fixed-element').theiaStickySidebar({additionalMarginTop:90});});</script>
+      <?php }?>
   <style><?php echo $wo['config']['styles_cc']; ?></style>
   <style type="text/css">
-    .count_items_carrito{position:absolute;top:0px;right:0px;display:flex;flex-wrap:wrap;font-size:10px;background:var(--header-color);color:var(--header-fondo);border-radius:15px;text-align:center;justify-content:center;align-items:center;line-height:10px;height:16px;letter-spacing:0;}
+    .count_items_carrito{position:absolute;top:6px;right:23px;display:flex;flex-wrap:wrap;font-size:10px;background:var(--header-color);color:var(--header-fondo);border-radius:15px;text-align:center;justify-content:center;align-items:center;line-height:10px;height:16px;letter-spacing:0;}
     .count_items_carrito span{padding:3px;}
     .header_no_ap_go_lie{bottom:-6px;background-size:1px 7px;background-repeat:repeat-x;right:0;box-sizing:border-box;pointer-events:none;z-index:0;left:0;height:7px;position:absolute;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAOBAMAAAD3WtBsAAAAFVBMVEUAAAAAAAAAAAAAAAAAAAAAAAD29va1cB7UAAAAB3RSTlMCCwQHGBAaZf6MKAAAABpJREFUCNdjSGNIY3BhCGUQBEJjIFQCQigAACyJAjLNW4w5AAAAAElFTkSuQmCC);}
   </style>
@@ -185,6 +132,22 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
   <script src="<?php echo $wo['config']['theme_url'];?>/javascript/qrcode.js?version=<?php echo $wo['config']['version']; ?>"></script>
 <?php } ?>
   <script type="text/javascript">
+    function Wo_CloseLightbox() {
+      $('.lightbox-container').remove();
+      document.body.style.overflow = 'auto';
+    }
+    function Wo_UpdateLocation(position) {
+    if (!position) {
+      return false;
+    }
+
+    $.post(Wo_Ajax_Requests_File() + '?f=save_user_location', {lat: position.coords.latitude, lng:position.coords.longitude}, function(data, textStatus, xhr) {
+        if (data.status == 200) {
+          return true;
+        }
+      });
+      return false;
+    }
     document.addEventListener('DOMContentLoaded', function() {
       var link = document.createElement('link');
       link.rel = 'stylesheet';
@@ -212,14 +175,6 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
         var box = $('#contnet');
         var ISAPI = $('#ISAPI').val();
         $(document).on('click', 'a[data-ajax]', function(e) {
-          if(typeof(check_wallet)!='undefined') {
-            clearInterval(check_wallet);
-          }
-          if ($('#live_post_id').length > 0) {
-            DeleteLive();
-            window.location = $(this).attr('href');
-            return false;
-          }
           Wo_CloseLightbox();
           $('body').removeAttr('no-more-posts');
           if ($('.postText').length) {
@@ -242,7 +197,7 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
                 $('#load-more-posts').hide();
                 json_data = JSON.parse($('#json-data').val());
                 if(json_data.page=='home') {
-                  document.getElementById('posts').innerHTML = '<div class="posts_load"><div class="wo_loading_post"><div class="lightui1-shimmer"><div class="_2iwr"></div> <div class="_2iws"></div> <div class="_2iwt"></div> <div class="_2iwu"></div> <div class="_2iwv"></div> <div class="_2iww"></div> <div class="_2iwx"></div> <div class="_2iwy"></div> <div class="_2iwz"></div> <div class="_2iw-"></div> <div class="_2iw_"></div> <div class="_2ix0"></div> </div></div><div class="wo_loading_post"><div class="lightui1-shimmer"> <div class="_2iwr"></div> <div class="_2iws"></div> <div class="_2iwt"></div> <div class="_2iwu"></div> <div class="_2iwv"></div> <div class="_2iww"></div> <div class="_2iwx"></div> <div class="_2iwy"></div> <div class="_2iwz"></div> <div class="_2iw-"></div> <div class="_2iw_"></div> <div class="_2ix0"></div> </div></div></div>';
+                  document.getElementById('posts').innerHTML = '<div class="paage_loader_s"><div class="titulo_loader_w loader_layshane"></div></div><div class="loading_poruductos_cont"><div class="loading_poruductos"><div class="loader_layshane"></div></div><div class="loading_poruductos"><div class="loader_layshane"></div></div><div class="loading_poruductos"><div class="loader_layshane"></div></div><div class="loading_poruductos"><div class="loader_layshane"></div></div></div>';
                   loadposts();
                   window.history.pushState({state:'new'},'', websiteUrl);
                   $("html, body").animate({ scrollTop: 0 }, 100);
@@ -299,25 +254,15 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
               }else if(json_data.page == 'products'){
                 $('.content-container').css('margin-top', '90px');
                 $('.ad-placement-header-footer').find('.contnet').css('margin-top', '0');
-              }else if(json_data.page == 'publicacion'){
-                $('#flikit').remove();
-                var script = document.createElement("script");
-                script.id = "flikit";
-                script.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-                document.head.appendChild(script);
+              }else if(json_data.page == 'tienda'){
+                $('#store_cs').remove();
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.id = "store_cs";
+                link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_t.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
+                document.head.appendChild(link);
               }else{
                 $('.content-container').css('margin-top', '90px');
-                $('.ad-placement-header-footer').find('.contnet').css('margin-top', '0');
-              }
-              if(json_data.is_footer == 1 && $('.second-footer').css('display') == 'none') {
-                $('footer .footer-wrapper').show();
-              }else if(json_data.is_footer == 1 && $('.second-footer').css('display') != 'none'){
-              }else{
-                if($(window).width() < 720) {
-                  $('footer .footer-wrapper').show();
-                }else{
-                  $('footer .footer-wrapper, .second-footer').hide();
-                }
               }
               document.title = decodeHtml(json_data.title);
               document_title = decodeHtml(json_data.title);
@@ -329,9 +274,6 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
               });
               $('#users-reacted-modal').modal("hide");
             }).fail(function() {
-              <?php if ($wo['config']['membership_system'] == 1) { ?>
-                window.location.href = "<?php echo lui_SeoLink('index.php?link1=go-pro'); ?>";
-              <?php } ?>
             })
             .always(function() {
               Wo_FinishBar();
@@ -350,7 +292,7 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <?php endif; ?>
 
-    <script src="<?php echo $wo['config']['theme_url'];?>/javascript/socket.io.js?version=<?php echo $wo['config']['version']; ?>" async defer></script>
+    <script src="<?php echo $wo['config']['theme_url'];?>/javascript/socket.io.js?version=<?php echo $wo['config']['version']; ?>" defer></script>
       <script>
       let nodejs_system = "<?php echo $wo['config']['node_socket_flow']; ?>";
       let socket = null
@@ -408,20 +350,7 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
             });
           }, 3000);
         })
-        socket.on("decline_call", (data) => {
-          $('#re-calling-modal').addClass('calling');
-          document.title = document_title;
-          setTimeout(function () {
-            $( '#re-calling-modal' ).remove();
-            $( '.modal-backdrop' ).remove();
-            $( 'body' ).removeClass( "modal-open" );
-          }, 3000);
-          $( '#re-calling-modal' ).remove();
-          $('.modal-backdrop.in').hide();
-          Wo_CloseModels();
-          Wo_PlayAudioCall('stop');
-          Wo_PlayVideoCall('stop');
-        })
+       
         socket.on("lastseen", (data) => {
             if (data.message_id && data.user_id) {
                   var chat_container = $('.chat-tab').find('#chat_' + data.user_id);
@@ -459,9 +388,6 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
             $('#chat_' + data.user_id).find('.chat-tab-status').removeClass('active');
             $("#online_" + data.user_id).find('svg path').attr('fill', '#dddddd');
             $("#messages-recipient-" + data.user_id).find('.dot').css({"background-color": "lightgray"});
-          });
-          socket.on("update_new_posts", (data) => {
-            Wo_intervalUpdates(1);
           });
           socket.on("on_avatar_changed", (data) => {
             $("#online_" + data.user_id).find('img').attr('src', data.name);
@@ -532,9 +458,7 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
                $("[data_messsages_count]").attr('data_messsages_count', "0");
              }
           });
-          socket.on("new_video_call", (data) => {
-             Wo_intervalUpdates(1);
-          });
+         
           socket.on("load_comment_replies", (data) => {
              Wo_ViewMoreReplies(data.comment_id);
           });
@@ -631,14 +555,43 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
         ?>
       });
   </script>
-  <?php foreach ($wo["products_categories"] as $key => $categorys): ?>
-    <?php $cat_logo_producs = $categorys['logo']; ?>
-    <?php $cat_nombre_producss = $wo["lang"][$categorys["lang_key"]] ?>
-    <?php if ($categorys['id']==0): ?>
-    <?php else: ?>
-      <link rel="preload" href="<?php echo $cat_logo_producs;?>" as="image">
-    <?php endif ?>
-  <?php endforeach ?>
+  
+  <link rel="preload" href="<?php echo $wo['config']['theme_url']; ?>/img/flags/united-states.svg" as="image">
+  <link rel="preload" href="<?php echo $wo['config']['theme_url']; ?>/img/flags/italy.svg" as="image">
+  <link rel="preload" href="<?php echo $wo['config']['theme_url']; ?>/img/flags/portugal.svg" as="image">
+  <link rel="preload" href="<?php echo $wo['config']['theme_url']; ?>/img/flags/peru.svg" as="image">
+  <style type="text/css">
+@keyframes placeHolderShimmer{0%{opacity:.5;}100%{opacity:1;}}
+.loader_layshane{
+  animation-duration:1s;
+  animation-fill-mode:forwards;
+  animation-iteration-count:infinite;
+  animation-name:placeHolderShimmer;
+  animation-timing-function:linear;
+  background:#e6e6e6;
+  height:100%;
+  position:relative;
+}
+.loader_layshane div {
+  background: #ffffff;
+  position: absolute;
+}
+.titulo_loader_w{width:100%;max-width:200px;display:block;height:30.42px;border-radius:20px;margin:10px 0;}
+  </style>
+  <style type="text/css">
+    /*Footer*/
+.footer_page_list_l hr{width:100%;border-color:#e9e9e9;}
+footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;width:100%;background:transparent;-webkit-background:transparent;-moz-background:transparent;font-family:sans-serif;}
+.footer_page_list_l{width:100%;position:relative;font-size:14px;display:flex;flex-wrap:wrap;justify-content:center;}
+.footer_page_list_l .footer-powered{display:flex;align-items:center;justify-content:center;color:#333;-webkit-color:#333;-moz-color:#333;user-select:none;padding:5px;flex-wrap:wrap;width:100%;}
+.footer_page_list_l .footer-powered .list-inline{margin:0;padding-left:0;color:#333;-webkit-color:#333;-moz-color:#333;display:flex;flex-wrap:wrap;justify-content:center;width:100%;}
+.footer_page_list_l .footer-powered .list-inline>li{display:inline-block;padding-right:8px;padding-left:8px}
+.footer_page_list_l .footer-powered .list-inline li a{color:#333;-webkit-color:#333;-moz-color:#333;padding:15px;display:block;font-size:18px;}
+.footer_page_list_l span{ margin:0;font-size:18px;width:100%;padding:4px;text-align:center;}
+.footer-wrapper-sidebar {font-size: 14.5px;}
+.footer-wrapper-sidebar .footer-powered{display:flex;align-items: center;justify-content:space-between;color:#858585;-webkit-color:#858585;-moz-color:#858585;font-size:13px;}
+.footer-wrapper-sidebar .footer-powered span, .footer-wrapper .footer-powered span{margin:0;}
+  </style>
 </head>
 
 <body <?php if ($wo['config']['chatSystem'] == 0) { ?> chat-off="true" <?php } ?>>
@@ -731,6 +684,7 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
       <?php } ?>
 
       <?php if ($wo['loggedin'] == false) { ?>
+       <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/welcome.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="script">
       <script type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/welcome.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <?php } ?>
       <?php if ($wo['config']['node_socket_flow'] == "1"){ ?>
@@ -758,12 +712,17 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/jqueryform.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/autogrow.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/boots.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
-   
+
+      <?php if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 'edit_product') { ?>
+        <script src="<?php echo $wo['config']['theme_url'];?>/javascript/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+      <?php } ?>
+
       <?php if ($wo['loggedin'] == true) {?>
       <?php if ($wo['config']['google_map'] == 1) { ?>
       <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $wo['config']['google_map_api'];?>&libraries=places"></script>
       <?php } ?>
       <?php } ?>
+      <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/audioRecord/record.js?version=<?php echo $wo['config']['version']; ?>" as="script">
       <script src="<?php echo $wo['config']['theme_url'];?>/javascript/audioRecord/record.js?version=<?php echo $wo['config']['version']; ?>"></script>
       <?php if ($wo['page'] == 'timeline' && $wo['loggedin'] == true && $wo['config']['css_upload'] == 1) { ?>
       <?php if (!empty($wo['user_profile']['css_file']) && file_exists($wo['user_profile']['css_file'])) {?>
@@ -944,7 +903,7 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
 
          }
         window.addEventListener("popstate", function (e){
-          location.reload();
+          //location.reload();
         });
 
        /*Language Select*/
@@ -1006,257 +965,6 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
       <?php if ($wo['page'] == 'welcome') {?>
     <style>.cc-bottom{bottom: 2.5em;}</style>
       <?php } ?>
-
-    <?php if ($wo['config']['user_status'] == 1) { ?>
-      <!-- // NEW STORY -->
-      <script type="text/javascript">
-        var storyLightboxElements = document.querySelectorAll('.story_lightbox');
-        storyLightboxElements.forEach(function(element) {
-          element.addEventListener('mouseover', function(event) {
-            var postId = element.getAttribute('data-post-id');
-            element.classList.add('dont_close_story_' + postId);
-            var width = getComputedStyle(element).width;
-            element.style.width = width;
-          });
-        });
-        var storyLightboxElements = document.querySelectorAll('.story_lightbox');
-        storyLightboxElements.forEach(function(element) {
-          element.addEventListener('mouseleave', function(event) {
-            Wo_Delay(function(){
-              if ($('#users-reacted-modal').is(':hidden')) {
-                value = $(this).attr('data-post-id');
-                $(this).removeClass('dont_close_story_'+value);
-                setTimeout(function(){
-                  $('.width_').css('width', '100%');
-                }, 700);
-                Wo_Delay(function(){
-                  if ($('.dont_close_story_'+value).length == 0) {
-                    $('.story_lightbox').find('.next-btn').click();
-                  }
-                }, 10000);
-              }
-            }, 500);
-          });
-        });
-
-
-          $(document).on('click', '.story-image-wrapper', function(event) {
-          event.preventDefault();
-          $('#contnet').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
-
-          $value = $(this).parents(".story-container").attr('data-status-id');
-          $.post(Wo_Ajax_Requests_File() + '?f=story_view', {id: $value}, function(data, textStatus, xhr) {
-            if (data.status == 200) {
-              document.body.style.overflow = 'hidden';
-                $('.lightbox-container').html(data.html);
-                $('.width_').addClass('load');
-                setTimeout(function(){
-                    $('.width_').css('width', '100%');
-              }, 200);
-                Wo_Delay(function(){
-                    if ($('.dont_close_story_'+$value).length == 0) {
-                      Get_NextStory(data.story_id);
-                    }
-              }, 10000);
-            }
-            else{
-              Wo_CloseLightbox();
-            }
-          });
-        });
-        function Wo_GetMoreStoryViews(story_id,self) {
-          last_view = $('.story_views_').last().attr('id');
-          $(self).addClass('dont_close_story_'+story_id);
-          $(self).find('span').html('<?php echo $wo["lang"]["please_wait"]?>');
-          $.post(Wo_Ajax_Requests_File() + '?f=story_views_', {last_view:last_view,story_id:story_id}, function(data, textStatus, xhr) {
-            if (data.status == 200) {
-              $(self).find('button').html('<svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather"><polyline points="6 9 12 15 18 9"></polyline></svg> <?php echo($wo['lang']['load_more']) ?>');
-
-              $('.views_container_').append(data.html);
-            }
-            else{
-              $(self).find('button').html('<?php echo $wo["lang"]["no_more_views"]?>');
-
-            }
-          });
-        }
-        $(document).on('click', '.see_all_stories', function(event) {
-          event.preventDefault();
-          $('#contnet').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
-          user_id = $(this).attr('data_story_user_id');
-          type = $(this).attr('data_story_type');
-          $.post(Wo_Ajax_Requests_File() + '?f=view_all_stories', {user_id: user_id,type:type}, function(data, textStatus, xhr) {
-            if (node_socket_flow == "1") {
-               socket.emit("user_notification", { to_id: user_id, user_id: _getCookie("user_id"), type: "added" });
-            }
-            document.body.style.overflow = 'hidden';
-            $('.lightbox-container').html(data.html);
-            setTimeout(function(){
-              video_story = $('#video_story').attr('data-story-video');
-                if ($('[data-story-video='+video_story+']').length == 0) {
-
-                  $('.width_').addClass('load');
-                  setTimeout(function(){
-                      $('.width_').css('width', '100%');
-                  }, 200);
-                  Wo_Delay(function(){
-                    value = $('.user_story_').attr('id');
-
-                      if ($('.dont_close_story_'+value).length == 0) {
-                        if (type == 'user') {
-                          Get_NextStory(data.story_id);
-                        }
-                        else{
-
-                          Get_NextStory(data.story_id,'friends');
-                        }
-                      }
-                  }, 10000);
-                }
-              }, 200);
-          });
-        });
-        function Get_PreviousStory(story_id,story_type = '') {
-          if ($('.lightbox-container').is(":visible")) {
-
-            Wo_CloseLightbox();
-            $('#contnet').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
-            $.post(Wo_Ajax_Requests_File() + '?f=view_story_by_id', {story_id: story_id,type:'previous',story_type:story_type}, function(data, textStatus, xhr) {
-               user_id = $(this).attr('data_story_user_id');
-               if (node_socket_flow == "1") {
-               socket.emit("user_notification", { to_id: user_id, user_id: _getCookie("user_id"), type: "added" });
-            }
-              if (data.status == 200) {
-                document.body.style.overflow = 'hidden';
-                  $('.lightbox-container').html(data.html);
-                  video_story = $('#video_story').attr('data-story-video');
-                if ($('[data-story-video='+video_story+']').length == 0) {
-                    $('.width_').addClass('load');
-                    setTimeout(function(){
-                        $('.width_').css('width', '100%');
-                  }, 200);
-                    Wo_Delay(function(){
-                      value = $('.user_story_').attr('id');
-                        if ($('.dont_close_story_'+value).length == 0) {
-                          if (story_type == 'user') {
-                            if ($('.lightpost-'+data.story_id).length > 0) {
-                              Get_NextStory(data.story_id);
-                            }
-                          }
-                          else{
-                            if ($('.lightpost-'+data.story_id).length > 0) {
-                              Get_NextStory(data.story_id,'friends');
-                            }
-                          }
-                        }
-                  }, 10000);
-                }
-              }
-              else{
-                Wo_CloseLightbox();
-              }
-            });
-          }
-        }
-        function Get_NextStory(story_id,story_type = '') {
-          if ($('.lightbox-container').is(":visible")) {
-            Wo_CloseLightbox();
-            $('#contnet').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
-            $.post(Wo_Ajax_Requests_File() + '?f=view_story_by_id', {story_id: story_id,type:'next',story_type:story_type}, function(data, textStatus, xhr) {
-              if (data.status == 200) {
-               user_id = $(this).attr('data_story_user_id');
-               if (node_socket_flow == "1") {
-               socket.emit("user_notification", { to_id: user_id, user_id: _getCookie("user_id"), type: "added" });
-            }
-                document.body.style.overflow = 'hidden';
-                  $('.lightbox-container').html(data.html);
-                  video_story = $('#video_story').attr('data-story-video');
-                if ($('[data-story-video='+video_story+']').length == 0) {
-                    $('.width_').addClass('load');
-                    setTimeout(function(){
-                        $('.width_').css('width', '100%');
-                  }, 200);
-                    Wo_Delay(function(){
-                      value = $('.user_story_').attr('id');
-                        if ($('.dont_close_story_'+value).length == 0) {
-                          if (story_type == 'user') {
-                            if ($('.lightpost-'+data.story_id).length > 0) {
-                              Get_NextStory(data.story_id);
-                            }
-                      }
-                      else{
-                        if ($('.lightpost-'+data.story_id).length > 0) {
-                          Get_NextStory(data.story_id,'friends');
-                        }
-                      }
-                        }
-                  }, 10000);
-                }
-              }
-              else{
-                if (story_type == 'user') {
-                  if($('.unseen_story').length > 0){
-                    $('.unseen_story').addClass('seen_story');
-                    $('.unseen_story').removeClass('unseen_story');
-
-                  }
-                }
-                Wo_CloseLightbox();
-              }
-            });
-          }
-      }
-      function Get_CurrentStory(story_id,story_type = '') {
-
-            Wo_CloseLightbox();
-            $('#contnet').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
-            $.post(Wo_Ajax_Requests_File() + '?f=view_story_by_id', {story_id: story_id,type:'current',story_type:story_type}, function(data, textStatus, xhr) {
-              if (data.status == 200) {
-                  user_id = $(this).attr('data_story_user_id');
-               if (node_socket_flow == "1") {
-               socket.emit("user_notification", { to_id: user_id, user_id: _getCookie("user_id"), type: "added" });
-            }
-                document.body.style.overflow = 'hidden';
-                  $('.lightbox-container').html(data.html);
-                  video_story = $('#video_story').attr('data-story-video');
-                if ($('[data-story-video='+video_story+']').length == 0) {
-                    $('.width_').addClass('load');
-                    setTimeout(function(){
-                        $('.width_').css('width', '100%');
-                  }, 200);
-                    Wo_Delay(function(){
-                      value = $('.user_story_').attr('id');
-                        if ($('.dont_close_story_'+value).length == 0) {
-                          if (story_type == 'user') {
-                            if ($('.lightpost-'+data.story_id).length > 0) {
-                              Get_NextStory(data.story_id);
-                            }
-                      }
-                      else{
-                        if ($('.lightpost-'+data.story_id).length > 0) {
-                          Get_NextStory(data.story_id,'friends');
-                        }
-                      }
-                        }
-                  }, 10000);
-                }
-              }
-              else{
-                if (story_type == 'user') {
-                  if($('.unseen_story').length > 0){
-                    $('.unseen_story').addClass('seen_story');
-                    $('.unseen_story').removeClass('unseen_story');
-
-                  }
-                }
-                Wo_CloseLightbox();
-              }
-            });
-      }
-    </script>
-      <!-- // NEW STORY -->
-
-    <?php } ?>
     <?php
     if ($wo['loggedin'] == true) {
     $wo['user']['notification_settings'] = (Array) json_decode(html_entity_decode($wo['user']['notification_settings']));
@@ -1265,227 +973,10 @@ if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 
         $.post(Wo_Ajax_Requests_File() + '?f=notify_memories', function(data, textStatus, xhr) {});
       </script>
     <?php } } ?>
-    <div id="pay_modal_wallet">
-      <div class="modal fade wow_mat_pops" id="pay-go-pro" role="dialog" data-keyboard="false">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="wow_pops_head">
-              <svg height="100px" preserveAspectRatio="none" version="1.1" viewBox="0 0 300 100" width="300px" xmlns="http://www.w3.org/2000/svg"><path d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729 c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z" fill="currentColor" opacity="0.6"></path> <path d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729 c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z" fill="currentColor" opacity="0.6"></path> <path d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428 c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z" fill="currentColor"></path></svg>
-              <h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"></path></svg> <?php echo $wo['lang']['pay_from_wallet'] ?></h4>
-            </div>
-            <div class="modal-body">
-              <div class="pay_modal_wallet_alert"></div>
-              <h4 class="pay_modal_wallet_text"></h4>
-            </div>
-            <div class="clear"></div>
-            <div class="modal-footer">
-              <div class="ball-pulse"><div></div><div></div><div></div></div>
-              <button type="button" class="btn btn-main" id="pay_modal_wallet_btn"><?php echo $wo['lang']['pay']; ?></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- HTML NOTIFICATION POPUP -->
     <div id="notification-popup"></div>
     <!-- HTML NOTIFICATION POPUP -->
-    <?php if ($wo['loggedin']) { ?>
-    <div class="modal fade" id="add_address_modal" role="dialog" data-keyboard="false" style="overflow-y: auto;">
-      <div class="modal-dialog wow_mat_mdl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
-            <h4 class="modal-title"><?php echo $wo['lang']['add_new_address'] ?></h4>
-          </div>
-          <form class="form form-horizontal address_form" method="post" action="#">
-            <div class="modal-body twocheckout_modal">
-              <div class="modal_add_address_modal_alert"></div>
-              <div class="clear"></div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="wow_form_fields">
-                    <label for="name"><?php echo $wo['lang']['name']; ?></label>
-                    <input id="name" name="name" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['name']; ?>" value="<?php echo($wo['user']['name']) ?>">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="wow_form_fields">
-                    <label for="phone"><?php echo $wo['lang']['phone_number']; ?></label>
-                    <input id="phone" name="phone" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['phone_number']; ?>" value="<?php echo($wo['user']['phone_number']) ?>">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="wow_form_fields">
-                    <label for="country"><?php echo $wo['lang']['country']; ?></label>
-                    <input id="country" name="country" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['country']; ?>">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="wow_form_fields">
-                    <label for="city"><?php echo $wo['lang']['city']; ?></label>
-                    <input id="city" name="city" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['city']; ?>">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="wow_form_fields">
-                    <label for="zip"><?php echo $wo['lang']['zip']; ?></label>
-                    <input id="zip" name="zip" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['zip']; ?>">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="wow_form_fields">
-                    <label for="address"><?php echo $wo['lang']['name']; ?></label>
-                    <textarea id="address" placeholder="<?php echo $wo['lang']['address']; ?>" name="address" rows="3" autocomplete="off"></textarea>
-                  </div>
-                </div>
-              </div>
-              <div class="clear"></div>
-            </div>
-            <div class="clear"></div>
-            <div class="modal-footer">
-              <div class="ball-pulse"><div></div><div></div><div></div></div>
-              <button type="submit" class="btn btn-main btn-mat"><?php echo $wo['lang']['add']; ?></button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <?php } ?>
-    <div class="modal fade" id="delete-address" tabindex="-1" role="dialog" aria-labelledby="delete-address" aria-hidden="true" data-id="0">
-    <div class="modal-dialog modal-md mat_box wow_mat_mdl" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
-          <h4 class="modal-title"><?php echo $wo['lang']['delete_your_address'] ?></h4>
-        </div>
-        <div class="modal-body">
-          <?php echo $wo['lang']['are_you_delete_your_address']; ?>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-mat" data-dismiss="modal"><?php echo $wo['lang']['delete']; ?></button>
-        </div>
-      </div>
-    </div>
-    </div>
-
-    <div class="modal fade ch_payment_box" id="buy_product_modal" tabindex="-1" role="dialog" aria-labelledby="buy_product" aria-hidden="true" data-id="0">
-    <div class="modal-dialog modal-md mat_box" role="document">
-      <div class="modal-content">
-        <div class="ch_payment_head">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,13A5,5 0 0,1 7,8H9A3,3 0 0,0 12,11A3,3 0 0,0 15,8H17A5,5 0 0,1 12,13M12,3A3,3 0 0,1 15,6H9A3,3 0 0,1 12,3M19,6H17A5,5 0 0,0 12,1A5,5 0 0,0 7,6H5C3.89,6 3,6.89 3,8V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V8C21,6.89 20.1,6 19,6Z"></path></svg>
-          <h4><?php echo $wo['lang']['payment_alert']; ?></h4>
-        </div>
-        <div class="modal-body">
-          <div class="modal_product_pay_alert"></div>
-          <?php echo $wo['lang']['purchase_the_items']; ?>
-        </div>
-        <div class="modal-footer">
-          <input type="hidden" id="product_id" autocomplete="off">
-          <input type="hidden" id="product_price" autocomplete="off">
-          <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $wo['lang']['cancel']; ?></button>
-          <button type="button" class="btn btn-main btn-mat"><?php echo $wo['lang']['pay']; ?></button>
-        </div>
-      </div>
-    </div>
-    </div>
-
-
-    <div class="modal fade ch_payment_box" id="buy_product_modal_dos" tabindex="-1" role="dialog" aria-labelledby="buy_product" aria-hidden="true" data-id="0">
-    <div class="modal-dialog modal-md mat_box" role="document">
-      <div class="modal-content">
-        <div class="ch_payment_head">
-          <svg width="24" height="24" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M512 512m-480 0a480 480 0 1 0 960 0 480 480 0 1 0-960 0Z" fill="#FFE8CD" /><path d="M224 364.8c0-25.6 19.2-44.8 51.2-44.8h480c25.6 0 51.2 19.2 51.2 44.8v288c0 25.6-19.2 44.8-51.2 44.8H275.2c-25.6 0-51.2-19.2-51.2-44.8V364.8z" fill="#FF9D1C" /><path d="M224 390.4h576v70.4h-576z" fill="#FFCA83" /><path d="M633.6 608c0-12.8 12.8-25.6 25.6-25.6h70.4c12.8 0 25.6 12.8 25.6 25.6v25.6c0 12.8-12.8 25.6-25.6 25.6h-70.4c-12.8 0-25.6-12.8-25.6-25.6v-25.6z" fill="#FFFFFF" /></svg>
-          <h4><?php echo $wo['lang']['payment_alert']; ?></h4>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div>
-              <label>
-                <span>Correo Electrónico</span>
-                <input type="text" size="50" data-culqi="card[email]" id="card[email]" autocomplete="off">
-              </label>
-            </div>
-            <div>
-              <label>
-                <span>Número de tarjeta</span>
-                <input type="text" size="20" data-culqi="card[number]" id="card[number]" autocomplete="off">
-              </label>
-            </div>
-            <div>
-              <label>
-                <span>CVV</span>
-                <input type="text" size="4" data-culqi="card[cvv]" id="card[cvv]" autocomplete="off">
-              </label>
-            </div>
-            <div>
-              <label>
-                <span>Fecha expiración (MM/YYYY)</span>
-                <input size="2" data-culqi="card[exp_month]" id="card[exp_month]" autocomplete="off">
-                <span>/</span>
-                <input size="4" data-culqi="card[exp_year]" id="card[exp_year]" autocomplete="off">
-              </label>
-            </div>
-          </form>
-          <div class="modal_product_pay_alert"></div>
-          <?php echo $wo['lang']['purchase_the_items']; ?>
-        </div>
-        <div class="modal-footer">
-          <input type="hidden" id="product_id" autocomplete="off">
-          <input type="hidden" id="product_price" autocomplete="off">
-          <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $wo['lang']['cancel']; ?></button>
-          <button type="button" id="btn_pagar" class="btn btn-main btn-mat"><?php echo $wo['lang']['pay']; ?></button>
-        </div>
-      </div>
-    </div>
-    </div>
-
-    <div class="modal fade ch_payment_box" id="buy_product_modal_tres" tabindex="-1" role="dialog" aria-labelledby="buy_product" aria-hidden="true" data-id="0">
-    <div class="modal-dialog modal-md mat_box" role="document">
-      <div class="modal-content">
-        <div class="ch_payment_head">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,13A5,5 0 0,1 7,8H9A3,3 0 0,0 12,11A3,3 0 0,0 15,8H17A5,5 0 0,1 12,13M12,3A3,3 0 0,1 15,6H9A3,3 0 0,1 12,3M19,6H17A5,5 0 0,0 12,1A5,5 0 0,0 7,6H5C3.89,6 3,6.89 3,8V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V8C21,6.89 20.1,6 19,6Z"></path></svg>
-          <h4><?php echo $wo['lang']['payment_alert']; ?></h4>
-        </div>
-        <div class="modal-body">
-          <div class="modal_product_pay_alert"></div>
-        </div>
-        <div class="modal-footer">
-          <input type="hidden" id="product_id" autocomplete="off">
-          <input type="hidden" id="product_price" autocomplete="off">
-          <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $wo['lang']['cancel']; ?></button>
-          <button type="button" class="btn btn-main btn-mat"><?php echo $wo['lang']['pay']; ?></button>
-        </div>
-      </div>
-    </div>
-    </div>
-
-
-
-  <div class="modal fade" id="refund_order" tabindex="-1" role="dialog" aria-labelledby="refund_order" aria-hidden="true" data-id="0">
-    <div class="modal-dialog mat_box wow_mat_mdl" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title"><?php echo $wo['lang']['request_refund']; ?></h5>
-        </div>
-        <form class="refund_order_form" method="post">
-          <div class="modal-body">
-            <div class="modal_refund_order_modal_alert"></div>
-            <div class="wow_form_fields">
-              <label class="form-label" for="refund_order_message"><?php echo $wo['lang']['please_explain_the_reason']; ?></label>
-              <textarea placeholder="<?php echo $wo['lang']['please_explain_the_reason']; ?>" rows="5" name="message" id="refund_order_message" autocomplete="off"></textarea>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-mat" data-dismiss="modal"><?php echo $wo['lang']['cancel']; ?></button>
-            <button type="submit" class="btn btn-main btn-mat get_refnd"><?php echo $wo['lang']['request']; ?></button>
-          </div>
-        </form>
-      </div>
-    </div>
-    </div>
-
   <a href="<?php echo $wo['config']['site_url'].'/checkout';?>" data-ajax="?link1=checkout" id="load_checkout" style="display: none;"></a>
-  
   <div id="select-language" class="modal fade" data-keyboard="false">
     <div class="lang_select_modal">
       <div class="modal-body">

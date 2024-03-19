@@ -11,6 +11,10 @@ class ComposerStaticInitc43a183acc26c2eab44c9e1150be41c1
         array (
             'WebPConvert\\' => 12,
         ),
+        'P' => 
+        array (
+            'Picqer\\Barcode\\' => 15,
+        ),
         'L' => 
         array (
             'LocateBinaries\\' => 15,
@@ -34,6 +38,10 @@ class ComposerStaticInitc43a183acc26c2eab44c9e1150be41c1
         'WebPConvert\\' => 
         array (
             0 => __DIR__ . '/..' . '/rosell-dk/webp-convert/src',
+        ),
+        'Picqer\\Barcode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/picqer/php-barcode-generator/src',
         ),
         'LocateBinaries\\' => 
         array (

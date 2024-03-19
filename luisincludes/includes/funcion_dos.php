@@ -3754,28 +3754,7 @@ function lui_IsNameExist($username, $active = 0) {
             );
         }
     }
-    $query = mysqli_query($sqlConnect, "SELECT COUNT(`page_id`) as pages,`page_id` as id FROM " . T_PAGES . " WHERE `page_name` = '{$username}' {$active_text}");
-    if (mysqli_num_rows($query)) {
-        $fetched_data = mysqli_fetch_assoc($query);
-        if ($fetched_data["pages"] == 1) {
-            return array(
-                true,
-                "type" => "page",
-                'id' => $fetched_data["id"]
-            );
-        }
-    }
-    ($query = mysqli_query($sqlConnect, "SELECT COUNT(`id`) as usergroups,`id` as id FROM " . T_GROUPS . " WHERE `group_name` = '{$username}' {$active_text}")) or die(mysqli_error($sqlConnect));
-    if (mysqli_num_rows($query)) {
-        $fetched_data = mysqli_fetch_assoc($query);
-        if ($fetched_data["usergroups"] > 0) {
-            return array(
-                true,
-                "type" => "group",
-                'id' => $fetched_data["id"]
-            );
-        }
-    }
+    
     return array(
         false
     );
@@ -7447,4 +7426,5 @@ function send_bulksms_message ( $post_body, $url, $username, $password) {
   curl_close( $ch );
   return $output;
 }
+
 ?>

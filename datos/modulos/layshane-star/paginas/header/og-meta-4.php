@@ -6,4 +6,3 @@
 <meta name="twitter:title" content="<?php echo $wo['itemsdata']['product']['name'];?>" />
 <meta name="twitter:description" content="<?php echo strip_tags($wo['itemsdata']['product']['description']);?>" />
 <meta name="twitter:image" content="<?php echo$wo['itemsdata']['product']['images'][0]['image']?>" />
-<link rel="preload" href="<?php echo$wo['itemsdata']['product']['images'][0]['image']?>" as="image">

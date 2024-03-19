@@ -462,6 +462,9 @@ function lui_SeoLink($query = '') {
     if ($wo['config']['seoLink'] == 1) {
         $query = preg_replace(array(
             '/^index\.php\?link1=search&query=(.*)$/i',
+            '/^index\.php\?link1=compras&query=(.*)$/i',
+            '/^index\.php\?link1=compras&page-id=(.*)$/i',
+            '/^index\.php\?link1=compras&page-id=(.*)&sort=(.*)$/i',
             '/^index\.php\?link1=developers&page=(.*)$/i',
             '/^index\.php\?link1=reviews&id=(.*)$/i',
             '/^index\.php\?link1=order&id=(.*)$/i',
@@ -504,6 +507,8 @@ function lui_SeoLink($query = '') {
             '/^index\.php\?link1=edit-product&id=([A-Za-z0-9_]+)$/i',
             '/^index\.php\?link1=products&c_id=([A-Za-z0-9_]+)$/i',
             '/^index\.php\?link1=products&c_id=([A-Za-z0-9_]+)&sub_id=([A-Za-z0-9_]+)$/i',
+            '/^index\.php\?link1=tienda&c_id=([A-Za-z0-9_]+)$/i',
+            '/^index\.php\?link1=tienda&c_id=([A-Za-z0-9_]+)&sub_id=([A-Za-z0-9_]+)$/i',
             '/^index\.php\?link1=my-products&c_id=([A-Za-z0-9_]+)$/i',
             '/^index\.php\?link1=my-products&c_id=([A-Za-z0-9_]+)&sub_id=([A-Za-z0-9_]+)$/i',
             '/^index\.php\?link1=carta&c_id=([A-Za-z0-9_]+)$/i',
@@ -555,6 +560,9 @@ function lui_SeoLink($query = '') {
             '/^index\.php\?link1=welcome$/i'
         ), array(
             $config['site_url'] . '/search/$1',
+            $config['site_url'] . '/compras/$1',
+            $config['site_url'] . '/compras?page=$1',
+            $config['site_url'] . '/compras?page=$1&sort=$2',
             $config['site_url'] . '/developers?page=$1',
             $config['site_url'] . '/reviews/$1',
             $config['site_url'] . '/order/$1',
@@ -597,6 +605,8 @@ function lui_SeoLink($query = '') {
             $config['site_url'] . '/edit-product/$1',
             $config['site_url'] . '/products/$1',
             $config['site_url'] . '/products/$1/$2',
+            $config['site_url'] . '/tienda/$1',
+            $config['site_url'] . '/tienda/$1/$2',
             $config['site_url'] . '/my-products/$1',
             $config['site_url'] . '/my-products/$1/$2',
             $config['site_url'] . '/carta/$1',
@@ -1134,7 +1144,7 @@ function lui_CompressImage($source_url, $destination_url, $quality) {
             }
         }
     }
-    @imagejpeg($image, $destination_url, $quality);
+    @imagewebp($image, $destination_url, $quality);
     return $destination_url;
 }
 function get_ip_address() {

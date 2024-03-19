@@ -1,19 +1,24 @@
+<?php if (!empty($wo['product']['images'][0]['id_color'])): ?>
+   <?php $color_id = lui_buscar_color_en_opciones($wo['product']['images'][0]['id_color']); ?>
+   <?php if(isset($color_id['id_color'])!=0): ?>
+      <?php $buscar_el_color_por_id = lui_buscar_color_en_colores($color_id['id_color'])?>
+      <?php $el_color = '/'.lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]); ?>
+      <?php $el_color_b = '&opcion='.lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]); ?>
+   <?php else: ?>
+      <?php $el_color = ''; ?>
+      <?php $el_color_b = ''; ?>
+   <?php endif ?>
+<?php else: ?>
+   <?php $el_color = ''; ?>
+   <?php $el_color_b = ''; ?>
+<?php endif ?>
 <div class="product" id="product-<?php echo $wo['product']['id']?>" data-id="<?php echo $wo['product']['id']?>">
 	<div class="product_info wow_main_mkt_prod">
 		<div class="product-image">
-			<?php $color_id = lui_buscar_color_en_opciones($wo['product']['images'][0]['id_color']); ?>
-			<?php if(isset($color_id['id_color'])!=0): ?>
-				<?php $buscar_el_color_por_id = lui_buscar_color_en_colores($color_id['id_color'])?>
-				<?php $el_color = '/'.lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]); ?>
-				<?php $el_color_b = '&type='.lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]); ?>
-			<?php else: ?>
-				<?php $el_color = ''; ?>
-				<?php $el_color_b = ''; ?>
-			<?php endif ?>
-			<a href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=timeline&items=<?php echo $wo['product']['seo_id'];?><?=$el_color_b;?>"><img src="<?php echo $wo['product']['images'][0]['image_org'];?>"></a>
+			<a href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=item&items=<?php echo $wo['product']['seo_id'];?><?=$el_color_b;?>"><img src="<?php echo $wo['product']['images'][0]['image_org'];?>"></a>
 			<?php if ($wo['loggedin']) { if ($wo['product']['seller']['id'] != $wo['user']['user_id']) { ?>
 				<div class="product-links">
-					<a class="more-info btn btn-mat" href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=timeline&items=<?php echo $wo['product']['seo_id'];?><?=$el_color_b;?>"><?php echo $wo['lang']['more_info'] ?></a>
+					<a class="more-info btn btn-mat" href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=publicacion&items=<?php echo $wo['product']['seo_id'];?><?=$el_color_b;?>"><?php echo $wo['lang']['more_info'] ?></a>
 				</div>
 			<?php } else { ?>
 			<?php } ?>
@@ -36,7 +41,7 @@
 					<?php } ?> 
 
 				<?php } else { ?>
-					<a class="btn btn-default btn-mat" href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=timeline&items=<?php echo $wo['product']['seo_id'];?><?=$el_color_b;?>" title="<?php echo $wo['lang']['more_info'] ?>">
+					<a class="btn btn-default btn-mat" href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=publicacion&items=<?php echo $wo['product']['seo_id'];?><?=$el_color_b;?>" title="<?php echo $wo['lang']['more_info'] ?>">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg>
 					</a>
 				<?php } ?>

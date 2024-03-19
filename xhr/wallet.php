@@ -1,5 +1,5 @@
 <?php
-if ($f == 'wallet') {
+if($f == 'wallet'){
     $dollar_to_point_cost = $wo['config']['dollar_to_point_cost'];
     if ($s == 'replenish-user-account') {
         $error = "";

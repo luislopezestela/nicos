@@ -301,7 +301,7 @@ function lui_agregar_el_atributo_para_el_producto($nombre,$id_producto) {
     }
 }
 # - Agregar el color de producto
-function lui_agregar_el_color_del_producto($id_producto,$id_color,$precio_adicional,$id_atributo) {
+function lui_agregar_el_color_del_producto($id_producto,$id_color,$precio_adicional,$color_sku,$id_atributo) {
     global $wo, $sqlConnect;
     if (empty($id_producto) or !is_numeric($id_producto) or $id_producto < 1) {
         return false;
@@ -309,13 +309,13 @@ function lui_agregar_el_color_del_producto($id_producto,$id_color,$precio_adicio
     if (empty($id_color)) {
         return false;
     }
-    $query_one = mysqli_query($sqlConnect, "INSERT INTO lui_opcion_de_colores_productos (`id_producto`,`id_color`,`precio_adicional`,`id_atributo`) VALUES ({$id_producto}, {$id_color},'{$precio_adicional}','{$id_atributo}')");
+    $query_one = mysqli_query($sqlConnect, "INSERT INTO lui_opcion_de_colores_productos (`id_producto`,`id_color`,`precio_adicional`,`sku`,`id_atributo`) VALUES ({$id_producto}, {$id_color},'{$precio_adicional}','{$color_sku}','{$id_atributo}')");
     if ($query_one) {
         return mysqli_insert_id($sqlConnect);
     }
 }
 # - Agregar el color de producto
-function lui_agregar_el_color_del_producto_cuando_no_hay($id_producto,$id_color,$precio_adicional,$id_atributo) {
+function lui_agregar_el_color_del_producto_cuando_no_hay($id_producto,$id_color,$precio_adicional,$color_sku,$id_atributo) {
     global $wo, $sqlConnect;
     if (empty($id_producto) or !is_numeric($id_producto) or $id_producto < 1) {
         return false;
@@ -323,13 +323,13 @@ function lui_agregar_el_color_del_producto_cuando_no_hay($id_producto,$id_color,
     if (empty($id_color)) {
         return false;
     }
-    $query_one = mysqli_query($sqlConnect, "INSERT INTO lui_opcion_de_colores_productos (`id_producto`,`id_color`,`precio_adicional`,`id_atributo`,`imagen`) VALUES ({$id_producto}, {$id_color},'{$precio_adicional}','{$id_atributo}','1')");
+    $query_one = mysqli_query($sqlConnect, "INSERT INTO lui_opcion_de_colores_productos (`id_producto`,`id_color`,`precio_adicional`,`sku`,`id_atributo`,`imagen`) VALUES ({$id_producto}, {$id_color},'{$precio_adicional}','{$color_sku}','{$id_atributo}','1')");
     if ($query_one) {
         return mysqli_insert_id($sqlConnect);
     }
 }
 # - Editar el precio del color de producto
-function lui_editar_el_precio_del_color_de_producto($id_producto,$id_color,$precio_adicional,$id_atributo) {
+function lui_editar_el_precio_del_color_de_producto($id_producto,$id_color,$precio_adicional,$color_sku,$id_atributo) {
     global $wo, $sqlConnect;
     if (empty($id_producto) or !is_numeric($id_producto) or $id_producto < 1) {
         return false;
@@ -337,7 +337,7 @@ function lui_editar_el_precio_del_color_de_producto($id_producto,$id_color,$prec
     if (empty($id_color)) {
         return false;
     }
-    $query_text = "UPDATE lui_opcion_de_colores_productos SET `precio_adicional` = '{$precio_adicional}' WHERE `id_producto` = '{$id_producto}' AND `id_color` = '{$id_color}' AND `id_atributo` = '{$id_atributo}' ";
+    $query_text = "UPDATE lui_opcion_de_colores_productos SET `precio_adicional` = '{$precio_adicional}', `sku` = '{$color_sku}' WHERE `id_producto` = '{$id_producto}' AND `id_color` = '{$id_color}' AND `id_atributo` = '{$id_atributo}' ";
     $query_dd  = mysqli_query($sqlConnect, $query_text);
     if ($query_dd) {
         return true;
@@ -1058,6 +1058,94 @@ function lui_GetProducts($filter_data = array()) {
         while ($fetched_data = mysqli_fetch_assoc($sql)) {
             $products           = lui_GetProduct($fetched_data['id']);
             $products['seller'] = lui_UserData($fetched_data['user_id']);
+            $data[]             = $products;
+        }
+    }
+    return $data;
+}
+function lui_BuscarProducts($filter_data = array()) {
+    global $wo, $sqlConnect;
+    $data      = array();
+    $query_one = " SELECT `id` FROM " . T_PRODUCTS . " WHERE status <> '1'";
+    if (!empty($filter_data['c_id'])) {
+        $category = $filter_data['c_id'];
+        $query_one .= " AND `category` = '{$category}'";
+    }
+    if (!empty($filter_data['sub_id'])) {
+        $sub_category = $filter_data['sub_id'];
+        $query_one .= " AND `sub_category` = '{$sub_category}'";
+    }
+    if (!empty($filter_data['after_id'])) {
+        if (is_numeric($filter_data['after_id'])) {
+            $after_id = lui_Secure($filter_data['after_id']);
+            $query_one .= " AND `id` < '{$after_id}' AND `id` <> $after_id";
+        }
+    }
+    if (!empty($filter_data['keyword'])) {
+        $keyword = lui_Secure($filter_data['keyword']);
+        $query_one .= " AND (`name` LIKE '%{$keyword}%' OR `sku` LIKE '%{$keyword}%' OR `gtin` LIKE '%{$keyword}%')";
+
+    }
+    if (!empty($filter_data['user_id'])) {
+        $user_id = lui_Secure($filter_data['user_id']);
+        $query_one .= " AND `user_id` = '{$user_id}'";
+    }
+    if (!empty($filter_data['order_by']) && $filter_data['order_by'] == 'price_low' && !empty($filter_data['price'])) {
+        $price = lui_Secure($filter_data['price']);
+        $query_one .= " AND `price` >= '{$price}'";
+    } else if (!empty($filter_data['order_by']) && $filter_data['order_by'] == 'price_high' && !empty($filter_data['price'])) {
+        $price = lui_Secure($filter_data['price']);
+        $query_one .= " AND `price` <= '{$price}'";
+    }
+    if (!empty($filter_data['length'])) {
+        $user_lat  = $wo['user']['lat'];
+        $user_lng  = $wo['user']['lng'];
+        $unit      = 6371;
+        $query_one = " AND status <> '1'";
+        $distance  = lui_Secure($filter_data['length']);
+        if (!empty($filter_data['c_id'])) {
+            $category = $filter_data['c_id'];
+            $query_one .= " AND `category` = '{$category}'";
+        }
+        if (!empty($filter_data['after_id'])) {
+            if (is_numeric($filter_data['after_id'])) {
+                $after_id = lui_Secure($filter_data['after_id']);
+                $query_one .= " AND `id` < '{$after_id}' AND `id` <> $after_id";
+            }
+        }
+        if (!empty($filter_data['keyword'])) {
+            $keyword = lui_Secure($filter_data['keyword']);
+            $query_one .= " AND (`name` LIKE '%{$keyword}%' OR `sku` LIKE '%{$keyword}%' OR `gtin` LIKE '%{$keyword}%')";
+
+        }
+        if (!empty($filter_data['user_id'])) {
+            $user_id = lui_Secure($filter_data['user_id']);
+            $query_one .= " AND `user_id` = '{$user_id}'";
+        }
+        $query_one = "SELECT `id`, ( {$unit} * acos(cos(radians('$user_lat'))  *
+        cos(radians(lat)) * cos(radians(lng) - radians('$user_lng')) +
+        sin(radians('$user_lat')) * sin(radians(lat ))) ) AS distance
+        FROM " . T_PRODUCTS . " WHERE `lat` <> 0 AND `lng` <> 0 $query_one
+        HAVING distance < '$distance'";
+    }
+    $query_one .= " AND `active` = '1' ";
+    if (!empty($filter_data['order_by']) && $filter_data['order_by'] == 'price_low') {
+        $query_one .= " ORDER BY `price` ASC";
+    } else if (!empty($filter_data['order_by']) && $filter_data['order_by'] == 'price_high') {
+        $query_one .= " ORDER BY `price` DESC";
+    } else {
+        $query_one .= " ORDER BY `id` DESC";
+    }
+    if (!empty($filter_data['limit'])) {
+        if (is_numeric($filter_data['limit'])) {
+            $limit = lui_Secure($filter_data['limit']);
+            $query_one .= " LIMIT {$limit}";
+        }
+    }
+    $sql = mysqli_query($sqlConnect, $query_one);
+    if (mysqli_num_rows($sql)) {
+        while ($fetched_data = mysqli_fetch_assoc($sql)) {
+            $products           = lui_GetProduct($fetched_data['id']);
             $data[]             = $products;
         }
     }
@@ -9195,4 +9283,61 @@ function AddNewRef($ref_id, $user_id, $amount) {
             //unset($parents[$key]);
         }
     }
+}
+
+function fecha_restante($data){
+    global $wo, $sqlConnect, $db;
+    $fechaa_restante = false;
+    if (!empty($data)){
+        $fecha_actual = new DateTime();
+        $fecla_sumas = new DateTime($data);
+        $diferencia = $fecha_actual->diff($fecla_sumas);
+        $años = $diferencia->y;
+        $meses = $diferencia->m;
+        $dias = $diferencia->d;
+        if($años>1){
+            $nameyear = $wo['lang']['years'];
+        }elseif($años==1) {
+            $nameyear = $wo['lang']['year'];
+        }elseif($años==0) {
+            $nameyear = false;
+            $y_year = false;
+        }else{
+            $y_year = false;
+            $nameyear = false;
+        }
+        if($meses>1){
+            $namemonth = $wo['lang']['months'].' y ';
+        }elseif($meses==1) {
+            $namemonth = $wo['lang']['month'].' y ';
+        }elseif($meses==0) {
+            $namemonth = false;
+            $y_month = false;
+        }else{
+            $y_month = false;
+            $namemonth = false;
+        }
+        if($dias>1){
+            $namedays = $wo['lang']['days'];
+        }elseif($dias==1) {
+            $namedays = $wo['lang']['day'];
+        }elseif($dias==0) {
+            $namedays = false;
+            $y_days = false;
+        }else{
+            $y_days = false;
+            $namedays = false;
+        }
+        if($nameyear) {
+            $y_year = $años.' '.$nameyear;
+        }
+        if($namemonth) {
+            $y_month = $meses.' '.$namemonth;
+        }
+        if($namedays) {
+            $y_days = $dias.' '.$namedays;
+        }
+        $fechaa_restante = $y_year.' '.$y_month.' '.$y_days;
+    }
+    return $fechaa_restante;
 }

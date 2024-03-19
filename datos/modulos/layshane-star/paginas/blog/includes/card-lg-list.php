@@ -1,4 +1,4 @@
-<div class="col-md-6" data-rm-blog="<?php echo $wo['blog']['id']; ?>">
+<div class="columna-4 columna-x4" data-rm-blog="<?php echo $wo['blog']['id']; ?>">
 	<div class="view-blog wow_main_blogs" id="<?php echo $wo['blog']['id']; ?>">
 		<div class="avatar">
 			<img src="<?php echo $wo['blog']['thumbnail']; ?>" alt="<?php echo $wo['blog']['title']; ?>">

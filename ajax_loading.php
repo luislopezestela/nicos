@@ -228,6 +228,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                     case 'products':
                         include('sources/products.php');
                         break;
+                    case 'tienda':
+                        include('sources/tienda.php');
+                        break;
                     case 'item':
                         include('sources/item.php');
                         break;
@@ -452,6 +455,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                         break;
                     case 'purchased':
                         include('sources/purchased.php');
+                        break;
+                    case 'compras':
+                        include('sources/compras.php');
                         break;
                     case 'customer_order':
                         include('sources/customer_order.php');
@@ -866,6 +872,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
             case 'products':
                 include('sources/products.php');
                 break;
+            case 'tienda':
+                include('sources/tienda.php');
+                break;
             case 'item':
                 include('sources/item.php');
                 break;
@@ -1108,6 +1117,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                 break;
             case 'purchased':
                 include('sources/purchased.php');
+                break;
+            case 'compras':
+                include('sources/compras.php');
                 break;
             case 'customer_order':
                 include('sources/customer_order.php');

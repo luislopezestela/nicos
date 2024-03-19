@@ -1,10 +1,10 @@
-<?php
+<?php 
 if ($wo['config']['store_system'] != 'on') {
-    header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+    header("Location: " . lui_SeoLink('index.php?link1=home'));
     exit();
 }
 if ($wo['loggedin'] == false) {
-    header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+    header("Location: " . lui_SeoLink('index.php?link1=home'));
     exit();
 }
 $wo['orders'] = $db->where('product_owner_id', $wo['user']['user_id'])->orderBy('id', 'DESC')->groupBy('hash_id')->get(T_USER_ORDERS, 10);

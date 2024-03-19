@@ -1,6 +1,6 @@
-<?php $copy = str_replace('{site_name}', $wo['config']['siteName'], $wo['lang']['copyrights']); ?>
+<?php $copy = str_replace('{site_name}', $wo['config']['siteName'], $wo['lang']['copyrights']); $pages = lui_GetCustomPages();?>
 <div class="footer_page_list_l">
-	<hr>
+	<hr><br><br>
 	<nav class="footer-powered">
 		<ul class="list-inline">
 			<li><a href="<?php echo lui_SeoLink('index.php?link1=terms&type=about-us');?>" data-ajax="?link1=terms&type=about-us"><?php echo $wo['lang']['about'];?></a></li>
@@ -10,7 +10,10 @@
 			<?php if ($wo['config']['developers_page'] == 1)  { ?>
 				<li><a data-ajax="?link1=developers" href="<?php echo lui_SeoLink('index.php?link1=developers');?>"><?php echo $wo['lang']['developers'];?></a></li>
 			<?php } ?>
+			<?php if (count($pages) > 0) {} ?>
 		</ul>
 	</nav>
 	<span><?php echo $copy = str_replace('{date}', date('Y'), $copy);?></span>
+	
 </div>
+<br><br>

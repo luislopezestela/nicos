@@ -1,57 +1,145 @@
 <?php if ($wo['config']['credit_card'] == 'yes') { ?>
 <script src="https://js.stripe.com/v3/"></script>
 <?php } ?>
+
 <?php if ($wo['config']['securionpay_payment'] == '1') { ?>
     <script src="https://securionpay.com/checkout.js"></script>
 <?php } ?>
 <?php $loadPage = lui_LoadPage('thirdparty/paypal-demo'); echo(!empty($loadPage)) ? $loadPage : '';?>
-<div>
+<?php echo lui_LoadPage("sidebar/left-sidebar"); ?>
+<style type="text/css">
+	body{background-color:#F0F2FD;}
+	.wow_main_blogs{background-color:#fff;box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);border-radius:6px;margin-bottom:30px;}
+.view-blog{color:#666;font-size:14.5px;line-height:17px;}
+.wow_main_blogs .avatar{display:block;position:relative;padding-bottom:80%;}
+.wow_main_blogs .avatar > img{width:100%;border-radius:6px;position:absolute;top:0;right:0;bottom:0;left:0;height:100%;object-fit:cover;vertical-align:middle;}
+.wow_main_blogs_info{width:100%;border-radius:6px;position:absolute;top:0;right:0;bottom:0;left:0;height:100%;background:linear-gradient(180deg, rgb(0 0 0 / 0%) 0%, rgba(0, 0, 0, 0.3) 35%, rgba(0, 0, 0, 0.3) 75%, rgb(0 0 0 / 50%) 100%);padding:20px;display:flex;flex-direction:column;font-family:Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;justify-content:flex-end;align-items:flex-start;}
+.wow_main_blogs_info > .postCategory{display:inline-block;text-decoration:none;color:#ffffff;margin-bottom:auto;background-color:rgb(0 0 0 / 70%);padding:4px 10px;border-radius:6px;}
+.wow_main_blogs_info > h2{margin:10px 0;font-size:24px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;max-width:100%;color:#fff;height:24px;}
+.wow_main_blogs_info > h2 a{text-decoration:none;color:white;}
+.wow_main_blogs_info > .postMeta--author-text, .wow_main_blogs_info > .postMeta--author-text a{color:rgba(255, 255, 255, 0.8);text-decoration:none;}
+.postMeta--author-text{vertical-align:middle;display:table-cell;overflow:hidden;}
+.middot{margin:0 6px;font-size:14.5px;line-height:1.1;font-weight:700;}
+.wow_main_blogs_info > .wow_main_blogs_btns{margin:15px -5px 0;}
+.wow_main_blogs_info > .wow_main_blogs_btns .btn{margin:0 5px;}
+.wow_main_blogs_info > .btn, .wow_main_blogs_info > .wow_main_blogs_btns .btn{max-width:160px;background-color:white;color:black;margin-top:15px;}
+.btn{display:inline-block;touch-action:manipulation;cursor:pointer;}
+.btn-mat{white-space:nowrap;vertical-align:middle;background-image:none;position:relative;user-select:none;outline:0;border:none;-webkit-tap-highlight-color:transparent;text-decoration:none;text-align:center;min-width:64px;line-height:36px;padding:0 16px;border-radius:max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;transform:translate3d(0,0,0);transition:background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms cubic-bezier(.4,0,.2,1);font-size:15px;overflow:hidden;font-family:Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;}
+.btn-mat::before{content:"";position:absolute;left:0;right:0;top:0;bottom:0;background-color:currentColor;opacity:0;transition:opacity 0.2s;}
+.btn-mat::after{content:"";position:absolute;left:50%;top:50%;border-radius:50%;padding:50%;width:32px;height:32px;background-color:currentColor;opacity:0;transform:translate(-50%, -50%) scale(1);transition:opacity 1s, transform 0.5s;}
+.btn-mat:active::after{opacity:0.16;transform:translate(-50%, -50%) scale(0);transition:transform 0s;}
+.btn.active, .btn:active{background-image:none;outline:0;-webkit-box-shadow:inset 0 1px 3px rgba(0,0,0,.125);box-shadow:inset 0 1px 3px rgba(0,0,0,.125);}
+.modal{position:fixed;z-index:1050;display:none;-webkit-overflow-scrolling:touch;outline:0}
+.modal.fade .modal-dialog{-webkit-transition: -webkit-transform .3s ease-out;-o-transition:-o-transform .3s ease-out;transition:transform .3s ease-out;-webkit-transform:translate(0,-25%);-ms-transform:translate(0,-25%);-o-transform:translate(0,-25%);transform:translate(0,-25%);}
+.modal.in .modal-dialog{-webkit-transform: translate(0,0);-ms-transform: translate(0,0);-o-transform: translate(0,0);transform: translate(0,0)}
+.modal-open .modal{overflow-x:hidden;overflow-y:auto}
+.modal-dialog{position:relative;width:auto;margin:10px}
+.modal-content{position:relative;background-color:#fff;background-clip:padding-box;border-radius:3px;outline:0;}
+.modal-backdrop{position:fixed;z-index:1040;background-color:#000}
+.modal-backdrop.fade{filter:alpha(opacity=0);opacity:0}
+.modal-backdrop.in{filter:alpha(opacity=50);opacity:.5}
+.modal-header{min-height:16.43px;background:#fcfcfc;padding:10px;border-top-right-radius:3px;border-bottom:1px solid #f1f1f1;border-top-left-radius:5px;}
+.modal-header .close{margin-top: -2px}
+.modal-title{margin:0;color:#666;font-size:15px;line-height:1.42857143;}
+.modal-body{position:relative;padding:15px;}
+.modal-footer{padding:5px;text-align:right;border-top:1px solid #f1f1f1;}
+.modal-footer .btn+.btn{margin-bottom:0;margin-left:5px}
+.modal-footer .btn-group .btn+.btn{margin-left:-1px}
+.modal-footer .btn-block+.btn-block{margin-left:0}
+.modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}
+@media (min-width: 768px){
+	.modal-dialog.big{width:800px!important}
+  .modal-dialog{width:600px;margin:150px auto}
+  .modal-content{-webkit-box-shadow:0 1px 5px rgba(0,0,0,.5);box-shadow:0 1px 5px rgba(0,0,0,.5);}
+  .modal-sm{width:300px}
+}
+@media (min-width: 992px){
+    .modal-lg{width:900px}
+}
+.modal,.modal-backdrop{top:0;right:0;bottom:0;left:0}
+.wow_pops_head .close{position:absolute;top:18px;right:27px;padding:0;opacity:0.4;text-shadow:none;color:var(--header-color);}
+button.close{-webkit-appearance:none;padding:0;cursor:pointer;background:0 0;border:0;}
+.wow_pops_head h4 svg{width:127px;height:127px;margin:auto;background-color:rgba(255, 255, 255, 0.2);border-radius:50%;padding:5px;display:flex;justify-content:center;align-items:center;color:#d63031;}
+</style>
+<div class="columna-8 sett_page wo_new_sett_pagee main_layshane_configuration_menu">
+	<div class="wow_sett_sidebar button_controle_layshane_back_settign">
+		<ul class="list-unstyled" style="padding-bottom:0;">
+			<li class="">
+				<a class="btn btn-default seleccionar_menu_laysh" style="background-color:#fff;">Menu</a>
+			</li>
+		</ul>
+	</div>
 	<br>
-	<div class="col-md-12 ads_col_12">
-		<div class="page-margin wowonder-well wo_new_wallet">
-			<?php if (isset($wo['replenishment_notif'])): ?>
-				<div id="replenish-user-account-alert">
-					<div class="alert alert-success"><?php echo $wo['replenishment_notif'];?></div>
-				</div>
-			<?php endif; ?>
-			<div id="replenish-user-account-alert-warning"></div>
-			<div class="alert alert-danger hidden please-check"><?php echo $wo['lang']['please_check_details'];?></div>
+	
+	<div class="wo_settings_page">
+		<div class="profile-lists singlecol">
 
-			<p class="bold"><?php echo $wo['lang']['my_balance'];?></p>
-			<div class="my_wallet wow_mini_wallets">
-				<div>
-					<h5><?php echo lui_GetCurrency($wo['config']['ads_currency']); ?><?php echo sprintf('%.2f',$wo['user']['wallet']);?></h5>
-				</div>
-				<div class="wow_mini_wallets_btns">
-					<button data-toggle="modal" data-target="#send_money_modal" class="btn btn-default btn-mat">
-						<?php echo $wo['lang']['send_money'];?>
-					</button>
-					<button class="btn btn-main btn-mat btn-mat-raised" onclick="$('.wow_add_money_hid_form').slideToggle();">
-						<?php echo $wo['lang']['add_funds'];?>
-					</button>
-				</div>
-			</div>
-			<div class="wow_add_money_hid_form text-center">
-				<form class="form" id="replenish-user-account">
-					<p class="bold"><?php echo $wo['lang']['replenish_my_balance'];?></p>
-					<div class="add-amount">
-						<h5><?php echo lui_GetCurrency($wo['config']['ads_currency']); ?><input type="number" placeholder="0.00" min="1.00" name="amount" id="amount" /></h5>
+			<div class="avatar-holder mt-0">
+				<div class="wo_page_hdng pag_neg_padd pag_alone">
+					<div class="wo_page_hdng_innr big_size">
+						<span>
+							<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-wallet" width="24" height="24" viewBox="0 0 24 24" stroke-width="2.6" stroke="#3498db" fill="#fff" stroke-linecap="round" stroke-linejoin="round">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+								<path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" />
+								<path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
+							</svg>
+						</span>
+						<?php echo $wo['lang']['wallet']; ?>
 					</div>
-					<button type="submit" class="btn btn-main btn-mat btn-mat-raised">
-						<?php echo $wo['lang']['continue'];?>
-					</button>
-				</form>
+				</div>
+				<span>Cuentas</span>
 			</div>
-		</div>
+			<br><br>
 
-		<div class="page-margin wowonder-well">
-			<?php $wo['trans'] = lui_GetMytransactions(); ?>
-			<div class="wallet_transactions">
-				<p class="bold">
-					<?php echo $wo['lang']['transaction_log']; ?>
-				</p>
-				<div class="tabbable">
-					<?php echo lui_LoadPage('ads/includes/latest_activities');?>
+			<div class="page-margin wowonder-well wo_new_wallet">
+				<?php echo lui_GetCurrency($wo['config']['ads_currency']); ?><br><br>
+				<?php echo sprintf('%.2f',$wo['user']['wallet']);?><br><br>
+				<?php echo '%.2f'.$wo['user']['wallet']; ?>
+
+				<?php if (isset($wo['replenishment_notif'])): ?>
+					<div id="replenish-user-account-alert">
+						<div class="alert alert-success"><?php echo $wo['replenishment_notif'];?></div>
+					</div>
+				<?php endif; ?>
+				<div id="replenish-user-account-alert-warning"></div>
+				<div class="alert alert-danger hidden please-check"><?php echo $wo['lang']['please_check_details'];?></div>
+
+				<p class="bold"><?php echo $wo['lang']['my_balance'];?></p>
+				<div class="my_wallet wow_mini_wallets">
+					<div>
+						<h5><?php echo lui_GetCurrency($wo['config']['ads_currency']); ?><?php echo sprintf('%.2f',$wo['user']['wallet']);?></h5>
+					</div>
+					<div class="wow_mini_wallets_btns">
+						<button data-toggle="modal" data-target="#send_money_modal" class="btn btn-default btn-mat">
+							<?php echo $wo['lang']['send_money'];?>
+						</button>
+						<button class="btn btn-main btn-mat btn-mat-raised" onclick="$('.wow_add_money_hid_form').slideToggle();">
+							<?php echo $wo['lang']['add_funds'];?>
+						</button>
+					</div>
+				</div>
+				<div class="wow_add_money_hid_form text-center">
+					<form class="form" id="replenish-user-account">
+						<p class="bold"><?php echo $wo['lang']['replenish_my_balance'];?></p>
+						<div class="add-amount">
+							<h5><?php echo lui_GetCurrency($wo['config']['ads_currency']); ?><input type="number" placeholder="0.00" min="1.00" name="amount" id="amount" /></h5>
+						</div>
+						<button type="submit" class="btn btn-main btn-mat btn-mat-raised">
+							<?php echo $wo['lang']['continue'];?>
+						</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="page-margin wowonder-well">
+				<?php $wo['trans'] = lui_GetMytransactions(); ?>
+				<div class="wallet_transactions">
+					<p class="bold">
+						<?php echo $wo['lang']['transaction_log']; ?>
+					</p>
+					<div class="tabbable">
+						<?php echo lui_LoadPage('ads/includes/latest_activities');?>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1112,3 +1200,4 @@ function securionpay_pay(){
 		</div>
 	</div>
 </div>
+<script type="text/javascript">recpoll()</script>

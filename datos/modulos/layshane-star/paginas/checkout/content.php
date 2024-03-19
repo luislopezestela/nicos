@@ -1,85 +1,375 @@
-<div class="page-margin">
+<?php if($wo['loggedin'] == true): ?>
+<style type="text/css">
+.container_cart_layshane{padding:30px;padding-top:0;}
+.div_container_lui_cart{
+	display:grid;
+	margin:0 auto;
+	grid-template-rows: repeat(var(--bs-rows, 1), 1fr);
+	grid-template-columns: repeat(var(--bs-columns, 12), 1fr);
+    gap: var(--bs-gap, 1.5rem);
+    margin: var(--bs-margin, auto);
+}
+:root {
+    --bs-columns: 12;
+    --bs-gap: 24px;
+}
+.sidebar_layshane_store{
+	margin:unset;
+	width:unset;
+	padding-right:0;
+	display:block;
+	order:0;
+	grid-column:auto / span 3;
+	box-sizing:border-box;
+	padding:10px;
+}
+@media all and (min-width: 1920px),print{
+	:root {
+		--gallery-nav-width: 440px;
+		--bs-gap: 28px;
+		--bs-padding: 0 116px;
+	}
+}
+@media all and (min-width: 768px),print{
+	.sidebar_layshane_store{
+		float:left;
+	}
+}
+.container_cart_lists {
+	padding-top: 10px;
+	position: relative;
+	margin-right: unset;
+	width: unset;
+	float: right;
+	grid-column: 4 / span 9;
+	margin-top: 0;
+	margin-left: 0;
+}
+.content_data_boleta,
+.content_data_factura{
+	padding:10px;
+}
+.sun_input{
+  display: flex;
+  flex-wrap:wrap;
+  line-height: 28px;
+  align-items: center;
+  position: relative;
+  width:100%;
+}
+.input-md{
+  width: 100%;
+  height: 40px;
+  line-height: 28px;
+  padding: 0 1rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  outline: none;
+  background-color: #f3f3f4;
+  color: #0d0c22;
+  transition: 0.3s ease;
+}
+.input-md::placeholder {
+  color: #9e9ea7;
+}
+.input-md:focus,
+.input-md:hover {
+  outline: none;
+  border-color: rgba(0, 48, 73, 0.4);
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgb(0 48 73 / 10%);
+}
+.sun_input_a{
+  position: relative;
+  padding: 20px 0 0;
+  width: 100%;
+}
+.sun_input_a .input-md_a{
+  font-family: inherit;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 17px;
+  color: #444;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+.sun_input_a .input-md_a::placeholder {
+  color: transparent;
+}
+
+.sun_input_a .input-md_a:placeholder-shown ~ label {
+  font-size: 17px;
+  cursor: text;
+  top: 20px;
+}
+.sun_input_a label{
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+  color: #9b9b9b;
+  pointer-events: none;
+}
+.sun_input_a .input-md_a:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #116399, #38caef);
+  border-image-slice: 1;
+}
+.sun_input_a .input-md_a:focus ~ label{
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+  color: #38caef;
+  font-weight: 700;
+}
+/* reset input */
+.sun_input_a .input-md_a:required, .sun_input_a .input-md_a:invalid {
+  box-shadow: none;
+}
+.option_order_users_data{
+	display:flex;
+	flex-wrap:wrap;
+}
+.option_order_data{
+	display:flex;
+	width:calc(50% - 14px);
+	margin:7px;
+	position:relative;
+}
+.option_order_data label{
+	background:#FFF;
+	display:flex;
+	width:100%;
+	height:100%;
+	padding:18px;
+	align-self:center;
+	align-items:center;
+	justify-content:center;
+	position:relative;
+	margin:0;
+	border-radius:6px;
+	border:2px solid var(--boton-color);
+	cursor:pointer;
+	transition:all .5s;
+}
+.option_order_data input{display:none;}
+.option_order_data input:checked ~ .label_selected_mod{
+	border:2px solid var(--boton-fondo)!important;
+}
+.content_delivery_data,
+.content_store_data{
+	transition:all .5s;
+}
+.nodisplay_mode_order{
+	height:0;
+	overflow:hidden;
+	width:0;
+	transition:all .5s;
+	min-height:0;
+	padding:0;
+}
+.button_layshane_green {
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  margin:25px auto;
+}
+.button_layshane_green:hover {
+  background-color: #23c483;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+.button_layshane_green:active {
+  transform:translateY(-1px);
+}
+.ch_title{display:flex;justify-content:space-between;align-items:center;}
+.container_cart_lists{padding:10px;padding-top:0;}
+.ch_checkout_title{padding:10px;}
+@media all and (max-width: 1050px),print{
+	.container_cart_layshane{
+		padding:0;
+	}
+	.container_cart_lists,
+	.sidebar_layshane_store{
+		grid-column:auto / span 12;
+	}
+	.modos_de_pago_container_buttons{
+		flex-wrap:wrap;
+	}
+}
+</style>
+<style type="text/css">
+.cart_chos_addrs{
+  display: flex;
+  flex-wrap:wrap;
+  width:100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.cart_chos_addrs > * {
+  margin: 6px;
+  width:100%;
+}
+.payment_address:checked + .radio-tile,
+.payment_sucursal:checked + .radio-tile{
+  border-color: #2260ff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
+  color: #2260ff;
+}
+.payment_address:checked + .radio-tile:before,
+.payment_sucursal:checked + .radio-tile:before{
+  transform: scale(1);
+  opacity: 1;
+  background-color: #2260ff;
+  border-color: #2260ff;
+}
+.payment_address:checked + .radio-tile p,
+.payment_sucursal:checked + .radio-tile p {
+  color: #2260ff;
+}
+.payment_address:focus + .radio-tile,
+.payment_sucursal:focus + .radio-tile {
+  border-color: #2260ff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
+}
+.payment_address:focus + .radio-tile:before,
+.payment_sucursal:focus + .radio-tile:before{
+  transform: scale(1);
+  opacity: 1;
+}
+.radio-tile{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 80px;
+  border-radius: 0.5rem;
+  border: 2px solid #b5bfd9;
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.15s ease;
+  cursor: pointer;
+  position: relative;
+  padding:7px;
+}
+.radio-tile:before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 2px solid #b5bfd9;
+  background-color: #fff;
+  border-radius: 50%;
+  top: 0.25rem;
+  left: 0.25rem;
+  opacity: 0;
+  transform: scale(0);
+  transition: 0.25s ease;
+}
+
+.radio-tile:hover {
+  border-color: #2260ff;
+}
+
+.radio-tile:hover:before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.radio-tile p {
+  color: #707070;
+  transition: 0.375s ease;
+  text-align: center;
+  font-size: 13px;
+}
+
+.payment_address,.payment_sucursal {
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(100%);
+  clip-path: inset(100%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+</style>
+<style type="text/css">
+.ch_total_price{
+	display:flex;
+	flex-wrap:wrap;
+	flex-direction:column;
+	width:100%;
+	position:relative;
+	background-color:#fff;
+	padding:30px;
+	align-content:flex-end;
+}
+.div_subs_contn{display:flex;align-items:center;justify-content:flex-end;gap:2em;padding:10px;user-select:none;}
+.modos_de_pago_container_buttons{display:flex;margin-top:10px;width:100%;flex-direction:row;gap:1em;}
+.lista_modo_pago{width:100%;display:flex;position:relative;background:#FFF;margin:5px 0;align-items:center;}
+.lista_modo_pago label{display:flex;width:100%;padding:10px;font-size:18px;justify-content:flex-start;align-items:center;cursor:pointer;gap:1rem;border:1px solid #2c8ce9;border-radius:4px;}
+.lista_modo_pago label h6{margin:0;padding:0;}
+.lista_modo_pago input:checked + label{
+  border-color: #2260ff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
+  color: #2260ff;
+}
+.lista_modo_pago input{display:none;}
+</style>
+<div class="page-margin container_cart_layshane">
 	<h2 class="ch_checkout_title"><?php echo $wo['lang']['shopping_cart'] ?></h2>
-	<div>
-		<style type="text/css">
-			.option_order_users_data{
-				display:flex;
-				flex-wrap:wrap;
-			}
-			.option_order_data{
-				display:flex;
-				width:calc(50% - 14px);
-				margin:7px;
-				position:relative;
-			}
-			.option_order_data label{
-				background:#FFF;
-				display:flex;
-				width:100%;
-				height:100%;
-				padding:18px;
-				align-self:center;
-				align-items:center;
-				justify-content:center;
-				position:relative;
-				margin:0;
-				border-radius:6px;
-				border:2px solid var(--boton-color);
-				cursor:pointer;
-				transition:all .5s;
-			}
-			.option_order_data input{display:none;}
-			.option_order_data input:checked ~ .label_selected_mod{
-				border:2px solid var(--boton-fondo)!important;
-			}
-			.content_delivery_data,
-			.content_store_data{
-				transition:all .5s;
-			}
-			.nodisplay_mode_order{
-				height:0;
-				overflow:hidden;
-				width:0;
-				transition:all .5s;
-				min-height:0;
-			}
-
-		</style>
-		
-			
-
-		<div class="col-md-5 contendata_deliveredstore">
+	<div class="div_container_lui_cart">
+		<div class="contendata_deliveredstore  sidebar_layshane_store leftcol">
 			<div class="option_order_users_data">
 				<div class="option_order_data">
 					<input type="radio" id="boleta_view" name="order_options_comprobante" value="boleta" <?php if($wo['user']['doc_order']=="boleta"){echo('checked');}?>>
 					<label class="label_selected_mod" for="boleta_view"><?php echo $wo['lang']['boleta']; ?></label>
 				</div>
-
 				<div class="option_order_data">
 					<input type="radio" id="factura_view" name="order_options_comprobante" value="factura" <?php if($wo['user']['doc_order']=="factura"){echo('checked');}?>>
 					<label class="label_selected_mod" for="factura_view"><?php echo $wo['lang']['invoice']; ?></label>
 				</div>
 			</div>
-
 			<div class="content_data_boleta <?php if($wo['user']['doc_order']!="boleta"){echo('nodisplay_mode_order');}?>">
 				<div class="panel-white ch_summary">
-					<div class="sun_input">
-						<label><?php echo $wo['lang']['boleta']; ?></label>
-						<input name="document_dni" type="text" class="form-control input-md" autocomplete="off" placeholder="DNI" value="<?=$wo['user']['comprobante_dni']?>">
+					<div class="sun_input_a">
+						<input id="dni" name="document_dni" type="text" class="form-control input-md_a" autocomplete="off" placeholder="DNI" value="<?=$wo['user']['comprobante_dni']?>" required="">
+						<label title="<?php echo $wo['lang']['boleta']; ?>" for="dni">DNI</label>
 					</div>
 				</div>
 			</div>
 			<div class="content_data_factura <?php if($wo['user']['doc_order']!="factura"){echo('nodisplay_mode_order');}?>">
 				<div class="panel-white ch_summary">
-					<div class="sun_input">
-						<label><?php echo $wo['lang']['invoice']; ?></label>
-						<input name="document_ruc" type="text" class="form-control input-md" autocomplete="off" placeholder="RUC" value="<?php echo($wo['user']['comprobante_ruc']) ?>">
+					<div class="sun_input_a">
+						<input id="ruc" name="document_ruc" type="text" class="form-control input-md_a" autocomplete="off" placeholder="RUC" value="<?php echo($wo['user']['comprobante_ruc']) ?>" required="">
+						<label for="ruc" title="<?php echo $wo['lang']['invoice']; ?>">RUC</label>
 					</div>
 				</div>
 			</div>
-
-
-
 			<div class="option_order_users_data">
 				<div class="option_order_data">
 					<input type="radio" id="retiro_tienda" name="order_options_data" value="tienda" <?php if($wo['user']['opcion_de_compra']=="tienda"){echo('checked');}?>>
@@ -96,45 +386,42 @@
 				<h4><?php echo $wo['lang']['sucursal_entrega'] ?></h4>
 				<div class="panel panel-white ch_card ch_summary">
 					<div class="checkout_alert"></div>
-
-					<ul class="list-unstyled mb-0 cart_chos_addrs">
+					<div class="list-unstyled mb-0 cart_chos_addrs">
 						<?php
 							if (!empty($wo['sucursales'])) {
 								foreach ($wo['sucursales'] as $key => $sucursal) {
 									?>
-							<li>
-								<input type="radio" name="choose-sucursal" id="choose_adrs_<?php echo($sucursal->id) ?>" value="<?php echo($sucursal->id) ?>" class="payment_sucursal" <?php if($wo['user']['sucursal_entrega']==$sucursal->id){echo('checked');}?>>
 								<label for="choose_adrs_<?php echo($sucursal->id) ?>">
-									<p><b><?php echo($sucursal->nombre) ?></b>&nbsp;<?php echo($sucursal->phone) ?></p>
-									<p><?php echo($sucursal->pais) ?>, <?php echo($sucursal->ciudad) ?> - <?php echo($sucursal->direccion) ?></p>
-									<p><?php echo($sucursal->referencia) ?></p>
+									<input type="radio" name="choose-sucursal" id="choose_adrs_<?php echo($sucursal->id) ?>" value="<?php echo($sucursal->id) ?>" class="payment_sucursal" <?php if($wo['user']['sucursal_entrega']==$sucursal->id){echo('checked');}?>>
+									<span class="radio-tile">
+										<p><b><?php echo($sucursal->nombre) ?></b>&nbsp;<?php echo($sucursal->phone) ?></p>
+										<p><?php echo($sucursal->pais) ?>, <?php echo($sucursal->ciudad) ?> - <?php echo($sucursal->direccion) ?></p>
+										<p><?php echo($sucursal->referencia) ?></p>
+									</span>
 								</label>
-							</li>
 						<?php  } } ?>
-					</ul>
+					</div>
 				</div>
-
 			</div>
 			<div class="content_delivery_data <?php if($wo['user']['opcion_de_compra']!="delivery"){echo('nodisplay_mode_order');}?>">
+				<?php if (!empty($wo['addresses'])): ?>
 				<h4><?php echo $wo['lang']['delivery_address'] ?></h4>
 				<div class="panel panel-white ch_card ch_summary">
 					<div class="checkout_alert"></div>
-
-					<ul class="list-unstyled mb-0 cart_chos_addrs">
-						<?php
-							if (!empty($wo['addresses'])) {
-								foreach ($wo['addresses'] as $key => $address) {
-									?>
-							<li>
+					<div class="list-unstyled mb-0 cart_chos_addrs">
+						<?php foreach ($wo['addresses'] as $key => $address){ ?>
+							<label for="choose_adrs_<?php echo($address->id) ?>">
 								<input type="radio" name="choose-address" id="choose_adrs_<?php echo($address->id) ?>" value="<?php echo($address->id) ?>" class="payment_address" <?php if($wo['user']['direccion_envio']==$address->id){echo('checked');}?>>
-								<label for="choose_adrs_<?php echo($address->id) ?>">
+								<span class="radio-tile">
 									<p><b><?php echo($address->name) ?></b>&nbsp;<?php echo($address->phone) ?></p>
 									<p><?php echo($address->country) ?>, <?php echo($address->city) ?> - <?php echo($address->referencia) ?></p>
-								</label>
-							</li>
-						<?php  } } ?>
-					</ul>
+								</span>
+							</label>
+						<?php } ?>
+					</div>
 				</div>
+				<?php endif ?><br>
+				<hr>
 				<h4><?php echo $wo['lang']['add_new_address'] ?></h4>
 				<form class="form form-horizontal address_form" method="post" action="#">
 					<div class="panel panel-white ch_card ch_address">
@@ -143,14 +430,14 @@
 						<div class="">
 							<div class="col-md-12">
 								<div class="sun_input">
-									<label><?php echo $wo['lang']['name']; ?></label>
-									<input name="name" type="text" class="form-control input-md" autocomplete="off" placeholder="<?php echo $wo['lang']['name']; ?>" value="<?php echo($wo['user']['name']) ?>">
+									<label for="name"><?php echo $wo['lang']['name']; ?></label>
+									<input id="name" name="name" type="text" class="form-control input-md" autocomplete="off" placeholder="<?php echo $wo['lang']['name']; ?>" value="<?php echo($wo['user']['name']) ?>" >
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="sun_input">
-									<label><?php echo $wo['lang']['phone_number']; ?></label>
-									<input name="phone" type="text" class="form-control input-md" autocomplete="off" placeholder="<?php echo $wo['lang']['phone_number']; ?>" value="<?php echo($wo['user']['phone_number']) ?>">
+									<label for="phone"><?php echo $wo['lang']['phone_number']; ?></label>
+									<input id="phone" name="phone" type="text" class="form-control input-md" autocomplete="off" placeholder="<?php echo $wo['lang']['phone_number']; ?>" value="<?php echo($wo['user']['phone_number']) ?>">
 								</div>
 							</div>
 							<div hidden>
@@ -160,25 +447,25 @@
 							</div>
 							<div class="col-md-6">
 								<div class="sun_input">
-									<label><?php echo $wo['lang']['city']; ?></label>
+									<label for="city"><?php echo $wo['lang']['city']; ?></label>
 									<input id="city" name="city" type="text" class="form-control input-md" autocomplete="off" placeholder="<?php echo $wo['lang']['city']; ?>">
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="sun_input">
-									<label><?php echo $wo['lang']['address']; ?></label>
-									<textarea class="form-control input-md" placeholder="<?php echo $wo['lang']['address']; ?>" name="address"></textarea>
+									<label for="address"><?php echo $wo['lang']['address']; ?></label>
+									<textarea id="address" class="form-control input-md" placeholder="<?php echo $wo['lang']['address']; ?>" name="address" autocomplete="off"></textarea>
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="sun_input">
-									<label><?php echo $wo['lang']['referrals']; ?></label>
-									<textarea class="form-control input-md" placeholder="<?php echo $wo['lang']['referrals']; ?>" name="referencia"></textarea>
+									<label for="referencia"><?php echo $wo['lang']['referrals']; ?></label>
+									<textarea id="referencia" class="form-control input-md" placeholder="<?php echo $wo['lang']['referrals']; ?>" name="referencia"></textarea>
 								</div>
 							</div>
 						</div>
 						<div class="clear"></div>
-						<button type="submit" class="btn btn-default btn-block btn-mat"><?php echo $wo['lang']['add']; ?></button>
+						<button type="submit" class="btn btn-default button_layshane_green"><?php echo $wo['lang']['add']; ?></button>
 					</div>
 				</form>
 			</div>
@@ -186,10 +473,10 @@
 		</div>
 
 
-		<div class="col-md-7">
+		<div class="container_cart_lists">
 			<div class="panel panel-white ch_card ch_cart">
                 <div class="ch_title">
-                	<a href="<?php echo $wo['config']['site_url'].'/products';?>" data-ajax="?link1=products" class="back-to-shop">
+                	<a href="<?php echo $wo['config']['site_url'].'/tienda';?>" data-ajax="?link1=tienda" class="back-to-shop">
 										<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M21,11H6.83L10.41,7.41L9,6L3,12L9,18L10.41,16.58L6.83,13H21V11Z" /></svg> <?php echo $wo['lang']['back_to_shop'] ?>
 									</a>
 									<div>
@@ -201,84 +488,82 @@
 						if (!empty($wo['html'])) {
 							echo $wo['html'];
 						} else {
-							echo '<div class="center-text empty_state"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>' . $wo['lang']['no_items_found'] . '</div>';
+							echo '<div class="center-text empty_state"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=""><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>' . $wo['lang']['no_items_found'] . '</div>';
 						}
 					?>
 				</div>
 				<div class="ch_total_price">
-					<div class="divider border-bottom"></div>
-					<h4><?php echo $wo['lang']['subtotal'] ?></h4>
-					<h3><?php echo $wo['config']['currency_symbol_array'][$wo['config']['currency']]; ?><?php echo $wo['subtotal']; ?></h3>
-
-					<h4><?php echo $wo['lang']['igv'] ?></h4>
-					<h3><?php echo $wo['config']['currency_symbol_array'][$wo['config']['currency']]; ?><?php echo $wo['igv']; ?></h3>
-
-					<div class="divider border-bottom"></div>
-					<h4><?php echo $wo['lang']['total'] ?></h4>
-					<p><?php echo $wo['config']['currency_symbol_array'][$wo['config']['currency']]; ?><?php echo $wo['total']; ?></p>
-					<div class="divider border-bottom"></div>
-
-					<div class="modos_de_pago_container_buttons">
-						<span>Pagar con:</span>
-
+					<div class="div_subs_contn">
+						<span><?php echo $wo['lang']['subtotal'] ?></span>
+						<span><?php echo $wo['config']['currency_symbol_array'][$wo['config']['currency']]; ?><?php echo $wo['subtotal']; ?></span>
+					</div>
+					<div class="div_subs_contn">
+						<span><?php echo $wo['lang']['igv'] ?></span>
+						<span><?php echo $wo['config']['currency_symbol_array'][$wo['config']['currency']]; ?><?php echo $wo['igv']; ?></span>
+					</div>
+					<div class="div_subs_contn">
+						<span><?php echo $wo['lang']['total'] ?></span>
+						<span><?php echo $wo['config']['currency_symbol_array'][$wo['config']['currency']]; ?><?php echo $wo['total']; ?></span>
+					</div>
+				</div>
+				<br>
+				<hr>
+				<br>
+				<span>Pagar con:</span>
+				<div class="modos_de_pago_container_buttons">
 						<div class="lista_modo_pago">
-							<input type="radio" id="modo_pago_1" name="modo_pago">
+							<input type="radio" id="modo_pago_1" name="modo_pago" value="1" <?=$wo['user']['mode_pay']==1 ? 'checked' : false ?>>
 							<label for="modo_pago_1">
-								<svg id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g><g><path class="st0" d="M369.5,263.1H194.6c-4.1,0-7.5-3.4-7.5-7.5v-83.3c0-4.1,3.4-7.5,7.5-7.5h174.8c4.1,0,7.5,3.4,7.5,7.5v83.4     C377,259.7,373.6,263.1,369.5,263.1z"/><path class="st1" d="M347.7,178.2c0-0.2,0-0.4,0-0.6H216.2c0,0.2,0.1,0.4,0.1,0.6c0,7.3-6,13.3-13.3,13.3v45.4     c7.3,0,13.3,6,13.3,13.3h131.5c0-7.3,6-13.3,13.3-13.3v-45.4C353.7,191.5,347.7,185.6,347.7,178.2z M233.3,221.2     c-4,0-7.3-3.3-7.3-7.3c0-4,3.3-7.3,7.3-7.3s7.3,3.3,7.3,7.3C240.5,217.9,237.3,221.2,233.3,221.2z M281.9,241.5     c-14.1,0-25.5-11.7-25.5-26s11.4-26,25.5-26c14.1,0,25.5,11.7,25.5,26S296,241.5,281.9,241.5z M330.6,221.2c-4,0-7.3-3.3-7.3-7.3     c0-4,3.3-7.3,7.3-7.3s7.3,3.3,7.3,7.3C337.8,217.9,334.6,221.2,330.6,221.2z"/><path class="st1" d="M292.6,217.5c-0.7-1-1.6-1.9-2.9-2.7c-1.3-0.8-2.9-1.4-5-1.9c-1.7-0.4-3.1-0.8-4-1.1c-1-0.3-1.8-0.7-2.3-1.2     s-0.9-1.1-0.9-1.9c0-0.8,0.4-1.5,1.2-2.1c0.8-0.6,1.8-0.8,2.9-0.8c1.1,0,2.1,0.2,2.8,0.6c0.7,0.4,1.3,1,1.8,1.7     c0.6,0.8,1.1,1.5,1.6,1.9c0.5,0.4,1.1,0.6,1.7,0.6c0.9,0,1.6-0.3,2.1-0.8c0.5-0.6,0.8-1.2,0.8-2c0-0.8-0.3-1.5-0.7-2.3     c-0.5-0.8-1.2-1.5-2.1-2.1c-0.9-0.6-2-1.2-3.4-1.6c-0.1,0-0.2-0.1-0.3-0.1v-2.4c0-1.9-1.6-3.6-3.5-3.6s-3.5,1.6-3.5,3.6v2.2     c-1,0.2-1.9,0.5-2.8,0.9c-1.5,0.8-2.7,1.8-3.5,3.1c-0.8,1.3-1.2,2.6-1.2,4.1c0,1.6,0.4,2.9,1.3,4.1c0.8,1.1,1.9,2,3.4,2.7     c1.4,0.7,3.3,1.3,5.5,1.9c2,0.5,3.5,1.1,4.3,1.6c0.9,0.6,1.3,1.5,1.3,2.8c0,0.8-0.4,1.6-1.3,2.2c-0.8,0.6-1.9,0.9-3.2,0.9     c-1.6,0-2.9-0.3-3.8-0.9c-0.9-0.6-1.8-1.6-2.4-2.9c-0.3-0.7-0.7-1.2-1.1-1.6c-0.4-0.4-0.9-0.6-1.6-0.6c-0.8,0-1.4,0.3-1.9,0.8     c-0.5,0.6-0.8,1.3-0.8,2c0,1.2,0.4,2.4,1.2,3.6c0.8,1.2,2.1,2.2,3.7,2.9c0.8,0.4,1.8,0.7,2.8,0.9v2.3c0,1.9,1.6,3.6,3.5,3.6     c1.9,0,3.5-1.6,3.5-3.6V230c0.9-0.2,1.8-0.4,2.4-0.8c1.7-0.8,3-1.8,3.9-3.2c0.9-1.4,1.3-3.1,1.3-5.1     C293.6,219.7,293.2,218.6,292.6,217.5z"/></g><path class="st2" d="M118.1,118.8h32.7c2.8,0,5.2,2.3,5.2,5.2v77.3c0,2.8-2.3,5.2-5.2,5.2h-32.7c-2.8,0-5.2-2.3-5.2-5.2V124    C112.9,121.1,115.2,118.8,118.1,118.8z"/><path class="st3" d="M71.3,212.3h41c3.5,0,6.4-2.9,6.4-6.4v-86.6c0-3.5-2.9-6.4-6.4-6.4h-41V212.3z"/><path class="st4" d="M225.5,177.1l0,0.5l0.1,2.5c0.2,6,5.3,10.7,11.3,10.5l40.4-0.6l2,0c6.3-0.2,11.5,3.9,11.3,10l-0.1,3.9    c0,0.1,0,0.2,0,0.3c-0.1,2.3-1,4.5-2.4,6.2c-0.9,1.1-2,2-3.3,2.7c-1.6,0.9-3.3,1.3-5.3,1.3h-37.3c-0.6,0-1.2,0.1-1.7,0.1    c-2,0.3-3.9,1.2-5.4,2.5l-6.1,3l-0.7,0.4c-8.1,4-16.7,6-25.4,6c-5.4,0-10.7-0.7-15.9-2.2c-9.4-2.7-18.2-7.7-25.3-14.9l-9.5-9.5    c-2.1-2.1-3.3-5-3.3-8v-60.2c0-4.9,3.9-8.8,8.8-8.8h119.8c2.3,0,4.6,0.8,6.4,2.1l55.1,40.1h-48.4c-1.2-0.4-2.5-0.6-3.7-0.6    l-16,0.6L236,166C230.1,166.2,225.4,171.1,225.5,177.1z"/><circle class="st3" cx="133.4" cy="190" r="8.4"/></g><g><path class="st4" d="M365.7,380.7c0,4.9-3.9,8.8-8.8,8.8H237.1c-2.3,0-4.6-0.8-6.4-2.1l-79.6-58c-5.4-4-5.9-11.7-1.1-16.4l0.8-0.8    c3.6-3.4,9.1-4,13.3-1.4l57.4,35.3c1.8,1.1,4,1.7,6.2,1.7l50.9-1.8c5.9-0.2,10.6-5.1,10.6-11.1l-0.1-3c-0.2-6-5.3-10.7-11.3-10.5    l-42.4,0.7c-6.3,0.2-11.5-3.9-11.3-10l0.1-3.9c0.2-5.9,5-10.5,10.9-10.5h37.3c2.6,0,5.2-0.9,7.1-2.6l6.9-3.3    c22.2-11.1,49.2-6.4,66.6,11.1l9.5,9.5c2.1,2.1,3.3,5,3.3,8V380.7z"/><path class="st2" d="M396.5,393.2h-32.7c-2.8,0-5.2-2.3-5.2-5.2v-77.3c0-2.8,2.3-5.2,5.2-5.2h32.7c2.8,0,5.2,2.3,5.2,5.2V388    C401.7,390.9,399.5,393.2,396.5,393.2z"/><path class="st5" d="M440.7,299.7h-41c-3.5,0-6.4,2.9-6.4,6.4v86.6c0,3.5,2.9,6.4,6.4,6.4h41V299.7z"/><circle class="st5" cx="376.4" cy="323.8" r="8.4"/></g></g></svg>
+								<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cash" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /><path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" /></svg>
 							<h6>Efectivo</h6>
 							</label>
 						</div>
 						<div class="lista_modo_pago">
-							<input type="radio" id="modo_pago_2" name="modo_pago">
+							<input type="radio" id="modo_pago_2" name="modo_pago" value="2" <?=$wo['user']['mode_pay']==2 ? 'checked' : false ?>>
 							<label for="modo_pago_2">
-								<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g data-name="Layer 15" id="Layer_15"><rect class="cls-1" height="18" width="32" x="2" y="40"/><path class="cls-2" d="M2,40V52.91c.662.053,1.327.09,2,.09,9.209,0,17.445-5.053,22.948-13Z"/><path class="cls-3" d="M56,58h6a0,0,0,0,1,0,0v4a0,0,0,0,1,0,0H54a0,0,0,0,1,0,0V60A2,2,0,0,1,56,58Z"/><path class="cls-4" d="M56,58H52a2,2,0,0,0-2,2v2h4V60A2,2,0,0,1,56,58Z"/><path class="cls-5" d="M56,20h6a0,0,0,0,1,0,0V37a0,0,0,0,1,0,0H52a0,0,0,0,1,0,0V24A4,4,0,0,1,56,20Z"/><path class="cls-6" d="M52,24V34.822c4.532-.986,8-6.343,8-12.822a17.719,17.719,0,0,0-.124-2H56A4,4,0,0,0,52,24Z"/><rect class="cls-7" height="21" width="10" x="52" y="37"/><rect class="cls-8" height="4" rx="2" width="16" x="43" y="24"/><path class="cls-5" d="M57,24H54v4h3a2,2,0,0,0,0-4Z"/><path class="cls-8" d="M62,4H50a3.982,3.982,0,0,0,2,3.445V13a5,5,0,0,0,9.9.989c.034,0,.066.011.1.011l-.092-.092A4.939,4.939,0,0,0,62,13Z"/><path class="cls-7" d="M62,13V4H50a4,4,0,0,0,4,4h2l3,4.646A3.991,3.991,0,0,0,62,14h0"/><path class="cls-9" d="M24,10h0a4,4,0,0,1,4,4V25a4,4,0,0,1-4,4h0Z"/><polygon class="cls-1" points="2 6 24 6 24 29 34 36 2 36 2 6"/><path class="cls-2" d="M30.52,33.564,24,29V6H2V36H29.355Q29.973,34.811,30.52,33.564Z"/><rect class="cls-10" height="4" width="32" x="2" y="36"/><path class="cls-11" d="M29.355,36H2v4H26.948A37.312,37.312,0,0,0,29.355,36Z"/><rect class="cls-10" height="4" width="28" x="2" y="2"/><rect class="cls-10" height="4" width="32" x="2" y="58"/><rect class="cls-12" height="2" transform="translate(0.559 28.349) rotate(-45)" width="4.243" x="32.379" y="12.5"/><rect class="cls-12" height="4.243" transform="translate(-7.219 31.571) rotate(-45)" width="2" x="33.5" y="22.379"/><rect class="cls-12" height="2" width="4" x="34" y="18"/><rect class="cls-12" height="18" width="2" x="55" y="40"/></g></svg>
+								<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-transfer-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 21v-6" /><path d="M20 6l-3 -3l-3 3" /><path d="M17 3v18" /><path d="M10 18l-3 3l-3 -3" /><path d="M7 3v2" /><path d="M7 9v2" /></svg>
 								<h6>Transferencia / Deposito</h6>
 							</label>
 						</div>
 						<div class="lista_modo_pago">
-							<input type="radio" id="modo_pago_3" name="modo_pago">
+							<input type="radio" id="modo_pago_3" name="modo_pago" value="3" <?=$wo['user']['mode_pay']==3 ? 'checked' : false ?>>
 							<label for="modo_pago_3">
-								<img src="<?=$wo['config']['theme_url'].'/icons/logo-yape.png';?>">
+								<img width="24" height="24" src="<?=$wo['config']['theme_url'].'/icons/logo-yape.png';?>">
 								<h6>Yape pago</h6>
 							</label>
 						</div>
 						<div class="lista_modo_pago">
-							<input type="radio" id="modo_pago_4" name="modo_pago">
+							<input type="radio" id="modo_pago_4" name="modo_pago" value="4" <?=$wo['user']['mode_pay']==4 ? 'checked' : false ?>>
 							<label for="modo_pago_4">
-								<img style="height: auto;" src="<?=$wo['config']['theme_url'].'/icons/cuotealo.png';?>">
+								<img style="height:auto;" width="60" src="<?=$wo['config']['theme_url'].'/icons/cuotealo.png';?>">
+								<h6>Cuotealo BCP</h6>
 							</label>
 						</div>
 						<div class="lista_modo_pago">
-							<input type="radio" id="modo_pago_5" name="modo_pago">
+							<input type="radio" id="modo_pago_5" name="modo_pago" value="5" <?=$wo['user']['mode_pay']==5 ? 'checked' : false ?>>
 							<label for="modo_pago_5">
-								<svg id="Icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><linearGradient gradientUnits="userSpaceOnUse" id="linear-gradient" x1="32" x2="32" y1="13.297" y2="53.105"><stop offset="0" stop-color="#57a0d7"/><stop offset="1" stop-color="#3374ba"/></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id="linear-gradient-2" x1="32" x2="32" y1="21.257" y2="33.496"><stop offset="0" stop-color="#434343"/><stop offset="1" stop-color="#212121"/></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id="linear-gradient-3" x1="18" x2="18" y1="36.584" y2="45.864"><stop offset="0" stop-color="#edeff0"/><stop offset="1" stop-color="#b0bec5"/></linearGradient></defs><rect class="clstarjeta-1" height="34.317" rx="2" width="54" x="5" y="14.842"/><rect class="clstarjeta-2" height="8.099" width="54" x="5" y="23.901"/><rect class="clstarjeta-3" height="5.525" width="13.743" x="11.129" y="38.099"/></svg>
+								<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 10v6a4 4 0 0 1 -4 4h-12a4 4 0 0 1 -4 -4v-6h20zm-14.99 4h-.01a1 1 0 1 0 .01 2a1 1 0 0 0 0 -2zm5.99 0h-2a1 1 0 0 0 0 2h2a1 1 0 0 0 0 -2zm5 -10a4 4 0 0 1 4 4h-20a4 4 0 0 1 4 -4h12z" stroke-width="0" fill="currentColor" /></svg>
 								<h6>Tarjeta debito / credito</h6>
 							</label>
-							
 						</div>
-
-						<!--Comprar con tarjeta
-						<button type="button" class="btn btn-success btn-mat buy_button" onclick="BuyProducts_tarjeta('hide','<?php echo $wo['total']; ?>')" <?php if (empty($wo['addresses'])) { ?>disabled="true"<?php } ?>><?php echo $wo['lang']['tarjeta'] ?></button>
-
-						Comprar con efectivo
-						<button type="button" class="btn btn-success btn-mat buy_button" onclick="BuyProducts_efectivo('hide','<?php echo $wo['total']; ?>')" <?php if (empty($wo['addresses'])) { ?>disabled="true"<?php } ?>><?php echo $wo['lang']['efectivo'] ?></button>-->
-
 					</div>
-					
-					
+					<br>
 					<hr>
-					
-					
-
-				</div>
+					<br>
+					<div class="pay_order_layshane"></div>
+					<br>
+					<br>
 			</div>
 		</div>
 	</div>
 </div>
-
 <script>
-$(document).ready(function() {
+function loadpay(numsdd){
+	$(".pay_order_layshane").load(Wo_Ajax_Requests_File() + '?f=order_opcion&s=pays_vie&tols='+<?=$wo['total'];?>);
+}
 
+$(document).ready(function() {
+loadpay()
 	$(document).on('click','#boleta_view', function(){
 		$('.content_data_factura').addClass('nodisplay_mode_order');
 		$('.content_data_boleta').removeClass('nodisplay_mode_order');
@@ -314,6 +599,7 @@ $(document).ready(function() {
 			data: {comprobante:selected_doc},
 			type: 'POST',
 			success: function (data) {
+				loadpay()
 			}
 		})
 	});
@@ -325,6 +611,7 @@ $(document).ready(function() {
 			data: {number:nums},
 			type: 'POST',
 			success: function (data) {
+				loadpay()
 			}
 		})
 	});
@@ -343,7 +630,7 @@ $(document).ready(function() {
 			data: {modo_compra:docs},
 			type: 'POST',
 			success: function (data) {
-				
+				loadpay()
 			}
 		})
 	});
@@ -366,6 +653,18 @@ $(document).ready(function() {
 			data: {sucursal:suc},
 			type: 'POST',
 			success: function (data) {
+			}
+		})
+	});
+
+	$('input[name="modo_pago"]').change(function(){
+		var pag = $(this).val();
+		$.ajax({
+			url: Wo_Ajax_Requests_File() + '?f=order_opcion&s=mode_pay&hash=' + $('.main_session').val(),
+			data: {pay_mod:pag},
+			type: 'POST',
+			success: function (data) {
+				loadpay()
 			}
 		})
 	});
@@ -436,3 +735,83 @@ $(document).ready(function() {
      }, 3000);
     <?php } ?>
 </script>
+<div id="pay_modal_wallet">
+      <div class="modal fade wow_mat_pops" id="pay-go-pro" role="dialog" data-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="wow_pops_head">
+              <svg height="100px" preserveAspectRatio="none" version="1.1" viewBox="0 0 300 100" width="300px" xmlns="http://www.w3.org/2000/svg"><path d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729 c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z" fill="currentColor" opacity="0.6"></path> <path d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729 c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z" fill="currentColor" opacity="0.6"></path> <path d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428 c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z" fill="currentColor"></path></svg>
+              <h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"></path></svg> <?php echo $wo['lang']['pay_from_wallet'] ?></h4>
+            </div>
+            <div class="modal-body">
+              <div class="pay_modal_wallet_alert"></div>
+              <h4 class="pay_modal_wallet_text"></h4>
+            </div>
+            <div class="clear"></div>
+            <div class="modal-footer">
+              <div class="ball-pulse"><div></div><div></div><div></div></div>
+              <button type="button" class="btn btn-main" id="pay_modal_wallet_btn"><?php echo $wo['lang']['pay']; ?></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="modal fade" id="delete-address" tabindex="-1" role="dialog" aria-labelledby="delete-address" aria-hidden="true" data-id="0">
+    <div class="modal-dialog modal-md mat_box wow_mat_mdl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
+          <h4 class="modal-title"><?php echo $wo['lang']['delete_your_address'] ?></h4>
+        </div>
+        <div class="modal-body">
+          <?php echo $wo['lang']['are_you_delete_your_address']; ?>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-mat" data-dismiss="modal"><?php echo $wo['lang']['delete']; ?></button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="modal fade ch_payment_box" id="buy_product_modal" tabindex="-1" role="dialog" aria-labelledby="buy_product" aria-hidden="true" data-id="0">
+    <div class="modal-dialog modal-md mat_box" role="document">
+      <div class="modal-content">
+        <div class="ch_payment_head">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,13A5,5 0 0,1 7,8H9A3,3 0 0,0 12,11A3,3 0 0,0 15,8H17A5,5 0 0,1 12,13M12,3A3,3 0 0,1 15,6H9A3,3 0 0,1 12,3M19,6H17A5,5 0 0,0 12,1A5,5 0 0,0 7,6H5C3.89,6 3,6.89 3,8V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V8C21,6.89 20.1,6 19,6Z"></path></svg>
+          <h4><?php echo $wo['lang']['payment_alert']; ?></h4>
+        </div>
+        <div class="modal-body">
+          <div class="modal_product_pay_alert"></div>
+          <?php echo $wo['lang']['purchase_the_items']; ?>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" id="product_id" autocomplete="off">
+          <input type="hidden" id="product_price" autocomplete="off">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $wo['lang']['cancel']; ?></button>
+          <button type="button" class="btn btn-main btn-mat"><?php echo $wo['lang']['pay']; ?></button>
+        </div>
+      </div>
+    </div>
+    </div>
+<?php else: ?>
+	<style type="text/css">
+		.empty_cart_order_user_not{
+			display:flex;
+			justify-content:center;
+			align-self:center;
+			min-height:calc(100vh - 280px);
+			align-items:center;
+			user-select:none;
+			flex-direction:column;
+		}
+		.empty_cart_order_user_not svg{display:block;margin-bottom:20px;}
+		.empty_cart_order_user_not div{display:block;}
+		.empty_cart_order_user_not a{
+			margin:10px auto;border:1px solid #ccc;border-radius:6px;padding:10px;
+		}
+	</style>
+	<div class="empty_cart_order_user_not"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart" width="34" height="34" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg><div>Inicia session para ver tus compras.</div>
+	<a class="dec main" href="<?=lui_SeoLink('index.php?link1=acceder');?>"><?php echo $wo['lang']['login']?></a>
+</div>
+<?php endif ?>

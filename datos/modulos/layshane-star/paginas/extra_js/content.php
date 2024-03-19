@@ -457,80 +457,12 @@ $(document).on('change', '#i_currently_work', function(event) {
     $('#experience_end_date').css('display', 'block');
   }
 });
-function Wo_GetPaymentMethods(self) {
-  var amount = $('#fund_donate_amount').val();
-  var fund_id = $('#fund_donate_id').val();
-  if (!amount || !fund_id) {
-    $('#fund_donate_amount').attr('style', 'border-color: red !important');
-    return false;
-  }
-  $('#fund_donate_amount').attr('style', 'border-color: unset');
-  $(self).attr('disabled', 'true');
-  $.get(Wo_Ajax_Requests_File() + '?f=funding&s=get_payment_donate_method&fund_id=' + fund_id + '&amount=' + amount, function (data) {
-      if (data.status == 200) {
-          $('#donate_for_fund_modal').html(data.html);
-		  $('#dont_modal').modal('hide');
-          $('#fund_payment_donate_modal').modal({
-           show: true
-          });
-      }
-      else{
-        $('#amount_fund_alert').html('<div class="alert alert-danger">' + data['message'] + '</div>');
-        setTimeout(function (argument) {
-          $('#amount_fund_alert').html('');
-        },2000);
-      }
-      $(self).removeAttr('disabled');
-  });
-}
-
-function Wo_BankTransferDonate(fund_id,amount) {
-  if (!amount || !fund_id) {
-    return false;
-  }
-
-  $('.bank_payment').attr('disabled', true).text("<?php echo $wo["lang"]["please_wait"]?>");
-
-  $('#configreset').click();
-  $(".prv-img").html('<div class="thumbnail-rendderer"><div><h4 class="bold"><?php echo $wo['lang']['drop_img_here']; ?></h4><div class="error-text-renderer"></div><div><span><?php echo $wo['lang']['or']; ?></span><p><?php echo $wo['lang']['browse_to_upload']; ?></p></div></div> </div>');
-  $("#blog-alert").html('');
-  $('#bank_donate_price').val(amount);
-  $('#bank_donate_fund_id').val(fund_id);
-  $('#pay-go-pro').modal('hide');
-  $('#bank_transfer_donate_modal').modal({
-         show: true
-        });
-}
-
-function Wo_BitcoinDonate(fund_id,amount) {
-  if (!amount || !fund_id) {
-    return false;
-  }
-
-  $('.btn-bitcoin').attr('disabled', true).text("<?php echo $wo["lang"]["please_wait"]?>");
-  $('#pay-go-pro').modal('hide');
-  $.get(Wo_Ajax_Requests_File() + '?f=donate_with_bitcoin&amount=' + amount+"&fund_id="+fund_id, function (data) {
-    if (data.status == 200) {
-      $(data.html).appendTo('body').submit();
-    }
-  });
-}
 
 function openInNewTab(url, id) {
    var myWindow = window.open(url, "", "width=600,height=700");
    return false;
 }
 
-function Wo_LiveComment(text,event,post_id,insert = 0) {
-  text = $('[id=post-' + post_id + ']').find('.comment-textarea').val();
-  if (text && (event.keyCode == 13 || insert == 1)) {
-    if ($('#live_post_comments_'+post_id+' .live_comments').length >= 4) {
-      $('#live_post_comments_'+post_id+' .live_comments').first().remove();
-    }
-      $('#live_post_comments_'+post_id).append('<div class="live_comments" live_comment_id=""><a class="pull-left" href="<?php echo($wo['user']['url']) ?>"><img class="live_avatar pull-left" src="<?php echo($wo['user']['avatar']) ?>" alt="avatar"></a><div class="comment-body" style="float: left;"><div class="comment-heading"><span><a href="<?php echo($wo['user']['url']) ?>" data-ajax="?link1=timeline&amp;u=<?php echo($wo['user']['username']) ?>" ><h4 class="live_user_h"> <?php echo($wo['user']['name']) ?> </h4></a></span><?php if ($wo['user']['verified'] == 1) { ?><span class="verified-color" data-toggle="tooltip" title="Verified User"><i class="fa fa-check-circle"></i></span><?php } ?><div class="comment-text">'+text+'</div></div></div><div class="clear"></div></div>');
-
-  }
-}
 function Wo_ReplyChatMessage(chat_id,id) {
   $('.message_reply_id_'+chat_id).val(id);
   $('.message_reply_text_'+chat_id+' span').find('.reply_content').remove();
@@ -807,11 +739,7 @@ $(window).on('load', function() {
   });
 
 });
-function ProcessingVideo(id) {
-  $.get(Wo_Ajax_Requests_File(), {f: 'posts', s: 'processing_video', post_id: id}, function (data) {
-    $('.processing_alert_'+id).remove();
-  });
-}
+
 function SendSeen(recipient_id) {
   var chat_container = $('.chat-tab').find('.chat_main_'+recipient_id);
   var last_id = chat_container.find('.messages-text:last').attr('data-message-id');
@@ -845,61 +773,10 @@ function LoadCheckout() {
   $('#load_checkout').click();
 }
 function RemoveProductFromCart(id) {
-  // $('#cart_product_'+id).remove();
-  // $('#checkout_product_'+id).remove();
   $.post(Wo_Ajax_Requests_File() + '?f=products&s=remove_cart&hash=' + $('.main_session').val(), {product_id: id}, function(data, textStatus, xhr) {
     $('.count_items_carrito_cou').html(data.totalunidades);
-    // if (data.status == 200) {
-    //   $('.unread_cart_count').html(data.count);
-    // }
   });
 }
-function NewAddress() {
-  $('.modal_add_address_modal_alert').empty();
-  $("#add_address_modal").find('.btn-mat').removeAttr('disabled')
-  $("#add_address_modal").find('.btn-mat').text("<?php echo $wo['lang']['add'] ?>");
-  $('#add_address_modal').modal('show');
-}
-$(document).ready(function() {
-    var options = {
-      url: Wo_Ajax_Requests_File() + '?f=address&s=add&hash=' + $('.main_session').val(),
-        beforeSubmit:  function () {
-          $('.modal_add_address_modal_alert').empty();
-          $("#add_address_modal").find('.btn-mat').attr('disabled', 'true');
-          $("#add_address_modal").find('.btn-mat').text("<?php echo($wo['lang']['please_wait']) ?>");
-        },
-        success: function (data) {
-          $("#add_address_modal").find('.btn-mat').text("<?php echo $wo['lang']['add'] ?>");
-          $("#add_address_modal").find('.btn-mat').removeAttr('disabled')
-          if (data.status == 200) {
-            $('.modal_add_address_modal_alert').html('<div class="alert alert-success bg-success"><i class="fa fa-check"></i> '+
-              data.message
-              +'</div>');
-              if (data.url && data.url != '') {
-                if ($('#setting_address_page').length > 0) {
-                  setTimeout(function () {
-                    location.href = data.url;
-                  },2000);
-                }
-                else{
-                  setTimeout(function () {
-                    $('.modal_add_address_modal_alert').empty();
-              $("#add_address_modal").find('.btn-mat').removeAttr('disabled')
-              $("#add_address_modal").find('.btn-mat').text("<?php echo $wo['lang']['add'] ?>");
-              $('#add_address_modal').modal('hide');
-              $('#load_checkout').click();
-                  },2000);
-                }
-              }
-          } else {
-            $('.modal_add_address_modal_alert').html('<div class="alert alert-danger bg-danger"> '+
-            data.message
-            +'</div>');
-          }
-        }
-    };
-    $('.address_form').ajaxForm(options);
-});
 function BuyProducts(type = 'show',price) {
   if ($('.payment_address').length < 1) {
     $('.checkout_alert').html("<div class='alert alert-danger bg-danger'><i class='fa fa-info-circle'></i> <?php echo($wo['lang']['please_add_address']); ?></div>");
@@ -1246,8 +1123,6 @@ function Wo_OpenBannedMenu(type = 'notification'){
     $('#requests-list').html("<div class='empty_state'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'><path d='M14 14.252v2.09A6 6 0 0 0 6 22l-2-.001a8 8 0 0 1 10-7.748zM12 13c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm7 6.586l2.121-2.122 1.415 1.415L20.414 19l2.122 2.121-1.415 1.415L19 20.414l-2.121 2.122-1.415-1.415L17.586 19l-2.122-2.121 1.415-1.415L19 17.586z' fill='currentColor'/></svg><?php echo($wo['lang']['your_requests_because_you_were_banned']); ?></div>");
   }
 }
-function AddYandexResult(target,self,result_co) {
-  $(target).val($(self).text());
-  $(result_co).html('');
-}
+
+
 </script>

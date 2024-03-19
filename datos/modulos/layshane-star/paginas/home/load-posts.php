@@ -12,14 +12,12 @@
 						<?php $cat_id_produc = $category['id']; ?>
 						<?php if ($cat_id_produc==0): ?>
 						<?php else: ?>
-						
 						<?php $cat_logo_produc = $category['logo']; ?>
 						<?php $cat_nombre_producs = $wo["lang"][$category["lang_key"]];?>
 						<li class="product_layshane">
-							<a href="<?php echo lui_SeoLink('index.php?link1=products&c_id='.$cat_id_produc);?>" data-ajax="?link1=products&c_id=<?=$cat_id_produc?>" alt="Comprar - <?=$cat_nombre_producs;?>">
-							<img src="<?=$cat_logo_produc; ?>" alt="<?=$cat_nombre_producs;?>">
+							<a href="<?php echo lui_SeoLink('index.php?link1=tienda&c_id='.$cat_id_produc);?>" data-ajax="?link1=tienda&c_id=<?=$cat_id_produc?>" alt="Comprar - <?=$cat_nombre_producs;?>">
+								<figure class="categories-g__bg bg--change" data-bg="<?=$cat_logo_produc; ?>" style="background-image: url(&quot;<?=$cat_logo_produc; ?>&quot;);"></figure>
 							<span class="name_product" alt="Informacion <?=$cat_nombre_producs;?>"><?=$cat_nombre_producs;?></span>
-							<?=$cat_nombre_producs;?>
 							</a>
 						</li>
 						<?php endif ?>

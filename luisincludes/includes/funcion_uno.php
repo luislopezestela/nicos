@@ -1636,7 +1636,8 @@ function lui_UploadImage($file, $name, $type, $type_file, $user_id = 0, $placeme
         'image/png',
         'image/jpeg',
         'image/gif',
-        'image/jpg'
+        'image/jpg',
+        'image/webp'
     );
     if (!in_array($type_file, $ar)) {
         return false;
@@ -5171,6 +5172,66 @@ function lui_UploadFavicon($data = array()) {
         }
     }
 }
+
+function lui_addImages_load($data = array(), $type = 0, $crop = true) {
+    global $wo, $sqlConnect;
+    
+    if (empty($data['file']) || empty($data['name'])) {
+        return false;
+    }
+
+    // Verificar si el tipo de archivo es WebP
+    if ($data['type'] === 'image/webp') {
+        $allowed_extensions = ['webp']; // Solo permitir la carga de archivos WebP
+    } else {
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    }
+
+    $file_extension = pathinfo($data['name'], PATHINFO_EXTENSION);
+    if (!in_array($file_extension, $allowed_extensions)) {
+        return false; // Extensión de archivo no permitida
+    }
+
+    // Crear directorios si no existen
+    $dir = "upload/photos/" . date('Y') . '/' . date('m');
+    if (!file_exists($dir)) {
+        mkdir($dir, 0777, true);
+    }
+
+    $filename = $dir . '/' . lui_GenerateKey() . '_' . date('d') . '_' . md5(time()) . "_image.webp";
+
+    // Si ya es WebP, simplemente mueve el archivo al directorio de destino
+    if ($data['type'] === 'image/webp') {
+        if (!move_uploaded_file($data['file'], $filename)) {
+            return false;
+        }
+    } else {
+        // Si no es WebP, convierte la imagen al formato WebP
+        $image = imagecreatefromstring(file_get_contents($data['file']));
+        if (!$image) {
+            return false; // Error al crear la imagen desde el contenido
+        }
+
+        // Guardar la imagen como WebP
+        if (!imagewebp($image, $filename, 100)) {
+            return false; // Error al guardar la imagen en formato WebP
+        }
+        imagedestroy($image);
+    }
+
+    // Redimensionar y recortar la imagen si es necesario
+    if ($crop) {
+        $crop_image = lui_Resize_Crop_Image($data['crop']['width'], $data['crop']['height'], $filename, $filename, 100);
+    }
+
+    $last_data = array(
+        'filename' => $filename,
+        'name' => $data['name']
+    );
+    return $last_data;
+}
+
+
 function lui_ShareFile($data = array(), $type = 0, $crop = true) {
     global $wo, $sqlConnect, $s3;
     $allowed = '';
@@ -5310,6 +5371,8 @@ function lui_ShareFile($data = array(), $type = 0, $crop = true) {
         return $last_data;
     }
 }
+
+
 function lui_DisplaySharedFile($media, $placement = '', $cache = false, $is_video = false) {
     global $wo, $sqlConnect, $db;
     $orginal = $media['filename'];
