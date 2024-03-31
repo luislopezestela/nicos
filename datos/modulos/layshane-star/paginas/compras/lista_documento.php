@@ -1,6 +1,6 @@
 <?php
 $html = '';
-$items_comprass = $db->objectbuilder()->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante', $wo['product']['comprap'])->get('imventario');
+$items_comprass = $db->objectbuilder()->where('estado','1')->where('id_comprobante', $wo['product']['comprap'])->get('imventario');
 $variantes_atributos = [];
 $atributos = $db->objectbuilder()->where('id_imventario', $wo['product']['id_imventarios'])->get('imventario_atributos');
 foreach($atributos as $atributo){
@@ -67,44 +67,6 @@ $opciones_del_producto = lui_poner_en_lista_las_opciones($wo['product']['id']);
 						<?php endif ?>
 					<?php endif ?>
 				</div>
-				<div class="placeholder_atri" style="display:none;"></div>
-				<div class="cont_atributes_listas_compras submenu_add_irtd_docmt" style="display:none;">
-					<div class="main_closed_view_more_items_orrder">
-						<span class="closed_view_more_items_orrder btn-mat"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg></span>
-					</div>
-					<div class="header_title_viewas_more_items">
-						<span style="font-size:18px;">Cantidad: <?=$wo['product']['cantidad'] ?></span>
-						<span class="layshane-btn_cr btn_layshane-1" onclick="RemoveProduct_compra_imv_all_atr('<?php echo $wo['product']['id_productos'];?>','hide')">Eliminar</span>
-					</div>
-					<?php $items_compra = $db->objectbuilder()->where('estado','0')->where('producto',$wo['product']['id'])->where('color',$wo['product']['color'])->where('id_sucursal',$wo['user']['sucursal'])->get('imventario'); ?>
-					
-				    <table class="table" style="background-color:#F8F8F8;">
-				    	<thead class="table__thead">
-				    		<tr>
-				    			<th class="table__th">Producto</th>
-				    			<th class="table__th">Modelo</th>
-				    			<th class="table__th">Barcode</th>
-				    			<th class="table__th"></th>
-				    		</tr>
-				    	</thead>
-				    	<tbody class="table__tbody">
-				    		<?php
-							    if (!empty($productos_similares)) {
-							        foreach ($productos_similares as $producto_similar) {
-							        	$wo['all_products_atr']['id'] = $producto_similar->id;
-								        $wo['all_products_atr']['producto_id'] = $identificador_unico;
-								        $wo['all_products_atr']['imagen'] = $wo['product']['images'][0]['image_org'];
-								        $wo['all_products_atr']['nombre'] = $wo['product']['name'];
-								        $wo['all_products_atr']['barcode'] = $producto_similar->barcode;
-								        $wo['all_products_atr']['modelo'] = $wo['product']['modelo'];
-							            $html .= lui_LoadPage('compras/lista_compra_all');
-							        }
-							    }
-							    echo $html;
-							?>
-				    	</tbody>
-				    </table>
-			    </div>
 			</td>
 			<td data-column="MODELO" class="table-row__td">
 				<div class="">
@@ -124,8 +86,7 @@ $opciones_del_producto = lui_poner_en_lista_las_opciones($wo['product']['id']);
 		    <td data-column="PRECIO" class="table-row__td">
 		    	<div class="precio_compra_invo_s">
 		    		<span><?=$wo['product']['symbol'];?></span>
-		    		<?php if(!empty($variantes_atributos)){$class_price_color='precio_compra_inputs_b';}else{$class_price_color='precio_compra_inputs_a';}?>
-		    		<input class="precio_compra_inputs <?=$class_price_color;?> precio_compra_inputs<?=$wo['product']['id'];?>" type="number" data-id="<?=$wo['product']['id'];?>" data-atributos='<?php echo json_encode($variantes_atributos); ?>' data-ct="<?=$wo['product']['cantidad'] ?>" autocomplete="off" pattern="\d*" name="precio_compra" value="<?=$productos_similares[0]->precio;?>">
+		    		<span  class="precio_compra_inputs"><?=$productos_similares[0]->precio;?></span>
 		    	</div>
 		    </td>
 		    <td data-column="SUBTOTAL" class="table-row__td">
@@ -153,50 +114,6 @@ $opciones_del_producto = lui_poner_en_lista_las_opciones($wo['product']['id']);
 						<?php endif ?>
 					<?php endif ?>
 				</div>
-				<div class="placeholder_atri" style="display:none;"></div>
-				<div class="cont_atributes_listas_compras submenu_add_irtd_docmt" style="display:none;">
-					<div class="main_closed_view_more_items_orrder">
-						<span class="closed_view_more_items_orrder btn-mat"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg></span>
-					</div>
-					<div class="header_title_viewas_more_items">
-						<span style="font-size:18px;">Cantidad: <?=$wo['product']['cantidad'] ?></span>
-						<?php if(isset($atributos_inv)): ?>
-							<?php if(!empty($variantes_atributos)): ?>
-								<span class="layshane-btn_cr btn_layshane-1" onclick="RemoveProduct_compra_imv_all_atr('<?php echo $wo['product']['id_productos'];?>','hide')">Eliminar</span>
-							<?php else: ?>
-								<span class="layshane-btn_cr btn_layshane-1" onclick="RemoveProduct_compra_imv_all(<?=$wo['product']['id_productos'];?>,'hide')">Eliminar</span>
-							<?php endif ?>
-						<?php endif ?>
-						
-					</div>
-					<?php $items_compra = $db->objectbuilder()->where('estado','0')->where('producto',$wo['product']['id'])->where('id_sucursal',$wo['user']['sucursal'])->get('imventario'); ?>
-				    <table class="table" style="background-color:#F8F8F8;">
-				    	<thead class="table__thead">
-				    		<tr>
-				    			<th class="table__th">Producto</th>
-				    			<th class="table__th">Modelo</th>
-				    			<th class="table__th">Barcode</th>
-				    			<th class="table__th"></th>
-				    		</tr>
-				    	</thead>
-				    	<tbody class="table__tbody">
-				    		<?php
-							    if (!empty($productos_similares)) {
-							        foreach ($productos_similares as $producto_similar) {
-							        	$wo['all_products_atr']['id'] = $producto_similar->id;
-								        $wo['all_products_atr']['producto_id'] = $identificador_unico;
-								        $wo['all_products_atr']['imagen'] = $wo['product']['images'][0]['image_org'];
-								        $wo['all_products_atr']['nombre'] = $wo['product']['name'];
-								        $wo['all_products_atr']['barcode'] = $producto_similar->barcode;
-								        $wo['all_products_atr']['modelo'] = $wo['product']['modelo'];
-							            $html .= lui_LoadPage('compras/lista_compra_all');
-							        }
-							    }
-							    echo $html;
-							?>
-				    	</tbody>
-				    </table>
-			    </div>
 			</td>
 			<td data-column="MODELO" class="table-row__td">
 				<div class="">
@@ -216,8 +133,7 @@ $opciones_del_producto = lui_poner_en_lista_las_opciones($wo['product']['id']);
 		    <td data-column="PRECIO" class="table-row__td">
 		    	<div class="precio_compra_invo_s">
 		    		<span><?=$wo['product']['symbol'];?></span>
-		    		<?php if(!empty($variantes_atributos)){$class_price_color='precio_compra_inputs_b';}else{$class_price_color='precio_compra_inputs_a';}?>
-		    		<input class="precio_compra_inputs <?=$class_price_color;?> precio_compra_inputs<?=$identificador_unico;?>" type="number" data-id="<?=$wo['product']['id'];?>" data-atributos='<?php echo json_encode($variantes_atributos); ?>' data-ct="<?=$wo['product']['cantidad'] ?>" autocomplete="off" pattern="\d*" name="precio_compra" value="<?=$productos_similares[0]->precio;?>" data-ident='<?=$identificador_unico;?>'>
+		    		<span  class="precio_compra_inputs"><?=$productos_similares[0]->precio;?></span>
 		    	</div>
 		    </td>
 

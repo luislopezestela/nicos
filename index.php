@@ -130,6 +130,12 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                     case 'get_news_feed':
                         include('sources/get_news_feed.php');
                         break;
+                    case 'cuentas':
+                        include('sources/cuentas.php');
+                        break;
+                    case 'ventas':
+                        include('sources/ventas.php');
+                        break;
                     case 'video-call':
                         include('sources/video.php');
                         break;
@@ -562,6 +568,12 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                 }
             } else {
                 switch ($page) {
+                    case 'cuentas':
+                        include('sources/cuentas.php');
+                        break;
+                    case 'ventas':
+                        include('sources/ventas.php');
+                        break;
                     case 'servicios':
                         include('sources/servicios.php');
                         break;
@@ -786,6 +798,12 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
         }
     } else {
         switch ($page) {
+            case 'cuentas':
+                include('sources/cuentas.php');
+                break;
+            case 'ventas':
+                include('sources/ventas.php');
+                break;
             case 'servicios':
                 include('sources/servicios.php');
                 break;

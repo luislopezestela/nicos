@@ -91,28 +91,6 @@ if (!empty($wo['notification']['type'])) {
                 }
             }
         }
-
-   //      switch (strtolower($notificationType2)) {
-
-			// case 'like':
-			// 	$wo['notification']['icon'] .= '<div class="inline_post_emoji inline_act_emoji no_anim"><div class="emoji emoji--like"><div class="emoji__hand"><div class="emoji__thumb"></div></div></div></div>';
-			// 	break;
-			// case 'love':
-			// 	$wo['notification']['icon'] .= '<div class="inline_post_emoji inline_act_emoji no_anim"><div class="emoji emoji--love"><div class="emoji__heart"></div></div></div>';
-			// 	break;
-			// case 'haha':
-			// 	$wo['notification']['icon'] .= '<div class="inline_post_emoji inline_act_emoji no_anim"><div class="emoji emoji--haha"><div class="emoji__face"><div class="emoji__eyes"></div><div class="emoji__mouth"><div class="emoji__tongue"></div></div></div></div></div>';
-			// 	break;
-			// case 'wow':
-			// 	$wo['notification']['icon'] .= '<div class="inline_post_emoji inline_act_emoji no_anim"><div class="emoji emoji--wow"><div class="emoji__face"><div class="emoji__eyebrows"></div><div class="emoji__eyes"></div><div class="emoji__mouth"></div></div></div></div>';
-			// 	break;
-			// case 'sad':
-			// 	$wo['notification']['icon'] .= '<div class="inline_post_emoji inline_act_emoji no_anim"><div class="emoji emoji--sad"><div class="emoji__face"><div class="emoji__eyebrows"></div><div class="emoji__eyes"></div><div class="emoji__mouth"></div></div></div></div>';
-			// 	break;
-			// case 'angry':
-			// 	$wo['notification']['icon'] .= '<div class="inline_post_emoji inline_act_emoji no_anim"><div class="emoji emoji--angry"><div class="emoji__face"><div class="emoji__eyebrows"></div><div class="emoji__eyes"></div><div class="emoji__mouth"></div></div></div></div>';
-			// 	break;
-			// }
     }
     if ($wo['notification']['type'] == "gift") {
         $wo['notification']['type_text'] .= $wo['lang']['send_gift_to_you'];
@@ -379,7 +357,7 @@ if (!empty($wo['notification']['type'])) {
     if ($wo['notification']['type'] == 'sent_u_money') {
         $wo['notification']['type_text'] = $wo['notification']['text'];
         $wo['notification']['url']       = $wo['notification']['url']; 
-        $wo['notification']['icon']     .= '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign money"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>';
+        $wo['notification']['icon']     .= '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-moneybag"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9.5 3h5a1.5 1.5 0 0 1 1.5 1.5a3.5 3.5 0 0 1 -3.5 3.5h-1a3.5 3.5 0 0 1 -3.5 -3.5a1.5 1.5 0 0 1 1.5 -1.5z" /><path d="M4 17v-1a8 8 0 1 1 16 0v1a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" /></svg>';
     }
     if ($wo['notification']['type'] == 'viewed_story') {
         $wo['notification']['type_text'] = $wo['lang']['viewed_your_story'];
@@ -466,7 +444,7 @@ if ($wo['notification']['type2'] == 'ffmpeg') {
             <div class="notification-time active">
                <?php echo $wo['notification']['icon'];?>
                <span class="ajax-time notification-time" title="<?php echo date('c',$wo['notification']['time']); ?>">
-               <?php echo lui_Time_Elapsed_String_word($wo['notification']['time'])?>
+                <?php echo lui_Time_Elapsed_String_word($wo['notification']['time'])?>
                </span>
             </div>
          </div>

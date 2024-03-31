@@ -61,6 +61,223 @@
 button.close{-webkit-appearance:none;padding:0;cursor:pointer;background:0 0;border:0;}
 .wow_pops_head h4 svg{width:127px;height:127px;margin:auto;background-color:rgba(255, 255, 255, 0.2);border-radius:50%;padding:5px;display:flex;justify-content:center;align-items:center;color:#d63031;}
 </style>
+
+<style type="text/css">
+	/*Wallet Header*/
+.wo_new_wallet{
+	position:relative;text-align: center;    overflow: hidden;padding: 40px 10px;
+}
+.wo_new_wallet > svg {
+	position:absolute;
+    width:100%;
+    pointer-events:none;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    opacity:0.15;
+}
+.wo_new_wallet .wow_mini_wallets {
+    align-items:center;
+    padding-bottom:7px;
+    flex-direction:column;
+    justify-content:center;
+    position:relative;
+}
+.wo_new_wallet .wow_mini_wallets h5 {
+	font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size:60px;
+    margin-bottom:20px;
+}
+.wo_new_wallet .wow_mini_wallets_btns {
+	margin:0!important;
+}
+
+.wow_mini_wallets {display: flex;align-items: center;padding-bottom: 7px;}
+.wow_mini_wallets h5 {margin: 0;font-size: 50px;font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;font-weight: 400;font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;}
+.wow_mini_wallets_btns {margin-left: auto;}
+.wow_mini_wallets_btns .btn {margin-left: 5px;}
+.wow_add_money_hid_form {display: none;}
+.wow_add_money_hid_form .add-amount, .wow_snd_money_form .add-amount {display:flex;margin: 15px 0 25px;}
+.wow_add_money_hid_form .add-amount h5, .wow_snd_money_form .add-amount h5 {margin: 0 auto;font-size: 42px;font-family: "Lato", sans-serif;width:100%;max-width:200px; padding: 4px 0;border-bottom: 2px solid #ddd;display:flex;position:relative;justify-content:center;align-items:center;gap:1rem;}
+.wow_add_money_hid_form .add-amount h5 input, .wow_snd_money_form .add-amount h5 input {width:100%;border:0;outline:none;font-size:42px}
+.wow_add_money_hid_form form {padding: 20px 0;border-top: 1px solid #ececec;}
+.wow_wallet_trans {font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;}
+.wow_wallet_trans thead {border-bottom: 1px solid #ececec;}
+.wow_wallet_trans thead tr th {font-weight: bold;}
+.wow_wallet_trans tbody tr {border-bottom: 1px solid #ececec;}
+.wow_wallet_trans tbody tr:last-child {border: 0;}
+/*Wallet Header*/
+.wo_new_wallet{
+	position:relative;text-align: center;    overflow: hidden;padding: 40px 10px;
+}
+.wo_new_wallet > svg {
+	position:absolute;
+    width:100%;
+    pointer-events:none;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    opacity:0.15;
+}
+.wo_new_wallet .wow_mini_wallets {
+    align-items:center;
+    padding-bottom:7px;
+    flex-direction:column;
+    justify-content:center;
+    position:relative;
+}
+.wo_new_wallet .wow_mini_wallets h5 {
+	font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size:60px;
+    margin-bottom:20px;
+}
+.wo_new_wallet .wow_mini_wallets_btns {
+	margin:0!important;
+}
+#replenish-user-account small{margin-bottom:5px;display:inline-block}
+#replenish-user-account-alert .alert,.choose_rel_ship_alert div{border-radius:0!important}
+#replenish-user-account-alert .alert,.choose_rel_ship_alert div{border-radius:0!important}
+.wo_settings_page .setting-update-alert{margin:20px 0 10px;}
+.wo_settings_page .alert{margin:20px 0 10px;}
+.profile-lists .setting-well{padding-top:0}
+.wo_user_profile .profile-lists {padding:  12px;}
+.admin-panel .page-margin{margin-bottom:0}
+.page-margin{margin-top:0px;margin-bottom:20px}
+.wowonder-well{background-color:#fff;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);border-radius: max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;padding:15px 15px 1px;}
+.wowonder-well.one-well{padding-top:0}
+.payment_box .modal-content{border-radius: max(100px, min(8px, calc((100vw - 35px - 100%) * 9999))) / 6px!important;}
+.payment_box .modal-content .wow_pops_head{border-radius:0!important;}
+@media (max-width:991px) {
+.tab-container,.wowonder-well{margin-bottom:20px}
+}
+@media (max-width: 600px) {
+	.wow_mini_wallets {flex-direction:column;}
+	.wow_mini_wallets_btns {margin:15px auto 0;}
+}
+@media (min-width:992px) {
+	.wo_new_wallet{padding: 30px 10px;}
+.wo_new_wallet > p{display:none;}
+	.wo_new_wallet .wow_mini_wallets{flex-direction:row;justify-content:space-between;padding:0 20px;}
+.wo_new_wallet .wow_mini_wallets h5{margin-bottom:0;}
+}
+#send-money-form .alert {border-radius:0}
+.choose_rel_ship_avatar img{width:100%;height:120px}
+#send-money-form .dropdown{width:100%}
+#send-money-form .dropdown ul.dropdown-menu{width:100%;border-radius:0;border-left:1px solid #ededed;border-bottom:1px solid #ededed;border-right:1px solid #ededed;box-shadow:0 2px 4px rgba(0,0,0,.2)!important}
+#send-money-form .dropdown ul.dropdown-menu li{width:100%;padding:5px 10px}
+#send-money-form .dropdown ul.dropdown-menu li:hover{background:0 0}
+#send-money-form .alert h4{margin:0;padding:0}
+#send-money-form h5 b{color:green}
+.wow_main_float_head .wow_form_fields {padding: 0;max-width: 500px;margin: 40px auto;}
+.wow_main_float_head .wow_form_fields input {background-color: rgba(255, 255, 255, 0.5);}
+.wow_main_float_head .wow_form_fields input::placeholder {color: #fff}
+.wow_main_float_head .wow_form_fields input:focus {background-color: white;}
+.wow_main_float_head .wow_form_fields .search_suggs, .wo_job_head_filter .search_suggs {position: absolute;padding: 10px;margin: 0;background-color: white;box-shadow: 0 3px 10px -2px rgba(0, 0, 0, 0.2);border-radius: 0 0 4px 4px;width: 100%;z-index: 9;}
+.wow_main_float_head .wow_form_fields .search_suggs:empty, .wo_job_head_filter .search_suggs:empty {padding: 0;background: transparent;box-shadow: none;}
+.wo_page_hdng_innr.big_size {font-size: 20px;font-weight: normal;line-height: 26px;}
+.wo_page_hdng_innr span {display: inline-flex;width:24px;min-width:24px;height:24px;align-items:center;justify-content:center;margin-right: 8px;border-radius: 50%;}
+.wo_page_hdng_search {margin-left: auto;}
+.wo_page_hdng_search .wow_form_fields {margin: -3px 0;padding: 0;}
+.wo_page_hdng_search .wow_form_fields input {box-shadow: none;background-color: #eaeff2;height: 30px;min-width: 340px;border-radius: 2em;font-size: 14.5px;padding: 2px 12px;}
+.wo_page_hdng_search .wow_form_fields .search_suggs, .main-blog-sidebar .widget .wow_form_fields .search_suggs {position: absolute;padding: 10px;margin: 0;background-color: white;box-shadow: 0 3px 10px -2px rgba(0, 0, 0, 0.2);border-radius: max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;z-index: 9;}
+/*Wallet*/
+.wallet_transactions > p {display: flex;justify-content: space-between;align-items: center;}
+.ads-cont-wrapper a,.hashtag-search-result a,.left-sidebar ul li a:focus,.left-sidebar ul li a:hover,.notification-list a:hover{text-decoration:none}
+.ads-cont-wrapper{width:100%;}
+.ads-cont-wrapper .table td {vertical-align:middle;padding: 13px 8px !important;}
+table .setting-avatar{width:20px;float:left;margin-right:5px;border-radius:100px}
+table.setting-table{font-size: 14.5px}
+table.setting-table .active{color:green}
+table.setting-table .pending{color:red}
+.table>thead>tr>th{border-bottom:0!important}
+.threads-table tr td{padding:10px!important;background-color:#fff;box-shadow:0 1px 0 0 #e3e4e8,0 0 0 1px #f1f1f1}
+
+/*Payment History*/
+table.wow_pymnt_table {font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;font-size: 14.5px;}
+table.wow_pymnt_table thead th {font-weight: bold;color: #333;}
+table.wow_pymnt_table tbody>tr:not(:last-child) {border-bottom: 1px solid rgba(0, 0, 0, 0.07);}
+table.wow_pymnt_table tbody>tr>td {vertical-align: middle;padding: 9px 5px;}
+table.wow_pymnt_table .label {display: inline-block;padding: 5px 12px;font-size: 13px;font-weight: bold;border-radius: max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;}
+table.wow_pymnt_table .label-warning {color: #ff9800;background-color: rgba(255, 152, 0, 0.1);}
+table.wow_pymnt_table .label-success {color: #4CAF50;background-color: rgba(76, 175, 80, 0.1);}
+table.wow_pymnt_table .label-danger {color: #F44336;background-color: rgba(244, 67, 54, 0.1);}
+.wow_sett_trans_table {margin: 10px -6px -15px;}
+table .setting-avatar{width:20px;float:left;margin-right:5px;border-radius:100px}
+table.setting-table{font-size: 14.5px}
+table.setting-table .active{color:green}
+table.setting-table .pending{color:red}
+/*Withdrawal*/
+.wallet_trans_type .badge {font-weight: bold;border-radius: 3px;}
+.wallet_trans_type .badge.success {background-color: rgba(76, 175, 80, 0.1);color: #4CAF50;}
+.wallet_trans_type .badge.warning {background-color: rgba(243, 148, 64, 0.1);color: #f39440;}
+.wallet_trans_type .badge.info {background-color: rgba(33, 150, 243, 0.1);color: #2196F3;}
+.wallet_trans_type .badge.danger {background-color: rgba(244, 67, 54, 0.1);color: #F44336;}
+.withdraw_hdr_title {display: flex;align-items: center;justify-content: space-between;}
+.withdraw_hdr_title .btn {box-shadow: none;padding: 0;}
+.withdraw_hdr_title .btn svg {margin-top: -2px;}
+.wallet_holder_name {display: inline-flex;align-items: center;background: rgb(76 175 80 / 0.15);color: #4CAF50;border-radius: 10px;padding: 10px 20px;margin: 5px 0 20px;}
+.wallet_holder_name svg {background-color: #4CAF50;color: white;border-radius: 50%;padding: 9px;width: 42px;height: 42px;}
+.wallet_holder_name .infoz b {margin: 0;}
+.wallet_holder_name .infoz p {margin: 0;font-size: 42px;font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";}
+
+</style>
+
+<style type="text/css">
+	.btn-default {
+    color: #555;
+    background-color: #fff;
+    border-color: #f1f1f1;
+}
+.table-responsive {
+    min-height: .01%;
+    overflow-x: auto;
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 10px;
+}
+pre code, table {
+    background-color: transparent;
+}
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.table-responsive {
+    min-height: .01%;
+    overflow-x: auto;
+}
+.table>thead:first-child>tr:first-child>th {
+    border-top: 0;
+    color: #555;
+}
+.table>thead>tr>th {
+    border-bottom: 0 !important;
+}
+.wow_wallet_trans thead tr th {
+    font-weight: bold;
+}
+.table>thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+}
+.table>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+}
+caption, th {
+    text-align: left;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+}
+</style>
 <div class="columna-8 sett_page wo_new_sett_pagee main_layshane_configuration_menu">
 	<div class="wow_sett_sidebar button_controle_layshane_back_settign">
 		<ul class="list-unstyled" style="padding-bottom:0;">
@@ -90,12 +307,7 @@ button.close{-webkit-appearance:none;padding:0;cursor:pointer;background:0 0;bor
 				<span>Cuentas</span>
 			</div>
 			<br><br>
-
 			<div class="page-margin wowonder-well wo_new_wallet">
-				<?php echo lui_GetCurrency($wo['config']['ads_currency']); ?><br><br>
-				<?php echo sprintf('%.2f',$wo['user']['wallet']);?><br><br>
-				<?php echo '%.2f'.$wo['user']['wallet']; ?>
-
 				<?php if (isset($wo['replenishment_notif'])): ?>
 					<div id="replenish-user-account-alert">
 						<div class="alert alert-success"><?php echo $wo['replenishment_notif'];?></div>

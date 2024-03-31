@@ -539,6 +539,10 @@ function lui_GetProductImages(int $id = 0) {
             $explode3                  = explode('.', $fetched_data['image']);
             $fetched_data['image_org'] = $explode3[0] . '_small.' . $explode2;
             $fetched_data['image_org'] = lui_GetMedia($fetched_data['image_org']);
+
+            $fetched_data['image_mini'] = $explode3[0] . '_thumbnail.' . $explode2;
+            $fetched_data['image_mini'] = lui_GetMedia($fetched_data['image_mini']);
+
             $fetched_data['image']     = lui_GetMedia($fetched_data['image']);
             $data[]                    = $fetched_data;
         }

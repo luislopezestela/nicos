@@ -110,13 +110,14 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
 <?php if($wo['page'] == 'movies' || $wo['page'] == 'watch_movie') { ?>
   <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/movies/style.movies.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" />
 <?php } ?>
-  <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
-  <script id="flikit" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
-
 <?php if($wo['page'] == 'tienda') { ?>
   <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
   <link id="store_cs" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" />
 <?php } ?>
+<?php if($wo['page'] == 'publicacion' || $wo['page'] == 'cuentas'): ?>
+  <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/flickity.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>">
+  <script id="flikit" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+<?php endif ?>
 <?php if ($wo['page'] != 'welcome') { ?>
   <script>$(document).ready(function() {$('div.leftcol').theiaStickySidebar({additionalMarginTop:90});});</script>
   <script type="text/javascript">jQuery(document).ready(function() {jQuery('.custom-fixed-element').theiaStickySidebar({additionalMarginTop:90});});</script>
@@ -136,35 +137,43 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
       $('.lightbox-container').remove();
       document.body.style.overflow = 'auto';
     }
-    function Wo_UpdateLocation(position) {
-    if (!position) {
-      return false;
-    }
+    
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
+    document.head.appendChild(link);
 
-    $.post(Wo_Ajax_Requests_File() + '?f=save_user_location', {lat: position.coords.latitude, lng:position.coords.longitude}, function(data, textStatus, xhr) {
-        if (data.status == 200) {
-          return true;
-        }
+    
+   
+    <?php echo $wo['config']['header_cc']."\n"; ?>
+
+    function Wo_Ajax_Requests_File(){return "<?php echo $wo['config']['site_url'].'/requests.php';?>"}
+    function Wo_Ajax_Requests_Filee(){return "<?php echo $wo['config']['site_url'].'/ajax_loading.php';?>"}
+    function guardarPosicionHorizontal(){
+      var miDiv = document.getElementById('carousel__content');
+      if (miDiv){
+        sessionStorage.setItem('scrollLeft', miDiv.scrollLeft);
+      }
+      
+    }
+    function restaurarPosicionHorizontal(){
+      var miDiv = document.getElementById('carousel__content');
+      if (miDiv) {
+        var scrollLeft = sessionStorage.getItem('scrollLeft') || 0;
+        miDiv.scrollLeft = scrollLeft;
+      }
+      
+    }
+    function Wo_UpdateLocation(position) {
+      if(!position){return false;}
+      $.post(Wo_Ajax_Requests_File() + '?f=save_user_location', {lat: position.coords.latitude, lng:position.coords.longitude}, function(data, textStatus, xhr) {
+        if(data.status == 200){return true;}
       });
       return false;
     }
-    document.addEventListener('DOMContentLoaded', function() {
-      var link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
-      document.head.appendChild(link);
-    });
-
-    <?php echo $wo['config']['header_cc']."\n"; ?>
-      function Wo_Ajax_Requests_File(){
-        return "<?php echo $wo['config']['site_url'].'/requests.php';?>"
-      }
-      function Wo_Ajax_Requests_Filee(){
-        return "<?php echo $wo['config']['site_url'].'/ajax_loading.php';?>"
-      }
-     
-      var websiteUrl = "<?php echo $wo['config']['site_url'];?>";
-      document.addEventListener('DOMContentLoaded', function(){
+    var websiteUrl = "<?php echo $wo['config']['site_url'];?>";
+    $(function(){
+      var urlss = window.location.href;
         <?php if ($wo['loggedin'] == true): ?>
         <?php if ($wo['user']['last_location_update'] < time()): ?>
           if (navigator.geolocation) {
@@ -172,9 +181,18 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
           }
         <?php endif; ?>
         <?php endif; ?>
-        var box = $('#contnet');
-        var ISAPI = $('#ISAPI').val();
-        $(document).on('click', 'a[data-ajax]', function(e) {
+      var box = $('#contnet');
+      var ISAPI = $('#ISAPI').val();
+      $(document).on('click', 'a[data-ajax]', function(e) {
+          var corousel_Data = document.getElementById('carousel__content');
+          if (corousel_Data){
+            if(document.body.contains(corousel_Data)){
+              guardarPosicionHorizontal();
+            }
+          }
+          if(typeof(check_wallet) != 'undefined'){
+            clearInterval(check_wallet);
+          }
           Wo_CloseLightbox();
           $('body').removeAttr('no-more-posts');
           if ($('.postText').length) {
@@ -191,7 +209,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
           var url = $(this).attr('data-ajax');
           e.preventDefault();
           if(!ISAPI){
-            if(url == '?index.php?link1=home') {
+            if(url == '?link1=home') {
               $get_value = $('#json-data').val();
               if($get_value) {
                 $('#load-more-posts').hide();
@@ -210,15 +228,38 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                 }
               }
             }
+              var urlsssss = $(this).attr('href');
+              var segments = urlsssss.split('/').filter(Boolean);
+            if (segments[2] == 'item'){
+                if ($('#flikit').length) {
+                      $('#flikit').remove();
+                }
+                var sucjs  = document.createElement('script');
+                sucjs.id   = 'flikit';
+                sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
+                document.head.appendChild(sucjs);
+            }
+            if (segments[2] == 'cuentas'){
+                if ($('#flikit').length) {
+                      $('#flikit').remove();
+                }
+                var sucjs  = document.createElement('script');
+                sucjs.id   = 'flikit';
+                sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
+                document.head.appendChild(sucjs);
+            }
             $.post(Wo_Ajax_Requests_Filee() + url, {url:url}, function (data) {
-              $('.user-details').remove();
+              if($('.user-details').length >0){
+                $('.user-details').remove();
+              }
+              
               json_data = JSON.parse($(data).filter('#json-data').val());
               if(json_data.welcome_page == 1 || json_data.redirect == 1) {
                 window.location.href = websiteUrl;
                 return false;
               }
               if($('.message-option-btns').length > 0) {
-                if(json_data.url == 'index.php?link1=home') {
+                if(json_data.url == 'index.php?index.php?link1=home') {
                   window.location.href = websiteUrl;
                 }else{
                   window.location.href = json_data.url;
@@ -243,34 +284,46 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
               }else{
                 window.history.pushState({state:'new'},'', json_data.url);
               }
-              $('.postText').autogrow({vertical: true, horizontal: false, height: 200});
-              window.onpopstate = function(event) {
-                $(window).unbind('popstate');
-                window.location.href = document.location;
-              };
-              if(json_data.page == 'timeline' || json_data.page == 'page' || json_data.page == 'group') {
-                $('.content-container').css('margin-top', '90px');
-                $('.ad-placement-header-footer').find('.contnet').css('margin-top', '20px');
-              }else if(json_data.page == 'products'){
+              if ($('.postText').length) {
+                $('.postText').autogrow({vertical: true, horizontal: false, height: 200});
+              }
+              
+           
+              if(json_data.page == 'products'){
                 $('.content-container').css('margin-top', '90px');
                 $('.ad-placement-header-footer').find('.contnet').css('margin-top', '0');
               }else if(json_data.page == 'tienda'){
-                $('#store_cs').remove();
+                if ($('#store_cs').length) {
+                  $('#store_cs').remove();
+                }
                 var link = document.createElement('link');
                 link.rel = 'stylesheet';
                 link.id = "store_cs";
                 link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_t.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
                 document.head.appendChild(link);
               }else{
-                $('.content-container').css('margin-top', '90px');
+                if ($('.content-container').length) {
+                  $('.content-container').css('margin-top', '90px');
+                }
               }
               document.title = decodeHtml(json_data.title);
               document_title = decodeHtml(json_data.title);
               $("html, body").animate({ scrollTop: 0 }, 90);
               Wo_FinishBar();
-              $('#hidden-content').empty();
+              if ($('#hidden-content').length) {
+                $('#hidden-content').empty();
+              }
+              
               $(document).ready(function(){
-                $('div.leftcol').theiaStickySidebar({additionalMarginTop: 90});
+                if ($('div.leftcol').length) {
+                  $('div.leftcol').theiaStickySidebar({additionalMarginTop: 90});
+                }
+                var corousel_Datas = document.getElementById('carousel__content');
+                if (corousel_Datas) {
+                  if(document.body.contains(corousel_Datas)){
+                    restaurarPosicionHorizontal();
+                  }
+                }
               });
               $('#users-reacted-modal').modal("hide");
             }).fail(function() {
@@ -281,7 +334,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
             $('.user-details, .pac-container, .lightbox-container').remove();
           }
         });
-      });
+    });
   </script>
   <?php echo (!empty($wo['config']['googleAnalytics'])) ? $wo['config']['googleAnalytics'] : ''; ?>
   <?php echo lui_LoadPage('style') ?>
@@ -902,10 +955,163 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
            $('#publisher-box-sticker-cont-'+id).html(sticker);
 
          }
-        window.addEventListener("popstate", function (e){
-          //location.reload();
-        });
+function supports_history_api() {
+  return !!(window.history && history.pushState);
+}
+$(function() {
+    if(!supports_history_api()){ return; }
+    window.addEventListener("popstate", function(e) {
+        if (typeof(check_wallet) != 'undefined') {
+            clearInterval(check_wallet);
+        }
+        Wo_CloseLightbox();
+        $('body').removeAttr('no-more-posts');
 
+        if ($('.postText').length && $('.postText').val().length > 0) {
+            if (!confirm("<?php echo html_entity_decode($wo['lang']['havent_finished_post'], ENT_QUOTES) ?>")) {
+                return false;
+            } else {
+                $('.postText').val("");
+            }
+        }
+
+        var segments = window.location.pathname.split('/').filter(Boolean);
+        var link1 = "home";
+        var items = null;
+        var opcion = null;
+        var c_id = null;
+        var sub_id = null;
+        if (segments.length > 0) {
+          link1 = segments[0];
+
+          if (segments.length > 1) {
+            if(segments[0]=='item'){
+              items = segments[1];
+              if (segments.length > 2) {
+                opcion = segments[2];
+              }
+            }else if(segments[0]=='tienda'){
+              c_id = segments[1];
+              if (segments.length > 2) {
+                sub_id = segments[2];
+              }
+            }
+            
+          }
+
+        }
+
+        var params = {};
+        if (link1) params.link1 = link1;
+        if (items) params.items = items;
+        if (opcion) params.opcion = opcion;
+        if (c_id) params.c_id = c_id;
+        if (sub_id) params.sub_id = sub_id;
+        var url = '?' + $.param(params);
+        Wo_StartBar();
+        window.post = 0;
+        var box = $('#contnet');
+        var ISAPI = $('#ISAPI').val();
+        e.preventDefault();
+        if (!ISAPI) {
+          if(segments[0] == 'home'){
+            $('#load-more-posts').hide();
+              document.getElementById('posts').innerHTML = '<div class="paage_loader_s"><div class="titulo_loader_w loader_layshane"></div></div><div class="loading_poruductos_cont"><div class="loading_poruductos"><div class="loader_layshane"></div></div><div class="loading_poruductos"><div class="loader_layshane"></div></div><div class="loading_poruductos"><div class="loader_layshane"></div></div><div class="loading_poruductos"><div class="loader_layshane"></div></div></div>';
+              loadposts();
+              $("html, body").animate({ scrollTop: 0 }, 100);
+              $('.user-details, .pac-container, .lightbox-container').remove();
+              Wo_clearPRecording();
+              Wo_CleanRecordNodes();
+              Wo_stopRecording();
+              Wo_StopLocalStream();
+              return false;
+            }
+            if (segments[0] == 'item'){
+              if ($('#flikit').length) {
+                    $('#flikit').remove();
+              }
+              var sucjs  = document.createElement('script');
+              sucjs.id   = 'flikit';
+              sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
+              document.head.appendChild(sucjs);
+            }
+            if (segments[0] == 'cuentas'){
+              if ($('#flikit').length) {
+                    $('#flikit').remove();
+              }
+              var sucjs  = document.createElement('script');
+              sucjs.id   = 'flikit';
+              sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
+              document.head.appendChild(sucjs);
+            }
+            $.post(Wo_Ajax_Requests_Filee() + url, { url: url }, function(data) {
+                if ($('.user-details').length > 0) {
+                    $('.user-details').remove();
+                }
+                json_data = JSON.parse($(data).filter('#json-data').val());
+                box.html(data);
+                if (json_data.is_css_file == 1) {
+                    $('.styled-profile').remove();
+                    $('footer').append(json_data.css_file);
+                    $('.extra-css').html(json_data.css_file_header);
+                } else {
+                    $('.styled-profile').attr('href', '');
+                    $('.extra-css').empty();
+                }
+                Wo_clearPRecording();
+                Wo_CleanRecordNodes();
+                Wo_stopRecording();
+                Wo_StopLocalStream();
+                if ($('.postText').length) {
+                    $('.postText').autogrow({ vertical: true, horizontal: false, height: 200 });
+                }
+
+                if (json_data.page == 'products') {
+                    $('.content-container').css('margin-top', '90px');
+                    $('.ad-placement-header-footer').find('.contnet').css('margin-top', '0');
+                } else if (json_data.page == 'tienda') {
+                    if ($('#store_cs').length) {
+                        $('#store_cs').remove();
+                    }
+                    var link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.id = "store_cs";
+                    link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_t.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
+                    document.head.appendChild(link);
+                }else{
+                    if ($('.content-container').length) {
+                        $('.content-container').css('margin-top', '90px');
+                    }
+                }
+
+                document.title = decodeHtml(json_data.title);
+                document_title = decodeHtml(json_data.title);
+                $("html, body").animate({ scrollTop: 0 }, 90);
+                Wo_FinishBar();
+                if ($('#hidden-content').length) {
+                    $('#hidden-content').empty();
+                }
+
+                $(document).ready(function() {
+                    if ($('div.leftcol').length) {
+                        $('div.leftcol').theiaStickySidebar({ additionalMarginTop: 90 });
+                    }
+                    var corousel_Datas = document.getElementById('carousel__content');
+                    if (corousel_Datas) {
+                        if (document.body.contains(corousel_Datas)) {
+                            restaurarPosicionHorizontal();
+                        }
+                    }
+                });
+
+                $('#users-reacted-modal').modal("hide");
+            }).fail(function() {}).always(function() {
+                Wo_FinishBar();
+            });
+            $('.user-details, .pac-container, .lightbox-container').remove();
+        }
+    });
+});
        /*Language Select*/
         document.addEventListener("DOMContentLoaded", function(){
           function appendImageToElement(elementSelector, imagePath, altText){
@@ -962,21 +1168,9 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
         });
       </script>
       <?php } ?>
-      <?php if ($wo['page'] == 'welcome') {?>
-    <style>.cc-bottom{bottom: 2.5em;}</style>
-      <?php } ?>
-    <?php
-    if ($wo['loggedin'] == true) {
-    $wo['user']['notification_settings'] = (Array) json_decode(html_entity_decode($wo['user']['notification_settings']));
-     if ($wo['loggedin'] == true && $wo['config']['memories_system'] != 0 && $wo['user']['notification_settings']['e_memory'] == 1 && empty($_COOKIE['memory'])) { ?>
-      <script type="text/javascript">
-        $.post(Wo_Ajax_Requests_File() + '?f=notify_memories', function(data, textStatus, xhr) {});
-      </script>
-    <?php } } ?>
     <!-- HTML NOTIFICATION POPUP -->
     <div id="notification-popup"></div>
     <!-- HTML NOTIFICATION POPUP -->
-  <a href="<?php echo $wo['config']['site_url'].'/checkout';?>" data-ajax="?link1=checkout" id="load_checkout" style="display: none;"></a>
   <div id="select-language" class="modal fade" data-keyboard="false">
     <div class="lang_select_modal">
       <div class="modal-body">

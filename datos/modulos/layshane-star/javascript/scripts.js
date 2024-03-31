@@ -1,3 +1,6 @@
+setTimeout(console.log.bind(console, "%c¡Detente!", "font-family:Helvetica, Arial, sans-serif; font-weight: bold; color: red; font-size: 45px; padding-top:10px;padding-bottom:10px;"));
+setTimeout(console.log.bind(console, "%cEsta función del navegador está pensada para desarrolladores. Si alguien te indicó que copiaras y pegaras algo aquí para habilitar una función de layshane o para hackear la cuenta de alguien, se trata de un fraude. Si lo haces, esta persona podrá acceder a tu cuenta.", "font-family: Helvetica, Arial, sans-serif; color: #555; font-size: 20px; padding-top:15px;padding-bottom:15px;"));
+setTimeout(console.log.bind(console, "%cPara obtener más información, consulta https://layshane.com/", "font-family:Helvetica, Arial, sans-serif; font-weight: normal; color: #555; font-size: 20px; padding-top:15px;padding-bottom:15px;"));
 current_notification_number = 0;
 current_messages_number = 0;
 current_follow_requests_number = 0;

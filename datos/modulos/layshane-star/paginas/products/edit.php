@@ -623,7 +623,7 @@
 									<?php endif ?>
 								<?php  } ?>
 								<div class="hidden">
-									<input type="file" id="publisher-photos" accept="image/x-png, image/gif, image/jpeg" name="postPhotos[]" multiple="multiple">
+									<input type="file" id="publisher-photos" accept="image/x-png, image/gif, image/jpeg, image/webp" name="postPhotos[]" multiple="multiple">
 								</div>
 							</div>
 
@@ -1025,7 +1025,7 @@
             var extn = product_imgPath.substring(product_imgPath.lastIndexOf('.') + 1).toLowerCase();
             var product_image_holder = $("#uploaded-productimage-holder");
             //product_image_holder.empty();
-            if(extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+            if(extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "webp") {
             	if(typeof(FileReader) != "undefined"){
             		for(var i = 0; i < product_countFiles; i++){
             			var product_reader = new FileReader();

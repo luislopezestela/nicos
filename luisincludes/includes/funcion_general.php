@@ -860,6 +860,11 @@ function lui_Resize_Crop_Image($max_width, $max_height, $source_file, $dst_dir, 
             break;
     }
     $dst_img = @imagecreatetruecolor($max_width, $max_height);
+    // Establecer el canal alfa para imágenes PNG y WebP
+    if ($mime == 'image/png' || $mime == 'image/webp') {
+        imagealphablending($dst_img, false);
+        imagesavealpha($dst_img, true);
+    }
     $src_img = @$image_create($source_file);
     if (function_exists('exif_read_data')) {
         $exif          = @exif_read_data($source_file);
@@ -868,17 +873,17 @@ function lui_Resize_Crop_Image($max_width, $max_height, $source_file, $dst_dir, 
             switch ($exif['Orientation']) {
                 case 3:
                     $src_img = @imagerotate($src_img, 180, 0);
-                    @imagejpeg($src_img, $dst_dir, $quality);
+                    @imagewebp($src_img, $dst_dir, $quality);
                     $another_image = true;
                     break;
                 case 6:
                     $src_img = @imagerotate($src_img, -90, 0);
-                    @imagejpeg($src_img, $dst_dir, $quality);
+                    @imagewebp($src_img, $dst_dir, $quality);
                     $another_image = true;
                     break;
                 case 8:
                     $src_img = @imagerotate($src_img, 90, 0);
-                    @imagejpeg($src_img, $dst_dir, $quality);
+                    @imagewebp($src_img, $dst_dir, $quality);
                     $another_image = true;
                     break;
             }
@@ -921,9 +926,10 @@ function substitute($stringOrFunction, $number) {
 function lui_Time_Elapsed_String_word($ptime)
 {
     global $wo;
+    header('Content-Type: text/html; charset=UTF-8');
     $etime = time() - $ptime;
     if ($etime < 1) {
-        return '0 seconds';
+        return '0 segundos';
     }
     $a        = array(
         365 * 24 * 60 * 60 => $wo['lang']['year'],
@@ -959,7 +965,7 @@ function lui_Time_Elapsed_String($ptime) {
     $etime = (time()) - $ptime;
     if ($etime < 1) {
         //return '0 seconds';
-        return 'Now';
+        return 'Ahora';
     }
     $seconds = abs($etime);
     $minutes = $seconds / 60;

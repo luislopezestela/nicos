@@ -1,6 +1,6 @@
+<?php echo lui_LoadPage("sidebar/left-sidebar"); ?>
 <div class="page-margin">
 	<div class="row">
-		<div class="col-md-2 leftcol"><?php echo lui_LoadPage("sidebar/left-sidebar"); ?></div>
 		<div class="col-md-7 singlecol">
 			<div class="page-margin wow_content">
 				<div class="wo_page_hdng pag_neg_padd pag_alone">

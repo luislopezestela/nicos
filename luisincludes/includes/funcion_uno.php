@@ -4902,6 +4902,7 @@ function lui_EmoPhone($string = '') {
     }
     return $string;
 }
+
 function lui_UploadLogo($data = array()) {
     global $wo, $sqlConnect;
     if (isset($data['file']) && !empty($data['file'])) {
@@ -5172,7 +5173,58 @@ function lui_UploadFavicon($data = array()) {
         }
     }
 }
+function lui_addImages_load_sinCrop($data = array(), $type = 0) {
+    global $wo, $sqlConnect;
+    
+    if (empty($data['file']) || empty($data['name'])) {
+        return false;
+    }
 
+    // Verificar si el tipo de archivo es WebP
+    if ($data['type'] === 'image/webp') {
+        $allowed_extensions = ['webp']; // Solo permitir la carga de archivos WebP
+    } else {
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    }
+
+    $file_extension = pathinfo($data['name'], PATHINFO_EXTENSION);
+    if (!in_array($file_extension, $allowed_extensions)) {
+        return false; // Extensión de archivo no permitida
+    }
+
+    // Crear directorios si no existen
+    $dir = "upload/photos/" . date('Y') . '/' . date('m');
+    if (!file_exists($dir)) {
+        mkdir($dir, 0777, true);
+    }
+
+    $filename = $dir . '/' . lui_GenerateKey() . '_' . date('d') . '_' . md5(time()) . "_image.webp";
+
+    // Si ya es WebP, simplemente mueve el archivo al directorio de destino
+    if ($data['type'] === 'image/webp') {
+        if (!move_uploaded_file($data['file'], $filename)) {
+            return false;
+        }
+    } else {
+        // Si no es WebP, convierte la imagen al formato WebP
+        $image = imagecreatefromstring(file_get_contents($data['file']));
+        if (!$image) {
+            return false; // Error al crear la imagen desde el contenido
+        }
+
+        // Guardar la imagen como WebP
+        if (!imagewebp($image, $filename, 100)) {
+            return false; // Error al guardar la imagen en formato WebP
+        }
+        imagedestroy($image);
+    }
+
+    $last_data = array(
+        'filename' => $filename,
+        'name' => $data['name']
+    );
+    return $last_data;
+}
 function lui_addImages_load($data = array(), $type = 0, $crop = true) {
     global $wo, $sqlConnect;
     
@@ -5337,13 +5389,25 @@ function lui_ShareFile($data = array(), $type = 0, $crop = true) {
                     $explode2  = @end(explode('.', $filename));
                     $explode3  = @explode('.', $filename);
                     $last_file = $explode3[0] . '_small.' . $explode2;
-                    if (lui_Resize_Crop_Image(400, 400, $filename, $last_file, 60)) {
+                    if (lui_Resize_Crop_Image(400, 400, $filename, $last_file, 90)) {
                         if ($second_file != 'gif' && $wo['config']['watermark'] == 1 && !empty($wo['add_watermark']) && $wo['add_watermark'] == true) {
                             watermark_image($last_file);
                         }
                         if (empty($data['local_upload'])) {
                             if (($wo['config']['amazone_s3'] == 1 || $wo['config']['wasabi_storage'] == 1 || $wo['config']['ftp_upload'] == 1 || $wo['config']['spaces'] == 1 || $wo['config']['cloud_upload'] == 1 || $wo['config']['backblaze_storage'] == 1) && !empty($last_file)) {
                                 $upload_s3 = lui_UploadToS3($last_file);
+                            }
+                        }
+                    }
+
+                    $last_file_mini = $explode3[0] . '_thumbnail.' . $explode2;
+                    if (lui_Resize_Crop_Image(90, 90, $filename, $last_file_mini, 90)) {
+                        if ($second_file != 'gif' && $wo['config']['watermark'] == 1 && !empty($wo['add_watermark']) && $wo['add_watermark'] == true) {
+                            watermark_image($last_file_mini);
+                        }
+                        if (empty($data['local_upload'])) {
+                            if (($wo['config']['amazone_s3'] == 1 || $wo['config']['wasabi_storage'] == 1 || $wo['config']['ftp_upload'] == 1 || $wo['config']['spaces'] == 1 || $wo['config']['cloud_upload'] == 1 || $wo['config']['backblaze_storage'] == 1) && !empty($last_file_mini)) {
+                                $upload_s3 = lui_UploadToS3($last_file_mini);
                             }
                         }
                     }
@@ -5358,7 +5422,7 @@ function lui_ShareFile($data = array(), $type = 0, $crop = true) {
             }
         }
         if (!empty($data['crop'])) {
-            $crop_image = lui_Resize_Crop_Image($data['crop']['width'], $data['crop']['height'], $filename, $filename, 60);
+            $crop_image = lui_Resize_Crop_Image($data['crop']['width'], $data['crop']['height'], $filename, $filename, 90);
         }
         if (empty($data['local_upload'])) {
             if (($wo['config']['amazone_s3'] == 1 || $wo['config']['wasabi_storage'] == 1 || $wo['config']['ftp_upload'] == 1 || $wo['config']['spaces'] == 1 || $wo['config']['cloud_upload'] == 1 || $wo['config']['backblaze_storage'] == 1) && !empty($filename)) {
@@ -7306,8 +7370,11 @@ function lui_DeletePost($post_id = 0, $type = '') {
                     $explode2 = @end(explode('.', $fetched_data['postFile']));
                     $explode3 = @explode('.', $fetched_data['postFile']);
                     $media_2  = $explode3[0] . '_small.' . $explode2;
+                    $media_3  = $explode3[0] . '_thumbnail.' . $explode2;
                     @unlink(trim($media_2));
                     lui_DeleteFromToS3($media_2);
+                    @unlink(trim($media_3));
+                    lui_DeleteFromToS3($media_3);
                 }
             }
         }
@@ -7336,9 +7403,12 @@ function lui_DeletePost($post_id = 0, $type = '') {
                     $explode2 = @end(explode('.', $fetched_delete_data['image']));
                     $explode3 = @explode('.', $fetched_delete_data['image']);
                     $media_2  = $explode3[0] . '_small.' . $explode2;
+                    $media_3  = $explode3[0] . '_thumbnail.' . $explode2;
                     @unlink(trim($media_2));
+                    @unlink(trim($media_3));
                     @unlink($fetched_delete_data['image']);
                     $delete_from_s3 = lui_DeleteFromToS3($media_2);
+                    $delete_from_s3 = lui_DeleteFromToS3($media_3);
                     $delete_from_s3 = lui_DeleteFromToS3($fetched_delete_data['image']);
                 }
             }
@@ -7350,9 +7420,12 @@ function lui_DeletePost($post_id = 0, $type = '') {
                     $explode2 = @end(explode('.', $fetched_data_s['image']));
                     $explode3 = @explode('.', $fetched_data_s['image']);
                     $media_2  = $explode3[0] . '_small.' . $explode2;
+                    $media_3  = $explode3[0] . '_thumbnail.' . $explode2;
                     @unlink(trim($media_2));
+                    @unlink(trim($media_3));
                     @unlink($fetched_data_s['image']);
                     $delete_from_s3 = lui_DeleteFromToS3($media_2);
+                    $delete_from_s3 = lui_DeleteFromToS3($media_3);
                     $delete_from_s3 = lui_DeleteFromToS3($fetched_data_s['image']);
                     mysqli_query($sqlConnect, "DELETE FROM " . T_ALBUMS_MEDIA . " WHERE `image` = '" . $fetched_data['postFile'] . "' ");
                 }
@@ -7373,9 +7446,12 @@ function lui_DeletePost($post_id = 0, $type = '') {
                     $explode2 = @end(explode('.', $fetched_data['image']));
                     $explode3 = @explode('.', $fetched_data['image']);
                     $media_2  = $explode3[0] . '_small.' . $explode2;
+                    $media_3  = $explode3[0] . '_thumbnail.' . $explode2;
                     @unlink(trim($media_2));
+                    @unlink(trim($media_3));
                     @unlink($fetched_data['image']);
                     $delete_from_s3 = lui_DeleteFromToS3($media_2);
+                    $delete_from_s3 = lui_DeleteFromToS3($media_3);
                     $delete_from_s3 = lui_DeleteFromToS3($fetched_data['image']);
                 }
             }
@@ -7388,9 +7464,12 @@ function lui_DeletePost($post_id = 0, $type = '') {
                             $explode2 = @end(explode('.', $fetched_data_['image']));
                             $explode3 = @explode('.', $fetched_data_['image']);
                             $media_2  = $explode3[0] . '_small.' . $explode2;
+                            $media_3  = $explode3[0] . '_thumbnail.' . $explode2;
                             @unlink(trim($media_2));
+                            @unlink(trim($media_3));
                             @unlink($fetched_data_['image']);
                             $delete_from_s3 = lui_DeleteFromToS3($media_2);
+                            $delete_from_s3 = lui_DeleteFromToS3($media_3);
                             $delete_from_s3 = lui_DeleteFromToS3($fetched_data_['image']);
                         }
                     }
@@ -7428,9 +7507,12 @@ function lui_DeletePost($post_id = 0, $type = '') {
                 $explode2 = @end(explode('.', $fetched_delete_data['image']));
                 $explode3 = @explode('.', $fetched_delete_data['image']);
                 $media_2  = $explode3[0] . '_small.' . $explode2;
+                $media_3  = $explode3[0] . '_thumbnail.' . $explode2;
                 @unlink(trim($media_2));
+                @unlink(trim($media_3));
                 @unlink($fetched_delete_data['image']);
                 $delete_from_s3 = lui_DeleteFromToS3($media_2);
+                $delete_from_s3 = lui_DeleteFromToS3($media_3);
                 $delete_from_s3 = lui_DeleteFromToS3($fetched_delete_data['image']);
                 if (!empty($fetched_delete_data['parent_id'])) {
                     lui_DeletePost($fetched_delete_data['post_id']);

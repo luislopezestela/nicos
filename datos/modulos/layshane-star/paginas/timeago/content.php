@@ -1,10 +1,8 @@
 <script type="text/javascript">
   (function (factory) {
   if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
     define(['jquery'], factory);
   } else {
-    // Browser globals
     factory(jQuery);
   }
 }(function ($) {
@@ -40,7 +38,7 @@
         hour: "<?php echo $wo['lang']['hour'];?>",
         hours: "<?php echo $wo['lang']['hours'];?>",
         day: "<?php echo $wo['lang']['day'];?>",
-        days: "<?php echo $wo['lang']['days'];?>",
+        days: "<?php echo html_entity_decode($wo['lang']['days']);?>",
         week: "<?php echo $wo['lang']['week'];?>",
         weeks: "<?php echo $wo['lang']['weeks'];?>",
         month: "<?php echo $wo['lang']['month'];?>",
@@ -82,20 +80,7 @@
         var string = $.isFunction(stringOrFunction) ? stringOrFunction(number, distanceMillis) : stringOrFunction;
         var value = ($l.numbers && $l.numbers[number]) || number;
         return number+' '+string.replace(/%d/i, value);
-        //return string.replace(/%d/i, value);
       }
-
-        // var words = seconds < 45 && substitute($l.seconds, '') ||
-        // seconds < 90 && substitute('m', 1) ||
-        // minutes < 45 && substitute('m', Math.round(minutes)) ||
-        // minutes < 90 && substitute('h', 1) ||
-        // hours < 24 && substitute('hrs', Math.round(hours)) ||
-        // hours < 42 && substitute('d', 1) ||
-        // days < 7 && substitute('d', Math.round(days)) ||
-        // weeks < 2 && substitute('w', 1) ||
-        // weeks < 52 && substitute('w', Math.round(weeks)) ||
-        // years < 1.5 && substitute('y', 1) ||
-        // substitute('yrs', Math.round(years));
         var words = '';
         if (type != 'notification') {
             if (seconds < 45) {
@@ -153,6 +138,7 @@
             }
             else if (days < 7) {
                 words = substitute($l.days + ' <?php echo $wo['lang']['ago'];?>', Math.round(days));
+
             }
             else if (weeks < 2) {
                 words = substitute($l.week + ' <?php echo $wo['lang']['ago'];?>', 1);

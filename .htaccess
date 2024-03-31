@@ -61,7 +61,7 @@ RewriteRule ^album/([A-Za-z0-9_-]+)$ index.php?link1=album&id=$1 [QSA]
 RewriteRule ^create-album$ index.php?link1=create-album [QSA]
 RewriteRule ^create-album/([A-Za-z0-9_-]+)$ index.php?link1=create-album&album=$1  [QSA]
 RewriteRule ^$ index.php?link1=home [QSA]
-
+RewriteRule ^ventas(/?|)$ index.php?link1=ventas [NC,QSA]
 RewriteRule ^setting/([A-Za-z0-9_]+)/$  index.php?link1=setting&user=$1 [NC,QSA]
 RewriteRule ^setting/([A-Za-z0-9_]+)/([A-Za-z0-9_-]+)$  index.php?link1=setting&user=$1&page=$2 [NC,QSA]
 RewriteRule ^page-setting/([^\/]+)(\/|)$  index.php?link1=page-setting&page=$1 [QSA]
@@ -112,7 +112,11 @@ RewriteRule ^carta(/?|)$ index.php?link1=carta [NC,QSA]
 RewriteRule ^carta/([A-Za-z0-9_-]+)$ index.php?link1=carta&c_id=$1 [QSA]
 RewriteRule ^carta/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$ index.php?link1=carta&c_id=$1&sub_id=$2 [QSA]
 RewriteRule ^qrtienda(/?|)$ index.php?link1=qrtienda [NC,QSA]
+
+
+
 RewriteRule ^imventario(/?|)$ index.php?link1=imventario [NC,QSA]
+RewriteRule ^imventario([^\/]+)(\/|)$ index.php?link1=imventario&page-id=$1 [NC,QSA]
 
 RewriteRule ^imv_productos(/?|)$ index.php?link1=imv_productos [NC,QSA]
 RewriteRule ^imv_ingredientes(/?|)$ index.php?link1=imv_ingredientes [NC,QSA]
@@ -176,6 +180,9 @@ RewriteRule ^ads/create(/?|)$ index.php?link1=create-ads [NC,QSA]
 RewriteRule ^ads/edit/(\d+)(/?|)$ index.php?link1=edit-ads&id=$1 [NC,QSA]
 RewriteRule ^ads/chart/(\d+)(/?|)$ index.php?link1=chart-ads&id=$1 [NC,QSA]
 RewriteRule ^admin/ads/edit/(\d+)(/?|)$ index.php?link1=manage-ads&id=$1 [NC,QSA]
+
+
+RewriteRule ^cuentas(/?|)$ index.php?link1=cuentas [NC,QSA]
 
 # *** STATUS ***
 RewriteRule ^status/create(/?|)$ index.php?link1=create-status [NC,QSA]

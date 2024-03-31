@@ -27,6 +27,7 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 .carousel {
   padding: 15px 0;
   padding-top:0;
+  position:relative;
 }
 .carousel h2 {
   margin: 0;
@@ -191,8 +192,9 @@ $section_keys = lui_GetSectionCatKeys('section_product');
   color: #fff;
 }
 .load-produts .load-more button{width:auto}
+.text_category span{font-family:sans-serif;padding-top:10px;}
 </style>
-<div class="header_layshane_tienda">
+<div class="header_layshane_tienda" style="text-align:center;">
 	<h1><?php echo $wo['lang']['tienda'] ?> <?=$wo['config']['siteName'];?></h1>
 	<?php if(!$category_id==0): ?>
 		<?php if (!empty($nombre_de_categoria_seleccionado)): ?>
@@ -248,9 +250,9 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 						<div class="dropdown-menu menu_drop_up_page dropdown_en_lista_view_productos">
 							<div class="market_categories">
 								<ul class="product-sort-slider price_conten_product_rigth">
-									<li class="active" onclick="changePriceSortValue('latest');$(this).addClass('active');"><a href="javascript:void(0)"><span></span><?php echo $wo['lang']['latest'] ?></a></li>
-									<li onclick="changePriceSortValue('price_low');$(this).addClass('active');"><a href="javascript:void(0)"><span></span><?php echo $wo['lang']['price_low'] ?></a></li>
-									<li onclick="changePriceSortValue('price_high');$(this).addClass('active');"><a href="javascript:void(0)"><span></span><?php echo $wo['lang']['price_high'] ?></a></li>
+									<li class="active" onclick="changePriceSortValue('latest');$(this).addClass('active');"><span></span><?php echo $wo['lang']['latest'] ?></li>
+									<li onclick="changePriceSortValue('price_low');$(this).addClass('active');"><span></span><?php echo $wo['lang']['price_low'] ?></li>
+									<li onclick="changePriceSortValue('price_high');$(this).addClass('active');"><span></span><?php echo $wo['lang']['price_high'] ?></li>
 								</ul>
 							</div>
 						</div>
@@ -289,8 +291,8 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 							<div class="carousel__header">
 						        <h2 class="carousel__headline">Categorias</h2>
 						        <div class="carousel__controls">
-						          <button class="carousel__arrow disabled arrow-prev"></button>
-						          <button class="carousel__arrow arrow-next"></button>
+						          <button class="carousel__arrow disabled arrow-prev" aria-label="Atras"></button>
+						          <button class="carousel__arrow arrow-next" aria-label="Adelante"></button>
 						        </div>
 						    </div>
 						    <script type="text/javascript">

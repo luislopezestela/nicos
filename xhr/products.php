@@ -47,7 +47,8 @@ if ($f == 'products') {
                 'gif',
                 'png',
                 'jpg',
-                'jpeg'
+                'jpeg',
+                'webp'
             );
             for ($i = 0; $i < count($_FILES['postPhotos']['name']); $i++) {
                 $new_string = pathinfo($_FILES['postPhotos']['name'][$i]);
@@ -232,6 +233,7 @@ if ($f == 'products') {
                 'gif',
                 'png',
                 'jpg',
+                'webp',
                 'jpeg'
             );
             for ($i = 0; $i < count($_FILES['postPhotos']['name']); $i++) {
@@ -358,7 +360,7 @@ if ($f == 'products') {
                             'name' => $_FILES['postPhotos']['name'][$i],
                             'size' => $_FILES["postPhotos"]["size"][$i],
                             'type' => $_FILES["postPhotos"]["type"][$i],
-                            'types' => 'jpg,png,jpeg,gif'
+                            'types' => 'jpg,png,jpeg,gif,webp'
                         );
                         $color_id         = 0;
                         if($color_seleccionado ==0 and $color_producto==0){
@@ -435,6 +437,7 @@ if ($f == 'products') {
                             $explode2    = @end(explode('.', $image['image']));
                             $explode3    = @explode('.', $image['image']);
                             $small_image = $explode3[0] . '_small.' . $explode2;
+                            $thumbnail_image = $explode3[0] . '_thumbnail.' . $explode2;
 
                             $product = lui_GetProduct($image['product_id']);
                             if (!empty($product) && $wo['user']['id'] == $product['user_id']) {
@@ -443,9 +446,11 @@ if ($f == 'products') {
                                     if (($wo['config']['amazone_s3'] == 1 || $wo['config']['wasabi_storage'] == 1 || $wo['config']['ftp_upload'] == 1 || $wo['config']['spaces'] == 1 || $wo['config']['cloud_upload'] == 1 || $wo['config']['backblaze_storage'] == 1)) {
                                         lui_DeleteFromToS3($image['image']);
                                         lui_DeleteFromToS3($small_image);
+                                        lui_DeleteFromToS3($thumbnail_image);
                                     }
                                     @unlink($image['image']);
                                     @unlink($small_image);
+                                    @unlink($thumbnail_image);
                                 }
                             }
                         }
@@ -1446,7 +1451,9 @@ if ($f == 'products') {
                     if (!empty($wo['story'])) {
                         $text          = $wo['story']->postText;
                         $hashtag_regex = '/(#\[([0-9]+)\])/i';
-                        preg_match_all($hashtag_regex, $text, $matches);
+                        if ($text !== null) {
+                            preg_match_all($hashtag_regex, $text, $matches);
+                        }
                         $match_i = 0;
                         foreach ($matches[1] as $match) {
                             $hashkey = $matches[2][$match_i];

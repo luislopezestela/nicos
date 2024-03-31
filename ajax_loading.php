@@ -51,6 +51,12 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                     case 'servicios':
                         include('sources/servicios.php');
                         break;
+                    case 'cuentas':
+                        include('sources/cuentas.php');
+                        break;
+                    case 'ventas':
+                        include('sources/ventas.php');
+                        break;
                     case 'carta':
                         include('sources/carta.php');
                         break;
@@ -486,6 +492,12 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                 }
             } else {
                 switch ($page) {
+                    case 'cuentas':
+                        include('sources/cuentas.php');
+                        break;
+                    case 'ventas':
+                        include('sources/ventas.php');
+                        break;
                     case 'servicios':
                         include('sources/servicios.php');
                         break;
@@ -694,6 +706,12 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
         switch ($page) {
             case 'servicios':
                 include('sources/servicios.php');
+                break;
+            case 'cuentas':
+                include('sources/cuentas.php');
+                break;
+            case 'ventas':
+                include('sources/ventas.php');
                 break;
             case 'carta':
                 include('sources/carta.php');
@@ -1268,6 +1286,7 @@ $data['url'] = lui_SeoLink('index.php' . $url);
 <input type="hidden" id="json-data" value='<?php
 echo htmlspecialchars(json_encode($data));
 ?>'>
+<input type="hidden" id="ulr-data-page" value='<?php echo $url; ?>'>
 <?php
 echo $wo['content'];
 ?>

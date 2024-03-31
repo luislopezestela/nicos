@@ -382,8 +382,8 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
             if (in_array($_POST['currency'], $wo['2checkout_currency'])) {
                 $saveSetting = lui_SaveConfig('2checkout_currency', $currency);
             }
-            $request                                                              = fetchDataFromURL("https://api.exchangerate.host/latest?base=" . $currency . "&symbols=" . implode(",", array_values($wo['config']['currency_array'])));
-            $exchange                                                             = json_decode($request, true);
+            $request  = fetchDataFromURL("https://api.exchangerate.host/latest?base=" . $currency . "&symbols=" . implode(",", array_values($wo['config']['currency_array'])));
+            $exchange = json_decode($request, true);
             if (!empty($exchange) && $exchange['success'] == true && !empty($exchange['rates'])) {
                 lui_SaveConfig('exchange', json_encode($exchange['rates']));
                 lui_SaveConfig('exchange_update', (time() + (60 * 60 * 12)));
@@ -1973,12 +1973,8 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
                         'size' => $_FILES["media_file"]["size"],
                         'type' => $_FILES["media_file"]["type"],
                         'types' => 'jpg,png,gif,jpeg,webp',
-                        'crop' => array(
-                            'width' => 270,
-                            'height' => 270
-                        )
                     );
-                    $media    = lui_addImages_load($fileInfo);
+                    $media    = lui_addImages_load_sinCrop($fileInfo);
                 }
                 if($themes=='restaurante-star'){
                     $fileInfo = array(
@@ -2053,18 +2049,15 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
             $logo = '';
             if (!empty($_FILES['media_file'])) {
                 $themes   = $wo['config']['theme'];
-                if($themes=='layshane_star'){
+                if($themes=='layshane-star'){
                     $fileInfo = array(
                         'file' => $_FILES["media_file"]["tmp_name"],
                         'name' => $_FILES['media_file']['name'],
                         'size' => $_FILES["media_file"]["size"],
                         'type' => $_FILES["media_file"]["type"],
-                        'types' => 'jpg,png,gif,jpeg',
-                        'crop' => array(
-                            'width' => 480,
-                            'height' => 490
-                        )
+                        'types' => 'jpg,png,gif,jpeg,webp',
                     );
+                    $media    = lui_addImages_load_sinCrop($fileInfo);
                 }elseif($themes=='restaurante-star'){
                     $fileInfo = array(
                         'file' => $_FILES["media_file"]["tmp_name"],
@@ -2077,9 +2070,10 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
                             'height' => 480
                         )
                     );
+                    $media    = lui_ShareFile($fileInfo);
                 }
                 
-                $media    = lui_ShareFile($fileInfo);
+                
                 if (!empty($media) && !empty($media['filename'])) {
                     $logo = $media['filename'];
                 }

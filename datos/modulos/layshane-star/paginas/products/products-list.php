@@ -15,15 +15,10 @@
 <div class="product" id="product-<?php echo $wo['product']['id']?>" data-id="<?php echo $wo['product']['id']?>">
 	<div class="product_info wow_main_mkt_prod">
 		<div class="product-image">
-			<a href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=item&items=<?php echo $wo['product']['seo_id'];?><?=$el_color_b;?>"><img src="<?php echo $wo['product']['images'][0]['image_org'];?>"></a>
-			<?php if ($wo['loggedin']) { if ($wo['product']['seller']['id'] != $wo['user']['user_id']) { ?>
-				<div class="product-links">
-					<a class="more-info btn btn-mat" href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=publicacion&items=<?php echo $wo['product']['seo_id'];?><?=$el_color_b;?>"><?php echo $wo['lang']['more_info'] ?></a>
-				</div>
-			<?php } else { ?>
-			<?php } ?>
-			<?php } ?>
-			
+			<a href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=item&items=<?php echo $wo['product']['seo_id'];?><?=$el_color_b;?>" style="font-size:0;">
+				<?php echo $wo['product']['name']?>
+				<img width="400" height="400" src="<?php echo $wo['product']['images'][0]['image_org'];?>" alt="Imagen">
+			</a>
 		</div>
 		<div class="produc_info">
 			<div class="wow_main_prod_foot" style="<?php echo(empty($wo['product']['units']) && $wo['product']['units'] < 1 ? 'padding-bottom: 5px;' : '') ?>">
@@ -41,9 +36,6 @@
 					<?php } ?> 
 
 				<?php } else { ?>
-					<a class="btn btn-default btn-mat" href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=publicacion&items=<?php echo $wo['product']['seo_id'];?><?=$el_color_b;?>" title="<?php echo $wo['lang']['more_info'] ?>">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg>
-					</a>
 				<?php } ?>
 				<?php } ?>
 			</div>
@@ -53,10 +45,10 @@
 				    $product_by_ = str_replace('{product_category_name}', $wo['products_categories'][$wo['product']['category']]['id'], $product_by_);
 			
 				?>
-				<a href="<?php echo lui_SeoLink('index.php?link1=products&c_id=' . $wo['product']['category']);?>"><?php echo $wo["lang"][$wo['products_categories'][$wo['product']['category']]['lang_key']];?></a>
+				<a href="<?php echo lui_SeoLink('index.php?link1=tienda&c_id=' . $wo['product']['category']);?>"><?php echo $wo["lang"][$wo['products_categories'][$wo['product']['category']]['lang_key']];?></a>
 				<?php if (!empty($wo['product']['product_sub_category'])) { ?>
 				<div>
-					<a href="<?php echo lui_SeoLink('index.php?link1=products&c_id=' . $wo['product']['category']);?>"><?php echo $wo['product']['product_sub_category'];?></a>
+					<a href="<?php echo lui_SeoLink('index.php?link1=tienda&c_id=' . $wo['product']['category'].'&sub_id='.$wo['product']['sub_category']);?>"><?php echo $wo['product']['product_sub_category'];?></a>
 				</div>
 				<?php } ?>
 			</div>
