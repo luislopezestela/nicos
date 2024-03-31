@@ -128,6 +128,7 @@ if($f == 'product_compra_list_addc_lop') {
 			    $wo['product']['name'] = $producto['name'];
 			    $wo['product']['modelo'] = $producto['modelo'];
 			    $wo['product']['sku'] = $producto['sku'];
+			    $wo['product']['comprap'] = $comprapendiente->id;
 			    $wo['product']['symbol'] = (!empty($wo['currencies'][$producto['currency']]['symbol'])) ? $wo['currencies'][$producto['currency']]['symbol'] : $wo['config']['classified_currency_s'];
 
 			    $wo['product']['inventario'] = $variantes_color[0]->id;
