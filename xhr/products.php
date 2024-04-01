@@ -675,10 +675,14 @@ if ($f == 'products') {
     if ($s == 'add_cart') {
         if (!empty($_POST['product_id']) && is_numeric($_POST['product_id']) && $_POST['product_id'] > 0) {
             $is_added = $db->where('product_id', lui_Secure($_POST['product_id']))->where('user_id',$wo['user']['user_id'])->getOne(T_USERCARD);
+
             if (!empty($is_added)) {
                 $product_data = lui_GetProduct(lui_Secure($_POST['product_id']));
                 if (!empty($product_data) && !empty($product_data['units']) && $product_data['units'] > $is_added->units) {
+
                     $db->where('id',$is_added->id)->update(T_USERCARD,array('units' => $db->inc(1)));
+
+                    
                 }
                 // $db->where('product_id',lui_Secure($_POST['product_id']))->where('user_id',$wo['user']['user_id'])->delete(T_USERCARD);
                 $data['status'] = 200;

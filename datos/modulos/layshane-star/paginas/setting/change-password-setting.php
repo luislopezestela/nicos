@@ -18,7 +18,7 @@
 		</div>
 		<?php } ?>
 		<div class="row">
-			<div class="col-md-6">
+			<div class="columna-6">
 				<div class="wow_form_fields">
 					<label for="new_password"><?php echo $wo['lang']['new_password']; ?></label>
 					<input id="new_password" name="new_password" type="password" class="form-control input-md">
@@ -32,7 +32,7 @@
 					<?php } ?>
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="columna-6">
 				<div class="wow_form_fields">
 					<label for="repeat_new_password"><?php echo $wo['lang']['repeat_password']; ?></label>
 					<input id="repeat_new_password" name="repeat_new_password" type="password" class="form-control input-md">

@@ -6,77 +6,278 @@ if ($wo['loggedin'] && $IsOwnerUser) {
    $wo['pr_complition'] = lui_ProfileCompletion();
 }
 ?>
-<style>.post-youtube iframe {overflow: hidden !important; height: 360px !important;}</style>
+<style type="text/css">
+.page-margin{margin-top:0px;margin-bottom:20px;}
+.perfil_de_usuario_details{width:100%;max-width:1200px;margin:0 auto auto auto;}
+.profile-container{padding-right:15px;padding-left:15px;}
+.profile-container .card{border-radius:max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;border-top-left-radius:0px;
+    border-top-right-radius:0px;
+    box-sizing:border-box;
+    margin-bottom:20px;
+}
+.profile-container .card.hovercard {
+    position:relative;
+    padding-top:0;
+    overflow:hidden;
+}
+.wo_user_profile .profile-container .card.hovercard {
+    overflow:visible;
+}
+.profile-container .card.hovercard .cardheader {
+    background:#fff;
+    background-size:cover;
+    max-height:333px;
+    min-height:333px;
+}
+.wo_user_profile .profile-container .card.hovercard .cardheader {
+    overflow:hidden;
+}
+.problackback{
+    display:block;
+    background:linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,.45) 100%);
+    padding:100px;
+    position:absolute;
+    width:100%;bottom:0;left:0;
+}
+.wo_user_profile .problackback {
+    border-radius:8px;
+}
+.wo_user_profile .pic-info-cont {
+    position:relative;
+    background-color:#fff;
+    width:100%;
+    height:180px;
+    bottom:0;
+    display:block;
+    margin:0;
+    text-align:center;
+}
+.wo_user_profile .pic-info-cont .user-avatar {
+    position:relative;
+    width:140px;
+    height:140px;
+    bottom:0;z-index: 1;
+    margin:-65px auto 0;
+    display:inline-block;
+    top:-15px;
+}
+.user-avatar-uploading-container {
+    background-color:rgba(0,0,0,.5);
+    height:100%;
+    width:100%;
+    position:absolute;
+    display:none;
+    border-radius:50%;
+}
+.user-avatar-uploading-progress {
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    display: none;
+}
+.user-avatar-uploading-progress .ball-pulse {
+    display: block;
+    margin: 60px auto;
+    float: none;
+    line-height: 0;
+}
+.user-avatar-uploading-progress .ball-pulse>div {
+    background-color: #dcdcdc;
+}
+.ball-pulse>div {
+    background-color: #3a3c3f;
+    border-radius: 100%;
+    margin: 0 1px;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+.ball-pulse>div:nth-child(1) {
+    -webkit-animation: scale-pulse .75s -.24s infinite cubic-bezier(.2,.68,.18,1.08);
+    animation: scale-pulse .75s -.24s infinite cubic-bezier(.2,.68,.18,1.08);
+}
+.ball-pulse>div:nth-child(2) {
+    -webkit-animation: scale-pulse .75s -.15s infinite cubic-bezier(.2,.68,.18,1.08);
+    animation: scale-pulse .75s -.15s infinite cubic-bezier(.2,.68,.18,1.08);
+}
+.ball-pulse>div:nth-child(3) {
+    -webkit-animation: scale-pulse .75s -.11s infinite cubic-bezier(.2,.68,.18,1.08);
+    animation: scale-pulse .75s -.11s infinite cubic-bezier(.2,.68,.18,1.08);
+}
+.wo_user_profile .pic-info-cont .user-avatar img {
+    width: 100%!important;
+    height:auto;
+    margin-right:auto;
+    box-shadow: 0 2px 10px rgba(0,0,0,.15);
+    border-radius: 50%;
+}
+.profile-avatar-changer {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    left: 0;
+    right: 0;
+    display: none;
+}
+.wo_profile_pic_hover{
+    top: 0;
+    border-radius: 50%;
+}
+.wo_profile_pic_hover .profile_avatar {
+    background: rgb(0 0 0 / 20%);
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-upload-image {
+    background-color: transparent;
+    opacity: 1;
+    color: #fff;
+    transition: all .2s;
+    text-shadow: #555 0 0 1px;
+    padding: 5px;
+    cursor:pointer;
+}
+.wo_profile_pic_hover .profile_avatar .btn-file {
+    border: 0;
+    background: rgb(0 0 0 / 80%);
+    border-radius: 50%;
+    line-height: 1;
+    padding: 8px;
+}
+.wo_profile_pic_hover .profile_avatar .btn-file svg {
+	vertical-align: middle;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    text-align: right;
+    opacity: 0;
+    outline: 0;
+    background: #fff;
+    cursor: inherit;
+    display: block;
+}
+.profile-container .card.hovercard .info .title {
+    left:0;
+    position:relative;
+    width: 100%;
+    z-index: 1;
+    text-shadow: none;
+    line-height: 1;
+    color: #fff;
+    vertical-align: middle;
+    font-size: 26px;
+    margin-top:0;
+    top:0;
+}
+.profile-container .card.hovercard .info .title a {
+    color: #4a4a4a;
+}
+.wo_user_profile .card.hovercard .info .options-buttons {
+    position: relative;
+    margin: 10px 10px 5px;
+    z-index: auto;
+}
+.wo_user_profile .options-buttons a{
+    margin: 0;
+    float: none;
+    line-height: 1.42857143;
+    white-space: nowrap;vertical-align: middle;
+}
+.wo_user_profile .btn-glossy > a{
+    border-radius: max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px !important;
+    border: 0!important;
+    box-shadow: none!important;
+    font-size: 15px!important;
+    padding: 6px 15px!important;
+    height: 33px;
+    margin-right: 3px;
+    display:inline-block;
+}
+.wo_user_profile .btn-glossy > a:not(.btn-main){
+    color: var(--boton-color);
+    background: var(--boton-fondo);
+    transition: all .5s;
+}
+.contenedor_information_users_layshane {
+    display: block;
+    background-color: #fafafa;
+    margin: 15px;
+    position: relative;
+}
+.status_user_layshane {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+}
+.status_user_layshane .online-contenido_perfil .online-text {
+    color: #fafafa;
+    padding: 2px 10px;
+    background: #4caf50;
+    border-radius: 0 0 10px 10px;
+    pointer-events: none;
+    user-select: none;
+}
+.wow_content{
+    padding-bottom: 6px;
+    border-radius:max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;
+    padding:15px 15px 1px;
+    width: 100%;
+}
+.wo_page_hdng {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+}
+.right_user_info .wo_page_hdng {
+    margin-bottom: 7px;
+}
+.wo_page_hdng_innr {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #050505;
+    font-weight: 600;
+    line-height: 16px;
+}
+.right_user_info li {
+	position:relative;
+	word-break:break-word;
+	display:block;
+    padding: 4px 13px;
+    color: #1d2129;
+    font-size: 14px;
+}
+.wow_content p{
+	padding:4px 13px;
+}
+</style>
 <div class="page-margin profile wo_user_profile perfil_de_usuario_details" data-page="timeline" data-id="<?php echo $wo['user_profile']['user_id'];?>">
 	<div class="profile-container">
 		<div class="card hovercard" style="margin-bottom: 0px;">
-			<div class="cardheader user-cover">
-				<?php if($IsOwner === true) { ?>
-					<form action="#" method="post" class="profile-cover-changer">
-                        <div class="input-group when-notedit profile_cover">
-                            <span class="input-group-btn">
-                                <span class="btn btn-upload-image btn-file">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                                    <input type="file" name="cover" accept="image/*" onchange="Wo_UpdateProfileCover();">
-                                </span>
-                            </span>
-                        </div>
-                        <div class="input-group profile_cover">
-                            <span class="input-group-btn when-notedit">
-                                <span class="btn btn-upload-image btn-file" onclick="Wo_StartRepositioner();">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-crop"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path></svg>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="input-group when-edit" style="display: none;">
-                            <span class="input-group-btn">
-                                <span class="btn btn-upload-image btn-file" onclick="Wo_SubmitRepositioner();">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="input-group when-edit" style="display: none;">
-                            <span class="input-group-btn">
-                                <span class="btn btn-upload-image btn-file" onclick="Wo_StopRepositioner();">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                </span>
-                            </span>
-                        </div>
-                        <input type="hidden" name="user_id" value="<?php echo $wo['user_profile']['user_id'];?>">
-                    </form>
-                    <form class="cover-position-form hidden" method="post">
-                        <input class="cover-position" name="pos" value="0" type="hidden">
-                        <input class="image_type" name="image_type" value="0" type="hidden">
-                        <input name="cover_image" id="cover-input-image" value="<?php echo $wo['user_profile']['cover_org']?>" type="hidden">
-                        <input name="real_image" id="full-input-image" value="<?php echo lui_GetMedia($wo['user_profile']['cover_full']); ?>" type="hidden">
-                        <input type="hidden" name="user_id" value="<?php echo $wo['user_profile']['user_id'];?>">
-                    </form>
-				<?php } ?>
-				<div class="user-cover-uploading-container"></div>
-				<div class="user-cover-uploading-progress">
-					<div class="pace-activity-parent"><div class="pace-activity"></div></div>
-				</div>
-				<div class="user-cover-reposition-container">
-					<div class="user-cover-reposition-w">
-						<img id="cover-image" src="<?php echo $wo['user_profile']['cover']?>" alt="<?php echo $wo['user_profile']['name']?>" onclick="Wo_OpenProfileCover('<?php echo $wo['user_profile']['cover_org']?>');" class="pointer"/>
-					</div>
-					<div class="user-reposition-container">
-						<img id="full-image" src="<?php echo lui_GetMedia($wo['user_profile']['cover_full'])?>" alt="<?php echo $wo['user_profile']['name']?>"/>
-						<div class="user-reposition-dragable-container" align="center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-move"><polyline points="5 9 2 12 5 15"></polyline><polyline points="9 5 12 2 15 5"></polyline><polyline points="15 19 12 22 9 19"></polyline><polyline points="19 9 22 12 19 15"></polyline><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
-							<?php echo $wo['lang']['drag_to_re']; ?>
-						</div>
-						<div class="user-cover-uploading-container user-repositioning-icons-container1"></div>
-						<div class="user-cover-uploading-progress user-repositioning-icons-container"></div>
-					</div>
-				</div>
-			</div>
-
-			<div class="problackback"></div>
-
+			<div class="cardheader user-cover"></div>
 			<div class="pic-info-cont">
                 <div class="user-avatar flip <?php if ($wo['have_stories'] == true && $wo['story_seen_class'] != 'seen_story' && $wo['loggedin'] == true) { ?><?php echo($wo['story_seen_class']); ?><?php } ?>">
-                    <div class="user-avatar-uploading-container">
+                	<div class="user-avatar-uploading-container">
                         <div class="user-avatar-uploading-progress">
                             <div class="ball-pulse"><div></div><div></div><div></div></div>
                         </div>
@@ -124,9 +325,6 @@ if ($wo['loggedin'] && $IsOwnerUser) {
                     </div>
                     <?php if ($wo['user_profile']['banned'] != 1) { ?>
                     <div class="options-buttons">
-						<span class="profile-message-btn btn-glossy">
-                        <?php echo lui_GetMessageButton($wo['user_profile']['user_id']);?>
-                        </span>
 						<?php if($IsOwnerUser === true) { ?>
 							<span class="btn-glossy">
 								<a class="btn btn-default" href="<?php echo lui_SeoLink('index.php?link1=setting&user=' . $wo['user_profile']['username'] . '&page=general-setting') ?>" data-ajax="?link1=setting&user=<?php echo $wo['user_profile']['username'] . '&page=general-setting'; ?>">
@@ -190,11 +388,6 @@ if ($wo['loggedin'] && $IsOwnerUser) {
 				</div>
 			</div>
 
-           
-
-            <li class="list-group-item" style="padding-top:0; padding-bottom:0;">
-                <hr>
-            </li>
             <li class="list-group-item">
                 <?php
                 $gender = ucfirst(strtolower($wo['user_profile']['gender']));
@@ -204,92 +397,8 @@ if ($wo['loggedin'] && $IsOwnerUser) {
                 else{
                 	echo $wo['genders'][array_keys($wo['genders'])[0]];
                 }
-                //echo ($gender == 'Male') ? $wo['lang']['male'] : $wo['lang']['female'];
                 ?>
             </li>
-            <?php if ($wo['user_profile']['birthday'] != '0000-00-00' && $wo['user_profile']['birthday'] != '00-00-0000' && lui_CanSeeBirthday($wo['user_profile']['user_id'], $wo['user_profile']['birth_privacy']) === true) {  ?>
-            <li class="list-group-item">
-                <?php echo date($wo['config']['date_style'],strtotime($wo['user_profile']['birthday']));?>
-            </li>
-            <?php  }  ?>
-             <li class="list-group-item" style="padding-top:0; padding-bottom:0;">
-                <hr>
-            </li>
-            <?php
-            $country = $wo['user_profile']['country_id'];
-            if ($country > 0) {
-            ?>
-            <li class="list-group-item">
-                <?php echo $wo['lang']['living_in'];?>
-                <?php echo $wo['countries_name'][$country];?>
-            </li>
-            <li class="list-group-item" style="padding-top:0; padding-bottom:0;">
-                <hr>
-            </li>
-            <?php } ?>
-            <?php if(!empty($wo['user_profile']['address']) && $wo['user_profile']['share_my_location'] == 1) {  ?>
-            <li class="list-group-item">
-                <span><?php echo $wo['lang']['located_in'];?> <?php echo $wo['user_profile']['address'];?></span>
-                <?php if (!empty($wo['config']['google_map_api']) && $wo['config']['google_map']) { ?>
-                <iframe width="100%" class="user-location-frame" frameborder="0" style="border:0;margin-top: 10px;" src="https://www.google.com/maps/embed/v1/place?key=<?php echo $wo['config']['google_map_api']; ?>&q=<?php echo $wo['user_profile']['address'];?>&language=en"></iframe>
-                <?php } ?>
-                <?php if ($wo['config']['yandex_map'] == 1) { ?>
-		            <div id="place_<?php echo($wo['user_profile']['user_id']) ?>" <?php echo($wo['config']['yandex_map'] == 1 ? 'style="width: 100%; height: 300px; padding: 0; margin: 10px 0 0;"' : '') ?>></div>
-		            <script type="text/javascript">
-		                  <?php if (!empty($wo['user_profile']['address'])) { ?>
-		                    setTimeout(function () {
-		                      var myMap;
-		                      ymaps.geocode("<?php echo($wo['user_profile']['address']); ?>").then(function (res) {
-		                          myMap = new ymaps.Map('place_<?php echo($wo['user_profile']['user_id']) ?>', {
-		                              center: res.geoObjects.get(0).geometry.getCoordinates(),
-		                              zoom : 10
-		                          });
-		                          myMap.geoObjects.add(new ymaps.Placemark(res.geoObjects.get(0).geometry.getCoordinates(), {
-		                              balloonContent: ''
-		                          }));
-		                      });
-		                    },1000);
-		                  <?php } ?>
-		                </script>
-		          <?php } ?>
-            </li>
-            <?php } ?>
-
-			<?php if(!empty($wo['user_profile']['facebook']) || !empty($wo['user_profile']['twitter']) || !empty($wo['user_profile']['linkedin']) || !empty($wo['user_profile']['vk']) || !empty($wo['user_profile']['youtube'])) { ?>
-				<li class="list-group-item text-muted" contenteditable="false">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-					<?php echo $wo['lang']['social_links']; ?>
-				</li>
-				<li class="list-group-item user-social-links">
-                    <?php  if(!empty($wo['user_profile']['youtube'])) {  ?>
-                    <a class="social-btn" href="https://www.youtube.com/<?php echo $wo['user_profile']['youtube']?>" target="_blank">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-youtube" fill="#ff0000"><path d="M10,16.5V7.5L16,12M20,4.4C19.4,4.2 15.7,4 12,4C8.3,4 4.6,4.19 4,4.38C2.44,4.9 2,8.4 2,12C2,15.59 2.44,19.1 4,19.61C4.6,19.81 8.3,20 12,20C15.7,20 19.4,19.81 20,19.61C21.56,19.1 22,15.59 22,12C22,8.4 21.56,4.91 20,4.4Z" /></svg>
-                    </a>
-                    <?php } if(!empty($wo['user_profile']['twitter'])) {  ?>
-                    <a class="social-btn" href="https://twitter.com/<?php echo $wo['user_profile']['twitter']?>" target="_blank">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-twitter" fill="#1da1f2"><path d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M17.71,9.33C18.19,8.93 18.75,8.45 19,7.92C18.59,8.13 18.1,8.26 17.56,8.33C18.06,7.97 18.47,7.5 18.68,6.86C18.16,7.14 17.63,7.38 16.97,7.5C15.42,5.63 11.71,7.15 12.37,9.95C9.76,9.79 8.17,8.61 6.85,7.16C6.1,8.38 6.75,10.23 7.64,10.74C7.18,10.71 6.83,10.57 6.5,10.41C6.54,11.95 7.39,12.69 8.58,13.09C8.22,13.16 7.82,13.18 7.44,13.12C7.81,14.19 8.58,14.86 9.9,15C9,15.76 7.34,16.29 6,16.08C7.15,16.81 8.46,17.39 10.28,17.31C14.69,17.11 17.64,13.95 17.71,9.33Z"></path></svg>
-                    </a>
-                    <?php } if(!empty($wo['user_profile']['facebook'])) {  ?>
-                    <a class="social-btn" rel="publisher" href="https://www.facebook.com/<?php echo $wo['user_profile']['facebook']?>" target="_blank">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-facebook" fill="#4267b2"><path d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M18,5H15.5A3.5,3.5 0 0,0 12,8.5V11H10V14H12V21H15V14H18V11H15V9A1,1 0 0,1 16,8H18V5Z"></path></svg>
-                    </a>
-                    <?php }  if(!empty($wo['user_profile']['linkedin'])) {  ?>
-                    <a class="social-btn" rel="publisher" href="https://www.linkedin.com/profile/view?id=<?php echo $wo['user_profile']['linkedin']?>" target="_blank">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-linkedin" fill="#0076b6"><path d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M18.5,18.5V13.2A3.26,3.26 0 0,0 15.24,9.94C14.39,9.94 13.4,10.46 12.92,11.24V10.13H10.13V18.5H12.92V13.57C12.92,12.8 13.54,12.17 14.31,12.17A1.4,1.4 0 0,1 15.71,13.57V18.5H18.5M6.88,8.56A1.68,1.68 0 0,0 8.56,6.88C8.56,5.95 7.81,5.19 6.88,5.19A1.69,1.69 0 0,0 5.19,6.88C5.19,7.81 5.95,8.56 6.88,8.56M8.27,18.5V10.13H5.5V18.5H8.27Z"></path></svg>
-                    </a>
-                    <?php } ?>
-                    <?php  if(!empty($wo['user_profile']['vk'])) {  ?>
-                    <a class="social-btn" rel="publisher" href="https://vk.com/<?php echo $wo['user_profile']['vk'];?>" target="_blank">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-vk" fill="#4a76a8"><path d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M17.24,14.03C16.06,12.94 16.22,13.11 17.64,11.22C18.5,10.07 18.85,9.37 18.74,9.07C18.63,8.79 18,8.86 18,8.86L15.89,8.88C15.89,8.88 15.73,8.85 15.62,8.92C15.5,9 15.43,9.15 15.43,9.15C15.43,9.15 15.09,10.04 14.65,10.8C13.71,12.39 13.33,12.47 13.18,12.38C12.83,12.15 12.91,11.45 12.91,10.95C12.91,9.41 13.15,8.76 12.46,8.6C12.23,8.54 12.06,8.5 11.47,8.5C10.72,8.5 10.08,8.5 9.72,8.68C9.5,8.8 9.29,9.06 9.41,9.07C9.55,9.09 9.86,9.16 10.03,9.39C10.25,9.68 10.24,10.34 10.24,10.34C10.24,10.34 10.36,12.16 9.95,12.39C9.66,12.54 9.27,12.22 8.44,10.78C8,10.04 7.68,9.22 7.68,9.22L7.5,9L7.19,8.85H5.18C5.18,8.85 4.88,8.85 4.77,9C4.67,9.1 4.76,9.32 4.76,9.32C4.76,9.32 6.33,12.96 8.11,14.8C9.74,16.5 11.59,16.31 11.59,16.31H12.43C12.43,16.31 12.68,16.36 12.81,16.23C12.93,16.1 12.93,15.94 12.93,15.94C12.93,15.94 12.91,14.81 13.43,14.65C13.95,14.5 14.61,15.73 15.31,16.22C15.84,16.58 16.24,16.5 16.24,16.5L18.12,16.47C18.12,16.47 19.1,16.41 18.63,15.64C18.6,15.58 18.36,15.07 17.24,14.03Z" /></svg>
-                    </a>
-                    <?php } ?>
-                    <?php  if(!empty($wo['user_profile']['instagram'])) {  ?>
-                    <a class="social-btn" rel="publisher" href="https://instagram.com/<?php echo $wo['user_profile']['instagram'];?>" target="_blank">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-instagram" fill="#3f729b"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" /></svg>
-                    </a>
-                    <?php } ?>
-				</li>
-			<?php } ?>
         </ul>
 
         <?php if(!empty($wo['user_profile']['about'])) {  ?>
@@ -323,17 +432,8 @@ if ($wo['loggedin'] && $IsOwnerUser) {
 		</div>
     <?php } ?>
 </div>
-<?php echo lui_LoadPage('modals/unfriend');?>
 <?php echo lui_LoadPage('modals/profile-picture');?>
-<?php echo lui_LoadPage('modals/cover-image');?>
-<?php if (!empty($wo['user_profile']['background_image']) && $wo['user_profile']['background_image_status'] == 1) { ?>
-<style>
-  body {
-    background: url(<?php echo lui_GetMedia($wo['user_profile']['background_image']); ?>) fixed !important;
-    background-size:100% auto;
-  }
-</style>
-<?php } ?>
+
 <!-- JS Timline functions -->
 <?php if ($wo['loggedin']): ?>
 <div class="modal fade" id="send_gift" role="dialog">
@@ -386,80 +486,6 @@ if ($wo['loggedin'] && $IsOwnerUser) {
 		</div>
 	</div>
 </div>
-<?php if ($wo['loggedin']): ?>
-	<div class="modal fade" id="add_to_family" role="dialog">
-		<div class="modal-dialog wow_mat_mdl">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
-					<h4 class="modal-title"><?php echo $wo['lang']['family_member']; ?></h4>
-				</div>
-				<div class="add_to_family_alert"></div>
-				<div class="modal-body">
-					<div class="family_mbr_detail">
-						<div class="family_mbr_avatar">
-							<img src="<?php echo $wo['user_profile']['avatar']; ?>" alt="<?php echo $wo['user_profile']['name']; ?>" class="responsive-img">
-						</div>&nbsp;&nbsp;
-						<h4 class="family_mbr_name"><?php echo $wo['user_profile']['name']; ?></h4>
-					</div>
-					<div class="add_as_cont">
-						<input type="hidden" id="family_list">
-						<div class="add_as_cont_list">
-							<?php foreach ($wo['family'] as $key => $value): ?>
-								<label>
-									<input type="radio" name="family_list" id="<?php echo $key; ?>" value="<?php echo $key; ?>" onclick="SelectFamilyList('<?php echo $key; ?>')">
-									<div class="btn-default"><?php echo $wo['lang'][$value]; ?></div>
-								</label>
-							<?php endforeach; ?>
-						</div>
-					</div>
-					<div class="clear"></div>
-				</div>
-				<div class="modal-footer">
-					<div class="ball-pulse"><div></div><div></div><div></div></div>
-					<button type="button" class="btn btn-main btn-mat" id="add_to_family_button" onclick="Wo_AddFamilyMember();"><?php echo $wo['lang']['add']; ?></button>
-				</div>
-			</div>
-		</div>
-	</div>
-<?php endif; ?>
-<div class="modal fade" id="delete_family_mbr_modal"  role="dialog" data-slide='true'>
-	<div class="modal-dialog modal-sm">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
-				<h4 class="modal-title"><?php echo $wo['lang']['important']; ?></h4>
-			</div>
-			<div class="modal-body">
-				<p><?php echo $wo['lang']['confirm_remove_family_member']; ?></p>
-			</div>
-			<div class="modal-footer">
-				<div class="ball-pulse"><div></div><div></div><div></div></div>
-				<button id="delete_family_member_button"  type="button" class="btn btn-main" onclick="Wo_DeleteFamilyMember($('#delete_family_mbr_modal').attr('data-family-member-id'));"><?php echo $wo['lang']['delete']; ?></button>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="modal fade in" id="poke_modal" role="dialog">
-	<div class="modal-dialog wow_mat_mdl">
-		<div class="modal-content">
-			<p style="text-align: center;padding: 30px 20px;font-family: Hind,Arial;font-size: 16px;">
-				<i class="fa fa-check" aria-hidden="true" style="color: green;"></i>
-				<?php echo $wo['lang']['you_have_poked'] . " " . ucfirst($wo['user_profile']['username']); ?>
-			</p>
-		</div>
-	</div>
-</div>
-<div class="modal fade in" id="accept_family_mbr_modal" role="dialog">
-	<div class="modal-dialog wow_mat_mdl">
-		<div class="modal-content">
-			<p style="text-align: center;padding: 30px 20px;font-family: Hind,Arial;font-size: 16px;">
-				<i class="fa fa-check" aria-hidden="true" style="color: green;"></i>
-				<?php echo $wo['lang']['family_member_added']; ?>
-			</p>
-		</div>
-	</div>
-</div>
 <div class="modal fade" id="cropImage" role="dialog">
 	<div class="modal-dialog wow_mat_mdl">
 		<div class="modal-content">
@@ -497,268 +523,6 @@ if ($wo['loggedin'] && $IsOwnerUser) {
             </div>
         </div>
     <?php endif; ?>
-    <?php if ($wo['config']['website_mode'] == 'linkedin') { ?>
-    	<div class="modal fade" id="finding_a_job_modal" role="dialog" data-keyboard="false">
-			<div class="modal-dialog wow_mat_mdl">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
-						<h4 class="modal-title"><?php echo $wo['lang']['add_job_preferences'] ?></h4>
-					</div>
-					<form class="form form-horizontal finding_a_job_form" method="post" action="#">
-						<div class="modal-body">
-							<h4><?php echo $wo['lang']['tell_us_kind_work'] ?></h4>
-							<div class="modal_finding_a_job_modal_alert"></div>
-							<div class="clear"></div>
-							<div class="wow_form_fields">
-								<label><?php echo $wo['lang']['job_title']; ?></label>
-								<input name="job_title" type="text" autocomplete="off">
-							</div>
-							<div class="wow_form_fields">
-								<label><?php echo $wo['lang']['job_location']; ?></label>
-								<input name="job_location" type="text" autocomplete="off">
-							</div>
-
-							<div class="wow_form_fields mb-0">
-								<label><?php echo $wo['lang']['workplaces']; ?></label>
-							</div>
-							<span class="round-check">
-								<input type="checkbox" id="on_site" name="workplaces[]" value="on_site">
-								<label for="on_site"><?php echo $wo['lang']['on_site']; ?></label>
-							</span>&nbsp;&nbsp;
-							<span class="round-check">
-								<input type="checkbox" id="hybrid" name="workplaces[]" value="hybrid">
-								<label for="hybrid"><?php echo $wo['lang']['hybrid']; ?></label>
-							</span>&nbsp;&nbsp;
-							<span class="round-check">
-								<input type="checkbox" id="remote" name="workplaces[]" value="remote">
-								<label for="remote"><?php echo $wo['lang']['remote']; ?></label>
-							</span>
-
-							<div class="wow_form_fields mb-0">
-								<label><?php echo $wo['lang']['job_types']; ?></label>
-							</div>
-							<span class="round-check">
-								<input type="checkbox" id="full_time" name="job_type[]" value="full_time">
-								<label for="full_time"><?php echo $wo['lang']['full_time']; ?></label>
-							</span>&nbsp;&nbsp;
-							<span class="round-check">
-								<input type="checkbox" id="contract" name="job_type[]" value="contract">
-								<label for="contract"><?php echo $wo['lang']['contract']; ?></label>
-							</span>&nbsp;&nbsp;
-							<span class="round-check">
-								<input type="checkbox" id="part_time" name="job_type[]" value="part_time">
-								<label for="part_time"><?php echo $wo['lang']['part_time']; ?></label>
-							</span>&nbsp;&nbsp;
-							<span class="round-check">
-								<input type="checkbox" id="internship" name="job_type[]" value="internship">
-								<label for="internship"><?php echo $wo['lang']['internship']; ?></label>
-							</span>&nbsp;&nbsp;
-							<span class="round-check">
-								<input type="checkbox" id="temporary" name="job_type[]" value="temporary">
-								<label for="temporary"><?php echo $wo['lang']['temporary']; ?></label>
-							</span>
-							<div class="clear"></div>
-						</div>
-						<div class="clear"></div>
-						<div class="modal-footer">
-							<div class="ball-pulse"><div></div><div></div><div></div></div>
-							<button type="submit" class="btn btn-main btn-mat"><?php echo $wo['lang']['add']; ?></button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade" id="providing_services_modal" role="dialog" data-keyboard="false">
-			<div class="modal-dialog wow_mat_mdl">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
-						<h4 class="modal-title"><?php echo $wo['lang']['set_up_services_page'] ?></h4>
-					</div>
-					<form class="form form-horizontal providing_services_form" method="post" action="#">
-						<div class="modal-body">
-							<div class="providing_services_modal_alert"></div>
-							<div class="clear"></div>
-
-							<div class="wow_form_fields">
-								<label><?php echo $wo['lang']['services']; ?></label>
-								<input name="services" type="text" autocomplete="off" id="providing_services_input">
-							</div>
-
-							<div class="wow_form_fields">
-								<label><?php echo $wo['lang']['location']; ?></label>
-								<input name="job_location" type="text" autocomplete="on">
-							</div>
-
-							<div class="wow_form_fields">
-								<label><?php echo $wo['lang']['description']; ?></label>
-								<textarea name="description" cols="20" rows="3"></textarea>
-							</div>
-							<div class="clear"></div>
-						</div>
-						<div class="clear"></div>
-						<div class="modal-footer">
-							<div class="ball-pulse"><div></div><div></div><div></div></div>
-							<button type="button" onclick="SubmitAjaxForm('.providing_services_form')" class="btn btn-main btn-mat"><?php echo $wo['lang']['add']; ?></button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-    <?php } ?>
-	<?php if ($wo['config']['website_mode'] == 'linkedin' && $wo['user_profile']['is_open_to_work'] != 0) { ?>
-
-		<div class="modal fade" id="edit_finding_a_job_modal" role="dialog" data-keyboard="false">
-			<div class="modal-dialog wow_mat_mdl">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
-						<h4 class="modal-title"><?php echo $wo['lang']['edit_job_preferences'] ?></h4>
-					</div>
-					<form class="form form-horizontal edit_finding_a_job_form" method="post" action="#">
-						<div class="modal-body">
-							<div class="modal_edit_finding_a_job_modal_alert"></div>
-							<div class="clear"></div>
-							<div class="wow_form_fields">
-								<label><?php echo $wo['lang']['job_title']; ?></label>
-								<input name="job_title" type="text" autocomplete="off" value="<?php echo $wo['user_profile']['open_to_work_data']->job_title; ?>">
-							</div>
-							<div class="wow_form_fields">
-								<label><?php echo $wo['lang']['job_location']; ?></label>
-								<input name="job_location" type="text" autocomplete="off" value="<?php echo $wo['user_profile']['open_to_work_data']->job_location; ?>">
-							</div>
-
-							<div class="wow_form_fields mb-0">
-								<label><?php echo $wo['lang']['workplaces']; ?></label>
-							</div>
-							<span class="round-check">
-								<input type="checkbox" id="on_site-edit" name="workplaces[]" value="on_site" <?php echo(strpos($wo['user_profile']['open_to_work_data']->workplaces, 'on_site') !== false ? 'checked' : '') ?>>
-								<label for="on_site-edit"><?php echo $wo['lang']['on_site']; ?></label>
-							</span>&nbsp;&nbsp;
-							<span class="round-check">
-								<input type="checkbox" id="hybrid-edit" name="workplaces[]" value="hybrid" <?php echo(strpos($wo['user_profile']['open_to_work_data']->workplaces, 'hybrid') !== false ? 'checked' : '') ?>>
-								<label for="hybrid-edit"><?php echo $wo['lang']['hybrid']; ?></label>
-							</span>&nbsp;&nbsp;
-							<span class="round-check">
-								<input type="checkbox" id="remote-edit" name="workplaces[]" value="remote" <?php echo(strpos($wo['user_profile']['open_to_work_data']->workplaces, 'remote') !== false ? 'checked' : '') ?>>
-								<label for="remote-edit"><?php echo $wo['lang']['remote']; ?></label>
-							</span>
-
-							<div class="wow_form_fields mb-0">
-								<label><?php echo $wo['lang']['job_types']; ?></label>
-							</div>
-							<span class="round-check">
-								<input type="checkbox" id="full_time-edit" name="job_type[]" value="full_time" <?php echo(strpos($wo['user_profile']['open_to_work_data']->job_type, 'full_time') !== false ? 'checked' : '') ?>>
-								<label for="full_time-edit"><?php echo $wo['lang']['full_time']; ?></label>
-							</span>&nbsp;&nbsp;
-							<span class="round-check">
-								<input type="checkbox" id="contract-edit" name="job_type[]" value="contract" <?php echo(strpos($wo['user_profile']['open_to_work_data']->job_type, 'contract') !== false ? 'checked' : '') ?>>
-								<label for="contract-edit"><?php echo $wo['lang']['contract']; ?></label>
-							</span>&nbsp;&nbsp;
-							<span class="round-check">
-								<input type="checkbox" id="part_time-edit" name="job_type[]" value="part_time" <?php echo(strpos($wo['user_profile']['open_to_work_data']->job_type, 'part_time') !== false ? 'checked' : '') ?>>
-								<label for="part_time-edit"><?php echo $wo['lang']['part_time']; ?></label>
-							</span>&nbsp;&nbsp;
-							<span class="round-check">
-								<input type="checkbox" id="internship-edit" name="job_type[]" value="internship" <?php echo(strpos($wo['user_profile']['open_to_work_data']->job_type, 'internship') !== false ? 'checked' : '') ?>>
-								<label for="internship-edit"><?php echo $wo['lang']['internship']; ?></label>
-							</span>&nbsp;&nbsp;
-							<span class="round-check">
-								<input type="checkbox" id="temporary-edit" name="job_type[]" value="temporary" <?php echo(strpos($wo['user_profile']['open_to_work_data']->job_type, 'temporary') !== false ? 'checked' : '') ?>>
-								<label for="temporary-edit"><?php echo $wo['lang']['temporary']; ?></label>
-							</span>
-							<div class="clear"></div>
-						</div>
-						<div class="clear"></div>
-						<div class="modal-footer">
-							<div class="ball-pulse"><div></div><div></div><div></div></div>
-							<input type="hidden" name="id" value="<?php echo $wo['user_profile']['open_to_work_data']->id; ?>">
-							<button type="submit" class="btn btn-main btn-mat"><?php echo $wo['lang']['edit']; ?></button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade" id="delete_open_to_work" role="dialog" data-keyboard="false">
-			<div class="modal-dialog modal-md wow_mat_mdl">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
-						<h4 class="modal-title"><?php echo $wo['lang']['delete'] ?> <?php echo $wo['lang']['open_to_work'] ?></h4>
-					</div>
-					<div class="modal-body">
-						<div class="delete_finding_a_job_modal_alert"></div>
-						<p><?php echo $wo['lang']['are_you_delete_open_work'] ?></p>
-					</div>
-					<div class="modal-footer">
-						<div class="ball-pulse"><div></div><div></div><div></div></div>
-						<button type="button" class="btn btn-main btn-mat" onclick="DeleteOpenToWork();"><?php echo $wo['lang']['delete']; ?></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	<?php } ?>
-	<?php if ($wo['config']['website_mode'] == 'linkedin' && $wo['user_profile']['is_providing_service'] != 0) { ?>
-
-		<div class="modal fade" id="edit_providing_services_modal" role="dialog" data-keyboard="false" style="overflow-y: auto;">
-			<div class="modal-dialog wow_mat_mdl">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
-						<h4 class="modal-title"><?php echo $wo['lang']['set_up_services_page'] ?></h4>
-					</div>
-					<form class="form form-horizontal edit_providing_services_form" method="post" action="#">
-						<div class="modal-body">
-							<div class="edit_providing_services_modal_alert"></div>
-							<div class="clear"></div>
-
-							<div class="wow_form_fields">
-								<label><?php echo $wo['lang']['services']; ?></label>
-								<input name="services" type="text" autocomplete="off" value="<?php echo $wo['user_profile']['providing_service']->services; ?>" id="edit_providing_services_input">
-							</div>
-
-							<div class="wow_form_fields">
-								<label><?php echo $wo['lang']['location']; ?></label>
-								<input name="job_location" type="text" autocomplete="off" value="<?php echo $wo['user_profile']['providing_service']->job_location; ?>">
-							</div>
-
-							<div class="wow_form_fields">
-								<label><?php echo $wo['lang']['description']; ?></label>
-								<textarea name="description" cols="20" rows="3"><?php echo $wo['user_profile']['providing_service']->description; ?></textarea>
-							</div>
-
-							<div class="clear"></div>
-						</div>
-						<div class="clear"></div>
-						<div class="modal-footer">
-							<div class="ball-pulse"><div></div><div></div><div></div></div>
-							<input type="hidden" name="id" value="<?php echo $wo['user_profile']['providing_service']->id; ?>">
-							<button type="button" onclick="SubmitAjaxForm('.edit_providing_services_form')" class="btn btn-main btn-mat"><?php echo $wo['lang']['edit']; ?></button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade" id="delete_providing_service" role="dialog" data-keyboard="false">
-			<div class="modal-dialog modal-md wow_mat_mdl">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
-						<h4 class="modal-title"><?php echo $wo['lang']['delete'] ?> <?php echo $wo['lang']['providing_services'] ?></h4>
-					</div>
-					<div class="modal-body">
-						<div class="delete_finding_a_job_modal_alert"></div>
-						<p><?php echo $wo['lang']['are_you_delete_services'] ?></p>
-					</div>
-					<div class="modal-footer">
-						<div class="ball-pulse"><div></div><div></div><div></div></div>
-						<button type="button" class="btn btn-main btn-mat" onclick="DeleteProvidingService();"><?php echo $wo['lang']['delete']; ?></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	<?php } ?>
 <?php endif; ?>
 <style>
 	.post-youtube iframe {
@@ -1401,18 +1165,6 @@ function Wo_OpenProfilePicture(image) {
         }
     });
 }
-function Wo_GetMutualFriends(user_id) {
-  Wo_progressIconLoader($('#sidebar-mutual-list-container').find('span'));
-  $.get(Wo_Ajax_Requests_File(), {
-    f: 'get_mutual_users',
-    user_id: user_id
-  }, function (data) {
-    if(data.status == 200) {
-      $('.sidebar-mutual-users-container').html(data.html);
-    }
-    Wo_progressIconLoader($('#sidebar-mutual-list-container').find('span'));
-  });
-}
 
 <?php if ( $wo['loggedin'] ){ ?>
     <?php if ( isset( $_GET['mode'] ) && $_GET['mode'] == 'opengift' ){ ?>
@@ -1422,166 +1174,5 @@ function Wo_GetMutualFriends(user_id) {
             }, 1000);
         });
     <?php } ?>
-<?php } ?>
-<?php if ($wo['config']['website_mode'] == 'linkedin') { ?>
-
-	$(document).ready(function() {
-
-	    var options = {
-	      url: Wo_Ajax_Requests_File() + '?f=open_to&s=find_job&hash=' + $('.main_session').val() + "&mode_type=linkedin",
-	        beforeSubmit:  function () {
-	          $('.modal_finding_a_job_modal_alert').empty();
-	          $("#finding_a_job_modal").find('.btn-mat').attr('disabled', 'true');
-	          $("#finding_a_job_modal").find('.btn-mat').text("<?php echo($wo['lang']['please_wait']) ?>");
-	        },
-	        success: function (data) {
-	          $("#finding_a_job_modal").find('.btn-mat').text("<?php echo $wo['lang']['add'] ?>");
-	          $("#finding_a_job_modal").find('.btn-mat').removeAttr('disabled')
-	          if (data.status == 200) {
-	            $('.modal_finding_a_job_modal_alert').html('<div class="alert alert-success bg-success"><i class="fa fa-check"></i> '+
-	              data.message
-	              +'</div>');
-	            setTimeout(function(){
-	            	location.reload()
-	            },3000);
-	          } else {
-	            $('.modal_finding_a_job_modal_alert').html('<div class="alert alert-danger bg-danger"> '+
-	            data.message
-	            +'</div>');
-	          }
-	        }
-	    };
-	    $('.finding_a_job_form').ajaxForm(options);
-	    var options = {
-	      url: Wo_Ajax_Requests_File() + '?f=open_to&s=edit_job&hash=' + $('.main_session').val() + "&mode_type=linkedin",
-	        beforeSubmit:  function () {
-	          $('.modal_edit_finding_a_job_modal_alert').empty();
-	          $("#edit_finding_a_job_modal").find('.btn-mat').attr('disabled', 'true');
-	          $("#edit_finding_a_job_modal").find('.btn-mat').text("<?php echo($wo['lang']['please_wait']) ?>");
-	        },
-	        success: function (data) {
-	          $("#edit_finding_a_job_modal").find('.btn-mat').text("<?php echo $wo['lang']['edit'] ?>");
-	          $("#edit_finding_a_job_modal").find('.btn-mat').removeAttr('disabled')
-	          if (data.status == 200) {
-	            $('.modal_edit_finding_a_job_modal_alert').html('<div class="alert alert-success bg-success"><i class="fa fa-check"></i> '+
-	              data.message
-	              +'</div>');
-	            setTimeout(function(){
-	            	location.reload()
-	            },3000);
-	          } else {
-	            $('.modal_edit_finding_a_job_modal_alert').html('<div class="alert alert-danger bg-danger"> '+
-	            data.message
-	            +'</div>');
-	          }
-	        }
-	    };
-	    $('.edit_finding_a_job_form').ajaxForm(options);
-	    var options = {
-	      url: Wo_Ajax_Requests_File() + '?f=open_to&s=providing_services&hash=' + $('.main_session').val() + "&mode_type=linkedin",
-	        beforeSubmit:  function (formData, jqForm, options) {
-	          $('.providing_services_modal_alert').empty();
-	          $("#providing_services_modal").find('.btn-mat').attr('disabled', 'true');
-	          $("#providing_services_modal").find('.btn-mat').text("<?php echo($wo['lang']['please_wait']) ?>");
-	        },
-	        success: function (data) {
-	          $("#providing_services_modal").find('.btn-mat').text("<?php echo $wo['lang']['add'] ?>");
-	          $("#providing_services_modal").find('.btn-mat').removeAttr('disabled')
-	          if (data.status == 200) {
-	            $('.providing_services_modal_alert').html('<div class="alert alert-success bg-success"><i class="fa fa-check"></i> '+
-	              data.message
-	              +'</div>');
-	            setTimeout(function(){
-	            	location.reload()
-	            },3000);
-	          } else {
-	            $('.providing_services_modal_alert').html('<div class="alert alert-danger bg-danger"> '+
-	            data.message
-	            +'</div>');
-	          }
-	        }
-	    };
-	    $('.providing_services_form').ajaxForm(options);
-	    var options = {
-	      url: Wo_Ajax_Requests_File() + '?f=open_to&s=edit_providing_services&hash=' + $('.main_session').val() + "&mode_type=linkedin",
-	        beforeSubmit:  function (formData, jqForm, options) {
-	          $('.edit_providing_services_modal_alert').empty();
-	          $("#edit_providing_services_modal").find('.btn-mat').attr('disabled', 'true');
-	          $("#edit_providing_services_modal").find('.btn-mat').text("<?php echo($wo['lang']['please_wait']) ?>");
-	        },
-	        success: function (data) {
-	          $("#edit_providing_services_modal").find('.btn-mat').text("<?php echo $wo['lang']['edit'] ?>");
-	          $("#edit_providing_services_modal").find('.btn-mat').removeAttr('disabled')
-	          if (data.status == 200) {
-	            $('.edit_providing_services_modal_alert').html('<div class="alert alert-success bg-success"><i class="fa fa-check"></i> '+
-	              data.message
-	              +'</div>');
-	            setTimeout(function(){
-	            	location.reload()
-	            },3000);
-	          } else {
-	            $('.edit_providing_services_modal_alert').html('<div class="alert alert-danger bg-danger"> '+
-	            data.message
-	            +'</div>');
-	          }
-	        }
-	    };
-	    $('.edit_providing_services_form').ajaxForm(options);
-	});
-<?php } ?>
-<?php if ($wo['loggedin'] && $wo['config']['website_mode'] == 'linkedin' && $wo['user_profile']['is_open_to_work'] != 0) { ?>
-function DeleteOpenToWork(){
-	$.ajax({
-        url: Wo_Ajax_Requests_File()+"?f=open_to&s=delete_job" + "&mode_type=linkedin",
-        type: 'POST',
-        dataType: 'json',
-        data: {id:<?php echo $wo['user_profile']['user_id']; ?>},
-    })
-    .done(function(data) {
-        if (data.status == 200) {
-            location.reload();
-			$('#delete_open_to_work').modal('hide');
-        }
-        else{
-        	$('.delete_finding_a_job_modal_alert').html('<div class="alert alert-danger bg-danger"> '+
-	            data.message
-	            +'</div>');
-        }
-    })
-    .fail(function() {
-        console.log("error");
-    })
-}
-function EditOpenToWork(){
-	$('#edit_finding_a_job_modal').modal('show');
-}
-<?php } ?>
-<?php if ($wo['loggedin'] && $wo['config']['website_mode'] == 'linkedin' && $wo['user_profile']['is_providing_service'] != 0) { ?>
-function EditProvidingService(){
-	$('#edit_providing_services_input').tagsinput({});
-	$('#edit_providing_services_modal').modal('show');
-}
-function DeleteProvidingService(){
-	$.ajax({
-        url: Wo_Ajax_Requests_File()+"?f=open_to&s=delete_service" + "&mode_type=linkedin",
-        type: 'POST',
-        dataType: 'json',
-        data: {id:<?php echo $wo['user_profile']['user_id']; ?>},
-    })
-    .done(function(data) {
-        if (data.status == 200) {
-            location.reload();
-			$('#delete_providing_service').modal('hide');
-        }
-        else{
-        	$('.delete_finding_a_job_modal_alert').html('<div class="alert alert-danger bg-danger"> '+
-	            data.message
-	            +'</div>');
-        }
-    })
-    .fail(function() {
-        console.log("error");
-    })
-}
 <?php } ?>
 </script>

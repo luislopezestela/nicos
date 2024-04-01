@@ -108,9 +108,11 @@
 		</button>
 	</div>
 	<script type="text/javascript">
-		const input = document.getElementById("input_moun");
-		input.addEventListener("input", (event) => {
-			if (event.target.value === ""){}
+		$(document).ready(function() {
+			const input = document.getElementById("input_moun");
+			input.addEventListener("input", (event) => {
+				if (event.target.value === ""){}
+			});
 		});
 	</script>
 <?php endif ?>

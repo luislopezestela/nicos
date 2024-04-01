@@ -119,20 +119,16 @@ $wo['setting_page'] = '';
 $pages_array = array(
    'general-setting',
    'profile-setting',
-   'privacy-setting',
    'change-password-setting',
-   'social-links',
    'design-setting',
    'avatar-setting',
    'email-setting',
    'verification',
-   'blocked-users',
    'transaction_log',
    'my_points',
    'manage-sessions',
    'notifications-settings',
    'two-factor',
-   'my_info',
    'invitation_links',
    'tiers',
 );
@@ -140,21 +136,17 @@ if ($wo['setting']['user_id'] == $wo['user']['user_id']) {
   $pages_array = array(
    'general-setting',
    'profile-setting',
-   'privacy-setting',
    'change-password-setting',
-   'social-links',
    'delete-account',
    'design-setting',
    'avatar-setting',
    'email-setting',
    'verification',
-   'blocked-users',
    'transaction_log',
    'my_points',
    'manage-sessions',
    'notifications-settings',
    'two-factor',
-   'my_info',
    'invitation_links',
    'tiers',
    );
@@ -215,15 +207,15 @@ if ($wo['setting_page'] == 'tiers' && $wo['config']['website_mode'] == 'patreon'
 <div class="page-margin">
 	<div class="setting-panel" style="position:relative;">
 		<?php if (empty($_GET['page'])): ?>
-			<div class="col-md-12 sidebar sett_page" id="wo_main_sett_side"><?=lui_LoadPage('setting/user-setting-sidebar');?></div>
+			<div class="columna-12 sidebar sett_page" id="wo_main_sett_side"><?=lui_LoadPage('setting/user-setting-sidebar');?></div>
 		<?php else: ?>
-				<div class="col-md-4 sidebar sett_page Wo_new_sett_sidee sidebar_layshane_configuration_user" id="wo_main_sett_side"><?=lui_LoadPage('setting/user-setting-sidebar');?></div>
+			<div class="columna-4 sidebar leftcol sett_page Wo_new_sett_sidee sidebar_layshane_configuration_user" id="wo_main_sett_side"><?=lui_LoadPage('setting/user-setting-sidebar');?></div>
 			
-			<div class="col-md-8 sett_page wo_new_sett_pagee main_layshane_configuration_user" id="wo_main_sett_mid">
+			<div class="columna-8 sett_page wo_new_sett_pagee main_layshane_configuration_user" id="wo_main_sett_mid">
 				<div class="wow_sett_sidebar button_controle_layshane_back_settign">
 					<ul class="list-unstyled" style="padding-bottom:0;">
-						<li class="active">
-							<a href="<?php echo lui_SeoLink('index.php?link1=setting' . $wo['user_setting_b']); ?>" data-ajax="?link1=setting<?php echo $wo['user_setting_b'];?>">Atras</a>
+						<li class="">
+							<a class="btn btn-default" style="background-color:#fff;" href="<?php echo lui_SeoLink('index.php?link1=setting' . $wo['user_setting_b']); ?>" data-ajax="?link1=setting<?php echo $wo['user_setting_b'];?>">Menu</a>
 						</li>
 					</ul>
 				</div>

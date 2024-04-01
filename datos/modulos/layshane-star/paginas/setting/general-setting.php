@@ -12,14 +12,14 @@
 		<div class="setting-general-alert setting-update-alert"></div>
 
 		<div class="row">
-			<div class="col-md-6">
+			<div class="columna-6">
 				<div class="wow_form_fields">
 					<label for="username"><?php echo $wo['lang']['username']; ?></label>
 					<input id="username" name="username" type="text" value="<?php echo $wo['setting']['username']?>" onkeyup="Wo_CheckUsername(this.value);" autocomplete="off">
 					<span class="help-block checking"></span>
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="columna-6">
 				<div class="wow_form_fields">
 					<label for="phone_number"><?php echo $wo['lang']['phone_number']; ?> </label>
 					<input name="phone_number" id="phone_number" type="tel" value="<?php echo $wo['setting']['phone_number']?>" autocomplete="off">
@@ -37,7 +37,7 @@
 			<?php } ?>
 		</div>
 		<div class="row">
-			<div class="col-md-6">
+			<div class="columna-6">
 				<?php
 					$cutoff   = 1930;
 					$now      = date('Y');
@@ -49,7 +49,7 @@
 					<input id="usr_birthday" name="birthday" type="text" autocomplete="off" value="<?php echo $wo['setting']['birthday'];?>">
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="columna-6">
 				<div class="wow_form_fields">
 					<label for="country"><?=$wo['lang']['country'];?></label>
 					<select id="country" name="country" autocomplete="off">
@@ -65,7 +65,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-6">
+			<div class="columna-6">
 				<div class="wow_form_fields">
 					<label for="gender"><?php echo $wo['lang']['gender']; ?></label>
 					<select id="gender" name="gender">
@@ -76,7 +76,7 @@
 				</div>
 			</div>
 			<?php if ($wo['config']['weather_widget'] == 1 && !empty($wo['config']['weather_key'])) { ?>
-			<div class="col-md-6">
+			<div class="columna-6">
 				<div class="wow_form_fields">
 					<label for="weather_unit"><?php echo $wo['lang']['weather_unit']; ?> </label>
 					<select id="weather_unit" name="weather_unit">
@@ -100,33 +100,33 @@
 						$selected_type_admin = ($wo['setting']['admin'] == 1)   ? ' checked' : '';
 						$selected_type_mod   = ($wo['setting']['admin'] == 2)   ? ' checked' : '';
 					?>
-					<div class="col-md-12 round-check">
+					<div class="columna-12 round-check">
 						<input type="radio" name="type" id="type-0" value="admin" <?php echo $selected_type_admin; ?>>
 						<label for="type-0"><?php echo $wo['lang']['admin']; ?></label>
 					</div>
-					<div class="col-md-12 round-check">
+					<div class="columna-12 round-check">
 						<input type="radio" name="type" id="type-1" value="user" <?php echo $selected_type_user; ?>>
 						<label for="type-1"><?php echo $wo['lang']['user']; ?></label>
 					</div>
-					<div class="col-md-12 round-check">
+					<div class="columna-12 round-check">
 						<input type="radio" name="type" id="type-2" value="mod" <?php echo $selected_type_mod; ?>>
 						<label for="type-2"><?php echo $wo['lang']['moderator']; ?></label>
 					</div>
 				</div>
 			<?php } ?>
 				<div class="wow_form_fields mb-0">
-					<label for="active"><?php echo $wo['lang']['status'];?></label>
+					<h4 for="active"><?php echo $wo['lang']['status'];?></h4>
 				</div>
 				<div class="form-group">
 					<?php 
 						$selected_active_yes = ($wo['setting']['active'] == 1)   ? ' checked' : '';
 						$selected_active_no  = ($wo['setting']['active'] == 0 || $wo['setting']['active'] == 2)   ? ' checked' : '';
 					?>
-					<div class="col-md-12 round-check">
+					<div class="columna-12 round-check">
 						<input type="radio" name="active" id="active-0" value="active" <?php echo $selected_active_yes; ?>>
 						<label for="active-0"><?php echo $wo['lang']['active']; ?></label>
 					</div>
-					<div class="col-md-12 round-check">
+					<div class="columna-12 round-check">
 						<input type="radio" name="active" id="active-1" value="inactive" <?php echo $selected_active_no; ?>>
 						<label for="active-1"><?php echo $wo['lang']['inactive']; ?></label>
 					</div>
@@ -142,18 +142,31 @@
 					$selected_verified_yes = ($wo['setting']['verified'] == 1)   ? ' checked' : '';
 					$selected_verified_no  = ($wo['setting']['verified'] == 0)   ? ' checked' : '';
 				?>
-				<div class="col-md-12 round-check">
+				<div class="columna-12 round-check">
 					<input type="radio" name="verified" id="verified-0" value="verified" <?php echo $selected_verified_yes; ?> >
 					<label for="verified-0"><?php echo $wo['lang']['verified']; ?></label>
 				</div>
-				<div class="col-md-12 round-check">
+				<div class="columna-12 round-check">
 					<input type="radio" name="verified" id="verified-1" value="notVerified" <?php echo $selected_verified_no; ?>>
 					<label for="verified-1"><?php echo $wo['lang']['not_verified']; ?></label>
 				</div>
-					
 			</div>
-			<?php if ($wo['config']['pro'] == 1) { ?>
+
+			<?php if(!$wo['is_moderoter']) { ?>
 				<div class="wow_form_fields">
+					<label for="sucursal_layshane"><span>Sucursal de trabajo de usuario</span></label>
+					<select id="sucursal_layshane" name="sucursal">
+						<option value="">Seleccione una tienda</option>
+						<?php $tiendas_layshane = lui_GetSucursalesTypes('');$layshane['tienda']="";?>
+						<?php foreach ($tiendas_layshane as $layshane['tienda']) {?>
+							<option value="<?=$layshane['tienda']['id'];?>" <?php echo ($wo['setting']['sucursal'] == $layshane['tienda']['id']) ? 'selected' : ''; ?>><?php echo $layshane['tienda']['nombre'];?> <?=$wo['setting']['sucursal'] ?></option>
+						<?php } ?>
+					</select>
+				</div>
+			<?php } ?>
+
+			<?php if ($wo['config']['pro'] == 1) { ?>
+				<div class="wow_form_fields" hidden>
 					<label for="pro_type"><?php echo $wo['lang']['member_type'];?></label>
 					<select id="pro_type" name="pro_type">
 						<?php $pros = lui_GetProPackages();?>
@@ -176,7 +189,7 @@
 			</div>
 			<div class="setting-panel form-group">
 				<div class="form-group col-lg-6">
-					<div class="col-md-12">
+					<div class="columna-12">
 						<?php $pro_type = lui_GetUserProType($wo['setting']['pro_type']);?>
 						<label style="color:<?php echo $pro_type['color_name'];?>">
 						<?php if (!empty(in_array($wo['setting']['pro_type'], array_keys($wo['pro_packages'])) && !empty($wo['pro_packages'][$wo['user']['pro_type']]['image'])) && $_COOKIE['mode'] == 'day') { ?>
@@ -240,13 +253,7 @@
 </div>
 
 <script type="text/javascript">
-	$(function() {
-		$("#usr_birthday").flatpickr({
-			dateFormat: "d-m-Y",
-			minDate: new Date('<?php echo date('Y')-129;?>'),
-			maxDate: new Date('<?php echo date('Y')-10; ?>-12-31'),
-		});
-});
+
 function Wo_ConfirmUpdatingUserData(){
  $('form.setting-general-form').submit();
  $("#confirm_updatin_user_date").modal('hide');

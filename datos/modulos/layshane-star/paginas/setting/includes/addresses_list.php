@@ -1,11 +1,11 @@
-<div class="col-md-6 address_<?php echo $wo['address']->id ?>">
+
+<div class="columna-6 address_<?php echo $wo['address']->id ?>">
 	<div class="address_book">
 		<div class="address_book_innr">
 			<div class="address_box">
 				<p class="addrs_name"><?php echo $wo['address']->name ?></p>
 				<p class="addrs_phone"><?php echo $wo['address']->phone; ?></p>
 				<p class="addrs_street"><?php echo $wo['address']->city; ?><br><?php echo $wo['address']->country; ?></p>
-				<p class="addrs_count"><?php echo $wo['address']->zip; ?></p>
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
@@ -34,42 +34,43 @@
 					<div class="modal_edit_address_modal_alert_<?php echo $wo['address']->id ?>"></div>
 					<div class="clear"></div>
 					<div class="row">
-						<div class="col-md-12">
+						<div class="columna-12">
 							<div class="wow_form_fields">
 								<label for="name"><?php echo $wo['lang']['name']; ?></label>
 								<input id="name" name="name" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['name']; ?>" value="<?php echo $wo['address']->name ?>">
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="columna-6">
 							<div class="wow_form_fields">
 								<label for="phone"><?php echo $wo['lang']['phone_number']; ?></label>
 								<input id="phone" name="phone" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['phone_number']; ?>" value="<?php echo $wo['address']->phone ?>">
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="wow_form_fields">
+						<div class="columna-6">
+							<div class="wow_form_fields" hidden>
 								<label for="country"><?php echo $wo['lang']['country']; ?></label>
 								<input id="country" name="country" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['country']; ?>" value="<?php echo $wo['address']->country ?>">
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="columna-6">
 							<div class="wow_form_fields">
 								<label for="city"><?php echo $wo['lang']['city']; ?></label>
 								<input id="city" name="city" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['city']; ?>" value="<?php echo $wo['address']->city ?>">
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="wow_form_fields">
-								<label for="zip"><?php echo $wo['lang']['zip']; ?></label>
-								<input id="zip" name="zip" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['zip']; ?>" value="<?php echo $wo['address']->zip ?>">
-							</div>
-						</div>
-						<div class="col-md-12">
+						<div class="columna-12">
 							<div class="wow_form_fields">
 								<label for="address"><?php echo $wo['lang']['name']; ?></label>
 								<textarea placeholder="<?php echo $wo['lang']['address']; ?>" name="address" rows="3"><?php echo $wo['address']->address ?></textarea>
 							</div>
 						</div>
+
+						<div class="columna-12">
+		                  <div class="wow_form_fields">
+		                    <label for="referencia"><?php echo $wo['lang']['referrals']; ?></label>
+		                    <textarea id="referencia" placeholder="<?php echo $wo['lang']['referrals']; ?>" name="referencia" rows="3" autocomplete="off"><?php echo $wo['address']->referencia ?></textarea>
+		                  </div>
+		                </div>
 					</div>
 					<input type="hidden" name="id" value="<?php echo $wo['address']->id ?>">
 					<div class="clear"></div>
@@ -114,3 +115,4 @@
 	    $('.edit_address_form_<?php echo $wo['address']->id ?>').ajaxForm(options); 
 	});
 </script>
+

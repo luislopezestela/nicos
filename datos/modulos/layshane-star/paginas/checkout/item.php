@@ -1,7 +1,19 @@
 <div class="ch_main_items">
 	<div class="prod_img">
-		<a href="<?php echo $wo['product']['url'];?>" data-ajax="?link1=post&id=<?php echo $wo['product']['seo_id']?>">
-			<img src="<?php echo $wo['product']['images'][0]['image']?>">
+		<a href="<?php echo $wo['product']['url'];?>" data-ajax="?link1=item&items=<?php echo $wo['product']['seo_id']?>">
+			<?php $rutadeimage = $wo['product']['images'][0]['image_mini']; ?>
+			<?php $ch = curl_init($rutadeimage);
+						curl_setopt($ch, CURLOPT_NOBODY, true);
+						curl_exec($ch);
+						$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+						curl_close($ch);
+			?>
+			<?php if ($status == 200): ?>
+				<img src="<?=($wo['product']['images'][0]['image_mini']);?>" alt="<?=$wo['product']['name'];?>" class='active pointer'>
+			<?php else: ?>
+				<img src="<?=($wo['product']['images'][0]['image_org']);?>"  alt="<?=$wo['product']['name'];?>">
+			<?php endif ?>
+			
 		</a>
 
 		<div class="quantity">
@@ -19,12 +31,12 @@
 		
 	</div>
     <div class="prod_info">
-        <h4><a href="<?php echo $wo['product']['url'];?>" data-ajax="?link1=post&id=<?php echo $wo['product']['seo_id']?>"><?php echo $wo['product']['name'];?></a></h4>
-		<p><a href="<?php echo $wo['product']['user_data']['url'];?>" data-ajax="?link1=timeline&u=<?php echo $wo['product']['user_data']['username'];?>"><?php echo $wo['product']['user_data']['name'];?></a></p>
+        <h4><a href="<?php echo $wo['product']['url'];?>" data-ajax="?link1=item&items=<?php echo $wo['product']['seo_id']?>"><?php echo $wo['product']['name'];?></a></h4>
         <div >
 			<div><?php echo (!empty($wo['currencies'][$wo['product']['currency']]['symbol'])) ? $wo['currencies'][$wo['product']['currency']]['symbol'] : $wo['config']['classified_currency_s'];?><?php echo $wo['product']['price']?></div>
 		</div>
     </div>
+    <br>
 	<div class="closed" onclick="RemoveProductFromCart('<?php echo $wo['product']['id'];?>');LoadCheckout();">&#10005;</div>
 
 	<script>

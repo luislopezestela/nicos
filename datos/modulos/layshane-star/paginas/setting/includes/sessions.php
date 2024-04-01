@@ -1,4 +1,4 @@
-<div class="col-lg-4 col-md-6 session_list" id="session_<?php echo $wo['session']['id']?>" data-id="<?php echo $wo['session']['id']?>">
+<div class="columna_lg_4 columna-6 session_list" id="session_<?php echo $wo['session']['id']?>" data-id="<?php echo $wo['session']['id']?>">
 	<div class="as_list">
 		<div class="hdr">
 			<div class="platform_icon">

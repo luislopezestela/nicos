@@ -213,6 +213,7 @@ td{display:table-cell;vertical-align:inherit;}
 			if(!empty($wo['itemsdata']['product']['images'])){
 				$color_idc = lui_buscar_color_en_opciones_redir($wo['itemsdata']['product']['id'],1);
 				if(!empty($color_idc)){
+					echo "string";
 					$buscar_el_color_por_idc = lui_buscar_color_en_colores($color_idc['id_color']);
 					$el_colorvc = lui_SlugPost($wo['lang'][$buscar_el_color_por_idc['lang_key']]);
 
@@ -246,7 +247,13 @@ td{display:table-cell;vertical-align:inherit;}
 			}
 
 			
-			 ?>
+
+			$cantidad_productos = 0;
+			$variantes_atributos = [];
+			$atributos_productos = Mostrar_Atributos_producto($wo['itemsdata']['product']['id']);
+			//unset($_SESSION['seleccion_atributos']);
+			$producto_id = $wo['itemsdata']['product']['id'];
+		?>
 		<div class="columns">
 			<div class="column main_columnas">
 				<div name="bvSeoContainer" itemscope itemtype="https://schema.org/Product" itemid="<?=$wo['config']['site_url']."/".$wo['itemsdata']['id_publicacion'] ?>" style="padding:10px;">
@@ -359,8 +366,8 @@ td{display:table-cell;vertical-align:inherit;}
 								<?php if (!empty($wo['itemsdata']['product']['marca'])): ?>
 									<span style="text-transform:uppercase;"><?=$wo['lang']['modelo'].': '.$wo['itemsdata']['product']['modelo']; ?></span>
 								<?php endif ?>
-								
 							</div>
+
 							<?php
 								$stars = '0';
 								if (!empty($wo['itemsdata']['product']['rating']) && is_numeric($wo['itemsdata']['product']['rating'])) {
@@ -378,16 +385,31 @@ td{display:table-cell;vertical-align:inherit;}
 								</div>
 							<?php } ?>
 							<?php $opciones_del_producto = lui_poner_en_lista_las_opciones($wo['itemsdata']['product']['id']);?>
-							<?php $atributos_productos = Mostrar_Atributos_producto($wo['itemsdata']['product']['id']); ?>
 							<?php
-							if (!empty($sku_colors_product->precio_adicional)) {
-								$precio_total_producto = $sku_colors_product->precio_adicional+$wo['itemsdata']['product']['price_format'];
-							}else{
-								$precio_total_producto = $wo['itemsdata']['product']['price_format'];
+							$precio_de_atributos = 0;
+							foreach ($atributos_productos as $atributo) {
+							    if ($atributo['nombre'] == 'Color') {
+							        continue;
+							    }
+							    $atributos_opciones_a = Mostrar_Opciones_Atributos_producto($atributo['id']);
+							    foreach ($atributos_opciones_a as $opcion) {
+							        if (isset($_SESSION['seleccion_atributos'][$wo['itemsdata']['product']['id']][$atributo['id']])) {
+							            if ($_SESSION['seleccion_atributos'][$wo['itemsdata']['product']['id']][$atributo['id']] == $opcion['id']) {
+							                $precio_de_atributos += $opcion['precio_adicional'];
+							                break;
+							            }
+							        } elseif ($opcion['active'] == 1) {
+							            $precio_de_atributos += $opcion['precio_adicional'];
+							        }
+							    }
 							}
-
-
-							echo '<div class="wo_post_prod_full_price">' . $symbol . number_format($precio_total_producto, 2,".",".") . ' (' . $text . ')</div>';
+							if (!empty($sku_colors_product->precio_adicional)) {
+								$precio_subtotal_producto = $sku_colors_product->precio_adicional+$wo['itemsdata']['product']['price_format'];
+							}else{
+								$precio_subtotal_producto = $wo['itemsdata']['product']['price_format'];
+							}
+							$precio_tota_del_producto = $precio_de_atributos+$precio_subtotal_producto;
+							echo '<div class="wo_post_prod_full_price">' . $symbol . '<span id="total_price">' .number_format($precio_tota_del_producto, 2,".",".") . '</span> (' . $text . ')</div>';
 							?>
 							<style type="text/css">
 								.atributos_from_publication_color{display:flex;width:100%;background:transparent;position:relative;margin:18px auto;}
@@ -430,15 +452,38 @@ td{display:table-cell;vertical-align:inherit;}
 								<?php endif ?>
 							</div>
 							
+							
 							<div class="content_atributos_c">
 								<?php foreach($atributos_productos as $wo['atributos']): ?>
 									<?php if($wo['atributos']['nombre']=='Color'): ?>
 									<?php else: $atributos_opciones = Mostrar_Opciones_Atributos_producto($wo['atributos']['id']);?>
 										<h4><?=$wo['atributos']['nombre'];?></h4>
 										<div class="contenido_opciones_atriburts">
+											<?php  ?>
 											<?php foreach ($atributos_opciones as $wo['opt_atributos']): ?>
+											    <?php
+												    $isChecked = '';
+							                        if (isset($_SESSION['seleccion_atributos'][$wo['itemsdata']['product']['id']][$wo['atributos']['id']])) {
+							                            if ($_SESSION['seleccion_atributos'][$wo['itemsdata']['product']['id']][$wo['atributos']['id']] == $wo['opt_atributos']['id']) {
+							                                $isChecked = 'checked';
+							                            }
+							                            $selecciones = $_SESSION['seleccion_atributos'][$wo['itemsdata']['product']['id']];
+													    foreach ($selecciones as $atributoId => $opcionId) {
+													        if (!isset($variantes_atributos[$atributoId])) {
+													            $variantes_atributos[$atributoId] = [];
+													        }
+													        $variantes_atributos[$atributoId][] = $opcionId;
+													    }
+
+													} elseif ($wo['opt_atributos']['active'] == 1) {
+													    $isChecked = 'checked';
+													    $variantes_atributos[$wo['atributos']['id']][] = $wo['opt_atributos']['id'];
+													}
+
+							                    ?>
+
 												<div class="lista_de_opciones_de_atributes">
-													<input class="seleccted_atributes_s" type="radio" name="opcion<?=$wo['atributos']['id'];?>" id="atr_opt_list<?=$wo['opt_atributos']['id'];?>" <?=$wo['opt_atributos']['active'] ? 'checked' : ''; ?> value="<?=$wo['opt_atributos']['precio_adicional']; ?>" onchange="updatePrice()">
+													<input class="seleccted_atributes_s" type="radio" name="opcion<?=$wo['atributos']['id'];?>" id="atr_opt_list<?=$wo['opt_atributos']['id'];?>" <?=$isChecked; ?> value="<?=$wo['opt_atributos']['precio_adicional']; ?>" data-atributo="<?=$wo['atributos']['id'];?>" data-opcion="<?=$wo['opt_atributos']['id'];?>" onchange="updateSelection()">
 													<label for="atr_opt_list<?=$wo['opt_atributos']['id'];?>"><?=$wo['opt_atributos']['nombre'];?></label>
 												</div>
 											<?php endforeach ?>
@@ -446,18 +491,43 @@ td{display:table-cell;vertical-align:inherit;}
 									<?php endif ?>
 								<?php endforeach ?>
 							</div>
-							<span id="suma-total"></span>
-							<?php $pagina = $wo['page'];?>
+							<?php
+							    if (!empty($variantes_atributos)) {
+								    $sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$wo['itemsdata']['product']['id']} AND estado = 1";
+								    $subqueries = [];
+								    foreach ($variantes_atributos as $atributo => $opciones) {
+								        foreach ($opciones as $opcion) {
+								            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
+								        }
+								    }
+								    $cantidad_prod = $db->rawQueryOne($sql)->cantidad;
+								    $cantidad_productos =	($cantidad_prod !== null) ? $cantidad_prod : 0;
+								} else{
+									if ($s_photo_color_id) {
+										$cantidad_productos = $db->where('estado', 1)
+											->where('color', $s_photo_color_id)
+		                                    ->where('producto', $wo['itemsdata']['product']['id'])
+		                                  	->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
+		                                $cantidad_productos = ($cantidad_productos !== null) ? $cantidad_productos : 0;
+									}else{
+										$cantidad_productos = $db->where('estado', 1)
+		                                    ->where('producto', $wo['itemsdata']['product']['id'])
+		                                  	->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
+		                                $cantidad_productos = ($cantidad_productos !== null) ? $cantidad_productos : 0;
+									}
+								    
+								}
+							?>
+							<span hidden id="cantidad_products"><?=$cantidad_productos;?></span>
 							<?php if ($wo['loggedin']) { ?>
 								<div class=" wo_post_prod_full_btns">
 									<?php if ($wo['config']['store_system'] == 'on') { ?>
-
-
-									<?php if (!empty($wo['itemsdata']['product']['units']) && $wo['itemsdata']['product']['units'] > 0) { ?>
-										<button class="contact btn-main btn btn-mat" onclick="AddProductToCart(this,'<?php echo($wo['itemsdata']['product']['id']); ?>','add')">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z" /></svg> <?php echo($wo['lang']['buy_now']) ?>
-										</button>
-									<?php }else{}?> 
+										<?php if (!empty($cantidad_productos) && $cantidad_productos > 0) { ?>
+											<br>
+											<button class="flex buttton_add_cart_list button3  contact btn-main btn btn-mat " onclick="AddProductToCart_layshane(this,'<?php echo($wo['itemsdata']['product']['id']); ?>','add')">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z" /></svg> <?php echo($wo['lang']['buy_now']) ?>
+											</button>
+										<?php }?>
 									<?php } ?>
 								</div>
 							<?php } ?>
@@ -475,6 +545,7 @@ td{display:table-cell;vertical-align:inherit;}
 							<?php endif ?>
 						</div>
 					</div>
+					
 					
 					<?php
 						$fields = lui_GetCustomFields('product'); 
@@ -546,16 +617,43 @@ td{display:table-cell;vertical-align:inherit;}
 			});
 		</script>
 		<script>
-    function updatePrice() {
-        var total = 0;
-        // Iterar sobre los radios seleccionados y sumar los valores
-        var selectedRadios = document.querySelectorAll('.seleccted_atributes_s:checked');
-        selectedRadios.forEach(function(radio) {
-            total += parseFloat(radio.value);
-        });
-        // Mostrar el precio total actualizado
-        document.getElementById('suma-total').textContent = 'Precio total: $' + total.toFixed(2);
-    }
-</script>
+		    var selections = {};
+		    var basePrice = <?=$precio_subtotal_producto;?>;
+
+		    function updateSelection() {
+		        selections = {};
+		        var selectedRadios = document.querySelectorAll('.seleccted_atributes_s:checked');
+		        selectedRadios.forEach(function(radio) {
+		            var atributoId = radio.getAttribute('data-atributo');
+		            var opcionId = radio.getAttribute('data-opcion');
+		            selections[atributoId] = opcionId;
+		        });
+		        var totalPrice = basePrice;
+		        Object.values(selections).forEach(function(opcionId) {
+		            var additionalPrice = parseFloat(document.querySelector('#atr_opt_list' + opcionId).value);
+		            totalPrice += additionalPrice;
+		        });
+		        document.getElementById('total_price').textContent = totalPrice.toFixed(2);
+		        guardarSeleccion(selections);
+		    }
+
+		    function guardarSeleccion(selecciones) {
+		        $.post(Wo_Ajax_Requests_File() + '?f=g_s_pr', {
+		            producto_id: <?=$wo['itemsdata']['product']['id'];?>,
+		            selecciones: selecciones
+		        }, function(data) {
+		        	document.getElementById('cantidad_products').textContent = data.cantidad_productos;
+		        	if (data.cantidad_productos==0) {
+		        		$('.buttton_add_cart_list').addClass('hidden');
+		        	}else{
+		        		$('.buttton_add_cart_list').removeClass('hidden');
+		        	}
+		            if (data.status == 200) {
+		            }
+		        });
+		    }
+		</script>
+
+
 	</main>
 </div>
