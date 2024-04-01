@@ -125,6 +125,7 @@ transition:border .5s ease;
 }
 @media (max-width:1050px) {
 	.page-wrapper.grid #maincontent .grid .producto_media_display.media{
+		position:relative;top:0;
 		grid-column: auto / span 12;grid-column-start:12;grid-column-end:2;
 	}
 	.page-wrapper.grid #maincontent .grid .informacion_del_producto{
@@ -134,6 +135,7 @@ transition:border .5s ease;
 @media (max-width:550px){
 	.page-wrapper.grid #maincontent .grid .producto_media_display.media{
 		grid-column: auto / span 12;
+		position:relative;top:0;
 		grid-column-start:auto;
     	grid-column-end:span 12;
 	}

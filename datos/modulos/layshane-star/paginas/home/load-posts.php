@@ -17,7 +17,7 @@
 						<li class="product_layshane">
 							<a href="<?php echo lui_SeoLink('index.php?link1=tienda&c_id='.$cat_id_produc);?>" data-ajax="?link1=tienda&c_id=<?=$cat_id_produc?>" alt="Comprar - <?=$cat_nombre_producs;?>">
 								<figure class="categories-g__bg bg--change" data-bg="<?=$cat_logo_produc; ?>" style="background-image: url(&quot;<?=$cat_logo_produc; ?>&quot;);"></figure>
-							<span class="name_product" alt="Informacion <?=$cat_nombre_producs;?>"><?=$cat_nombre_producs;?></span>
+								<span class="name_product" alt="Informacion <?=$cat_nombre_producs;?>"><?=$cat_nombre_producs;?></span>
 							</a>
 						</li>
 						<?php endif ?>
