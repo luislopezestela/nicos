@@ -1,4 +1,24 @@
-<link rel="preload" id="flikitlod" href="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
+<script type="text/javascript">
+	if ($('#flikit').length) {
+          $('#flikit').remove();
+    }
+    if ($('#flikitlod').length) {
+          $('#flikitlod').remove();
+    }
+    var preloadLink = document.createElement('link');
+    preloadLink.id = 'flikitlod';
+    preloadLink.rel = 'preload';
+    preloadLink.href = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
+    preloadLink.as = 'script';
+
+    // Agrega el enlace de precarga al encabezado del documento
+    document.head.appendChild(preloadLink);
+
+    var sucjs  = document.createElement('script');
+    sucjs.id   = 'flikit';
+    sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
+    document.head.appendChild(sucjs);
+</script>
 <style type="text/css">
 body{background:#F0F2FD;}
 /*Full Product Post page*/
