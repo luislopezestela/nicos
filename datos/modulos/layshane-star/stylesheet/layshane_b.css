@@ -1606,4 +1606,10 @@ button.close {
         border-bottom: 0
     }
 }
+.carousel__item.dragging a {
+    pointer-events: none!important;
+}
+
+.no-click{pointer-events:none!important;}
+.more_its{mask-image:linear-gradient(to left, transparent 1%, black 13%)!important;}
 

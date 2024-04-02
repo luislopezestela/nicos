@@ -114,7 +114,7 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 	aspect-ratio: 1/1;
 	flex:0 0 auto;
 	display:inline-flex;
-	width:calc(100% / 5 - 1.31rem);
+	width:calc(100% / 7 - 1.31rem);
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.123);
   border-radius: 20px;
   background: rgb(245, 245, 245);
@@ -123,25 +123,37 @@ $section_keys = lui_GetSectionCatKeys('section_product');
   margin:0px;
 }
 @media only screen and (max-width: 1500px) {
-  .carousel .carousel__item{width:calc(100% / 4 - 1.31rem);}
+  .carousel .carousel__item{width:calc(100% / 5 - 1.31rem);}
 }
 @media only screen and (max-width: 1200px) {
-  .carousel .carousel__item{width:calc(100% / 3 - 1.03rem)}
+  .carousel .carousel__item{width:calc(100% / 4 - 1.03rem)}
 }
 @media only screen and (max-width: 990px) {
-  .carousel .carousel__item{width:calc(100% / 4 - 1.31rem);}
+  .carousel .carousel__item{width:calc(100% / 5 - 1.31rem);}
 }
 @media only screen and (max-width: 870px) {
-  .carousel .carousel__item{width:calc(100% / 3 - 1.03rem)}
+  .carousel .carousel__item{width:calc(100% / 4 - 1.03rem)}
 }
 @media only screen and (max-width: 620px) {
-  .carousel .carousel__item{width:calc(100% / 2 - 1.03rem)}
+  .carousel .carousel__item{width:calc(100% / 3 - 1.03rem)}
+}
+@media only screen and (max-width: 470px) {
+	.carousel .carousel__content{grid-gap:11px;}
+	.columna_xs-6{width:100%;float:none;}
+  .carousel .carousel__item{width:calc(100% / 2 - 3.5rem)}
 }
 @media only screen and (max-width: 390px) {
 	.columna_xs-6{width:100%;float:none;}
-  .carousel .carousel__item{width:calc(100% / 1 - 0.5rem)}
+  .carousel .carousel__item{width:calc(100% / 1 - 10rem)}
 }
-
+@media only screen and (max-width: 330px) {
+	.columna_xs-6{width:100%;float:none;}
+  .carousel .carousel__item{width:calc(100% / 1 - 6rem)}
+}
+@media only screen and (max-width: 290px) {
+	.columna_xs-6{width:100%;float:none;}
+  .carousel .carousel__item{width:calc(100% / 1 - 4rem)}
+}
 .carousel .carousel__item .carousel__description{width:100%;position:absolute;bottom:0;display:flex;top:50%;}
 .carousel .carousel__item a {
   position:absolute;
@@ -310,7 +322,7 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 							    window.onload = restaurarPosicionHorizontal;
 
 							</script>
-						    <ul class="carousel__content" id="carousel__content">
+						    <ul class="carousel__content more_its" id="carousel__content">
 						    	<?php if($category_id==0): ?>
 						    		<?php foreach ($wo['products_categories'] as $category){
 						    			$cat_id_produc = $category['id'];
@@ -444,12 +456,13 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 	var COMPONENT_SELECTOR = '.carousel__wrapper';
 	var CONTROLS_SELECTOR = '.carousel__controls';
 	var CONTENT_SELECTOR = '.carousel__content';
-
 	var components = document.querySelectorAll( COMPONENT_SELECTOR );
+
 
 	for ( let i = 0; i < components.length; i++ ) {
 		const component = components[ i ];
 		const content = component.querySelector( CONTENT_SELECTOR );
+		let isDragStart = false, isDragging = false;
 		let x = 0;
 		let mx = 0;
 		const maxScrollWidth = content.scrollWidth - content.clientWidth / 2 - content.clientWidth / 2;
@@ -486,6 +499,11 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 		 * @param {object} e event object.
 		 */
 		const mousemoveHandler = ( e ) => {
+			if(!isDragStart) return;
+			e.preventDefault();
+    	isDragging = true;
+    	content.classList.add("dragging");
+    	content.classList.add("no-click");
 			const mx2 = e.pageX - content.offsetLeft;
 			if ( mx ) {
 				content.scrollLeft = content.sx + mx - mx2;
@@ -493,39 +511,56 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 		};
 
 		/**
-		 * @param {object} e event object.
+		 * @param {object} e event object. 
 		 */
 		const mousedownHandler = ( e ) => {
+			isDragStart = true;
 			content.sx = content.scrollLeft;
 			mx = e.pageX - content.offsetLeft;
-			content.classList.add( 'dragging' );
 		};
+
 		const scrollHandler = () => {
 			toggleArrows();
 		};
 		const toggleArrows = () => {
 			if ( content.scrollLeft > maxScrollWidth - 10 ) {
 				nextButton.classList.add( 'disabled' );
+				content.classList.remove("more_its");
 			} else if ( content.scrollLeft < 10 ) {
 				prevButton.classList.add( 'disabled' );
+				content.classList.add("more_its");
 			} else {
+				content.classList.add("more_its");
 				nextButton.classList.remove( 'disabled' );
 				prevButton.classList.remove( 'disabled' );
 			}
 		};
 		const mouseupHandler = () => {
+			isDragStart = false;
 			mx = 0;
 			content.classList.remove( 'dragging' );
+			content.classList.remove("no-click");
+			if(!isDragging) return;
+    	isDragging = false;
 		};
 
-		content.addEventListener( 'mousemove', mousemoveHandler );
 		content.addEventListener( 'mousedown', mousedownHandler );
+		content.addEventListener( 'touchstart', mousedownHandler);
+
+		document.addEventListener( 'mousemove', mousemoveHandler );
+		content.addEventListener( 'touchmove', mousemoveHandler);
+
 		if ( component.querySelector( CONTROLS_SELECTOR ) !== undefined ) {
 			content.addEventListener( 'scroll', scrollHandler );
 		}
-		content.addEventListener( 'mouseup', mouseupHandler );
-		content.addEventListener( 'mouseleave', mouseupHandler );
+		document.addEventListener( 'mouseup', mouseupHandler );
+		content.addEventListener( 'touchend', mouseupHandler);
+
+		//content.addEventListener( 'mouseleave', mouseupHandler );
+
 	}
+
+
 
 $('.wow_main_blogs_bg').css('height', ($('.wow_main_float_head').height()) + 'px');
 

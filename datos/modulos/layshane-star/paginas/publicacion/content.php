@@ -525,24 +525,24 @@ td{display:table-cell;vertical-align:inherit;}
 								<div class=" wo_post_prod_full_btns">
 									<?php if ($wo['config']['store_system'] == 'on') { ?>
 										<?php if (!empty($cantidad_productos) && $cantidad_productos > 0) { ?>
-											<br>
-											<button class="flex buttton_add_cart_list button3  contact btn-main btn btn-mat " onclick="AddProductToCart_layshane(this,'<?php echo($wo['itemsdata']['product']['id']); ?>','add')">
+											<br><br>
+											<button class="flex buttton_add_cart_list button3  contact btn-main btn btn-mat " disabled onclick="AddProductToCart_layshane(this,'<?php echo($wo['itemsdata']['product']['id']); ?>','add')">
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z" /></svg> <?php echo($wo['lang']['buy_now']) ?>
 											</button>
+											<br><br>
 										<?php }?>
 									<?php } ?>
 								</div>
 							<?php } ?>
-							
+							<style type="text/css">
+								.selected-information{width:100%;max-width:500px;padding:15px!important;word-spacing:4px;line-height:1.8;margin:10px 0;}
+								.selected-information>p{margin-bottom:1em!important;}
+							</style>
 							<?php if($wo['loggedin'] == false): ?>
-								<div class="product-care-info stellar-body__small">
-									<div class="care-container">
-										<div class="title">
-											<div class="selected-carepack two-lines">Para realizar una compra, es necesario <a style="color:var(--boton-fondo);font-weight:700;" href="<?php echo lui_SeoLink('index.php?link1=acceder');?>"> Acceder </a> al sistema, si es nuevo debe <a style="color:var(--boton-fondo);font-weight:700;" href="<?php echo lui_SeoLink('index.php?link1=register');?>"> Registrarse </a>. (es requerido por su seguridad al momento de comprar). Hacemos que tus compras sean mas seguras.</div>
-										</div>
-									</div>
-								</div>
-								<div>
+								<div class="selected-information alert alert-info">
+									<p>Para realizar una compra, es necesario
+									<a style="color:var(--boton-fondo);font-weight:700;" href="<?php echo lui_SeoLink('index.php?link1=acceder');?>"> Acceder </a> al sistema,
+									 si es nuevo debe <a style="color:var(--boton-fondo);font-weight:700;" href="<?php echo lui_SeoLink('index.php?link1=register');?>"> Registrarse </a>. (es requerido por su seguridad al momento de comprar). Hacemos que tus compras sean mas seguras.</p>
 								</div>
 							<?php endif ?>
 						</div>
