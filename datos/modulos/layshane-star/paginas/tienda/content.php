@@ -205,6 +205,13 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 }
 .load-produts .load-more button{width:auto}
 .text_category span{font-family:sans-serif;padding-top:10px;}
+.carousel__content {
+  overflow: auto!important; /* o overflow: scroll; */
+  -webkit-overflow-scrolling: touch!important; /* Mejora la experiencia de desplazamiento en iOS */
+  overscroll-behavior: none!important; /* Evita el desplazamiento en dispositivos táctiles */
+  overscroll-behavior-x: none!important;
+}
+
 </style>
 <div class="header_layshane_tienda" style="text-align:center;">
 	<h1><?php echo $wo['lang']['tienda'] ?> <?=$wo['config']['siteName'];?></h1>
@@ -451,7 +458,6 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 		<div class="clear"></div>
 	</div>
 </div>
-
 <script>
 	var COMPONENT_SELECTOR = '.carousel__wrapper';
 	var CONTROLS_SELECTOR = '.carousel__controls';
@@ -544,11 +550,37 @@ $section_keys = lui_GetSectionCatKeys('section_product');
     	isDragging = false;
 		};
 
+		/**
+		 * @param {object} e event object.
+		 */
+		const touchmoveHandler = (e) => {
+		    if (!isDragStart) return;
+		    e.preventDefault();
+		    isDragging = true;
+		    content.classList.add("dragging");
+		    content.classList.add("no-click");
+		    const mx2 = e.touches[0].pageX - content.offsetLeft;
+		    if (mx) {
+		        content.scrollLeft = content.sx + mx - mx2;
+		    }
+		};
+
+		/**
+		 * @param {object} e event object. 
+		 */
+		const touchstartHandler = (e) => {
+		    isDragStart = true;
+		    content.sx = content.scrollLeft;
+		    mx = e.touches[0].pageX - content.offsetLeft;
+		};
+
+		content.addEventListener('touchstart', touchstartHandler);
+		content.addEventListener('touchmove', touchmoveHandler);
+
+
 		content.addEventListener( 'mousedown', mousedownHandler );
-		content.addEventListener( 'touchstart', mousedownHandler);
 
 		document.addEventListener( 'mousemove', mousemoveHandler );
-		content.addEventListener( 'touchmove', mousemoveHandler);
 
 		if ( component.querySelector( CONTROLS_SELECTOR ) !== undefined ) {
 			content.addEventListener( 'scroll', scrollHandler );
@@ -557,9 +589,11 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 		content.addEventListener( 'touchend', mouseupHandler);
 
 		//content.addEventListener( 'mouseleave', mouseupHandler );
-
+		document.addEventListener('mouseleave', () => {
+		    isDragStart = false;
+		    isDragging = false;
+		});
 	}
-
 
 
 $('.wow_main_blogs_bg').css('height', ($('.wow_main_float_head').height()) + 'px');

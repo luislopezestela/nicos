@@ -232,6 +232,35 @@ a:hover{
       justify-content: center;
    }
 }
+.image {
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+  opacity: 0;
+}
+
+.bounce {
+  animation: bounceAnimation 0.8s cubic-bezier(0.4, 0.8, 0.75, 1.2);
+}
+
+@keyframes bounceAnimation {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(0);
+  }
+  90% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
 </style>
 <div class="container_acceder">
    <div class="login-content">
@@ -248,7 +277,7 @@ a:hover{
                </div>
                <div class="div">
                      <h5 for="username"><?php echo $wo['lang']['username']?></h5>
-                     <input class="input" id="username" name="username" type="text" autocomplete="off" autofocus>
+                     <input class="input" id="username" name="username" type="text" autocomplete="off">
                </div>
             </div>
             <div class="input-div pass">
@@ -416,9 +445,10 @@ a:hover{
 </div>
 
 <script>
-var working = false;
-var $this = $('#login');
-var $state = $this.find('.errors');
+
+   var working = false;
+   var $this = $('#login');
+   var $state = $this.find('.errors');
 
 <?php if($wo['config']['googleLogin'] != 0): ?>
 function handleCredentialResponse(response) {
@@ -452,6 +482,8 @@ window.onload = function () {
 }
 <?php endif; ?>
 
+   
+
 $(function() {
   $('#login').ajaxForm({
     url: Wo_Ajax_Requests_File() + '?f=login',
@@ -478,28 +510,14 @@ $(function() {
       }
       working = false;
     }
-  });
+   });
+  cargaranimatiosn();
 });
 
-const inputs = document.querySelectorAll(".input");
 
 
-function addcl(){
-   let parent = this.parentNode.parentNode;
-   parent.classList.add("focus");
-}
-
-function remcl(){
-   let parent = this.parentNode.parentNode;
-   if(this.value == ""){
-      parent.classList.remove("focus");
-   }
-}
 
 
-inputs.forEach(input => {
-   input.addEventListener("focus", addcl);
-   input.addEventListener("blur", remcl);
-});
+   
 
 </script>

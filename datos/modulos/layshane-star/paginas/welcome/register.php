@@ -72,7 +72,7 @@ a:hover{color:var(--boton-fondo);}
 						<div class="i">
            		<i><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="16" width="14" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg></i>
            	</div>
-           	<div class="div">	
+           	<div class="div">
 							<h5 for="first_name"><?php echo $wo['lang']['first_name']?></h5>
 							<input class="input" id="first_name" name="first_name" type="text" autocomplete="off" autofocus>
 						</div>
@@ -93,7 +93,7 @@ a:hover{color:var(--boton-fondo);}
            	</div>
            	<div class="div">
 							<h5 for="username"><?php echo $wo['lang']['username']?></h5>
-							<input class="input" id="username" name="username" type="text" autocomplete="off" autofocus>
+							<input class="input" id="username" name="username" type="text" autocomplete="off">
 						</div>
 					</div>
 				<?php } ?>
@@ -209,22 +209,9 @@ a:hover{color:var(--boton-fondo);}
 var working = false;
 var $this = $('#register');
 var $state = $this.find('.errors');
-const inputs = document.querySelectorAll(".input");
-function addcl(){
-	let parent = this.parentNode.parentNode;
-	parent.classList.add("focus");
-}
-function remcl(){
-	let parent = this.parentNode.parentNode;
-	if(this.value == ""){
-		parent.classList.remove("focus");
-	}
-}
-inputs.forEach(input => {
-	input.addEventListener("focus", addcl);
-	input.addEventListener("blur", remcl);
-});
+
 $(function() {
+	cargaranimatiosn();
   $this.ajaxForm({
     url: Wo_Ajax_Requests_File() + '?f=register',
     beforeSend: function() {

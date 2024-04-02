@@ -323,6 +323,7 @@
 	.wo_market .market_bottom .productos_en_cuadros{grid-template-columns:repeat(auto-fill, minmax(calc(100% / 2 - 1rem), 1fr));}
 }
 @media (max-width:520px) {
+	.caja_de_productos_en_lista{width:100%!important}
 	.contenido_layshane_items{display:block!important;}
 	.wo_market .market_bottom .productos_en_cuadros{grid-template-columns:repeat(auto-fill, minmax(calc(100% - 1rem), 1fr));}
 }

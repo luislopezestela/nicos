@@ -124,59 +124,15 @@ transition:border .5s ease;
   100%{transform:scale(1, 1);}
 }
 @media (max-width:1050px) {
-	.page-wrapper.grid #maincontent .grid .producto_media_display.media{
-		position:relative;top:0;
-		grid-column: auto / span 12;grid-column-start:12;grid-column-end:2;
-	}
-	.page-wrapper.grid #maincontent .grid .informacion_del_producto{
-		grid-column: auto / span 12;
-	}
+	.page-wrapper.grid #maincontent .grid .producto_media_display.media{position:relative;top:0;grid-column: auto / span 12;grid-column-start:12;grid-column-end:2;}
+	.page-wrapper.grid #maincontent .grid .informacion_del_producto{grid-column:auto / span 12;}
 }
-@media (max-width:550px){
-	.page-wrapper.grid #maincontent .grid .producto_media_display.media{
-		grid-column: auto / span 12;
-		position:relative;top:0;
-		grid-column-start:auto;
-    	grid-column-end:span 12;
-	}
-}
-body:not([dir=rtl]) blockquote {
-    border-left: 2px solid #ccc;
-    margin-left: 1.5rem;
-    padding-left: 1rem;
-}
-blockquote {
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 40px;
-    margin-inline-end: 40px;
-    unicode-bidi: isolate;
-}
-div {
-    display: block;
-    unicode-bidi: isolate;
-}
-h2 {
-    display: block;
-    font-size: 1.5em;
-    margin-block-start: 0.83em;
-    margin-block-end: 0.83em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
-}
-p {
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    unicode-bidi: isolate;
-}
-</style>
-<style type="text/css">
+@media (max-width:550px){.page-wrapper.grid #maincontent .grid .producto_media_display.media{grid-column: auto / span 12;position:relative;top:0;grid-column-start:auto;grid-column-end:span 12;}}
+body:not([dir=rtl]) blockquote{border-left:2px solid #ccc;margin-left:1.5rem;padding-left:1rem;}
+blockquote{display:block;margin-block-start:1em;margin-block-end:1em;margin-inline-start:40px;margin-inline-end:40px;unicode-bidi: isolate;}
+div{display:block;unicode-bidi:isolate;}
+h2{display:block;font-size:1.5em;margin-block-start:0.83em;margin-block-end:0.83em;margin-inline-start:0px;margin-inline-end:0px;font-weight:bold;unicode-bidi:isolate;}
+p{display:block;margin-block-start:1em;margin-block-end:1em;margin-inline-start:0px;margin-inline-end:0px;unicode-bidi:isolate;}
 .page-wrapper.grid{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     line-height: 1.4;}
 strong{font-weight:bold;}

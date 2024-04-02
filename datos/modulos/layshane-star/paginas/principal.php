@@ -77,7 +77,6 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
   <link rel="canonical" href="<?=($link_text)?>"/>
 <?php } ?>
 <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-3.7.0.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
-<link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-ui.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/boots.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/scripts.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <link rel="preload" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
@@ -101,7 +100,6 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
   <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/tinymce/tinymce.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
   <script src="<?php echo $wo['config']['theme_url'];?>/javascript/tinymce/tinymce.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
 <?php } ?>
-<script src="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-ui.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
 <?php if ($wo['loggedin'] == true): ?>
   <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/jqueryform.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <?php endif ?>
@@ -737,7 +735,6 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
       <?php } ?>
 
       <?php if ($wo['loggedin'] == false) { ?>
-       <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/welcome.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="script">
       <script type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/welcome.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <?php } ?>
       <?php if ($wo['config']['node_socket_flow'] == "1"){ ?>
