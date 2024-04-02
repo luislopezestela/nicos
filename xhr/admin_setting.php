@@ -1845,18 +1845,15 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
                         if(!empty($_FILES['media_file']["tmp_name"])){
                             $filename = "";
                             $themes   = $wo['config']['theme'];
-                            if($themes=='layshane_star'){
+                            if($themes=='layshane-star'){
                                 $fileInfo = array(
                                     'file' => $_FILES["media_file"]["tmp_name"],
                                     'name' => $_FILES['media_file']['name'],
                                     'size' => $_FILES["media_file"]["size"],
                                     'type' => $_FILES["media_file"]["type"],
-                                    'types' => 'jpg,png,gif,jpeg',
-                                    'crop' => array(
-                                        'width' => 280,
-                                        'height' => 290
-                                    )
+                                    'types' => 'jpg,png,gif,jpeg,webp',
                                 );
+                                $media    = lui_addImages_load_sinCrop($fileInfo);
                             }elseif($themes=='restaurante-star'){
                                 $fileInfo = array(
                                     'file' => $_FILES["media_file"]["tmp_name"],
@@ -1869,9 +1866,10 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
                                         'height' => 480
                                     )
                                 );
+                                $media    = lui_ShareFile($fileInfo,0,false);
                             }
                             
-                            $media    = lui_ShareFile($fileInfo,0,false);
+                            
                             if (!empty($media)) {
                                 $filename = $media['filename'];
                             }
@@ -1931,6 +1929,37 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
             $wo['category_section'] = $id_de_categoria_section;
             $wo['categoria_id'] = $id_de_categoria;
             $html .= lui_LoadAdminPage('products-categories/form');
+            $data['status'] = 200;
+            $data['html']   = $html;
+        }
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
+    if ($s == 'get_category_langs_sub' && !empty($_POST['lang_key'])) {
+        $data['status'] = 400;
+        $html           = '';
+        $langs          = lui_GetLangDetails($_POST['lang_key']);
+        if (count($langs) > 0) {
+            foreach ($langs as $key => $wo['langs']) {
+                foreach ($wo['langs'] as $wo['key_'] => $wo['lang_vlaue']) {
+                    $html .= lui_LoadAdminPage('edit-lang/form-list');
+                }
+            }
+            if (isset($_POST['categoria_id'])) {
+                $id_de_categoria = $_POST['categoria_id'];
+            }else{
+                $id_de_categoria = false;
+            }
+            if (isset($_POST['id_section'])) {
+                $id_de_categoria_section = $_POST['id_section'];
+            }else{
+                $id_de_categoria_section = false;
+            }
+            $wo['category_section'] = $id_de_categoria_section;
+            $wo['categoria_id'] = $id_de_categoria;
+            $html .= lui_LoadAdminPage('products-sub-categories/form');
             $data['status'] = 200;
             $data['html']   = $html;
         }
@@ -6282,13 +6311,9 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
                                 'name' => $_FILES['media_file']['name'],
                                 'size' => $_FILES["media_file"]["size"],
                                 'type' => $_FILES["media_file"]["type"],
-                                'types' => 'jpg,png,gif,jpeg',
-                                'crop' => array(
-                                    'width' => 280,
-                                    'height' => 290
-                                )
+                                'types' => 'jpg,png,gif,jpeg,webp'
                             );
-                            $media    = lui_ShareFile($fileInfo,0,false);
+                            $media    = lui_addImages_load_sinCrop($fileInfo);
                             if (!empty($media)) {
                                 $filename = $media['filename'];
                             }

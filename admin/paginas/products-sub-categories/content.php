@@ -65,7 +65,7 @@ if (!empty($_GET['key']) && in_array($_GET['key'], array_keys($wo['products_cate
                                     <div class="form-line">
                                         <label class="form-label">Logo</label>
                                         <div class="btn-file d-flex align-items-center">
-                                            <input type="file" id="icono_categorias" accept="image/x-png, image/gif, image/jpeg" name="media_file" class="hidden">
+                                            <input type="file" id="icono_categorias" accept="image/x-png, image/gif, image/jpeg, image/webp" name="media_file" class="hidden">
                                             <div class="mr-2 change-file-ico">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16.5,6V17.5A4,4 0 0,1 12.5,21.5A4,4 0 0,1 8.5,17.5V5A2.5,2.5 0 0,1 11,2.5A2.5,2.5 0 0,1 13.5,5V15.5A1,1 0 0,1 12.5,16.5A1,1 0 0,1 11.5,15.5V6H10V15.5A2.5,2.5 0 0,0 12.5,18A2.5,2.5 0 0,0 15,15.5V5A4,4 0 0,0 11,1A4,4 0 0,0 7,5V17.5A5.5,5.5 0 0,0 12.5,23A5.5,5.5 0 0,0 18,17.5V6H16.5Z"></path></svg>
                                             </div>
@@ -272,7 +272,6 @@ edit_category_form.ajaxForm({
         edit_category_form.find('.waves-effect').text("Por favor espere..");
     },
     success: function(data) {
-        console.log(data)
         if (data.status == 200) {
             edit_category_form.find('.waves-effect').text('Guardar');
             $('.edit_category_form_alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Sub categoria editado con exito</div>');
@@ -298,7 +297,7 @@ $(document).on('click','#save_edited_category', function(event) {
 function edit_category(id,id_categoria) {
   $('#id_of_key').val(id);
   $('#categoria_idd').val(id_categoria);
-  $.post(Wo_Ajax_Requests_File() + '?f=admin_setting&s=get_category_langs', {lang_key: id,categoria_id:id_categoria}, function(data, textStatus, xhr) {
+  $.post(Wo_Ajax_Requests_File() + '?f=admin_setting&s=get_category_langs_sub', {lang_key: id,categoria_id:id_categoria}, function(data, textStatus, xhr) {
       if (data.status == 200) {
         $('.data_lang').html(data.html);
         $('#editcategoryModal').modal();
