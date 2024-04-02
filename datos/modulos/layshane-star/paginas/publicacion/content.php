@@ -18,6 +18,8 @@
     sucjs.id   = 'flikit';
     sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
     document.head.appendChild(sucjs);
+
+
 </script>
 <style type="text/css">
 body{background:#F0F2FD;}
@@ -557,7 +559,7 @@ td{display:table-cell;vertical-align:inherit;}
 			</div>
 		</div>
 		<script type="text/javascript">
-			$(function() {
+			sucjs.onload = function() {
 				var lightboxEnabled = true;
 				var flkty_1 = new Flickity('.wo_post_prod_full_img', {
 				    fullscreen: true,
@@ -591,9 +593,9 @@ td{display:table-cell;vertical-align:inherit;}
 					    }
 					});
 				}
+			};
+			sucjs
 
-
-			});
 		</script>
 		<script>
 		    var selections = {};
