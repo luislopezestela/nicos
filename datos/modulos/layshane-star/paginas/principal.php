@@ -276,9 +276,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                 }
                 return false;
               }
-              $(document).ready(function(){
-                box.html(data);
-              });
+              box.html(data);
               if(json_data.is_css_file == 1){
                 $('.styled-profile').remove();
                 $('footer').append(json_data.css_file);

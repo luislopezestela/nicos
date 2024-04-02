@@ -1,3 +1,4 @@
+<link rel="preload" id="flikitlod" href="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <style type="text/css">
 body{background:#F0F2FD;}
 /*Full Product Post page*/
