@@ -228,27 +228,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
             }
               var urlsssss = $(this).attr('href');
               var segments = urlsssss.split('/').filter(Boolean);
-            if (segments[2] == 'item'){
-                if ($('#flikit').length) {
-                      $('#flikit').remove();
-                }
-                if ($('#flikitlod').length) {
-                      $('#flikitlod').remove();
-                }
-                var preloadLink = document.createElement('link');
-                preloadLink.id = 'flikitlod';
-                preloadLink.rel = 'preload';
-                preloadLink.href = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-                preloadLink.as = 'script';
-
-                // Agrega el enlace de precarga al encabezado del documento
-                document.head.appendChild(preloadLink);
-
-                var sucjs  = document.createElement('script');
-                sucjs.id   = 'flikit';
-                sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-                document.head.appendChild(sucjs);
-            }
+            
             if (segments[2] == 'tienda'){
                 if ($('#store_cs').length) {
                   $('#store_cs').remove();

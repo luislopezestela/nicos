@@ -14,12 +14,6 @@
     // Agrega el enlace de precarga al encabezado del documento
     document.head.appendChild(preloadLink);
 
-    var sucjs  = document.createElement('script');
-    sucjs.id   = 'flikit';
-    sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-    document.head.appendChild(sucjs);
-
-
 </script>
 <style type="text/css">
 body{background:#F0F2FD;}
@@ -561,6 +555,10 @@ td{display:table-cell;vertical-align:inherit;}
 		<script type="text/javascript">
 			
 			$(function() {
+				var sucjs  = document.createElement('script');
+			    sucjs.id   = 'flikit';
+			    sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
+			    document.head.appendChild(sucjs);
 				sucjs.onload = function() {
 					var lightboxEnabled = true;
 					var flkty_1 = new Flickity('.wo_post_prod_full_img', {
@@ -568,14 +566,15 @@ td{display:table-cell;vertical-align:inherit;}
 					    fade: true,
 					    pageDots: false,
 					    bgLazyLoad: true,
-					    lazyLoad: 1
+					    lazyLoad: true
 					});
 
 					var flkty_2 = new Flickity('.wo_post_prod_full_img_slider', {
 					    asNavFor: '.wo_post_prod_full_img',
 					    contain: true,
 					    pageDots: false,
-					    lazyLoad: 1,
+					    bgLazyLoad: true,
+					    lazyLoad: true,
 					    prevNextButtons: false
 					});
 
@@ -596,7 +595,6 @@ td{display:table-cell;vertical-align:inherit;}
 						});
 					}
 				};
-				sucjs
 			});
 		</script>
 		<script>
