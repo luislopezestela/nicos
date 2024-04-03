@@ -1073,6 +1073,8 @@
       images_upload_credentials: true,
       paste_data_images: true,
       image_advtab: true,
+      relative_urls: false,
+      remove_script_host: false,
       entity_encoding : 'raw',
       images_upload_url: Wo_Ajax_Requests_File() + '?f=upload-blog-image',
       toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
@@ -1085,14 +1087,17 @@
                   var file = this.files[0];
                   var reader = new FileReader();
                   reader.onload = function(e) {
+                    console.log(e)
                       callback(e.target.result, {
                           alt: ''
                       });
                   };
+                  console.log(file)
                   reader.readAsDataURL(file);
               });
           }
       },
+
     });
 
     $(function() {

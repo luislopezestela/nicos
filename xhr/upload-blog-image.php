@@ -15,9 +15,9 @@ if ($f == 'upload-blog-image') {
             $mediaName     = $media['name'];
         }
         if (!empty($mediaFilename)) {
-            $filetowrite = lui_GetMedia($mediaFilename);
+            $filetowrite = lui_GetMedia_bl($mediaFilename);
             echo json_encode(array(
-                'location' => $filetowrite
+                'location' => $wo['config']['site_url'] . '/' .$filetowrite
             ));
             exit();
         } else {
