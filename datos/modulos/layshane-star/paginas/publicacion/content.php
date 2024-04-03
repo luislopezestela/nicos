@@ -386,6 +386,9 @@ td{display:table-cell;vertical-align:inherit;}
 							}else{
 								$precio_subtotal_producto = $wo['itemsdata']['product']['price_format'];
 							}
+							echo $precio_de_atributos;
+							echo "<br>";
+							echo $precio_subtotal_producto;
 							$precio_tota_del_producto = $precio_de_atributos+$precio_subtotal_producto;
 							echo '<div class="wo_post_prod_full_price">' . $symbol . '<span id="total_price">' .number_format($precio_tota_del_producto, 2,".",".") . '</span> (' . $text . ')</div>';
 							?>
