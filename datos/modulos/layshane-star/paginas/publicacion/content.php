@@ -594,8 +594,9 @@ td{display:table-cell;vertical-align:inherit;}
 					});
 				}
 			};
-			sucjs
-
+			$(function() {
+				sucjs
+			});
 		</script>
 		<script>
 		    var selections = {};
