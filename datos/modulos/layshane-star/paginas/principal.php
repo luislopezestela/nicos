@@ -249,6 +249,25 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                 sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
                 document.head.appendChild(sucjs);
             }
+            if (segments[2] == 'tienda'){
+                if ($('#store_cs').length) {
+                  $('#store_cs').remove();
+                }
+                if ($('#store_cslod').length) {
+                      $('#store_cslod').remove();
+                }
+                var preloadstored = document.createElement('link');
+                preloadstored.id = 'store_cslod';
+                preloadstored.rel = 'preload';
+                preloadstored.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_t.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
+                preloadstored.as = 'style';
+                document.head.appendChild(preloadstored);
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.id = "store_cs";
+                link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_t.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
+                document.head.appendChild(link);
+            }
             if (segments[2] == 'cuentas'){
                 if ($('#flikit').length) {
                       $('#flikit').remove();
@@ -276,6 +295,17 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                 }
                 return false;
               }
+              if(json_data.page == 'tienda'){
+                if ($('#store_cs').length) {
+                  $('#store_cs').remove();
+                }
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.id = "store_cs";
+                link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_t.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
+                document.head.appendChild(link);
+              }
+
               box.html(data);
               if(json_data.is_css_file == 1){
                 $('.styled-profile').remove();
@@ -302,15 +332,6 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
               if(json_data.page == 'products'){
                 $('.content-container').css('margin-top', '90px');
                 $('.ad-placement-header-footer').find('.contnet').css('margin-top', '0');
-              }else if(json_data.page == 'tienda'){
-                if ($('#store_cs').length) {
-                  $('#store_cs').remove();
-                }
-                var link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.id = "store_cs";
-                link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_t.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
-                document.head.appendChild(link);
               }else{
                 if ($('.content-container').length) {
                   $('.content-container').css('margin-top', '90px');
