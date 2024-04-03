@@ -382,16 +382,23 @@ td{display:table-cell;vertical-align:inherit;}
 							    }
 							}
 							if (!empty($sku_colors_product->precio_adicional)) {
-								$precio_subtotal_producto = $sku_colors_product->precio_adicional+$wo['itemsdata']['product']['price_format'];
+								$precio_subtotal_producto = $sku_colors_product->precio_adicional+$wo['itemsdata']['product']['price'];
 							}else{
-								$precio_subtotal_producto = $wo['itemsdata']['product']['price_format'];
+								$precio_subtotal_producto = $wo['itemsdata']['product']['price'];
 							}
-							echo $precio_de_atributos;
-							echo "<br>";
-							echo $precio_subtotal_producto;
-							$precio_tota_del_producto = $precio_de_atributos+$precio_subtotal_producto;
+
+							
+							if ($precio_de_atributos > 0) {
+								$suma_precios_atributs = $precio_de_atributos;
+								$precio_tota_del_producto = $suma_precios_atributs+$precio_subtotal_producto;
+							}else{
+								$precio_tota_del_producto = $precio_subtotal_producto;
+							}
+							
+							
 							echo '<div class="wo_post_prod_full_price">' . $symbol . '<span id="total_price">' .number_format($precio_tota_del_producto, 2,".",".") . '</span> (' . $text . ')</div>';
 							?>
+							<br>
 							<style type="text/css">
 								.atributos_from_publication_color{display:flex;width:100%;background:transparent;position:relative;margin:18px auto;}
 								.content_atributos{display:flex;flex-wrap:wrap;}
@@ -524,6 +531,7 @@ td{display:table-cell;vertical-align:inherit;}
 									 si es nuevo debe <a style="color:var(--boton-fondo);font-weight:700;" href="<?php echo lui_SeoLink('index.php?link1=register');?>"> Registrarse </a>. (es requerido por su seguridad al momento de comprar). Hacemos que tus compras sean mas seguras.</p>
 								</div>
 							<?php endif ?>
+							<br><br>
 						</div>
 					</div>
 					
