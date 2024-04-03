@@ -11,7 +11,6 @@
     preloadLink.href = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
     preloadLink.as = 'script';
 
-    // Agrega el enlace de precarga al encabezado del documento
     document.head.appendChild(preloadLink);
 
 </script>
@@ -161,6 +160,8 @@ tbody{display:table-row-group;vertical-align:middle;border-color:inherit;}
 tr{display:table-row;vertical-align:inherit;border-color:inherit;}
 td{display:table-cell;vertical-align:inherit;}
 .ephox-snooker-resizer-bar{background-color:#b4d7ff;opacity:0;-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+.NewCondition{display:inline-block!important;padding:8px 15px;font-size:14px;letter-spacing:2px;background:#00c800;border-radius:20px;color:#ffffff;}
+.RefurbishedCondition{display:inline-block!important;padding:8px 15px;font-size:14px;letter-spacing:2px;background:#ffd400b5;border-radius:20px;color:#213216;}
 </style>
 <div class="page-margin page-wrapper grid">
 	<main id="maincontent" class="page-main">
@@ -179,6 +180,7 @@ td{display:table-cell;vertical-align:inherit;}
 
 			$type = ($wo['itemsdata']['product']['type'] == 0) ? '' . $wo['lang']['new'] . '' : '' . $wo['lang']['used'] . '';
 			$condicion = ($wo['itemsdata']['product']['type'] == 0) ? '' . "NewCondition" . '' : '' . "RefurbishedCondition" . '';
+			$condicions = ($wo['itemsdata']['product']['type'] == 0) ? '' . "Nuevo" . '' : '' . "Reacondicionado" . '';
 
 			$offerta = false;
 			$marca = false;
@@ -294,9 +296,9 @@ td{display:table-cell;vertical-align:inherit;}
 													$ch = curl_init($rutadeimage);
 													curl_setopt($ch, CURLOPT_NOBODY, true);
 													curl_exec($ch);
-													$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+													$statuss = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 													curl_close($ch);
-													if($status == 200) {
+													if($statuss == 200) {
 														echo  "<div><img src='" . ($photo['image_mini']) ."' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
 													}else{
 														echo  "<div><img src='" . ($photo['image_org']) ."' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
@@ -308,9 +310,9 @@ td{display:table-cell;vertical-align:inherit;}
 												$ch = curl_init($rutadeimage);
 												curl_setopt($ch, CURLOPT_NOBODY, true);
 												curl_exec($ch);
-												$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+												$statuss = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 												curl_close($ch);
-												if($status == 200) {
+												if($statuss == 200) {
 													echo  "<div><img src='" . ($photo['image_mini']) ."' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
 												}else{
 													echo  "<div><img src='" . ($photo['image_org']) ."' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
@@ -341,6 +343,7 @@ td{display:table-cell;vertical-align:inherit;}
 								<?php if (!empty($wo['itemsdata']['product']['marca'])): ?>
 									<span style="text-transform:uppercase;"><?=$wo['lang']['modelo'].': '.$wo['itemsdata']['product']['modelo']; ?></span>
 								<?php endif ?>
+								<span class="<?=$condicion;?>"><?=$condicions;?></span>
 							</div>
 
 							<?php
