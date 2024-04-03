@@ -559,42 +559,43 @@ td{display:table-cell;vertical-align:inherit;}
 			</div>
 		</div>
 		<script type="text/javascript">
-			sucjs.onload = function() {
-				var lightboxEnabled = true;
-				var flkty_1 = new Flickity('.wo_post_prod_full_img', {
-				    fullscreen: true,
-				    fade: true,
-				    pageDots: false,
-				    bgLazyLoad: true,
-				    lazyLoad: 1
-				});
-
-				var flkty_2 = new Flickity('.wo_post_prod_full_img_slider', {
-				    asNavFor: '.wo_post_prod_full_img',
-				    contain: true,
-				    pageDots: false,
-				    lazyLoad: 1,
-				    prevNextButtons: false
-				});
-
-				flkty_1.on('dragStart', () => flkty_1.slider.style.pointerEvents = 'none');
-				flkty_1.on('dragEnd', () => flkty_1.slider.style.pointerEvents = 'auto');
-				flkty_2.on('dragStart', () => flkty_2.slider.style.pointerEvents = 'none');
-				flkty_2.on('dragEnd', () => flkty_2.slider.style.pointerEvents = 'auto');
-				function Wo_OpenAlbumLightBox(image_id, type) {
-					$('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
-					$.get(Wo_Ajax_Requests_File(), {f:'open_album_lightbox', image_id:image_id, type:type}, function(data) {
-						if (data.status == 200) {
-							document.body.style.overflow = 'hidden';
-							$('.lightbox-container').html(data.html);
-						}
-					    if (data.html.length == 0) {
-					       document.body.style.overflow = 'auto';
-					    }
-					});
-				}
-			};
+			
 			$(function() {
+				sucjs.onload = function() {
+					var lightboxEnabled = true;
+					var flkty_1 = new Flickity('.wo_post_prod_full_img', {
+					    fullscreen: true,
+					    fade: true,
+					    pageDots: false,
+					    bgLazyLoad: true,
+					    lazyLoad: 1
+					});
+
+					var flkty_2 = new Flickity('.wo_post_prod_full_img_slider', {
+					    asNavFor: '.wo_post_prod_full_img',
+					    contain: true,
+					    pageDots: false,
+					    lazyLoad: 1,
+					    prevNextButtons: false
+					});
+
+					flkty_1.on('dragStart', () => flkty_1.slider.style.pointerEvents = 'none');
+					flkty_1.on('dragEnd', () => flkty_1.slider.style.pointerEvents = 'auto');
+					flkty_2.on('dragStart', () => flkty_2.slider.style.pointerEvents = 'none');
+					flkty_2.on('dragEnd', () => flkty_2.slider.style.pointerEvents = 'auto');
+					function Wo_OpenAlbumLightBox(image_id, type) {
+						$('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+						$.get(Wo_Ajax_Requests_File(), {f:'open_album_lightbox', image_id:image_id, type:type}, function(data) {
+							if (data.status == 200) {
+								document.body.style.overflow = 'hidden';
+								$('.lightbox-container').html(data.html);
+							}
+						    if (data.html.length == 0) {
+						       document.body.style.overflow = 'auto';
+						    }
+						});
+					}
+				};
 				sucjs
 			});
 		</script>
