@@ -190,7 +190,6 @@ td{display:table-cell;vertical-align:inherit;}
 			if(!empty($wo['itemsdata']['product']['images'])){
 				$color_idc = lui_buscar_color_en_opciones_redir($wo['itemsdata']['product']['id'],1);
 				if(!empty($color_idc)){
-					echo "string";
 					$buscar_el_color_por_idc = lui_buscar_color_en_colores($color_idc['id_color']);
 					$el_colorvc = lui_SlugPost($wo['lang'][$buscar_el_color_por_idc['lang_key']]);
 

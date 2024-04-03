@@ -314,21 +314,7 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 						          <button class="carousel__arrow arrow-next" aria-label="Adelante"></button>
 						        </div>
 						    </div>
-						    <script type="text/javascript">
-								function guardarPosicionHorizontal() {
-							      var miDiv = document.getElementById('carousel__content');
-							      sessionStorage.setItem('scrollLeft', miDiv.scrollLeft);
-							    }
-							    function restaurarPosicionHorizontal() {
-							      var miDiv = document.getElementById('carousel__content');
-							      var scrollLeft = sessionStorage.getItem('scrollLeft') || 0;
-							      miDiv.scrollLeft = scrollLeft;
-							    }
-							    
-							    window.onbeforeunload = guardarPosicionHorizontal;
-							    window.onload = restaurarPosicionHorizontal;
-
-							</script>
+						    
 						    <ul class="carousel__content more_its" id="carousel__content">
 						    	<?php if($category_id==0): ?>
 						    		<?php foreach ($wo['products_categories'] as $category){
@@ -396,6 +382,27 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 						    		<?php } ?>
 						    	<?php endif ?>
 						    </ul>
+						    <script type="text/javascript">
+								function guardarPosicionHorizontal() {
+							      var miDiv = document.getElementById('carousel__content');
+							      if (miDiv) {
+							      	sessionStorage.setItem('scrollLeft', miDiv.scrollLeft);
+							      }
+							      
+							    }
+							    function restaurarPosicionHorizontal() {
+							      var miDiv = document.getElementById('carousel__content');
+							      if (miDiv) {
+							      	var scrollLeft = sessionStorage.getItem('scrollLeft') || 0;
+							      	miDiv.scrollLeft = scrollLeft;
+							      }
+							      
+							    }
+							    
+							    window.onbeforeunload = guardarPosicionHorizontal;
+							    window.onload = restaurarPosicionHorizontal;
+
+							</script>
 						  
 						</div>
 					</div>
