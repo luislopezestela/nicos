@@ -343,17 +343,17 @@ td{display:table-cell;vertical-align:inherit;}
 									<span style="text-transform:uppercase;"><?=$wo['lang']['modelo'].': '.$wo['itemsdata']['product']['modelo']; ?></span>
 								<?php endif ?>
 								<span class="<?=$condicion;?>"><?=$condicions;?></span>
-								<?php if (!empty($wo['itemsdata']['product']['disponible']==1) || !empty($wo['itemsdata']['product']['solo_web']==1)): ?>
-									<span style="display:flex;gap:1rem;">
-										<?php if (!empty($wo['itemsdata']['product']['disponible']==1)): ?>
-											<span style="color:#00d200;">En inventario</span>
-										<?php endif ?>
-										<?php if (!empty($wo['itemsdata']['product']['solo_web']==1)): ?>
-											<span>|</span>
-											<span style="color:#0066f4;">Solo por la web</span>
-										<?php endif ?>
-									</span>
-								<?php endif ?>
+								<span style="display:flex;gap:1rem;">
+									<?php if (!empty($wo['itemsdata']['product']['disponible']==1)): ?>
+										<div style="color:#00d200;">En inventario</div>
+									<?php else: ?>
+										<div style="color:#d20000;">Agotado</div>
+									<?php endif ?>
+									<?php if (!empty($wo['itemsdata']['product']['solo_web']==1)): ?>
+										<div>|</div>
+										<div style="color:#0066f4;">Solo por la web</div>
+									<?php endif ?>
+								</span>
 							</div>
 
 							<?php
