@@ -343,6 +343,17 @@ td{display:table-cell;vertical-align:inherit;}
 									<span style="text-transform:uppercase;"><?=$wo['lang']['modelo'].': '.$wo['itemsdata']['product']['modelo']; ?></span>
 								<?php endif ?>
 								<span class="<?=$condicion;?>"><?=$condicions;?></span>
+								<?php if (!empty($wo['itemsdata']['product']['disponible']==1) || !empty($wo['itemsdata']['product']['solo_web']==1)): ?>
+									<span style="display:flex;gap:1rem;">
+										<?php if (!empty($wo['itemsdata']['product']['disponible']==1)): ?>
+											<span style="color:#00d200;">En inventario</span>
+										<?php endif ?>
+										<?php if (!empty($wo['itemsdata']['product']['solo_web']==1)): ?>
+											<span>|</span>
+											<span style="color:#0066f4;">Solo por la web</span>
+										<?php endif ?>
+									</span>
+								<?php endif ?>
 							</div>
 
 							<?php
@@ -397,47 +408,49 @@ td{display:table-cell;vertical-align:inherit;}
 							
 							echo '<div class="wo_post_prod_full_price">' . $symbol . '<span id="total_price">' .number_format($precio_tota_del_producto, 2,".",".") . '</span> (' . $text . ')</div>';
 							?>
-							<br>
-							<style type="text/css">
-								.atributos_from_publication_color{display:flex;width:100%;background:transparent;position:relative;margin:18px auto;}
-								.content_atributos{display:flex;flex-wrap:wrap;}
-								.content_atributos .atribut_product{border: 2px solid transparent; display:flex;border-radius:5px;box-shadow: -10px -10px 20px rgb(255, 255, 255), 10px 10px 20px rgba(0, 0, 0, 0.1);color:#b6b6b6;background:#f4f4f4;list-style:none;margin:7px;}
-								.content_atributos span{position:absolute;top:-17px;left:1px;color:#998;}
-								.content_atributos .atribut_product a{text-transform:uppercase;padding:6px 8px;text-decoration:none;display:flex;justify-content:center;align-items: center;}
-								.content_atributos .atribut_product a i{display:block;height:20px;width:20px;border-radius:30px;margin:5px;}
-								.btn_sty_go{box-shadow: -10px -10px 20px rgb(255, 255, 255), 10px 10px 20px rgba(0, 0, 0, 0.1);background:#f4f4f4;transition:all .5s;}
-							</style>
-							
-							<div class="atributos_from_publication_color">
-								<?php if (isset($opciones_del_producto)): ?>
-									<div class="content_atributos">
-										<?php foreach ($opciones_del_producto as $color => $valorcolor): $seleccionadocoloor='';?>
-											<?php if (!empty($valorcolor['id_atributo'])): ?>
-												<?php $atributo = $db->where('id',$valorcolor['id_atributo'])->getOne('atributos'); ?>
-												<span><?=$atributo->nombre;?></span>
-												<?php $buscar_el_color_por_id = lui_buscar_color_en_colores($valorcolor['id_color'])?>
-												<?php $el_color = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]); ?>
-												<?php if($el_color==$wo['atributo_items']): ?>
-													<?php $seleccionadocoloor = 'style="border: 2px solid '.$buscar_el_color_por_id['color'].'!important;"'; ?>
+							<?php if (isset($opciones_del_producto)): ?>
+								<?php if (count($opciones_del_producto) > 0): ?>
+									<style type="text/css">
+										.atributos_from_publication_color{display:flex;width:100%;background:transparent;position:relative;margin:18px auto;}
+										.content_atributos{display:flex;flex-wrap:wrap;}
+										.content_atributos .atribut_product{border: 2px solid transparent; display:flex;border-radius:5px;box-shadow: -10px -10px 20px rgb(255, 255, 255), 10px 10px 20px rgba(0, 0, 0, 0.1);color:#b6b6b6;background:#f4f4f4;list-style:none;margin:7px;}
+										.content_atributos span{position:absolute;top:-17px;left:1px;color:#998;}
+										.content_atributos .atribut_product a{text-transform:uppercase;padding:6px 8px;text-decoration:none;display:flex;justify-content:center;align-items: center;}
+										.content_atributos .atribut_product a i{display:block;height:20px;width:20px;border-radius:30px;margin:5px;}
+										.btn_sty_go{box-shadow: -10px -10px 20px rgb(255, 255, 255), 10px 10px 20px rgba(0, 0, 0, 0.1);background:#f4f4f4;transition:all .5s;}
+									</style>
+									<div class="atributos_from_publication_color">
+										<div class="content_atributos">
+											<?php foreach ($opciones_del_producto as $color => $valorcolor): $seleccionadocoloor='';?>
+												<?php if (!empty($valorcolor['id_atributo'])): ?>
+													<?php $atributo = $db->where('id',$valorcolor['id_atributo'])->getOne('atributos'); ?>
+													<span><?=$atributo->nombre;?></span>
+													<?php $buscar_el_color_por_id = lui_buscar_color_en_colores($valorcolor['id_color'])?>
+													<?php $el_color = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]); ?>
+													<?php if($el_color==$wo['atributo_items']): ?>
+														<?php $seleccionadocoloor = 'style="border: 2px solid '.$buscar_el_color_por_id['color'].'!important;"'; ?>
+													<?php endif ?>
+													
+													<li class="atribut_product" <?=$seleccionadocoloor; ?>>
+														<a href="<?=$wo['itemsdata']['product']['url'].'/'.$el_color?>" data-ajax="?link1=item&items=<?=$wo['itemsdata']['product']['seo_id'].'&opcion='.$el_color;?>"><?=$wo['lang'][$buscar_el_color_por_id['lang_key']]; ?> <i style="background:<?=$buscar_el_color_por_id['color'];?>;"></i></a>
+													</li>
+												<?php else: ?>
+													<?php $buscar_el_color_por_id = lui_buscar_color_en_colores($valorcolor['id_color'])?>
+													<?php $el_color = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]); ?>
+													<?php if($el_color==$wo['atributo_items']): ?>
+														<?php $seleccionadocoloor = 'style="border: 2px solid '.$buscar_el_color_por_id['color'].'!important;"'; ?>
+													<?php endif ?>
+													<li class="atribut_product" <?=$seleccionadocoloor; ?>>
+														<a href="<?=$wo['itemsdata']['product']['url'].'/'.$el_color?>" data-ajax="?link1=item&items=<?=$wo['itemsdata']['product']['seo_id'].'&opcion='.$el_color;?>"><?=$wo['lang'][$buscar_el_color_por_id['lang_key']]; ?> <i style="background:<?=$buscar_el_color_por_id['color'];?>;"></i></a>
+													</li>
 												<?php endif ?>
-												
-												<li class="atribut_product" <?=$seleccionadocoloor; ?>>
-													<a href="<?=$wo['itemsdata']['product']['url'].'/'.$el_color?>" data-ajax="?link1=item&items=<?=$wo['itemsdata']['product']['seo_id'].'&opcion='.$el_color;?>"><?=$wo['lang'][$buscar_el_color_por_id['lang_key']]; ?> <i style="background:<?=$buscar_el_color_por_id['color'];?>;"></i></a>
-												</li>
-											<?php else: ?>
-												<?php $buscar_el_color_por_id = lui_buscar_color_en_colores($valorcolor['id_color'])?>
-												<?php $el_color = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]); ?>
-												<?php if($el_color==$wo['atributo_items']): ?>
-													<?php $seleccionadocoloor = 'style="border: 2px solid '.$buscar_el_color_por_id['color'].'!important;"'; ?>
-												<?php endif ?>
-												<li class="atribut_product" <?=$seleccionadocoloor; ?>>
-													<a href="<?=$wo['itemsdata']['product']['url'].'/'.$el_color?>" data-ajax="?link1=item&items=<?=$wo['itemsdata']['product']['seo_id'].'&opcion='.$el_color;?>"><?=$wo['lang'][$buscar_el_color_por_id['lang_key']]; ?> <i style="background:<?=$buscar_el_color_por_id['color'];?>;"></i></a>
-												</li>
-											<?php endif ?>
-										<?php endforeach ?>
+											<?php endforeach ?>
+										</div>
 									</div>
+								<?php else: ?>
+									<br>
 								<?php endif ?>
-							</div>
+							<?php endif ?>
 							
 							
 							<div class="content_atributos_c">

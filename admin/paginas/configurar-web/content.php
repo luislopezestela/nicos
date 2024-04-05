@@ -22,6 +22,13 @@
                     <form class="site-settings" method="POST">
                         <div class="form-group form-float">
                             <div class="form-line">
+                                <label class="form-label">Nueva version disponible <?php echo $wo['config']['filesVersion']; ?></label>
+                                <input type="text" id="siteTitle" name="version" class="form-control" value="<?php echo $wo['config']['version']; ?>">
+                                <small class="admin-info">Vercion actual del sistema .</small>
+                            </div>
+                        </div>
+                         <div class="form-group form-float">
+                            <div class="form-line">
                                 <label class="form-label">Titulo</label>
                                 <input type="text" id="siteTitle" name="siteTitle" class="form-control" value="<?php echo $wo['config']['siteTitle']; ?>">
                                 <small class="admin-info">El título general de su sitio web, aparecerá en Google y en la pestaña de su navegador.</small>

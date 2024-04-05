@@ -296,6 +296,16 @@ if ($f == 'products') {
             $stok_active = $db->where('id',$_POST['product_id'])->getOne('lui_products');
             $stock = $stok_active->stock;
         }
+        if(!empty($_POST['disponible']) && $_POST['disponible'] == true) {
+            $disponible = 1;
+        }else{
+            $disponible = 0;
+        }
+        if(!empty($_POST['solo_web']) && $_POST['solo_web'] == true) {
+            $solo_web = 1;
+        }else{
+            $solo_web = 0;
+        }
        
         if (empty($errors)) {
             $sub_category = '';
@@ -321,6 +331,8 @@ if ($f == 'products') {
                 'color' => $color_producto,
                 'stock' => $stock,
                 'currency' => $currency,
+                'disponible' => $disponible,
+                'solo_web' => $solo_web
             );
 
             $fields = lui_GetCustomFields('product'); 
