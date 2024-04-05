@@ -122,7 +122,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
       <?php }?>
   <style><?php echo $wo['config']['styles_cc']; ?></style>
   <style type="text/css">
-    .count_items_carrito{position:absolute;top:6px;right:23px;display:flex;flex-wrap:wrap;font-size:10px;background:var(--header-color);color:var(--header-fondo);border-radius:15px;text-align:center;justify-content:center;align-items:center;line-height:10px;height:16px;letter-spacing:0;}
+    .count_items_carrito{position:absolute;top:0px;right:25px;display:flex;flex-wrap:wrap;font-size:10px;background:var(--header-color);color:var(--header-fondo);border-radius:15px;text-align:center;justify-content:center;align-items:center;line-height:10px;height:16px;letter-spacing:0;}
     .count_items_carrito span{padding:3px;}
     .header_no_ap_go_lie{bottom:-6px;background-size:1px 7px;background-repeat:repeat-x;right:0;box-sizing:border-box;pointer-events:none;z-index:0;left:0;height:7px;position:absolute;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAOBAMAAAD3WtBsAAAAFVBMVEUAAAAAAAAAAAAAAAAAAAAAAAD29va1cB7UAAAAB3RSTlMCCwQHGBAaZf6MKAAAABpJREFUCNdjSGNIY3BhCGUQBEJjIFQCQigAACyJAjLNW4w5AAAAAElFTkSuQmCC);}
   </style>
@@ -140,11 +140,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
     link.rel = 'stylesheet';
     link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
     document.head.appendChild(link);
-
-    
-   
     <?php echo $wo['config']['header_cc']."\n"; ?>
-
     function Wo_Ajax_Requests_File(){return "<?php echo $wo['config']['site_url'].'/requests.php';?>"}
     function Wo_Ajax_Requests_Filee(){return "<?php echo $wo['config']['site_url'].'/ajax_loading.php';?>"}
     function guardarPosicionHorizontal(){
@@ -216,7 +212,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                   document.getElementById('posts').innerHTML = '<div class="paage_loader_s"><div class="titulo_loader_w loader_layshane"></div></div><div class="loading_poruductos_cont"><div class="loading_poruductos"><div class="loader_layshane"></div></div><div class="loading_poruductos"><div class="loader_layshane"></div></div><div class="loading_poruductos"><div class="loader_layshane"></div></div><div class="loading_poruductos"><div class="loader_layshane"></div></div></div>';
                   loadposts();
                   window.history.pushState({state:'new'},'', websiteUrl);
-                  $("html, body").animate({ scrollTop: 0 }, 100);
+                  $("html, body").animate({ scrollTop: 0 }, 55);
                   $('.user-details, .pac-container, .lightbox-container').remove();
                   Wo_clearPRecording();
                   Wo_CleanRecordNodes();
@@ -310,16 +306,16 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
               
            
               if(json_data.page == 'products'){
-                $('.content-container').css('margin-top', '90px');
+                $('.content-container').css('margin-top', '55px');
                 $('.ad-placement-header-footer').find('.contnet').css('margin-top', '0');
               }else{
                 if ($('.content-container').length) {
-                  $('.content-container').css('margin-top', '90px');
+                  $('.content-container').css('margin-top', '55px');
                 }
               }
               document.title = decodeHtml(json_data.title);
               document_title = decodeHtml(json_data.title);
-              $("html, body").animate({ scrollTop: 0 }, 90);
+              $("html, body").animate({ scrollTop: 0 }, 55);
               Wo_FinishBar();
               if ($('#hidden-content').length) {
                 $('#hidden-content').empty();
@@ -327,7 +323,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
               
               $(document).ready(function(){
                 if ($('div.leftcol').length) {
-                  $('div.leftcol').theiaStickySidebar({additionalMarginTop: 90});
+                  $('div.leftcol').theiaStickySidebar({additionalMarginTop: 55});
                 }
                 var corousel_Datas = document.getElementById('carousel__content');
                 if (corousel_Datas) {
@@ -649,12 +645,16 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
 .footer_page_list_l{width:100%;position:relative;font-size:14px;display:flex;flex-wrap:wrap;justify-content:center;}
 .footer_page_list_l .footer-powered{display:flex;align-items:center;justify-content:center;color:#333;-webkit-color:#333;-moz-color:#333;user-select:none;padding:5px;flex-wrap:wrap;width:100%;}
 .footer_page_list_l .footer-powered .list-inline{margin:0;padding-left:0;color:#333;-webkit-color:#333;-moz-color:#333;display:flex;flex-wrap:wrap;justify-content:center;width:100%;}
-.footer_page_list_l .footer-powered .list-inline>li{display:inline-block;padding-right:8px;padding-left:8px}
-.footer_page_list_l .footer-powered .list-inline li a{color:#333;-webkit-color:#333;-moz-color:#333;padding:15px;display:block;font-size:18px;}
+.footer_page_list_l .footer-powered .list-inline>li{display:inline-flex;padding-right:8px;padding-left:8px;justify-content:center;align-items:center;}
+.footer_page_list_l .footer-powered .list-inline li .language_select,
+.footer_page_list_l .footer-powered .list-inline li a{color:#333;-webkit-color:#333;-moz-color:#333;padding:15px;display:block;font-size:18px;cursor:pointer;}
 .footer_page_list_l span{ margin:0;font-size:18px;width:100%;padding:4px;text-align:center;}
 .footer-wrapper-sidebar {font-size: 14.5px;}
 .footer-wrapper-sidebar .footer-powered{display:flex;align-items: center;justify-content:space-between;color:#858585;-webkit-color:#858585;-moz-color:#858585;font-size:13px;}
 .footer-wrapper-sidebar .footer-powered span, .footer-wrapper .footer-powered span{margin:0;}
+.posts-count{z-index:99;padding:10px 15px;text-align:center;position:fixed;transition:all .2s ease;top:115px;left:50%;transform:translate(-50%,-50%);border-radius:20px;box-shadow:0 2px 2px rgba(0,0,0,.2)!important;background:#008aff;color:#fff;}
+.posts-count:empty{padding:0;border:0;box-shadow:none!important}
+.posts-count:hover{background-color:#0062b6;}
   </style>
 </head>
 
@@ -689,38 +689,67 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
         <li>
           <?php if ($wo['loggedin'] == true): ?>
             <a class="sixteen-font-size home_display <?php echo ($wo['page'] == 'home') ? 'active': '';?>" href="<?php echo $wo['config']['site_url']; ?>" data="home_display" data-ajax="?index.php?link1=home" title="Inicio">
-              <svg viewBox="0 0 28 28" class="x1lliihq x1k90msu x2h7rmj x1qfuztq x5e5rjt" fill="currentColor" height="28" width="28"><path d="M25.825 12.29C25.824 12.289 25.823 12.288 25.821 12.286L15.027 2.937C14.752 2.675 14.392 2.527 13.989 2.521 13.608 2.527 13.248 2.675 13.001 2.912L2.175 12.29C1.756 12.658 1.629 13.245 1.868 13.759 2.079 14.215 2.567 14.479 3.069 14.479L5 14.479 5 23.729C5 24.695 5.784 25.479 6.75 25.479L11 25.479C11.552 25.479 12 25.031 12 24.479L12 18.309C12 18.126 12.148 17.979 12.33 17.979L15.67 17.979C15.852 17.979 16 18.126 16 18.309L16 24.479C16 25.031 16.448 25.479 17 25.479L21.25 25.479C22.217 25.479 23 24.695 23 23.729L23 14.479 24.931 14.479C25.433 14.479 25.921 14.215 26.132 13.759 26.371 13.245 26.244 12.658 25.825 12.29"></path></svg><span>&nbsp;<?php echo $wo['lang']['home'] ?></span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                <path d="M8.99944 22L8.74881 18.4911C8.61406 16.6046 10.1082 15 11.9994 15C13.8907 15 15.3848 16.6046 15.2501 18.4911L14.9994 22" stroke="currentColor" stroke-width="1.5" />
+                <path d="M2.35151 13.2135C1.99849 10.9162 1.82198 9.76763 2.25629 8.74938C2.69059 7.73112 3.65415 7.03443 5.58126 5.64106L7.02111 4.6C9.41841 2.86667 10.6171 2 12.0001 2C13.3832 2 14.5818 2.86667 16.9791 4.6L18.419 5.64106C20.3461 7.03443 21.3097 7.73112 21.744 8.74938C22.1783 9.76763 22.0018 10.9162 21.6487 13.2135L21.3477 15.1724C20.8473 18.4289 20.597 20.0572 19.4291 21.0286C18.2612 22 16.5538 22 13.1389 22H10.8613C7.44646 22 5.73903 22 4.57112 21.0286C3.40321 20.0572 3.15299 18.4289 2.65255 15.1724L2.35151 13.2135Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+              </svg><span>&nbsp;<?php echo $wo['lang']['home'] ?></span>
             </a>
           <?php else: ?>
             <a class="sixteen-font-size welcome_page_display <?php echo ($wo['page'] == 'welcome_page') ? 'active': '';?>" href="<?php echo $wo['config']['site_url']; ?>" data="welcome_page_display" data-ajax="?index.php?link1=welcome_page" title="Inicio">
-              <svg viewBox="0 0 28 28" class="x1lliihq x1k90msu x2h7rmj x1qfuztq x5e5rjt" fill="currentColor" height="28" width="28"><path d="M25.825 12.29C25.824 12.289 25.823 12.288 25.821 12.286L15.027 2.937C14.752 2.675 14.392 2.527 13.989 2.521 13.608 2.527 13.248 2.675 13.001 2.912L2.175 12.29C1.756 12.658 1.629 13.245 1.868 13.759 2.079 14.215 2.567 14.479 3.069 14.479L5 14.479 5 23.729C5 24.695 5.784 25.479 6.75 25.479L11 25.479C11.552 25.479 12 25.031 12 24.479L12 18.309C12 18.126 12.148 17.979 12.33 17.979L15.67 17.979C15.852 17.979 16 18.126 16 18.309L16 24.479C16 25.031 16.448 25.479 17 25.479L21.25 25.479C22.217 25.479 23 24.695 23 23.729L23 14.479 24.931 14.479C25.433 14.479 25.921 14.215 26.132 13.759 26.371 13.245 26.244 12.658 25.825 12.29"></path></svg><span>&nbsp;<?php echo $wo['lang']['home'] ?></span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                <path d="M8.99944 22L8.74881 18.4911C8.61406 16.6046 10.1082 15 11.9994 15C13.8907 15 15.3848 16.6046 15.2501 18.4911L14.9994 22" stroke="currentColor" stroke-width="1.5" />
+                <path d="M2.35151 13.2135C1.99849 10.9162 1.82198 9.76763 2.25629 8.74938C2.69059 7.73112 3.65415 7.03443 5.58126 5.64106L7.02111 4.6C9.41841 2.86667 10.6171 2 12.0001 2C13.3832 2 14.5818 2.86667 16.9791 4.6L18.419 5.64106C20.3461 7.03443 21.3097 7.73112 21.744 8.74938C22.1783 9.76763 22.0018 10.9162 21.6487 13.2135L21.3477 15.1724C20.8473 18.4289 20.597 20.0572 19.4291 21.0286C18.2612 22 16.5538 22 13.1389 22H10.8613C7.44646 22 5.73903 22 4.57112 21.0286C3.40321 20.0572 3.15299 18.4289 2.65255 15.1724L2.35151 13.2135Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+              </svg><span>&nbsp;<?php echo $wo['lang']['home'] ?></span>
             </a>
           <?php endif ?>
         </li>
-        <?php if ($wo['loggedin'] == true) { ?>
-          <li>
-            <a class="sixteen-font-size products_display <?php echo ($wo['page'] == 'products') ? 'active': '';?>" href="<?php echo lui_SeoLink('index.php?link1=products'); ?>" data="products_display" data-ajax="?link1=products" title="<?php echo $wo['lang']['tienda'];?>">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="3" y1="21" x2="21" y2="21"></line><path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4"></path><line x1="5" y1="21" x2="5" y2="10.85"></line><line x1="19" y1="21" x2="19" y2="10.85"></line><path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"></path></svg><span>&nbsp;<?php echo $wo['lang']['tienda'] ?></span>
-            </a>
-          </li>
-        <?php } ?>
-        <?php if ($wo['loggedin'] == true) { ?>
-          <?php  $totalcarrito = 0;
-          $items = $db->where('user_id',$wo['user']['user_id'])->get(T_USERCARD);
-          if(!empty($items)){
-            foreach($items as $key => $item) {
-              $totalcarrito += $item->units;
+        <li>
+          <a class="sixteen-font-size products_display <?php echo ($wo['page'] == 'tienda') ? 'active': '';?>" href="<?php echo lui_SeoLink('index.php?link1=tienda'); ?>" data="products_display" data-ajax="?link1=tienda" title="<?php echo $wo['lang']['tienda'];?>">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+              <path d="M2.9668 10.4961V15.4979C2.9668 18.3273 2.9668 19.742 3.84548 20.621C4.72416 21.5001 6.13837 21.5001 8.9668 21.5001H14.9668C17.7952 21.5001 19.2094 21.5001 20.0881 20.621C20.9668 19.742 20.9668 18.3273 20.9668 15.4979V10.4961" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              <path d="M14.9668 16.9932C14.2827 17.6004 13.1936 17.9932 11.9668 17.9932C10.74 17.9932 9.65089 17.6004 8.9668 16.9932" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              <path d="M10.1038 8.41848C9.82182 9.43688 8.79628 11.1936 6.84777 11.4482C5.12733 11.673 3.82246 10.922 3.48916 10.608C3.12168 10.3534 2.28416 9.53872 2.07906 9.02952C1.87395 8.52032 2.11324 7.41706 2.28416 6.96726L2.96743 4.98888C3.13423 4.49196 3.5247 3.31666 3.92501 2.91913C4.32533 2.5216 5.13581 2.5043 5.4694 2.5043H12.4749C14.2781 2.52978 18.2209 2.48822 19.0003 2.50431C19.7797 2.52039 20.2481 3.17373 20.3848 3.45379C21.5477 6.27061 22 7.88382 22 8.57124C21.8482 9.30456 21.22 10.6873 19.0003 11.2955C16.6933 11.9275 15.3854 10.6981 14.9751 10.2261M9.15522 10.2261C9.47997 10.625 10.4987 11.4279 11.9754 11.4482C13.4522 11.4686 14.7273 10.4383 15.1802 9.92062C15.3084 9.76786 15.5853 9.31467 15.8725 8.41848" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg><span>&nbsp;<?php echo $wo['lang']['tienda'] ?></span>
+          </a>
+        </li>
+        <?php $totalcarrito = 0; ?>
+          <?php if ($wo['loggedin'] == true) {
+            $items = $db->where('user_id',$wo['user']['user_id'])->get(T_USERCARD);
+            if(!empty($items)){
+              foreach($items as $key => $item) {
+                $totalcarrito += $item->units;
+              }
             }
           }
-          $totalcomprasencarrito = $totalcarrito; ?>
-          <li>
-            <a href="<?php echo lui_SeoLink('index.php?link1=checkout'); ?>" class="sixteen-font-size checkout_display <?php echo ($wo['page'] == 'checkout') ? 'active': '';?>" data="checkout_display" data-ajax="?link1=checkout" title="<?php echo $wo['lang']['carrito'];?>">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        $totalcomprasencarrito = $totalcarrito; ?>
+        <li>
+          <a href="<?php echo lui_SeoLink('index.php?link1=checkout'); ?>" class="sixteen-font-size checkout_display <?php echo ($wo['page'] == 'checkout') ? 'active': '';?>" data="checkout_display" data-ajax="?link1=checkout" title="<?php echo $wo['lang']['carrito'];?>">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+              <path d="M3.87289 17.0194L2.66933 9.83981C2.48735 8.75428 2.39637 8.21152 2.68773 7.85576C2.9791 7.5 3.51461 7.5 4.58564 7.5H19.4144C20.4854 7.5 21.0209 7.5 21.3123 7.85576C21.6036 8.21152 21.5126 8.75428 21.3307 9.83981L20.1271 17.0194C19.7282 19.3991 19.5287 20.5889 18.7143 21.2945C17.9 22 16.726 22 14.3782 22H9.62182C7.27396 22 6.10003 22 5.28565 21.2945C4.47127 20.5889 4.27181 19.3991 3.87289 17.0194Z" stroke="currentColor" stroke-width="1.5" />
+              <path d="M17.5 7.5C17.5 4.46243 15.0376 2 12 2C8.96243 2 6.5 4.46243 6.5 7.5" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+            <?php if ($totalcomprasencarrito > 0): ?>
               <div class="count_items_carrito"><p class="count_items_carrito_cou"><?=$totalcomprasencarrito;?></p></div>
-              <span>&nbsp;<?php echo $wo['lang']['carrito'] ?></span>
+            <?php endif ?>
+            <span>&nbsp;<?php echo $wo['lang']['carrito'] ?></span>
+          </a>
+        </li>
+        <li>
+          <?php if ($wo['loggedin'] == true): ?>
+            <a href="#" title="Usuario" class="" role="button">
+              <div class="user-avatar">
+                <svg aria-label="Tu perfil" class="x3ajldb" data-visualcompletion="ignore-dynamic" role="img" style="height:40px;width:40px;display:block!important;"><mask id=":Rqir3aj9emhpapd5aq:"><circle cx="20" cy="20" fill="white" r="20"></circle></mask><g mask="url(#:Rqir3aj9emhpapd5aq:)"><image id="updateImage-<?php echo $wo['user']['user_id']?>" style="height:40px;width:40px" x="0" y="0" height="100%" preserveAspectRatio="xMidYMid slice" width="100%" xlink:href="<?php echo $wo['user']['avatar'];?>" alt="<?php echo $wo['user']['name'];?> Foto de perfil" title="<?php echo $wo['user']['name'];?>?stp=cp0_dst-jpg_p80x80&amp;_nc_cat=106&amp;ccb=1-7&amp;_nc_sid=5740b7&amp;_nc_eui2=AeHUyvGqD28DTV6dFGiOhORyO6rJUO4xvbs7qslQ7jG9u3HR9C1nni0qwp0btEgtV1o7JwMo4kTgIbsHvzqd_A-L&amp;_nc_ohc=DA2_ucFDv0YAX9ojMSS&amp;_nc_ht=scontent.flim2-2.fna&amp;oh=00_AfDSY02NmaaCrFBDtDsQgANdwf8YXSBfTUkfhYRdAhX7fw&amp;oe=65E0FA2A"></image><circle class="xbh8q5q x1pwv2dq xvlca1e" cx="20" cy="20" r="20"></circle></g></svg>
+              </div>
             </a>
-          </li>
-        <?php } ?>
+          <?php else: ?>
+            <a class="sixteen-font-size products_display <?php echo ($wo['page'] == 'acceder') ? 'active': '';?>" href="<?php echo lui_SeoLink('index.php?link1=acceder'); ?>" data="products_display" data-ajax="?link1=acceder" title="<?php echo $wo['lang']['login'];?>">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                <path d="M6.57757 15.4816C5.1628 16.324 1.45336 18.0441 3.71266 20.1966C4.81631 21.248 6.04549 22 7.59087 22H16.4091C17.9545 22 19.1837 21.248 20.2873 20.1966C22.5466 18.0441 18.8372 16.324 17.4224 15.4816C14.1048 13.5061 9.89519 13.5061 6.57757 15.4816Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M16.5 6.5C16.5 8.98528 14.4853 11 12 11C9.51472 11 7.5 8.98528 7.5 6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5Z" stroke="currentColor" stroke-width="1.5" />
+              </svg><span>&nbsp;<?php echo $wo['lang']['login'] ?></span>
+            </a>
+          <?php endif ?>
+        </li>
         </ul>
       </nav>
     </footer>
@@ -805,7 +834,7 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
         if(customFixedElement.length > 0){
         customFixedElement.forEach(function(element) {
             element.classList.add('theiaStickySidebar');
-            element.style.additionalMarginTop = '90px';
+            element.style.additionalMarginTop = '55px';
         });}});
       </script>
       <?php }?>
@@ -828,7 +857,6 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
          <source src="<?php echo $wo['config']['theme_url']; ?>/mp3/video_call.mp3" type="audio/mpeg">
       </audio>
       <?php } ?>
-
       <!-- End 'Audio FILES' -->
       <script>
         function _getSession(cname) {
@@ -872,74 +900,7 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
           if (f > -1) {
                 $('.header-brand').attr('href', "<?php echo $wo['config']['site_url']."/?cache=".time(); ?>");
           }
-         function ShowCommentGif(id,type) {
-            $( ".gif_post_comment" ).each(function( index ) {
-               if ($( this ).attr('id') != 'gif-form-'+id) {
-                  $( this ).slideUp();
-               }
-            });
-            $('#gif-form-'+id).slideToggle(200);
-            $('.gif_post_comment_gif').html('');
-         }
-         function GifScrolledC(self) {
-            if ((($(self).prop("scrollHeight") - $(self).height()) - $(self).scrollTop()) < 300) {
-              id = $(self).attr('GId');
-              type = $(self).attr('GType');
-              word = $(self).attr('GWord');
-              offset = $(self).attr('GOffset');
-              SearchForGif(word,id,type,offset);
-            }
-         }
-         function SearchForGif(keyword,id = 0,type = '',offset = 0) {
-
-            if ($('#publisher-box-stickers-cont-'+id).attr('GWord') != keyword) {
-              $('#publisher-box-stickers-cont-'+id).empty();
-              $('#publisher-box-stickers-cont-'+id).attr('GOffset', 0);
-              $('#publisher-box-stickers-cont-'+id).attr('GWord', keyword);
-            }
-            else{
-              $('#publisher-box-stickers-cont-'+id).attr('GOffset', parseInt($('#publisher-box-stickers-cont-'+id).attr('GOffset')) + 20);
-            }
-            Wo_Delay(function(){
-                $.ajax({
-                  url: 'https://api.giphy.com/v1/gifs/search?',
-                  type: 'GET',
-                  dataType: 'json',
-                  data: {q:keyword,api_key:'<?php echo $wo['config']['giphy_api'];?>', limit: 20,offset: offset},
-                })
-                .done(function(data) {
-                  if (data.meta.status == 200 && data.data.length > 0) {
-                    var appended = false;
-                    for (var i = 0; i < data.data.length; i++) {
-                        appended = true;
-                        if (appended == true) {
-                          appended = false;
-                          if (type == 'story') {
-                             $('#publisher-box-stickers-cont-'+id).append($('<img alt="gif" src="'+data.data[i].images.fixed_height_small.url+'" data-gif="' + data.data[i].images.fixed_height.url + '" onclick="Wo_PostCommentGif_'+id+'(this,'+id+')" autoplay loop>'));
-                         }
-                         else{
-                           $('#publisher-box-stickers-cont-'+id).append($('<img alt="gif" src="'+data.data[i].images.fixed_height_small.url+'" data-gif="' + data.data[i].images.fixed_height.url + '" onclick="Wo_PostReplyCommentGif_'+id+'(this,'+id+')" autoplay loop>'));
-                         }
-                          appended = true;
-                        }
-                    }
-                    var images = 0;
-                    Wo_ElementLoad($('img[alt=gif]'), function(){
-                      images++;
-                    });
-                    if (data.data.length == images || images >= 5) {
-
-                    }
-                  }
-                  else{
-                     $('#publisher-box-stickers-cont-'+id).html('<p class="no_gifs_found"><i class="fa fa-frown-o"></i> <?php echo $wo['lang']['no_result']; ?></p>');
-                  }
-                })
-                .fail(function() {
-                  //console.log("error");
-                })
-              },100);
-         }
+       
          function ShowCommentStickers(id,type) {
             $('.gif_post_comment').slideUp(200);
             $('.gif_post_comment_gif').html('');
@@ -978,13 +939,12 @@ $(function() {
         $('body').removeAttr('no-more-posts');
 
         if ($('.postText').length && $('.postText').val().length > 0) {
-            if (!confirm("<?php echo html_entity_decode($wo['lang']['havent_finished_post'], ENT_QUOTES) ?>")) {
-                return false;
-            } else {
-                $('.postText').val("");
-            }
+          if (!confirm("<?php echo html_entity_decode($wo['lang']['havent_finished_post'], ENT_QUOTES) ?>")) {
+              return false;
+          } else {
+              $('.postText').val("");
+          }
         }
-
         var segments = window.location.pathname.split('/').filter(Boolean);
         var link1 = "home";
         var items = null;
@@ -993,7 +953,6 @@ $(function() {
         var sub_id = null;
         if (segments.length > 0) {
           link1 = segments[0];
-
           if (segments.length > 1) {
             if(segments[0]=='item'){
               items = segments[1];
@@ -1006,9 +965,7 @@ $(function() {
                 sub_id = segments[2];
               }
             }
-            
           }
-
         }
 
         var params = {};
@@ -1090,7 +1047,7 @@ $(function() {
                 }
 
                 if (json_data.page == 'products') {
-                    $('.content-container').css('margin-top', '90px');
+                    $('.content-container').css('margin-top', '55px');
                     $('.ad-placement-header-footer').find('.contnet').css('margin-top', '0');
                 } else if (json_data.page == 'tienda') {
                     if ($('#store_cs').length) {
@@ -1103,13 +1060,13 @@ $(function() {
                     document.head.appendChild(link);
                 }else{
                     if ($('.content-container').length) {
-                        $('.content-container').css('margin-top', '90px');
+                        $('.content-container').css('margin-top', '55px');
                     }
                 }
 
                 document.title = decodeHtml(json_data.title);
                 document_title = decodeHtml(json_data.title);
-                $("html, body").animate({ scrollTop: 0 }, 90);
+                $("html, body").animate({ scrollTop: 0 }, 55);
                 Wo_FinishBar();
                 if ($('#hidden-content').length) {
                     $('#hidden-content').empty();
@@ -1117,7 +1074,7 @@ $(function() {
 
                 $(document).ready(function() {
                     if ($('div.leftcol').length) {
-                        $('div.leftcol').theiaStickySidebar({ additionalMarginTop: 90 });
+                        $('div.leftcol').theiaStickySidebar({ additionalMarginTop: 55 });
                     }
                     var corousel_Datas = document.getElementById('carousel__content');
                     if (corousel_Datas) {
@@ -1135,36 +1092,14 @@ $(function() {
         }
     });
 });
-       /*Language Select*/
-        document.addEventListener("DOMContentLoaded", function(){
-          function appendImageToElement(elementSelector, imagePath, altText){
-            var element = document.querySelector(elementSelector);
-            if(element){
-              var newSpan = document.createElement("span");
-              newSpan.classList.add("language_initial");
-              newSpan.setAttribute("rel", "nofollow");
-              var newImg = document.createElement("img");
-              newImg.setAttribute("src", imagePath);
-              newImg.setAttribute("alt", altText);
-              newSpan.appendChild(newImg);
-              element.appendChild(newSpan);
-            } else {
-              console.error("No se encontró el elemento con el selector:", elementSelector);
-            }
-          }
-          appendImageToElement(".language_select .English", "<?php echo $wo['config']['theme_url']; ?>/img/flags/united-states.svg", "layshane");
-          appendImageToElement(".language_select .Italian", "<?php echo $wo['config']['theme_url']; ?>/img/flags/italy.svg", "layshane");
-          appendImageToElement(".language_select .Portuguese", "<?php echo $wo['config']['theme_url']; ?>/img/flags/portugal.svg", "layshane");
-          appendImageToElement(".language_select .Spanish", "<?php echo $wo['config']['theme_url']; ?>/img/flags/peru.svg", "layshane");
-          appendImageToElement(".language_select .Quechua", "<?php echo $wo['config']['theme_url']; ?>/img/flags/peru.svg", "layshane");
-        });
-        <?php echo $wo['config']['footer_cc']; ?>
-      </script>
-      <?php if ($wo['page'] != 'get_news_feed') { ?>
-        <style type="text/css">
-          .cc-color-override--1246177171 .cc-btn{border:none!important;}
-          .cc-color-override--1246177171 .cc-link{color:initial!important;}
-        </style>
+      
+      <?php echo $wo['config']['footer_cc']; ?>
+    </script>
+    <?php if ($wo['page'] != 'get_news_feed') { ?>
+      <style type="text/css">
+        .cc-color-override--1246177171 .cc-btn{border:none!important;}
+        .cc-color-override--1246177171 .cc-link{color:initial!important;}
+      </style>
       <script>
         document.addEventListener('DOMContentLoaded', function() {
           window.addEventListener("load", function(){
@@ -1190,29 +1125,52 @@ $(function() {
           })});
         });
       </script>
-      <?php } ?>
+    <?php } ?>
     <!-- HTML NOTIFICATION POPUP -->
     <div id="notification-popup"></div>
     <!-- HTML NOTIFICATION POPUP -->
-  <div id="select-language" class="modal fade" data-keyboard="false">
-    <div class="lang_select_modal">
-      <div class="modal-body">
-        <span class="titulo_modal"><?=$wo['lang']['language'];?></span>
-        <?php $langs = lui_LangsNamesFromDB();
-          $idioma = $db->where('iso',$wo['lang_attr'])->getOne(T_LANG_ISO);
-          if(count($langs) > 0) {
-            foreach ($langs as $key => $wo['langs']) {
-              if ($wo['config'][$wo['langs']] == 1) {
-                $language = $wo['langs'];
-                $languages_name = ucfirst($wo['langs']);
-                $link = ($wo['config']['seoLink'] == 1) ? '?lang=' . $language: '?&lang=' . $language;?>
-                <?php if($idioma->lang_name == $wo['langs']): ?>
-                  <?php else: ?>
-                    <span class="language_select"><a href="<?=$link;?>" rel="nofollow" class="<?=$languages_name;?>"><?=$languages_name;?></a></span>
-                <?php endif ?>
-        <?php } } } ?>
+    <div id="select-language" class="modal fade" data-keyboard="false">
+      <div class="lang_select_modal">
+        <div class="modal-body">
+          <span class="titulo_modal"><?=$wo['lang']['language'];?></span>
+          <?php $langs = lui_LangsNamesFromDB();
+            $idioma = $db->where('iso',$wo['lang_attr'])->getOne(T_LANG_ISO);
+            if(count($langs) > 0) {
+              foreach ($langs as $key => $wo['langs']) {
+                if ($wo['config'][$wo['langs']] == 1) {
+                  $language = $wo['langs'];
+                  $languages_name = ucfirst($wo['langs']);
+                  $link = ($wo['config']['seoLink'] == 1) ? '?lang=' . $language: '?&lang=' . $language;?>
+                  <?php if($idioma->lang_name == $wo['langs']): ?>
+                    <?php else: ?>
+                      <span class="language_select"><a href="<?=$link;?>" rel="nofollow" class="<?=$languages_name;?>"><?=$languages_name;?></a></span>
+                  <?php endif ?>
+          <?php } } } ?>
+        </div>
       </div>
     </div>
-  </div>
+    <script type="text/javascript">
+      /*Language Select*/
+      document.addEventListener("DOMContentLoaded", function(){
+        function appendImageToElement(elementSelector, imagePath, altText){
+          var element = document.querySelector(elementSelector);
+          if(element){
+            var newSpan = document.createElement("span");
+            newSpan.classList.add("language_initial");
+            newSpan.setAttribute("rel", "nofollow");
+            var newImg = document.createElement("img");
+            newImg.setAttribute("src", imagePath);
+            newImg.setAttribute("alt", altText);
+            newSpan.appendChild(newImg);
+            element.appendChild(newSpan);
+          }
+        }
+        appendImageToElement(".language_select .English", "<?php echo $wo['config']['theme_url']; ?>/img/flags/united-states.svg", "layshane");
+        appendImageToElement(".language_select .Italian", "<?php echo $wo['config']['theme_url']; ?>/img/flags/italy.svg", "layshane");
+        appendImageToElement(".language_select .Portuguese", "<?php echo $wo['config']['theme_url']; ?>/img/flags/portugal.svg", "layshane");
+        appendImageToElement(".language_select .Spanish", "<?php echo $wo['config']['theme_url']; ?>/img/flags/peru.svg", "layshane");
+        appendImageToElement(".language_select .Quechua", "<?php echo $wo['config']['theme_url']; ?>/img/flags/peru.svg", "layshane");
+      });
+    </script>
    </body>
 </html>

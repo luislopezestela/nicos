@@ -26,7 +26,7 @@ form{width:360px;}
 .input-div.focus:before, .input-div.focus:after{width:50%;}
 .input-div.focus > div > h5{top:-5px;font-size:15px;}
 .input-div.focus > .i > i{color:var(--boton-fondo);}
-.input-div > div > input,.input-div > div > select{position:absolute;left:0;top:0;width:100%;height:100%;border:none;outline:none;background:none;padding:0.5rem 0.7rem;font-size:1.2rem;color:#555;font-family:'poppins', sans-serif;}
+.input-div > div > input,.input-div > div > select{position:absolute;left:0;top:0;width:100%;height:100%;border:none;outline:none;background:none!important;padding:0.5rem 0.7rem;font-size:1.2rem;color:#555;font-family:'poppins', sans-serif;}
 .input-div.pass{margin-bottom:4px;}
 .input-div.two{margin-bottom:4px;}
 a{text-decoration:none;color:#999;font-size:0.9rem;transition:.3s;}

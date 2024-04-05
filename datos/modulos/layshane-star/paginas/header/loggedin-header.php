@@ -27,6 +27,17 @@ if ($followers_alert == 0) {
     $followers_hidden_class = ' hidden';
     $unread_update_followers = '';
 }
+$totalcarrito = 0;
+$totalcomprasencarrito = 0;
+if($wo['loggedin'] == true){
+	$items = $db->where('user_id',$wo['user']['user_id'])->get(T_USERCARD);
+	if(!empty($items)){
+		foreach($items as $key => $item){
+			$totalcarrito += $item->units;
+		}
+	}
+}
+$totalcomprasencarrito = $totalcarrito;
 ?>
 </ul>
 <style type="text/css">
@@ -41,6 +52,18 @@ svg:not(:root){overflow-clip-margin:content-box;overflow:hidden;}
 .x10l6tqk{position:absolute;}
 </style>
 <ul class="nav navbar-nav navbar-right <?php echo lui_RightToLeft('pull-right');?>" id="head_menu_rght">
+	<li class="is_no_phone">
+		<a href="<?php echo lui_SeoLink('index.php?link1=checkout'); ?>" class="sixteencart checkout_display <?php echo ($wo['page'] == 'checkout') ? 'active': '';?>" data="checkout_display" data-ajax="?link1=checkout" title="<?php echo $wo['lang']['carrito'];?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart">
+			<circle cx="9" cy="21" r="1"></circle>
+			<circle cx="20" cy="21" r="1"></circle>
+			<path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+			<?php if ($totalcomprasencarrito > 0): ?>
+	            <div class="count_items_carrito">
+	               <span class="count_items_carrito_cou"><?=$totalcomprasencarrito;?></span>
+	            </div>
+	         <?php endif ?>
+		</a>
+	</li>
 	<li class="dropdown messages-notification-container" onclick="<?php echo(((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] == 1)) ? "Wo_OpenBannedMenu('message');" : 'Wo_OpenMessagesMenu();')) ?>">
 		<span class="new-update-alert<?php echo $messages_hidden_class;?>" data_messsages_count="<?php echo $messages_alert?>">
 			<?php echo $messages_alert?>
@@ -78,8 +101,8 @@ svg:not(:root){overflow-clip-margin:content-box;overflow:hidden;}
 			</li>
 		</ul>
 	</li>
-	<li class="dropdown">
-		<a href="#" title="Usuario" class="dropdown-toggle user-menu-combination" data-toggle="dropdown" role="button" aria-expanded="false">
+	<li class="dropdown is_no_phone">
+		<a href="#" title="Usuario" class="dropdown-toggle user-menu-combination is_no_phone" data-toggle="dropdown" role="button" aria-expanded="false">
 			<div class="user-avatar">
 				<svg aria-label="Tu perfil" class="x3ajldb" data-visualcompletion="ignore-dynamic" role="img" style="height:40px;width:40px;display:block!important;"><mask id=":Rqir3aj9emhpapd5aq:"><circle cx="20" cy="20" fill="white" r="20"></circle></mask><g mask="url(#:Rqir3aj9emhpapd5aq:)"><image id="updateImage-<?php echo $wo['user']['user_id']?>" style="height:40px;width:40px" x="0" y="0" height="100%" preserveAspectRatio="xMidYMid slice" width="100%" xlink:href="<?php echo $wo['user']['avatar'];?>" alt="<?php echo $wo['user']['name'];?> Foto de perfil" title="<?php echo $wo['user']['name'];?>?stp=cp0_dst-jpg_p80x80&amp;_nc_cat=106&amp;ccb=1-7&amp;_nc_sid=5740b7&amp;_nc_eui2=AeHUyvGqD28DTV6dFGiOhORyO6rJUO4xvbs7qslQ7jG9u3HR9C1nni0qwp0btEgtV1o7JwMo4kTgIbsHvzqd_A-L&amp;_nc_ohc=DA2_ucFDv0YAX9ojMSS&amp;_nc_ht=scontent.flim2-2.fna&amp;oh=00_AfDSY02NmaaCrFBDtDsQgANdwf8YXSBfTUkfhYRdAhX7fw&amp;oe=65E0FA2A"></image><circle class="xbh8q5q x1pwv2dq xvlca1e" cx="20" cy="20" r="20"></circle></g></svg>
 			</div>

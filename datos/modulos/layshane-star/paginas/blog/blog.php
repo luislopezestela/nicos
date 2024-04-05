@@ -1,4 +1,199 @@
 <style>body{overflow-x:hidden;}</style>
+<style type="text/css"></style>
+<style type="text/css">
+.products{width:100%;}
+.lui_header_blog{background:linear-gradient(-45deg, #00a3ff8f 0%,#08418778 100%), url(/upload/photos/blogspage-header.jpg);position:absolute;left:0;right:0;top:0px;background-size:cover;background-position:center;border-top:1px solid #6CA0C6;color:#fff;}
+.new_market.lui_header_blog .container{padding:50px 15px 140px;text-align:center;}
+.wow_main_blogs_bg{margin-bottom:15px;}
+.wo_market_head_filter, .wo_job_head_filter{
+  display:flex;
+  width:100%;
+  align-items:center;
+  flex-wrap:wrap;
+  font-family:Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+  max-width:1024px;
+  position:relative;
+  z-index:1;
+  background:#fff;
+  border-radius:4px;
+  margin:-135px auto 30px !important;
+  padding:15px 15px 1px !important;
+}
+.wo_job_head_filter .search-blog{width:100%;padding:0;}
+.wo_job_head_filter.blogs .search-blog .main-blog-sidebar{padding:0;position:relative;}
+.contenido_blogs_lui .search-blog input{
+  border:1px solid #ddd;
+  border-radius:8px;
+  padding:0 35px!important;
+  line-height:38px;
+  background-color:#fff;
+  width:100%;
+  outline:0;
+  cursor:text;
+}
+.contenido_blogs_lui .main-blog-sidebar:before{
+	content:' ';
+	color:#0071c5;
+  background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA7klEQVR4nO2USwrCQBBE397PSr2OxhsoXkXEhajJxtsoeg6NN/G71ZGBCgQhTjJBFLGgITDVXUNNdeBX0QIiIAauqh0QAs2ywwfAGTAZdQL6ZYbfNWgJtIGKqgOsdHYDej62JDcfvuCNxDkCjSICUermLqzFnRcR2KvJ2uJCIK59+Ny4qKmag1sT11qaG+cCAnUfgVhNNi0udH0sCtVko+jCRtxZEYGmlsgoilkYi3Pw2eq+lsgoioHepCpbkpvbmuCJnpYo61dx0HDjY1OChpZoq/he9T1P2WLKirgwehJZ/EW+yq4pb8LsXYn6HB6EGmSrW6n6egAAAABJRU5ErkJggg==");
+  font-size:19px;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:22px;
+  position:absolute;
+  opacity:.5;
+  height:100%;
+  width:35px;
+  top:0;
+  left:0;
+  display:flex;
+  justify-content:center;
+  line-height:38px;
+  font-weight:200;
+}
+.wo_job_head_filter .search_suggs:empty{
+  padding:0;
+  background:transparent;
+  box-shadow:none;
+}
+.wow_main_float_head .wow_form_fields .search_suggs, .wo_job_head_filter .search_suggs{
+  position:absolute;
+  margin:0;
+  background-color:white;
+  box-shadow: 0 3px 10px -2px rgba(0, 0, 0, 0.2);
+  border-radius:0 0 4px 4px;
+  width:100%;
+  z-index:11;
+  padding:10px;
+}
+.main-blog-sidebar .popular-articles li {
+  margin-top:30px;
+  overflow:hidden;
+  font-family:Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+}
+.main-blog-sidebar .popular-articles li:first-child{margin-top:0;}
+.main-blog-sidebar .popular-articles li .article-thumbnail{
+  display:block;
+  width:65px;
+  height:65px;
+  position:relative;
+  border-radius:10px;
+  background:#aaa;
+}
+.main-blog-sidebar .popular-articles li .article-thumbnail img{
+  width:100%;
+  height:100%;
+  position:relative;
+  margin-right:15px;
+  border-radius:10px;
+  object-fit:cover;
+}
+.main-blog-sidebar .popular-articles li .article-title {
+  margin-left:80px;
+  color:rgba(0, 0, 0, .8);
+  display:block;
+  font-size:16px;
+  font-weight:bold;
+  line-height:1.4;
+  text-decoration:none;
+}
+.main-blog-sidebar .popular-articles li .article-info{
+  margin-left:80px;
+  display:block;
+  margin-top:4px;
+  color:rgba(0, 0, 0, .4);
+  font-size:14.5px;
+  font-weight:400;
+}
+.categorias_de_blog_conten{
+  display:flex;
+  flex-wrap:wrap;
+  padding:4px;
+  width:100%;
+}
+.estados_vendedores {
+  background:transparent;
+  position:relative;
+  margin-bottom:20px;
+  max-width:100%;
+}
+.estados_vendedores_control{
+  font-size:16px;
+  border:none;
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:10;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  color:#000;
+  background:#fff;
+  cursor:pointer;
+  opacity:.5;
+  transition:all .3s;
+}
+
+.categorias_de_blog_conten .estados_vendedores .estados_vendedores_control.atras{left:-15px!important;}
+.categorias_de_blog_conten .estados_vendedores .estados_vendedores_control.siguiente{right:-15px!important;}
+.categorias_de_blog_conten .estados_vendedores .estados_vendedores_contenedor{margin-left:25px;margin-right:25px;}
+.estados_vendedores_contenedor{
+  cursor:grab;
+  display:flex;
+  overflow:hidden;
+  scroll-behavior:smooth;
+}
+.categorias_de_blog{
+  display:block;
+  margin:2px !important;
+  width:calc(100% / 5 - 4px) !important;
+  height:100px;
+  border:0!important;
+  border-radius:0 !important;
+}
+.slider__item {
+  overflow:hidden;
+  padding:0;
+  flex:0 0 auto;
+  background:#FAFAFA;
+  text-decoration:none;
+}
+.categorias_de_blog a {
+  transform:initial !important;
+  user-select:none;
+  border: 0!important;
+  transition:all .5s !important;
+  border-radius:4px !important;
+  display:flex!important;
+  position:relative;
+  width:100%!important;
+  height:100%!important;
+  background-color:rgba(63, 81, 181, 0.1) !important;
+  padding:10px!important;
+  justify-content:center!important;
+  align-items:center!important;
+  text-decoration:none!important;
+}
+.slider__nuevo_item a{overflow:hidden;background:#fff;}
+</style>
+<style type="text/css">
+	.table_row_lui{
+	display:grid;
+  gap:1rem;
+  grid-template-columns: repeat(auto-fill, minmax(calc(100% / 2 - 1rem), 1fr));
+  width:100%;
+  max-width:1800px;
+  position:relative;
+  margin:auto;
+}}
+</style>
+<style type="text/css">
+.wow_main_blogs_bg {
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  margin-bottom: 30px;
+}
+</style>
 <div class="page-margin products">
 	<div class="lui_header_blog new_market blogs">
 		<div class="container">
@@ -19,8 +214,6 @@
 			
 		</div>
 	</div>
-	
-	<div class="wow_main_blogs_bg"></div>
 	
 	<div class="wow_content contenido_blogs_lui wo_job_head_filter blogs ">
 		<div class="search-blog">
@@ -48,8 +241,6 @@
 				</div>
 			</section>
 		</div>
-			
-
 	</div>
 
 	<div id="recent-blogs" class="table_row_lui">

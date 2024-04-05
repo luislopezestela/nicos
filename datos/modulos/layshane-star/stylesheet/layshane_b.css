@@ -85,11 +85,13 @@
 .lang_select_modal .language_select{display:flex;width:100%;position:relative;cursor:pointer;user-select:none;margin-top:3px;padding:10px 5px;}
 .lang_select_modal .language_select a{display:flex;width:100%;flex-wrap:wrap;justify-content:space-between;align-items:center;}
 .lang_select_modal .language_initial img{height:30px;}
+span.language_initial{display:block;overflow:hidden;padding:0!important;border-radius:50%;height:30px;width:30px!important;}
+.language_initial img{height:30px;width:30px;object-fit:cover;border-radius:50%;}
 @media (min-width: 768px){
   .lang_select_modal{
     width:600px;
     margin-top:0;margin-left:auto;
-    margin-right:0;
+    margin-right:auto;
     margin-bottom:0;
   }
 }
@@ -530,7 +532,7 @@
 .wow_sett_content .text-center > .btn-mat {min-width: 150px;margin: 17px 0;}
 #wo_main_sett_mid .wo_settings_page .text-center > .btn-mat{min-width:150px;margin:17px 0;}
 .text-center{text-align:center;}
-svg.feather{vertical-align:middle;margin-top:-4px;width: 19px;height:19px;}
+svg.feather{vertical-align:middle;margin-top:0px;width:19px;height:19px;}
 .btn-default{background:#ebeef0;border:0}
 .btn-default svg.feather{margin-top:-3px;width:16px;height:16px}
 /*Buttons*/

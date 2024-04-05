@@ -132,7 +132,7 @@ form{
    height: 100%;
    border: none;
    outline: none;
-   background: none;
+   background: none!important;
    padding: 0.5rem 0.7rem;
    font-size: 1.2rem;
    color: #555;

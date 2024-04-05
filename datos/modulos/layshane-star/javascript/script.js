@@ -84,7 +84,7 @@ $(function () {
   });
 
 
-      intervalUpdates = setTimeout(Wo_intervalUpdates, 6000);
+    intervalUpdates = setTimeout(Wo_intervalUpdates, 6000);
     if (node_socket_flow == "0") {
       setTimeout(Wo_IsLogged, 30000);
     }
@@ -510,7 +510,7 @@ function Wo_intervalUpdates(force_update = 0, loop = 0) {
               });
               Wo_PlayVideoCall('play');
             }
-            document.title = 'New video call..';
+            document.title = 'Nueva videollamada..';
             setTimeout(function () {
               Wo_CloseModels();
               $('#re-calling-modal').addClass('calling');
