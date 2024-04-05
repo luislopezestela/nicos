@@ -5755,18 +5755,6 @@ function lui_GenirateSiteMap($updating = 'daily') {
     while ($fetched_data = mysqli_fetch_assoc($profiles)) {
         $sitemap->addItem($fetched_data['username'], '1.0', $updating, 'Today');
     }
-    if ($wo['config']['groups'] == 1) {
-        $groups = mysqli_query($sqlConnect, "SELECT `group_name` FROM " . T_GROUPS . " WHERE `active` = '1'");
-        while ($fetched_data = mysqli_fetch_assoc($groups)) {
-            $sitemap->addItem($fetched_data['group_name'], '0.9', $updating, 'Today');
-        }
-    }
-    if ($wo['config']['pages'] == 1) {
-        $pages = mysqli_query($sqlConnect, "SELECT `page_name` FROM " . T_PAGES . " WHERE `active` = '1'");
-        while ($fetched_data = mysqli_fetch_assoc($pages)) {
-            $sitemap->addItem($fetched_data['page_name'], '0.9', $updating, 'Today');
-        }
-    }
     $posts = mysqli_query($sqlConnect, "SELECT `id` FROM " . T_POSTS . " WHERE `postPrivacy` = '0'");
     while ($fetched_data = mysqli_fetch_assoc($posts)) {
         $sitemap->addItem('post/' . $fetched_data['id'], '0.8', $updating, 'Today');

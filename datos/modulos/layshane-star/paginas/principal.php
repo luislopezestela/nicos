@@ -641,7 +641,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
   <style type="text/css">
     /*Footer*/
 .footer_page_list_l hr{width:100%;border-color:#e9e9e9;}
-footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;width:100%;background:transparent;-webkit-background:transparent;-moz-background:transparent;font-family:sans-serif;}
+footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;width:100%;background:#fff;-webkit-background:#fff;-moz-background:#fff;font-family:sans-serif;}
 .footer_page_list_l{width:100%;position:relative;font-size:14px;display:flex;flex-wrap:wrap;justify-content:center;}
 .footer_page_list_l .footer-powered{display:flex;align-items:center;justify-content:center;color:#333;-webkit-color:#333;-moz-color:#333;user-select:none;padding:5px;flex-wrap:wrap;width:100%;}
 .footer_page_list_l .footer-powered .list-inline{margin:0;padding-left:0;color:#333;-webkit-color:#333;-moz-color:#333;display:flex;flex-wrap:wrap;justify-content:center;width:100%;}

@@ -34,7 +34,7 @@ body{background:#F0F2FD;}
 .flickity-rtl .flickity-prev-next-button.next {right: auto;left: 10px;}
 .flickity-prev-next-button .flickity-button-icon {position: absolute;left: 20%;top: 20%;width: 60%;height: 60%;}
 .wo_post_prod_full {padding: 20px;background-color:#FFFF}
-.wo_post_prod_full_img img {border: 0;width: 100%;aspect-ratio: 1;border-radius: 7px;}
+.wo_post_prod_full_img img {border: 0;width: 100%;aspect-ratio: 1;border-radius: 7px;object-fit:contain;}
 .wo_post_prod_full_img_slider {text-align: center;margin-top: 15px;white-space: nowrap;overflow-x: auto;}
 .wo_post_prod_full_img_slider img {aspect-ratio: 1;width: 60px;border-radius: 3px;margin: 2px;}
 .wo_post_prod_full_img_slider .is-selected img {box-shadow: 0 0 0 2px #4a4a4a;}

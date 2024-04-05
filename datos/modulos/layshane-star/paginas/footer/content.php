@@ -1,7 +1,7 @@
 <?php $copy = str_replace('{site_name}', $wo['config']['siteName'], $wo['lang']['copyrights']); $pages = lui_GetCustomPages();?>
 <?php $idioma = $db->where('iso',$wo['lang_attr'])->getOne(T_LANG_ISO); ?>
 <div class="footer_page_list_l">
-	<hr><br><br>
+	<hr style="margin:0!important"><br><br>
 	<nav class="footer-powered">
 		<ul class="list-inline">
 			<li><a href="<?php echo lui_SeoLink('index.php?link1=terms&type=about-us');?>" data-ajax="?link1=terms&type=about-us"><?php echo $wo['lang']['about'];?></a></li>
