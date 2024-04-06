@@ -270,8 +270,6 @@
 									</div>
 								</div>
 
-								
-
 								<?php if ($wo['config']['store_system'] == 'on') { ?>
 									<div class="columna-4" hidden>
 										<div class="wow_form_fields" hidden>
@@ -594,7 +592,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	images_upload_url: Wo_Ajax_Requests_File() + '?f=upload-blog-image',
 	toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
 	toolbar2: 'print preview media | forecolor backcolor emoticons',
-	plugins: ['advlist','anchor','emoticons', 'autolink','autoresize','lists','link','image','charmap','preview','searchreplace','wordcount','visualblocks','visualchars','code','fullscreen','insertdatetime','media','nonbreaking','save','table','directionality','Template','codesample','importcss','pagebreak'],
+	plugins: ['advlist','anchor','emoticons', 'autolink','autoresize','lists','link','image','charmap','preview','searchreplace','wordcount','visualblocks','visualchars','code','fullscreen','insertdatetime','media','nonbreaking','save','table','directionality','codesample','importcss','pagebreak'],
 	file_picker_callback: function(callback, value, meta){
 		if(meta.filetype == 'image'){
 			$('#upload').trigger('click');
