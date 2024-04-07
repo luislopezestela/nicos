@@ -1,68 +1,93 @@
+<script type="text/javascript">
+  if ($('#sblog_cat_css').length) {
+    $('#sblog_cat_css').remove();
+  }
+  if ($('#s_blogs_cat_loop').length) {
+    $('#s_blogs_cat_loop').remove();
+  }
+  var preloadLink_blogs_s = document.createElement('link');
+  preloadLink_blogs_s.id = 's_blogs_cat_loop';
+  preloadLink_blogs_s.rel = 'preload';
+  preloadLink_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/blogcategorystyle.css?version=<?php echo $wo['config']['version']; ?>";
+  preloadLink_blogs_s.as = 'style';
+  document.head.appendChild(preloadLink_blogs_s);
+
+  var sucjsslik_blogs_s  = document.createElement('link');
+  sucjsslik_blogs_s.rel = 'stylesheet';
+	sucjsslik_blogs_s.id   = 'sblog_cat_css';
+	sucjsslik_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/blogcategorystyle.css?version=<?php echo $wo['config']['version']; ?>";
+	document.head.appendChild(sucjsslik_blogs_s);
+
+</script>
 <style>body{overflow-x:hidden;}</style>
 <div class="page-margin products">
-	<div class="lui_header_blog new_market blogs">
-		<div class="container">
-			<h1>Layshane blog</h1>
-			<p><?php echo $wo['lang']['most_recent_art']; ?></p>
+	<div class="row">
+		<div class="columna-8">
+			<div class="latest-blogs" id="blog-list">
+				<?php
+					$pages = lui_GetBlogs(array("category" => $_GET['id'],'limit' => 10));
+						if (count($pages) > 0) {
+		                	foreach ($pages as $wo['blog']) {
+		                    	echo lui_LoadPage('blog/includes/card-horiz-list');
+		                	}
+		                } 
+		                else {
+		                	echo '<h5 class="search-filter-center-text empty_state"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg> ' . $wo['lang']['no_blogs_found'] . '</h5>';
+		                }
+				?>
+			</div> 
+			<div class="loading-alert"></div>
+ 
+			<div class="posts_load">
+			    <?php if (count($pages) >= 0): ?>
+				<div class="load-more">
+                    <button class="btn btn-default text-center wo_load_more load-more-blogs" id="hren" >
+	                    <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path></svg></span> <?php echo $wo['lang']['load_more_blogs'] ?>
+                	</button>
+                </div>
+                <?php endif ?>
+			</div>	
 		</div>
-	</div>
-	
-	<div class="wow_main_blogs_bg"></div>
-	
-	<div class="wow_content contenido_blogs_lui wo_job_head_filter blogs">
-		<div class="search-blog">
-			<div class="main-blog-sidebar">
-				<input type="text" placeholder="<?php echo $wo['lang']['search_for_article']?>" id="search-blog-input">
-			</div>
-		</div>
-		<div class="categorias_de_blog_conten">
-			<section class="estados_vendedores" style="width:100%;">
-				<button class="estados_vendedores_control atras"><svg fill="currentColor" viewBox="0 0 24 24" width="1em" height="1em" class="x1lliihq x1k90msu x2h7rmj x1qfuztq xcza8v6 xxk0z11 xvy4d1p"><path d="M14.791 5.207 8 12l6.793 6.793a1 1 0 1 1-1.415 1.414l-7.5-7.5a1 1 0 0 1 0-1.414l7.5-7.5a1 1 0 1 1 1.415 1.414z"></path></svg></button>
-				<button class="estados_vendedores_control siguiente"><svg fill="currentColor" viewBox="0 0 24 24" width="1em" height="1em" class="x1lliihq x1k90msu x2h7rmj x1qfuztq xcza8v6 xxk0z11 xvy4d1p"><path d="M9.209 5.207 16 12l-6.791 6.793a1 1 0 1 0 1.415 1.414l7.5-7.5a1 1 0 0 0 0-1.414l-7.5-7.5a1 1 0 1 0-1.415 1.414z"></path></svg></button>
-				<div class="estados_vendedores_contenedor" data-multislide="true" >
-					<?php 
-						$category_id = (!empty($_GET['id'])) ? (int) $_GET['id'] : 0;
-						foreach ($wo['blog_categories'] as $key => $category) {
-							$active = ($category_id == $key) ? 'active' : '';
-					?>
-					<div class="categorias_de_blog slider__item slider__nuevo_item" data_prodect_cat_id="id">
-						<a class="<?php echo $active?>" href="<?php echo lui_SeoLink('index.php?link1=blog-category&id=' . $key) ?>" data-ajax="?link1=blog-category&id=<?php echo $key?>">
-							<?php echo $category;?>
-						</a>
+		<div class="columna-4">
+			<div class="search-artiles-form">
+				<form>
+					<h4 class="recent-articles" style="color: #2196f3;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg> <?php echo $wo['lang']['search'] ?></h4>
+					<div class="inner-addon left-addon">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="glyphicon feather feather-search search_laysh_blo"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+
+						<span id="load-search-icon" class="hidden">
+							<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25px" height="25px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve"><path fill="#333" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"/> </path></svg>
+						</span>
+						<input type="text" value="" class="form-control" placeholder="<?php echo $wo['lang']['search'] ?>" id="search-art">
 					</div>
-					<?php } ?>
-				</div>
-			</section>
-		</div>
-	</div>
-	
-	<div id="blog-list" class="table_row_lui">
-		<?php
-			$pages = lui_GetBlogs(array("category" => $_GET['id'],'limit' => 10));
-			if (count($pages) > 0) {
-				foreach ($pages as $wo['blog']) {
-					echo lui_LoadPage('blog/includes/card-horiz-list');
-				}
-			} 
-			else {
-				echo '<div class="empty_state"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20,11H4V8H20M20,15H13V13H20M20,19H13V17H20M11,19H4V13H11M20.33,4.67L18.67,3L17,4.67L15.33,3L13.67,4.67L12,3L10.33,4.67L8.67,3L7,4.67L5.33,3L3.67,4.67L2,3V19A2,2 0 0,0 4,21H20A2,2 0 0,0 22,19V3L20.33,4.67Z" /></svg>' . $wo['lang']['no_blogs_found'] . '</div>';
-			}
-		?>
-	</div>
-	
-	<div class="posts_load">
-		<?php if (count($pages) >= 0): ?>
-			<div class="load-more">
-				<button class="btn btn-default text-center pointer load-more-blogs" id="hren"><?php echo $wo['lang']['load_more_blogs'] ?></button>
+				</form>
 			</div>
-		<?php endif ?>
+
+			<div class="main-blog-sidebar" id="category-page">
+				<!--Categories-->
+				<div class="widget">
+					<h4 class="recent-articles" style="color: #4caf50;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5.5,7A1.5,1.5 0 0,1 4,5.5A1.5,1.5 0 0,1 5.5,4A1.5,1.5 0 0,1 7,5.5A1.5,1.5 0 0,1 5.5,7M21.41,11.58L12.41,2.58C12.05,2.22 11.55,2 11,2H4C2.89,2 2,2.89 2,4V11C2,11.55 2.22,12.05 2.59,12.41L11.58,21.41C11.95,21.77 12.45,22 13,22C13.55,22 14.05,21.77 14.41,21.41L21.41,14.41C21.78,14.05 22,13.55 22,13C22,12.44 21.77,11.94 21.41,11.58Z"></path></svg> <?php echo $wo['lang']['categories'] ?></h4>
+					<ul class="popular-categories">
+						<?php 
+							$category_id = (!empty($_GET['id'])) ? (int) $_GET['id'] : 0;
+							foreach ($wo['blog_categories'] as $key => $category) {
+								$active = ($category_id == $key) ? 'active' : '';
+						?>
+						<li class="<?php echo $active?>">
+							<a href="<?php echo lui_SeoLink('index.php?link1=blog-category&id=' . $key) ?>" data-ajax="?link1=blog-category&id=<?php echo $key?>"><?php echo $category;?></a>
+						</li>
+						<?php } ?>
+					</ul>
+				</div>
+			</div>	
+		</div>
+		<div class="clear"></div>
 	</div>
 </div>
 
 <script>
-$('.wow_main_blogs_bg').css('height', ($('.lui_header_blog').height()) + 'px');
-
 jQuery(document).ready(function($) {
+
   var delay = (function(){
     var timer = 0;
     return function(callback, ms){
@@ -72,6 +97,9 @@ jQuery(document).ready(function($) {
   })();
 
   $("#search-art").keyup(function() {
+  	$('#load-search-icon').removeClass('hidden');
+  	$('.search_laysh_blo').addClass('hidden');
+  	
       delay(function(){
       if ($("#search-art").val().trim()) {
 	      $.ajax({
@@ -80,10 +108,19 @@ jQuery(document).ready(function($) {
 	        data: {f:"search-art",keyword:$("#search-art").val(),cat:'<?php echo $_GET['id']; ?>'},
 	        dataType: "json",
 	        success: function(data){
+	        	console.log(data)
 	          if (data['status'] == 200) {
-	          	$(".latest-blogs").html(data['html'])
+	          	$('#load-search-icon').addClass('hidden');
+	          	if (data['warning']==null) {
+	          		$(".latest-blogs").html(data['html'])
+	          	}else{
+	          		$(".latest-blogs").html('<h5 class="search-filter-center-text"> ' + data['warning'] + '</h5>')
+	          	}
+  						$('.search_laysh_blo').removeClass('hidden');
 	          }else{
-	          	$("#blog-list").html('<div class="empty_state"> ' + data['warning'] + '</div>')
+  						$('.search_laysh_blo').removeClass('hidden');
+	          	$('#load-search-icon').addClass('hidden');
+	          	$(".latest-blogs").html('<h5 class="search-filter-center-text"> ' + data['warning'] + '</h5>')
 	          }
 	        }
 	      })}
@@ -95,7 +132,7 @@ jQuery(document).ready(function($) {
          url: Wo_Ajax_Requests_File(),
          type: 'GET',
          dataType: 'json',
-         data: {f:"load-blogs",offset:($(".wow_main_blogs").length > 0) ? $(".wow_main_blogs:last").attr('id') : 0,id:<?php echo $_GET['id'] ?>},
+         data: {f:"load-blogs",offset:($(".view-blog").length > 0) ? $(".view-blog:last").attr('id') : 0,id:<?php echo $_GET['id'] ?>},
          success:function(data){
             if (data['status'] == 200) {
             	$(".latest-blogs h5.search-filter-center-text").remove();

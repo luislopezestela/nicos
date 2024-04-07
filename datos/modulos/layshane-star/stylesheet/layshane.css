@@ -564,6 +564,11 @@ svg{
 @media (max-width: 350px) {
   .header-fixed1000 .container-fluid .wow_hdr_innr_left .header-brand img{max-height:54px;max-width:280px;height:100%;width:100%;}
 }
+.btn-info {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
 /*ind*/
   .page_home_v{width:min(82rem, 100%);padding:20px;margin:auto;user-select:none;}
   .paage_welcome{width:100%;display:flex;position:relative;margin:20px auto;justify-content:flex-start;align-items:center;flex-wrap:wrap;}

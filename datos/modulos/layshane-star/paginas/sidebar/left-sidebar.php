@@ -1,33 +1,3 @@
-<style type="text/css">
-.wow_content{border-radius:max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;padding:15px 15px 1px;width:100%;word-wrap:break-word;}
-.wow_sett_sidebar{padding:0;}
-.list-unstyled{padding-left: 0;list-style:none;}
-.wow_sett_sidebar > ul{margin:0;padding:10px 0;}
-.wow_sett_sidebar > ul > li > a{padding:0;display:block;font-size:15px;padding:13px 22px;min-width:88px;text-decoration:none;transition:background-color .4s cubic-bezier(.25,.8,.25,1);letter-spacing:.01em;color:rgba(0,0,0,0.65);font-family:Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;}
-.wow_sett_sidebar > ul hr{border-color:#e8e8e8;border-top:1px solid #f4f4f4;margin:5px 0 !important;}
-.wow_sett_sidebar > ul > li > a span{position:relative;height:32px;width:32px;margin:auto 13px auto 0;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;word-wrap:break-word;}
-.wow_sett_sidebar > ul > li > a span:before{content:'';position:absolute;top:0;right:0;bottom:0;left:0;opacity:0.1;border-radius:50%;}
-.wow_sett_sidebar > ul > li > a span svg, .wow_sett_sidebar > ul > li > a span img{position:relative;height:24px;width:24px;padding:0;border-radius:0;margin:auto;background:transparent;vertical-align:middle;}
-.wow_sett_sidebar > ul > li > a:hover, .wow_sett_sidebar .wow_sett_submenu > ul li a:hover{background-color:rgba(158,158,158,0.05);}
-.wow_sett_sidebar > ul > li.active > a{color:currentColor;font-weight:bold;background-color:rgb(0 0 0 / 4%);box-shadow:inset -3px 0px currentColor;}
-.wow_sett_sidebar > ul > .tiendas.active{border:0.5rem solid #99cbff;}
-.wow_sett_sidebar > ul > li.mywallet.active > a{color:#3498db;box-shadow:inset -3px 0px #3498db;}
-.wow_sett_sidebar > ul > li.cuentas.active > a{color:#6c5ce7;box-shadow:inset -3px 0px #6c5ce7;}
-.wow_sett_sidebar > ul > li.myblogs.active > a{color:#1abc9c;box-shadow:inset -3px 0px #1abc9c;}
-.wow_sett_sidebar > ul > li.myproducts.active > a{color:#1da1f2;box-shadow:inset -3px 0px #1da1f2;}
-.wow_sett_sidebar > ul > li.mypurchased.active > a {color:#0984e3;box-shadow: inset -3px 0px #0984e3;}
-.wow_sett_sidebar > ul > li.mycompras.active > a {color:#0984e3;box-shadow: inset -3px 0px #0984e3;}
-.wow_sett_sidebar > ul > li.myqr_tienda.active > a {color:#9b59b6;box-shadow: inset -3px 0px #9b59b6;}
-.wow_sett_sidebar > ul > li.imventarios.active > a {color:#2ecc71;box-shadow: inset -3px 0px #2ecc71;}
-.wow_sett_sidebar > ul > li.ventas.active > a {color:#3498db;box-shadow: inset -3px 0px #3498db;}
-.wow_sett_sidebar > ul > li.orders.active > a {color:#3498db;box-shadow: inset -3px 0px #3498db;}
-.wow_sett_sidebar > ul > li.active > a svg{fill:currentColor;}
-.des_set_act_menu{display:none!important;}
-.desl_dider_d_menu{width:100%!important;}
-@media (min-width: 992px){
-  .Wo_new_sett_sidee{padding-left:15px;width:30%;}
-}
-</style>
 <?php
 $user_id            = $wo['user']['user_id'];
 $wo['is_admin']     = lui_IsAdmin();
@@ -75,6 +45,38 @@ if (!empty($_GET['link1'])) {
 }
 $wo['sucursales'] = lui_GetSucursalesTypes('');
 ?>
+<?php if ($wo['loggedin'] == true && lui_IsMobile() == false) { ?>
+<style type="text/css">
+.wow_content{border-radius:max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;padding:15px 15px 1px;width:100%;word-wrap:break-word;}
+.wow_sett_sidebar{padding:0;}
+.list-unstyled{padding-left: 0;list-style:none;}
+.wow_sett_sidebar > ul{margin:0;padding:10px 0;}
+.wow_sett_sidebar > ul > li > a{padding:0;display:block;font-size:15px;padding:13px 22px;min-width:88px;text-decoration:none;transition:background-color .4s cubic-bezier(.25,.8,.25,1);letter-spacing:.01em;color:rgba(0,0,0,0.65);font-family:Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;}
+.wow_sett_sidebar > ul hr{border-color:#e8e8e8;border-top:1px solid #f4f4f4;margin:5px 0 !important;}
+.wow_sett_sidebar > ul > li > a span{position:relative;height:32px;width:32px;margin:auto 13px auto 0;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;word-wrap:break-word;}
+.wow_sett_sidebar > ul > li > a span:before{content:'';position:absolute;top:0;right:0;bottom:0;left:0;opacity:0.1;border-radius:50%;}
+.wow_sett_sidebar > ul > li > a span svg, .wow_sett_sidebar > ul > li > a span img{position:relative;height:24px;width:24px;padding:0;border-radius:0;margin:auto;background:transparent;vertical-align:middle;}
+.wow_sett_sidebar > ul > li > a:hover, .wow_sett_sidebar .wow_sett_submenu > ul li a:hover{background-color:rgba(158,158,158,0.05);}
+.wow_sett_sidebar > ul > li.active > a{color:currentColor;font-weight:bold;background-color:rgb(0 0 0 / 4%);box-shadow:inset -3px 0px currentColor;}
+.wow_sett_sidebar > ul > .tiendas.active{border:0.5rem solid #99cbff;}
+.wow_sett_sidebar > ul > li.mywallet.active > a{color:#3498db;box-shadow:inset -3px 0px #3498db;}
+.wow_sett_sidebar > ul > li.cuentas.active > a{color:#6c5ce7;box-shadow:inset -3px 0px #6c5ce7;}
+.wow_sett_sidebar > ul > li.myblogs.active > a{color:#1abc9c;box-shadow:inset -3px 0px #1abc9c;}
+.wow_sett_sidebar > ul > li.myproducts.active > a{color:#1da1f2;box-shadow:inset -3px 0px #1da1f2;}
+.wow_sett_sidebar > ul > li.mypurchased.active > a {color:#0984e3;box-shadow: inset -3px 0px #0984e3;}
+.wow_sett_sidebar > ul > li.mycompras.active > a {color:#0984e3;box-shadow: inset -3px 0px #0984e3;}
+.wow_sett_sidebar > ul > li.myqr_tienda.active > a {color:#9b59b6;box-shadow: inset -3px 0px #9b59b6;}
+.wow_sett_sidebar > ul > li.imventarios.active > a {color:#2ecc71;box-shadow: inset -3px 0px #2ecc71;}
+.wow_sett_sidebar > ul > li.ventas.active > a {color:#3498db;box-shadow: inset -3px 0px #3498db;}
+.wow_sett_sidebar > ul > li.orders.active > a {color:#3498db;box-shadow: inset -3px 0px #3498db;}
+.wow_sett_sidebar > ul > li.active > a svg{fill:currentColor;}
+.des_set_act_menu{display:none!important;}
+.desl_dider_d_menu{width:100%!important;}
+@media (min-width: 992px){
+  .Wo_new_sett_sidee{padding-left:15px;width:30%;}
+}
+</style>
+
 <div class="columna-4 Wo_new_sett_sidee sidebar left-sidebar leftcol sidebar_layshane_configuration_menu">
 	<div class="wow_content wow_sett_sidebar">
 		<?php if ($wo['loggedin'] == true && $wo['page'] != 'maintenance'):?>
@@ -235,6 +237,9 @@ $wo['sucursales'] = lui_GetSucursalesTypes('');
 		<?php endif ?>
 	</div>
 </div>
+
+<?php } ?>
+
 <script type="text/javascript">
 function recpoll() {
 	current_width = $(window).width();
@@ -285,4 +290,11 @@ function Wo_StorePosts(type) {
   });
 }
 </script>
+<?php }else{ ?>
 <?php } ?>
+<style type="text/css">
+	.button_controle_layshane_back_settign{display:none!important;}
+.footer_page_list_l{display:none!important;}
+.content-container{padding-bottom:60px!important;}
+footer{background:transparent!important;}
+</style>

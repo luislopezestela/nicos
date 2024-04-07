@@ -117,8 +117,8 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
   <script id="flikit" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
 <?php endif ?>
 <?php if ($wo['page'] != 'welcome') { ?>
-  <script>$(document).ready(function() {$('div.leftcol').theiaStickySidebar({additionalMarginTop:90});});</script>
-  <script type="text/javascript">jQuery(document).ready(function() {jQuery('.custom-fixed-element').theiaStickySidebar({additionalMarginTop:90});});</script>
+  <script>$(document).ready(function() {$('div.leftcol').theiaStickySidebar({additionalMarginTop:55});});</script>
+  <script type="text/javascript">jQuery(document).ready(function() {jQuery('.custom-fixed-element').theiaStickySidebar({additionalMarginTop:55});});</script>
       <?php }?>
   <style><?php echo $wo['config']['styles_cc']; ?></style>
   <style type="text/css">

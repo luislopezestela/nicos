@@ -1,4 +1,4 @@
-<div class="recommended-articles col-md-4">
+<div class="recommended-articles columna-4">
 	<div class="article-thumbnail">
 		<a href="<?php echo $wo['blog-style']['url'] ?>">
 			<img src="<?php echo $wo['blog-style']['thumbnail'];?>" alt="Article Picture">

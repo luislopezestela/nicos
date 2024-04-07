@@ -1,21 +1,32 @@
-<div class="publicacion_br" data-blog-id="<?php echo $wo['article']['id']; ?>">
-	<div class="contenido_datos_blof">
-		<span class="imagen_blod">
-			<img decoding="async" src="<?php echo $wo['article']['thumbnail']; ?>" alt="<?php echo $wo['article']['title']; ?>" title="<?php echo $wo['article']['title']; ?>" srcset="<?php echo $wo['article']['thumbnail']; ?> 768w, <?php echo $wo['article']['thumbnail']; ?> 480w" sizes="(min-width: 0px) and (max-width: 480px) 480px, (min-width: 481px) 768px, 100vw">
-		</span>
-		<div class="articulo_blog_texto">
-			<h2><a href="<?php echo $wo['article']['url']; ?>"><?php echo $wo['article']['title']; ?></a></h2>
-			<p class="textto_blog_cat">
-				<span class="postMeta--author-text">
+<div data-blog-id="<?php echo $wo['article']['id']; ?>">
+	<div class="sun_article_list">
+		<a href="<?php echo $wo['article']['url']; ?>" data-ajax="?link1=read-blog&id=<?php echo $wo['article']['id']; ?>">
+			<div class="avatar">
+				<img src="<?php echo $wo['article']['thumbnail']; ?>" alt="<?php echo $wo['article']['title']; ?>">
+			</div>
+		</a>
+		<div class="blog-h-desc">
+		 	<div class="blog-meta-desc">
+				<div class="postMeta">
 					<time><?php echo date("d M Y",$wo['article']['posted']); ?></time>
-				</span>
-				|
-				<a class="postCategory" href="<?php echo $wo['article']['category_link']; ?>" data-ajax="?link1=blog-category&id=<?php echo $wo['article']['category']; ?>"><?php echo $wo['blog_categories'][$wo['article']['category']]; ?></a>
+					<span class="middot">/</span>
+					<?php echo $wo['lang']['by'] ?>
+					<a href="<?php echo $wo['article']['author']['url']; ?>" data-ajax="?link1=timeline&u=<?php echo $wo['article']['author']['username']; ?>"><?php echo $wo['article']['author']['name']; ?></a>
+				</div>
+		 	</div>
+			<h3 class="art-title" title="<?php echo $wo['article']['title']; ?>"><a href="<?php echo $wo['article']['url']; ?>"><?php echo $wo['article']['title']; ?></a></h3>
+			<p class="desc">
+				<?php 
+				$desc = str_replace('<br>', '', $wo['article']['description']);
+				echo $desc = mb_substr($desc, 0, 110, "UTF-8") . ".."; ?>
 			</p>
-			
-			
-			<a href="<?php echo $wo['article']['url']; ?>" class="bboton_blog_le"><?php echo $wo['lang']['read_more'] ?></a>
+			<div class="postFooter">
+				<div class="u-floatLeft">
+					<a href="<?php echo $wo['article']['url']; ?>" class="main"><?php echo $wo['lang']['read_more'] ?></a>
+					<span class="middot main">|</span>
+					<a class="main" href="<?php echo $wo['article']['category_link']; ?>" data-ajax="?link1=blog-category&id=<?php echo $wo['article']['category']; ?>"><?php echo $wo['blog_categories'][$wo['article']['category']]; ?></a>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-

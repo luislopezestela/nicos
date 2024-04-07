@@ -1,9 +1,10 @@
 <div class="blog-comment-item" data-blog-comment-reply="<?php echo $wo['comm-reply']['id']; ?>">
 	<div class="col-md-1 col-sm-1 col-xs-1"></div>
+	<div style="display:flex;width:100%;justify-content:center;">
 	<div class="col-md-1 col-sm-1 col-xs-1 <?php echo lui_RightToLeft('pull-left');?> blog-comment-item-img">
 		<img src="<?php echo $wo['comm-reply']['user_data']['avatar']; ?>" alt="" class="responsive-img img-circle">
 	</div>
-	<div class="col-md-10 <?php echo lui_RightToLeft('pull-right');?> col-sm-10 col-xs-9 blog-comment-item-body">
+	<div class="columna-10 <?php echo lui_RightToLeft('pull-right');?> columna_sm-10 columna_xs-9 blog-comment-item-body">
 		<h5>
 			<a class="pointer bold" data-ajax="?link1=timeline&u=<?php echo $wo['comm-reply']['user_data']['username']; ?>" href="<?php echo $wo['comm-reply']['user_data']['url']; ?>">
 				<?php echo $wo['comm-reply']['user_data']['name']; ?>
@@ -134,5 +135,6 @@
 				<?php } ?>
 			</span>
 		</div>
+	</div>
 	</div>
 </div>

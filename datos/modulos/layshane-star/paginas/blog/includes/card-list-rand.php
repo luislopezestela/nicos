@@ -1,5 +1,5 @@
 <div class="owl-item" data-blog-id="<?php echo $wo['article']['id']; ?>">
-	<div class="format-standard" style="background-image:url(<?php echo $wo['article']['thumbnail']; ?>)">
+	<div class="format-standard" style="background-image:url(<?php echo $wo['article']['thumbnail']; ?>);height:350px;">
 		<div class="blog-h-desc postCategory">
 			<h5><?php echo $wo['blog_categories'][$wo['article']['category']]; ?></h5>
 			<h4 class="art-title"><?php echo $wo['article']['title']; ?></h4>

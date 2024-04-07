@@ -386,35 +386,34 @@ body{background-color:#F0F2FD;}
 
 tinymce.init({
   selector: '#blog',
-  height: 400,
+  height: 470,
   images_upload_credentials: true,
   paste_data_images: true,
   image_advtab: true,
-  entity_encoding : "raw",
+  relative_urls: false,
+  remove_script_host: false,
+  entity_encoding : 'raw',
   images_upload_url: Wo_Ajax_Requests_File() + '?f=upload-blog-image',
-  toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-  toolbar2: "print preview media | forecolor backcolor emoticons",
-  plugins: [
-      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-      "searchreplace wordcount visualblocks visualchars code fullscreen",
-      "insertdatetime media nonbreaking save table contextmenu directionality",
-      "emoticons template paste textcolor colorpicker textpattern"
-    ],
-    file_picker_callback: function(callback, value, meta) {
-      if (meta.filetype == 'image') {
-        $('#upload').trigger('click');
-        $('#upload').on('change', function() {
-          var file = this.files[0];
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            callback(e.target.result, {
-              alt: ''
-            });
-          };
-          reader.readAsDataURL(file);
-        });
+  toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+  toolbar2: 'preview media | forecolor backcolor emoticons',
+  plugins: ['advlist','anchor','emoticons', 'autolink','autoresize','lists','link','image','charmap','preview','searchreplace','wordcount','visualblocks','visualchars','code','fullscreen','insertdatetime','media','nonbreaking','save','table','directionality','codesample','importcss','pagebreak'],
+  file_picker_callback: function(callback, value, meta){
+      if(meta.filetype == 'image'){
+          $('#upload').trigger('click');
+          $('#upload').on('change', function() {
+              var file = this.files[0];
+              var reader = new FileReader();
+              reader.onload = function(e) {
+                console.log(e)
+                  callback(e.target.result, {
+                      alt: ''
+                  });
+              };
+              console.log(file)
+              reader.readAsDataURL(file);
+          });
       }
-    },
+  },
 });
 recpoll()
 </script> 
