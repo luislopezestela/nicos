@@ -514,7 +514,7 @@ svg{
 #wo_home_btns > svg{width:19px;height:19px;}
 #wo_home_btns > span {display:inline;}
 }
-.header-fixed1000 .container-fluid .wow_hdr_innr_left .header-brand img{max-height:54px;max-width:280px;width:100%;}
+.header-fixed1000 .container-fluid .wow_hdr_innr_left .header-brand img{max-height:30px;max-width:150px;width:100%;}
 @media (max-width: 1050px) {
 .is_no_phone{display:none!important;visibility:hidden!important;}
 #wo_nw_msg_page .msg_under_hood .mobilerightpane{height: calc(100vh - 155px);}

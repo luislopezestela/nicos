@@ -320,13 +320,30 @@ $(document).on('click', '#night_mode_toggle', function(event) {
       $('head').append('<link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/dark.css<?php echo $wo['update_cache']; ?>" id="night-mode-css">');
       $('#night_mode_toggle').attr('data-mode', 'day');
       $('#night-mode-text').text('<?php echo $wo['lang']['day_mode']?>');
+      var tex_nigtday = document.getElementsByClassName('night-mode-text');
+      var tex_nigtdaymode = document.getElementsByClassName('night_mode_layshane');
+      if (tex_nigtdaymode.length > 0) {
+        $('.night_mode_layshane').attr('data-mode', 'day');
+      }
+      if (tex_nigtday.length > 0) {
+        $(tex_nigtday).text('<?php echo $wo['lang']['day_mode']?>');
+      }
   } else {
       $('#night-mode-css').remove();
       $('#night_mode_toggle').attr('data-mode', 'night');
       $('#night-mode-text').text('<?php echo $wo['lang']['night_mode']?>');
+      var tex_nigtday = document.getElementsByClassName('night-mode-text');
+      var tex_nigtdaymode = document.getElementsByClassName('night_mode_layshane');
+      if (tex_nigtdaymode.length > 0) {
+        $('.night_mode_layshane').attr('data-mode', 'night');
+      }
+      if (tex_nigtday.length > 0) {
+        $(tex_nigtday).text('<?php echo $wo['lang']['night_mode']?>');
+      }
   }
   $.post(Wo_Ajax_Requests_File() + '?mode=' + mode);
 });
+
 
 function Wo_LoadViewsInfo(self) {
   $('#load_more_info_btn').html('<?php echo $wo['lang']['please_wait'] ?>');

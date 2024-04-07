@@ -117,13 +117,16 @@ form{
 
 .input-div.focus > div > h5{
    top: -5px;
-   font-size: 15px;
+   font-size: 15px;z-index:1;
 }
 
 .input-div.focus > .i > i{
    color:var(--boton-fondo);
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 50px var(--body-background) inset; /* Cambiar el color de fondo a blanco */
+}
 .input-div > div > input{
    position: absolute;
    left: 0;

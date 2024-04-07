@@ -39,7 +39,6 @@ if($wo['loggedin'] == true){
 }
 $totalcomprasencarrito = $totalcarrito;
 ?>
-</ul>
 <style type="text/css">
 .x1i10hfl{-webkit-tap-highlight-color:transparent;}
 .x1ypdohk{cursor:pointer;}

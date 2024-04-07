@@ -51,6 +51,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                     case 'servicios':
                         include('sources/servicios.php');
                         break;
+                    case 'menu':
+                        include('sources/menu.php');
+                        break;
                     case 'cuentas':
                         include('sources/cuentas.php');
                         break;
@@ -501,6 +504,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                     case 'servicios':
                         include('sources/servicios.php');
                         break;
+                    case 'menu':
+                        include('sources/menu.php');
+                        break;
                     case 'carta':
                         include('sources/carta.php');
                         break;
@@ -613,6 +619,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                 case 'servicios':
                     include('sources/servicios.php');
                     break;
+                case 'menu':
+                    include('sources/menu.php');
+                    break;
                 case 'carta':
                     include('sources/carta.php');
                     break;
@@ -706,6 +715,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
         switch ($page) {
             case 'servicios':
                 include('sources/servicios.php');
+                break;
+            case 'menu':
+                include('sources/menu.php');
                 break;
             case 'cuentas':
                 include('sources/cuentas.php');
@@ -1118,6 +1130,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
             case 'servicios':
                 include('sources/servicios.php');
                 break;
+            case 'menu':
+                include('sources/menu.php');
+                break;
             case 'carta':
                 include('sources/carta.php');
                 break;
@@ -1178,6 +1193,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
             break;
         case 'servicios':
             include('sources/servicios.php');
+            break;
+        case 'menu':
+            include('sources/menu.php');
             break;
         case 'carta':
             include('sources/carta.php');

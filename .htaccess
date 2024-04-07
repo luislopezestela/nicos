@@ -114,6 +114,7 @@ RewriteRule ^carta/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$ index.php?link1=carta&c_id
 RewriteRule ^qrtienda(/?|)$ index.php?link1=qrtienda [NC,QSA]
 
 
+RewriteRule ^menu(/?|)$ index.php?link1=menu [NC,QSA]
 
 RewriteRule ^imventario(/?|)$ index.php?link1=imventario [NC,QSA]
 RewriteRule ^imventario([^\/]+)(\/|)$ index.php?link1=imventario&page-id=$1 [NC,QSA]

@@ -133,6 +133,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                     case 'cuentas':
                         include('sources/cuentas.php');
                         break;
+                    case 'menu':
+                        include('sources/menu.php');
+                        break;
                     case 'ventas':
                         include('sources/ventas.php');
                         break;
@@ -571,6 +574,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                     case 'cuentas':
                         include('sources/cuentas.php');
                         break;
+                    case 'menu':
+                        include('sources/menu.php');
+                        break;
                     case 'ventas':
                         include('sources/ventas.php');
                         break;
@@ -695,6 +701,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                 case 'servicios':
                     include('sources/servicios.php');
                     break;
+                case 'menu':
+                    include('sources/menu.php');
+                    break;
                 case 'carta':
                     include('sources/carta.php');
                     break;
@@ -800,6 +809,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
         switch ($page) {
             case 'cuentas':
                 include('sources/cuentas.php');
+                break;
+            case 'menu':
+                include('sources/menu.php');
                 break;
             case 'ventas':
                 include('sources/ventas.php');
@@ -1245,6 +1257,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
     switch ($page) {
         case 'servicios':
             include('sources/servicios.php');
+            break;
+        case 'menu':
+            include('sources/menu.php');
             break;
         case 'carta':
             include('sources/carta.php');
