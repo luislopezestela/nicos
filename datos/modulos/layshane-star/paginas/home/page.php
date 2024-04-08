@@ -68,6 +68,19 @@ function loadposts() {
 		Wo_FinishBar();
 	});
 }
+
+if ($('#scripts_page').length) {
+  $('#scripts_page').remove();
+}
+if ($('#scripts_page_load').length) {
+  $('#scripts_page_load').remove();
+}
+if ($('#style_pag_css').length) {
+  $('#style_pag_css').remove();
+}
+if ($('#s_pag_loop').length) {
+  $('#s_pag_loop').remove();
+}
 <?php if ($wo['loggedin'] == true): ?>
 	<?php if ($wo['user']['social_login'] == 1) { ?>
 	  $(window).on("load", function (e) {

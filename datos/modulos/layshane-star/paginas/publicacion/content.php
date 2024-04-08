@@ -1,26 +1,25 @@
 <script type="text/javascript">
-	if ($('#flikit').length) {
-    $('#flikit').remove();
+	if ($('#scripts_page').length) {
+    $('#scripts_page').remove();
   }
-  if ($('#flikitlod').length) {
-        $('#flikitlod').remove();
+  if ($('#scripts_page_load').length) {
+        $('#scripts_page_load').remove();
   }
   var preloadLink = document.createElement('link');
-  preloadLink.id = 'flikitlod';
+  preloadLink.id = 'scripts_page_load';
   preloadLink.rel = 'preload';
   preloadLink.href = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
   preloadLink.as = 'script';
   document.head.appendChild(preloadLink);
 
-
-  if ($('#spublications_css').length) {
-   $('#spublications_css').remove();
+	if ($('#style_pag_css').length) {
+    $('#style_pag_css').remove();
   }
-  if ($('#s_publications_loop').length) {
-    $('#s_publications_loop').remove();
+  if ($('#s_pag_loop').length) {
+    $('#s_pag_loop').remove();
   }
   var preloadLink_blogs_s = document.createElement('link');
-  preloadLink_blogs_s.id = 's_publications_loop';
+  preloadLink_blogs_s.id = 's_pag_loop';
   preloadLink_blogs_s.rel = 'preload';
   preloadLink_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>";
   preloadLink_blogs_s.as = 'style';
@@ -28,9 +27,11 @@
 
   var sucjsslik_blogs_s  = document.createElement('link');
   sucjsslik_blogs_s.rel = 'stylesheet';
-	sucjsslik_blogs_s.id   = 'spublications_css';
+	sucjsslik_blogs_s.id   = 'style_pag_css';
 	sucjsslik_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>";
 	document.head.appendChild(sucjsslik_blogs_s);
+
+
 </script>
 <div class="page-margin page-wrapper grid">
 	<main id="maincontent" class="page-main">
@@ -456,7 +457,7 @@
 			
 			$(function() {
 				var sucjs  = document.createElement('script');
-			    sucjs.id   = 'flikit';
+			    sucjs.id   = 'scripts_page';
 			    sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
 			    document.head.appendChild(sucjs);
 				sucjs.onload = function() {

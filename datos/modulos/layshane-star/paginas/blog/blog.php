@@ -1,25 +1,25 @@
 <script type="text/javascript">
-	if ($('#sliks').length) {
-    $('#sliks').remove();
+	if ($('#scripts_page').length) {
+    $('#scripts_page').remove();
   }
-  if ($('#slikslod').length) {
-    $('#slikslod').remove();
+  if ($('#scripts_page_load').length) {
+    $('#scripts_page_load').remove();
   }
   var preloadLink = document.createElement('link');
-  preloadLink.id = 'slikslod';
+  preloadLink.id = 'scripts_page_load';
   preloadLink.rel = 'preload';
   preloadLink.href = "<?php echo $wo['config']['theme_url'];?>/javascript/slick/slick.min.js?version=<?php echo $wo['config']['version']; ?>";
   preloadLink.as = 'script';
   document.head.appendChild(preloadLink);
 
-  if ($('#sblog_css').length) {
-    $('#sblog_css').remove();
+  if ($('#style_pag_css').length) {
+    $('#style_pag_css').remove();
   }
-  if ($('#s_blogs_loop').length) {
-    $('#s_blogs_loop').remove();
+  if ($('#s_pag_loop').length) {
+    $('#s_pag_loop').remove();
   }
   var preloadLink_blogs_s = document.createElement('link');
-  preloadLink_blogs_s.id = 's_blogs_loop';
+  preloadLink_blogs_s.id = 's_pag_loop';
   preloadLink_blogs_s.rel = 'preload';
   preloadLink_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/blogs_style.css?version=<?php echo $wo['config']['version']; ?>";
   preloadLink_blogs_s.as = 'style';
@@ -27,7 +27,7 @@
 
   var sucjsslik_blogs_s  = document.createElement('link');
   sucjsslik_blogs_s.rel = 'stylesheet';
-	sucjsslik_blogs_s.id   = 'sblog_css';
+	sucjsslik_blogs_s.id   = 'style_pag_css';
 	sucjsslik_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/blogs_style.css?version=<?php echo $wo['config']['version']; ?>";
 	document.head.appendChild(sucjsslik_blogs_s);
 
@@ -127,7 +127,7 @@ jQuery(document).ready(function($) {
 
 $(function() {
 	var sucjsslik  = document.createElement('script');
-			sucjsslik.id   = 'sliks';
+			sucjsslik.id   = 'scripts_page';
 			sucjsslik.src = "<?php echo $wo['config']['theme_url'];?>/javascript/slick/slick.min.js?version=<?php echo $wo['config']['version']; ?>";
 			document.head.appendChild(sucjsslik);
 	sucjsslik.onload = function() {
