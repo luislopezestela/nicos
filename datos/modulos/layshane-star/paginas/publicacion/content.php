@@ -105,7 +105,7 @@
 		?>
 		<div class="columns">
 			<div class="column main_columnas">
-				<div name="bvSeoContainer" itemscope itemtype="https://schema.org/Product" itemid="<?=$wo['config']['site_url']."/item/".$wo['itemsdata']['id_publicacion'] ?>" style="padding:10px;">
+				<div name="bvSeoContainer" itemscope itemtype="https://schema.org/Product" itemid="<?=$wo['config']['site_url']."/item/".$wo['itemsdata']['id_publicacion'].$wo['itemsdata']['product']['coloreds']; ?>" style="padding:10px;">
 	        <meta itemprop="name" content="<?= isset($wo['itemsdata']['product']['name']) ? htmlspecialchars($wo['itemsdata']['product']['name']) : '' ?>">
 					<meta itemprop="sku" content="<?= isset($wo['itemsdata']['product']['sku']) ? htmlspecialchars($wo['itemsdata']['product']['sku']) : '' ?>">
 					<meta itemprop="GTIN" content="<?= isset($wo['itemsdata']['product']['gtin']) ? htmlspecialchars($wo['itemsdata']['product']['gtin']) : '' ?>">
@@ -126,7 +126,7 @@
 		        <meta itemprop="price" content="<?= isset($wo['itemsdata']['product']['price_format']) ? htmlspecialchars($wo['itemsdata']['product']['price_format']) : '' ?>">
 		        <meta itemprop="itemOffered" content="<?= isset($wo['itemsdata']['product']['name']) ? htmlspecialchars($wo['itemsdata']['product']['name']) : '' ?>">
 		        <meta itemprop="availability" content="http://schema.org/<?= isset($disponibilidad) ? htmlspecialchars($disponibilidad) : '' ?>">
-		        <meta itemprop="url" content="<?= isset($wo['config']['site_url']) && isset($wo['itemsdata']['id_publicacion']) ? htmlspecialchars($wo['config']['site_url'] . "/item/" . $wo['itemsdata']['id_publicacion']) : '' ?>">
+		        <meta itemprop="url" content="<?= isset($wo['config']['site_url']) && isset($wo['itemsdata']['id_publicacion']) ? htmlspecialchars($wo['config']['site_url'] . "/item/" . $wo['itemsdata']['id_publicacion'].$wo['itemsdata']['product']['coloreds']) : '' ?>">
 			      <?php if (isset($offerta)): ?>
 			      	<meta itemprop="priceValidUntil" content="">
 			      <?php endif ?>

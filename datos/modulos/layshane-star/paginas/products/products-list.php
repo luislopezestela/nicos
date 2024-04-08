@@ -53,7 +53,7 @@
 				<?php } ?>
 			</div>
 			<div class="product-title">
-				<a href="<?php echo $wo['product']['url']?>" data-ajax="?link1=post&id=<?php echo $wo['product']['seo_id'];?>" title="<?php echo $wo['product']['name']?>"><?php echo $wo['product']['name']?></a>
+				<a href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=item&items=<?php echo $wo['product']['seo_id'];?><?=$el_color_b;?>" title="<?php echo $wo['product']['name']?>"><?php echo $wo['product']['name']?></a>
 			</div>
 			<div class="product-price">
 				<?php echo (!empty($wo['currencies'][$wo['product']['currency']]['symbol'])) ? $wo['currencies'][$wo['product']['currency']]['symbol'] : $wo['config']['classified_currency_s'];?><?php echo $wo['product']['price_format']?>
