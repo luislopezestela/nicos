@@ -2338,7 +2338,7 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
         echo json_encode($data);
         exit();
     }
-    // category
+    // category 
     // manage packages
     if ($s == 'add_pro_package') {
         $data['status'] = 400;

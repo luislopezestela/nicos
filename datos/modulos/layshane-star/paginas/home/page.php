@@ -34,6 +34,7 @@
 		</div>
 	</div>
 </div>
+
 <?php
 if($wo['loggedin'] == true) {
 	if ($wo['user']['social_login'] == 1) {

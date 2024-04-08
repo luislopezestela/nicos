@@ -5755,10 +5755,30 @@ function lui_GenirateSiteMap($updating = 'daily') {
     while ($fetched_data = mysqli_fetch_assoc($profiles)) {
         $sitemap->addItem($fetched_data['username'], '1.0', $updating, 'Today');
     }
-    $posts = mysqli_query($sqlConnect, "SELECT `id` FROM " . T_POSTS . " WHERE `postPrivacy` = '0'");
-    while ($fetched_data = mysqli_fetch_assoc($posts)) {
-        $sitemap->addItem('post/' . $fetched_data['id'], '0.8', $updating, 'Today');
+    //$posts = mysqli_query($sqlConnect, "SELECT `id` FROM " . T_POSTS . " WHERE `postPrivacy` = '0'");
+    //while ($fetched_data = mysqli_fetch_assoc($posts)) {
+      //  $sitemap->addItem('post/' . $fetched_data['id'], '0.8', $updating, 'Today');
+    //}
+    if ($wo['config']['can_use_market'] == 1) {
+        $productos = mysqli_query($sqlConnect, "SELECT `id`,`name` FROM " . T_PRODUCTS);
+        while ($fetched_data = mysqli_fetch_assoc($productos)) {
+            $color_productos_v = mysqli_query($sqlConnect, "SELECT `id_producto`, `id_color` FROM `lui_opcion_de_colores_productos` WHERE `id_producto` = '{$fetched_data['id']}'");
+
+            if (mysqli_num_rows($color_productos_v) >= 1) {
+                while ($fet_data = mysqli_fetch_assoc($color_productos_v)) {
+                    $color_query = mysqli_query($sqlConnect, "SELECT `lang_key` FROM `lui_products_colores` WHERE `id` = '{$fet_data['id_color']}'");
+                    $color_data = mysqli_fetch_assoc($color_query);
+                    $url = 'item/' . lui_SlugPost($fetched_data['name']) .'/'. lui_SlugPost($wo['lang'][$color_data['lang_key']]);
+                    $sitemap->addItem($url, '0.7', $updating, 'Today');
+                }
+            } else {
+                $url = 'item/' . lui_SlugPost($fetched_data['name']);
+                $sitemap->addItem($url, '0.7', $updating, 'Today');
+            }
+        }
+        $sitemap->addItem('tienda', '0.6', $updating, 'Today');
     }
+
     if ($wo['config']['blogs'] == 1) {
         $blogs = mysqli_query($sqlConnect, "SELECT `id`,`title` FROM " . T_BLOG);
         while ($fetched_data = mysqli_fetch_assoc($blogs)) {
