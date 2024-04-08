@@ -33,7 +33,7 @@
 
 
 </script>
-<div class="page-margin page-wrapper grid">
+<div class="page-margin page-wrapper grid loader_pagesf products_itemd">
 	<main id="maincontent" class="page-main">
 		<br>
 		<?php
@@ -453,89 +453,91 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
-			
-			$(function() {
-				var sucjs  = document.createElement('script');
-			    sucjs.id   = 'scripts_page';
-			    sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-			    document.head.appendChild(sucjs);
-				sucjs.onload = function() {
-					var lightboxEnabled = true;
-					var flkty_1 = new Flickity('.wo_post_prod_full_img', {
-					    fullscreen: true,
-					    fade: true,
-					    pageDots: false,
-					    bgLazyLoad: true,
-					    lazyLoad: true
-					});
-
-					var flkty_2 = new Flickity('.wo_post_prod_full_img_slider', {
-					    asNavFor: '.wo_post_prod_full_img',
-					    contain: true,
-					    pageDots: false,
-					    bgLazyLoad: true,
-					    lazyLoad: true,
-					    prevNextButtons: false
-					});
-
-					flkty_1.on('dragStart', () => flkty_1.slider.style.pointerEvents = 'none');
-					flkty_1.on('dragEnd', () => flkty_1.slider.style.pointerEvents = 'auto');
-					flkty_2.on('dragStart', () => flkty_2.slider.style.pointerEvents = 'none');
-					flkty_2.on('dragEnd', () => flkty_2.slider.style.pointerEvents = 'auto');
-					function Wo_OpenAlbumLightBox(image_id, type) {
-						$('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
-						$.get(Wo_Ajax_Requests_File(), {f:'open_album_lightbox', image_id:image_id, type:type}, function(data) {
-							if (data.status == 200) {
-								document.body.style.overflow = 'hidden';
-								$('.lightbox-container').html(data.html);
-							}
-						    if (data.html.length == 0) {
-						       document.body.style.overflow = 'auto';
-						    }
-						});
-					}
-				};
-			});
-		</script>
-		<script>
-		    var selections = {};
-		    var basePrice = <?=$precio_subtotal_producto;?>;
-
-		    function updateSelection() {
-		        selections = {};
-		        var selectedRadios = document.querySelectorAll('.seleccted_atributes_s:checked');
-		        selectedRadios.forEach(function(radio) {
-		            var atributoId = radio.getAttribute('data-atributo');
-		            var opcionId = radio.getAttribute('data-opcion');
-		            selections[atributoId] = opcionId;
-		        });
-		        var totalPrice = basePrice;
-		        Object.values(selections).forEach(function(opcionId) {
-		            var additionalPrice = parseFloat(document.querySelector('#atr_opt_list' + opcionId).value);
-		            totalPrice += additionalPrice;
-		        });
-		        document.getElementById('total_price').textContent = totalPrice.toFixed(2);
-		        guardarSeleccion(selections);
-		    }
-
-		    function guardarSeleccion(selecciones) {
-		        $.post(Wo_Ajax_Requests_File() + '?f=g_s_pr', {
-		            producto_id: <?=$wo['itemsdata']['product']['id'];?>,
-		            selecciones: selecciones
-		        }, function(data) {
-		        	document.getElementById('cantidad_products').textContent = data.cantidad_productos;
-		        	if (data.cantidad_productos==0) {
-		        		$('.buttton_add_cart_list').addClass('hidden');
-		        	}else{
-		        		$('.buttton_add_cart_list').removeClass('hidden');
-		        	}
-		            if (data.status == 200) {
-		            }
-		        });
-		    }
-		</script>
-
-
 	</main>
 </div>
+
+<script type="text/javascript">
+$(function() {
+	var sucjs  = document.createElement('script');
+    sucjs.id   = 'scripts_page';
+    sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
+  document.head.appendChild(sucjs);
+	sucjs.onload = function() {
+		setTimeout(function() {
+			$('.products_itemd').removeClass('loader_pagesf');
+	  }, 500);
+		
+		var lightboxEnabled = true;
+		var flkty_1 = new Flickity('.wo_post_prod_full_img', {
+		    fullscreen: true,
+		    fade: true,
+		    pageDots: false,
+		    bgLazyLoad: true,
+		    lazyLoad: true
+		});
+
+		var flkty_2 = new Flickity('.wo_post_prod_full_img_slider', {
+		    asNavFor: '.wo_post_prod_full_img',
+		    contain: true,
+		    pageDots: false,
+		    bgLazyLoad: true,
+		    lazyLoad: true,
+		    prevNextButtons: false
+		});
+
+		flkty_1.on('dragStart', () => flkty_1.slider.style.pointerEvents = 'none');
+		flkty_1.on('dragEnd', () => flkty_1.slider.style.pointerEvents = 'auto');
+		flkty_2.on('dragStart', () => flkty_2.slider.style.pointerEvents = 'none');
+		flkty_2.on('dragEnd', () => flkty_2.slider.style.pointerEvents = 'auto');
+		function Wo_OpenAlbumLightBox(image_id, type) {
+			$('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+			$.get(Wo_Ajax_Requests_File(), {f:'open_album_lightbox', image_id:image_id, type:type}, function(data) {
+				if (data.status == 200) {
+					document.body.style.overflow = 'hidden';
+					$('.lightbox-container').html(data.html);
+				}
+			    if (data.html.length == 0) {
+			       document.body.style.overflow = 'auto';
+			    }
+			});
+		}
+	};
+});
+</script>
+<script>
+  var selections = {};
+  var basePrice = <?=$precio_subtotal_producto;?>;
+
+  function updateSelection() {
+      selections = {};
+      var selectedRadios = document.querySelectorAll('.seleccted_atributes_s:checked');
+      selectedRadios.forEach(function(radio) {
+          var atributoId = radio.getAttribute('data-atributo');
+          var opcionId = radio.getAttribute('data-opcion');
+          selections[atributoId] = opcionId;
+      });
+      var totalPrice = basePrice;
+      Object.values(selections).forEach(function(opcionId) {
+          var additionalPrice = parseFloat(document.querySelector('#atr_opt_list' + opcionId).value);
+          totalPrice += additionalPrice;
+      });
+      document.getElementById('total_price').textContent = totalPrice.toFixed(2);
+      guardarSeleccion(selections);
+  }
+
+  function guardarSeleccion(selecciones) {
+      $.post(Wo_Ajax_Requests_File() + '?f=g_s_pr', {
+          producto_id: <?=$wo['itemsdata']['product']['id'];?>,
+          selecciones: selecciones
+      }, function(data) {
+      	document.getElementById('cantidad_products').textContent = data.cantidad_productos;
+      	if (data.cantidad_productos==0) {
+      		$('.buttton_add_cart_list').addClass('hidden');
+      	}else{
+      		$('.buttton_add_cart_list').removeClass('hidden');
+      	}
+          if (data.status == 200) {
+          }
+      });
+  }
+</script>
