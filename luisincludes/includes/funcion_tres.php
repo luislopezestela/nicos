@@ -5785,7 +5785,7 @@ function lui_GenirateSiteMap($updating = 'daily') {
             $url = 'read-blog/' . $fetched_data['id'] . '_' . lui_SlugPost($fetched_data['title']);
             $sitemap->addItem($url, '0.7', $updating, 'Today');
         }
-        $sitemap->addItem('blog', '0.6', $updating, 'Today');
+        $sitemap->addItem('blogs', '0.6', $updating, 'Today');
     }
     if ($wo['config']['developers_page'] == 1) {
         $sitemap->addItem('developers', '0.1', 'yearly');
