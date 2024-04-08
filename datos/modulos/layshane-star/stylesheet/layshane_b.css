@@ -629,7 +629,7 @@ span.product-list {
 .wo_lbox_topbar .lbox_topbar_child svg.feather:hover{color:#fff}
 .wo_image_lightbox .story-img{display:table;width:100%;min-width:900px;max-width:900px;background:0 0;position:relative;margin:0 auto;height:100%;user-select:none;}
 .wo_image_lightbox .story-img .changer{background:0 0;top:0;width:60px;height:100%;display:block!important;margin-bottom:0;user-select:none;}
-.wo_image_lightbox .story-img .changer svg.feather{margin-top:0;width:45px;height:45px;color:rgba(255,255,255,.45);transition:all .2s ease-in-out;top:50%;left:50%;position:absolute;transform:translate(-50%,-50%)}
+.wo_image_lightbox .story-img .changer svg.feather{margin-top:0;width:45px;height:45px;color:rgba(0,0,0,.45);transition:all .2s ease-in-out;top:50%;left:50%;position:absolute;transform:translate(-50%,-50%)}
 .wo_image_lightbox .story-img .changer:hover svg.feather{color:#fff}
 .wo_image_lightbox .story-img .changer.next-btn{right:-70px}
 .wo_image_lightbox .story-img .changer.previous-btn{left:-70px}

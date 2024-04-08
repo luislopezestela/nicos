@@ -19,6 +19,27 @@ if(in_array(true, $check_item)){
         $wo['itemsdata']['page'] = 1;
         $wo['itemsdata']['id_publicacion'] = $id;
         if(!empty($wo['itemsdata']['product_id'])){
+            $color_productos_vcol = mysqli_query($sqlConnect, "SELECT `id_producto`, `id_color` FROM `lui_opcion_de_colores_productos` WHERE `id_producto` = '{$wo['itemsdata']['product']['id']}'");
+
+            if (mysqli_num_rows($color_productos_vcol) >= 1) {
+                while ($fet_data = mysqli_fetch_assoc($color_productos_vcol)) {
+                    $color_query = mysqli_query($sqlConnect, "SELECT `lang_key` FROM `lui_products_colores` WHERE `id` = '{$fet_data['id_color']}'");
+                    $color_data = mysqli_fetch_assoc($color_query);
+                    if ($wo['atributo_items']!=0) {
+                        $elcolor_disponible_view = lui_SlugPost($wo['lang'][$color_data['lang_key']]);
+                        if($wo['atributo_items']==$elcolor_disponible_view){
+                            $wo['itemsdata']['product']['coloreds'] = '/'. lui_SlugPost($wo['lang'][$color_data['lang_key']]);
+                        }
+                    }else{
+                        $wo['itemsdata']['product']['coloreds'] = '';
+                    }
+                    
+                }
+            } else {
+                $wo['itemsdata']['product']['coloreds'] = '';
+            }
+
+
             $name = $wo['title']        = FilterStripTags(lui_Secure($wo['itemsdata']['product']['name'])). ' - ' . $wo['config']['siteName'];
             $keyword = $wo['keywords']  = FilterStripTags(lui_Secure($wo['itemsdata']['product']['name']));
             $about = $wo['description'] = FilterStripTags(strip_tags(lui_Secure($wo['itemsdata']['product']['description'])));

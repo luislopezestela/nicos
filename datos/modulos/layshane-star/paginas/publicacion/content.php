@@ -1,168 +1,37 @@
 <script type="text/javascript">
 	if ($('#flikit').length) {
-          $('#flikit').remove();
-    }
-    if ($('#flikitlod').length) {
-          $('#flikitlod').remove();
-    }
-    var preloadLink = document.createElement('link');
-    preloadLink.id = 'flikitlod';
-    preloadLink.rel = 'preload';
-    preloadLink.href = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-    preloadLink.as = 'script';
+    $('#flikit').remove();
+  }
+  if ($('#flikitlod').length) {
+        $('#flikitlod').remove();
+  }
+  var preloadLink = document.createElement('link');
+  preloadLink.id = 'flikitlod';
+  preloadLink.rel = 'preload';
+  preloadLink.href = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
+  preloadLink.as = 'script';
+  document.head.appendChild(preloadLink);
 
-    document.head.appendChild(preloadLink);
 
+  if ($('#spublications_css').length) {
+   $('#spublications_css').remove();
+  }
+  if ($('#s_publications_loop').length) {
+    $('#s_publications_loop').remove();
+  }
+  var preloadLink_blogs_s = document.createElement('link');
+  preloadLink_blogs_s.id = 's_publications_loop';
+  preloadLink_blogs_s.rel = 'preload';
+  preloadLink_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>";
+  preloadLink_blogs_s.as = 'style';
+  document.head.appendChild(preloadLink_blogs_s);
+
+  var sucjsslik_blogs_s  = document.createElement('link');
+  sucjsslik_blogs_s.rel = 'stylesheet';
+	sucjsslik_blogs_s.id   = 'spublications_css';
+	sucjsslik_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>";
+	document.head.appendChild(sucjsslik_blogs_s);
 </script>
-<style type="text/css">
-body{background:#F0F2FD;}
-/*Full Product Post page*/
-.flickity-enabled {position: relative;}
-.flickity-enabled:focus { outline: none; }
-.flickity-viewport {overflow: hidden;position: relative;height: 100%;}
-.flickity-slider {position: absolute;width: 100%;height: 100%;}
-.flickity-button {position: absolute;background: hsla(0, 0%, 100%, 0.75);border: none;color: #333;}
-.flickity-button:hover {background: white;cursor: pointer;}
-.flickity-button:focus {outline: none;box-shadow: 0 0 0 5px #19F;}
-.flickity-button:active {opacity: 0.6;}
-.flickity-button:disabled {color:#777;cursor:auto;cursor:not-allowed; }
-.flickity-button-icon {fill: currentColor;}
-.flickity-prev-next-button {top: 50%;width: 44px;height: 44px;border-radius: 50%;transform: translateY(-50%);}
-.flickity-prev-next-button.previous { left: 10px; }
-.flickity-prev-next-button.next { right: 10px; }
-.flickity-rtl .flickity-prev-next-button.previous {left: auto;right: 10px;}
-.flickity-rtl .flickity-prev-next-button.next {right: auto;left: 10px;}
-.flickity-prev-next-button .flickity-button-icon {position: absolute;left: 20%;top: 20%;width: 60%;height: 60%;}
-.wo_post_prod_full {padding: 20px;background-color:#FFFF}
-.wo_post_prod_full_img img {border: 0;width: 100%;aspect-ratio: 1;border-radius: 7px;object-fit:contain;}
-.wo_post_prod_full_img_slider {text-align: center;margin-top: 15px;white-space: nowrap;overflow-x: auto;}
-.wo_post_prod_full_img_slider img {aspect-ratio: 1;width: 60px;border-radius: 3px;margin: 2px;}
-.wo_post_prod_full_img_slider .is-selected img {box-shadow: 0 0 0 2px #4a4a4a;}
-.wo_post_prod_full_name {font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-weight: 400;font-size: 37px;word-wrap: break-word;line-height: 50px;}
-.wo_post_prod_full_price {font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size: 32px;word-wrap: break-word;color:var(--boton-fondo);}
-.wo_post_prod_full_stars {margin: 10px 0;}
-/*Product Review Stars*/
-.pr_stars .star {width: 18px;height: 18px;margin: 0 2px 0 0px;}
-.pr_stars .star path { fill: rgb(0 0 0 / 20%);}
-.pr_stars[data-stars] .star path {fill: #ff9800;}
-.pr_stars[data-stars="0"] .star path {fill: rgb(0 0 0 / 20%);}
-.pr_stars[data-stars="1"] .star:nth-child(1) ~ .star path {fill: rgb(0 0 0 / 20%);}
-.pr_stars[data-stars="2"] .star:nth-child(2) ~ .star path {fill: rgb(0 0 0 / 20%);}
-.pr_stars[data-stars="3"] .star:nth-child(3) ~ .star path {fill: rgb(0 0 0 / 20%);}
-.pr_stars[data-stars="4"] .star:nth-child(4) ~ .star path {fill: rgb(0 0 0 / 20%);}
-.pr_stars[data-stars="5"] .star:nth-child(5) ~ .star path {fill: rgb(0 0 0 / 20%);}
-
-.wo_post_prod_full_user {display: flex;align-items: center;border: 1px solid #e7e7e7;border-radius: 7px;padding: 10px;margin: 25px 0;}
-.wo_post_prod_full_user .avatar {margin: 0;width: 40px;height: 40px;flex: 0 0 auto;}
-.wo_post_prod_full_user h5 {margin: 0;font-size: 16px;}
-.wo_post_prod_full_user h5 b {display: block;margin: 0 0 2px;font-weight: normal;font-size: 14.5px;opacity: 0.8;}
-.wo_post_prod_full_user h5 a {color: inherit;}
-.wo_post_prod_full_btns .btn {border-radius: max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;line-height:42px;font-size: 15px;width:100%;max-width:420px;}
-.wo_post_prod_full_info {padding: 0;margin: 0;list-style: none;border: 0;}
-.wo_post_prod_full_info li {display: flex;align-items: center;justify-content: space-between;}
-.wo_post_prod_full_info li > span {display: inline-flex;font-size: 15px;padding: 7px 0 0;align-items: center;}
-.wo_post_prod_full_info li > span svg {width: 14px;height: auto;}
-.wo_post_prod_full_info li > span:first-child { white-space: nowrap;position: relative;width: 30%;flex: 1 1 auto;}
-.wo_post_prod_full_info li > span:first-child:after {content: '';height: 1px;background: rgb(0 0 0 / 7%);flex-grow: 1;margin: 0 7px;}
-.wo_post_prod_full_info li > span:last-child {flex: 0 0 auto;}
-.wo_post_prod_full hr {margin: 20px 0 !important;}
-.wo_post_prod_full > p {margin: 0;font-size: 15px;line-height: 26px;}
-.wo_post_prod_full_related_prnt {padding: 20px 20px 1px;}
-.wo_post_prod_full_related {background-color:#fff; border: 1px solid #f0f2f5;border-radius: 10px;font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;transition: all 0.2s;overflow: hidden;margin-bottom: 30px;}
-.wo_post_prod_full_related .img {display: block;}
-.wo_post_prod_full_related .img img {aspect-ratio: 1;width: 100%;}
-.wo_post_prod_full_related .info {padding: 10px;}
-.wo_post_prod_full_related .info .title {margin: 0 0 7px;font-size: 16px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
-.wo_post_prod_full_related .info .title a {color: inherit;}
-.wo_post_prod_full_related .info > div {margin-top: 3px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
-.wo_post_prod_full_related .info > div svg {margin-top: -3px;}
-.grid .g-col-lg-12{grid-column: auto/span 12;}
-:root{--bs-gap: 28px;--bs-padding: 0 116px;}
-:root{--bs-columns:12;--bs-gap:24px;--bs-margin:auto 28px;--bs-width:28px;--bs-offset:-28px;}
-.page-wrapper.grid{margin:var(--bs-margin,auto);max-width:1920px;row-gap:0;box-sizing:content-box;margin:auto;}
-.grid{display:grid;grid-template-rows:repeat(var(--bs-rows,1),1fr);grid-template-columns:repeat(var(--bs-columns,12),1fr);gap:var(--bs-gap,1.5rem);margin:var(--bs-margin,auto);}
-#posts-laoded{margin-left:-7px;margin-right:-7px;}
-#posts{display:flex;position:relative;flex-wrap:wrap;width:initial!important;max-width:initial!important;}
-.post-container{max-width:100%;position:relative;margin:7px;width:calc(100% / 4 - 15px);}
-.post{width:100%;}
-.page-wrapper.grid #maincontent{margin:0;row-gap:0;grid-column:auto/span 12;}
-.page-wrapper.grid #maincontent .grid{margin:0;}
-.page-wrapper.grid #maincontent .grid .producto_media_display.media{grid-column:auto/span 7;grid-column-start:2;grid-column-end:7;padding:0;position:sticky;top:125px;height:fit-content;}
-.informacion_del_producto, .producto_media_display.media{width:unset;margin-left:unset;margin-right:unset;}
-.page-wrapper .page-main{padding-left:0;padding-right:0;}
-.page-main{max-width:100%;padding:0;}
-.page-wrapper.grid .grid{font-size:16px;--bs-margin:0;}
-.columns{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;box-sizing:border-box;}
-.columns .column.main_columnas{padding-bottom:40px;-webkit-flex-basis:auto;flex-basis:auto;-webkit-flex-grow:1;flex-grow:1;-ms-flex-order:1;-webkit-order:1;order:1;width:100%;}
-.page-wrapper .grid .informacion_del_producto,.page-wrapper .grid .producto_media_display.media{width:unset;margin-left:unset;margin-right:unset;}
-.producto_media_display.media{margin-top:10px;padding-top:5px;}
-.page-wrapper.grid #maincontent .grid .informacion_del_producto{grid-column:auto/span 5;grid-column-start:8;padding:0;}
-.informacion_del_producto .page-title{font-size:34px;line-height:40px;font-family:'FormaDJRMicro-Regular';font-weight:400;color:#000;}
-.informacion_del_producto .page-title-wrapper h1{margin-bottom:14px;margin-top:0;}
-.panel{margin-bottom:0!important;}
-.categorias_de_tienda_pagina_principal{display:block;position:relative;margin-bottom:7px;}
-.categorias_de_tienda_pagina_principal li{display:block;background:#fff;border-radius:4px;}
-.rightcol{margin-top:20px;}
-.content_atributos_c{display:flex;flex-wrap:wrap;width:100%;}
-.content_atributos_c h4{display:block;width:100%;user-select:none;font-weight:bold;padding:3px;color:#444;}
-.contenido_opciones_atriburts{display:flex;flex-wrap:wrap;gap:.5rem;width:100%;}
-.lista_de_opciones_de_atributes{--background:transparent;--text:#414856;--radio:#7C96B2;--radio-checked:#4F29F0;--radio-size:28px;--width:100%;--border-radius:10px;display:flex;align-items:center;width:100%;color:var(--text);position:relative;padding:5px 20px;cursor:pointer;}
-.lista_de_opciones_de_atributes label{margin-top:4px;align-items:center;padding:7px;font-size:16px;user-select:none;width:100%;cursor:pointer;}
-.lista_de_opciones_de_atributes input[type="radio"]{-webkit-appearance:none;-moz-appearance: none;position: relative;
-height:var(--radio-size);
-width:var(--radio-size);
-outline:none;
-margin:0;
-cursor:pointer;
-border:2px solid var(--boton-fondo);
-background:transparent;
-border-radius:50%;
-display:grid;
-justify-self:end;
-justify-items:center;
-align-items:center;
-overflow:hidden;
-transition:border .5s ease;
-}
-.informacion_del_producto .page-title-wrapper span{margin-block-end:1em;margin-block-start:1em;display:block;}
-.lista_de_opciones_de_atributes input[type="radio"]::before, .lista_de_opciones_de_atributes input[type="radio"]::after {content:"";display:flex;justify-self:center;border-radius:50%;}
-.lista_de_opciones_de_atributes input[type="radio"]::before {position:absolute;width:100%;height:100%;background:var(--background);z-index:1;opacity:var(--opacity, 1);}
-.lista_de_opciones_de_atributes input[type="radio"]::after {position:relative;width:calc(100% /2);height:calc(100% /2);background:var(--boton-fondo);top:var(--y, 100%);transition:top 0.5s cubic-bezier(0.48, 1.97, 0.5, 0.63);}
-.lista_de_opciones_de_atributes input[type="radio"]:checked{--radio: var(--radio-checked);}
-.lista_de_opciones_de_atributes input[type="radio"]:checked::after{--y:0%;animation:stretch-animate .3s ease-out .17s;}
-.lista_de_opciones_de_atributes input[type="radio"]:checked::before{--opacity:0;}
-.lista_de_opciones_de_atributes input[type="radio"]:checked ~ input[type="radio"]::after{--y:-100%;}
-.lista_de_opciones_de_atributes input[type="radio"]:not(:checked)::before {--opacity:1;transition:opacity 0s linear .5s;}
-@keyframes stretch-animate {
-  0%{transform:scale(1, 1);}
-  28%{transform:scale(1.15, 0.85);}
-  50%{transform:scale(0.9, 1.1);}
-  100%{transform:scale(1, 1);}
-}
-@media (max-width:1050px) {
-	.page-wrapper.grid #maincontent .grid .producto_media_display.media{position:relative;top:0;grid-column: auto / span 12;grid-column-start:12;grid-column-end:2;}
-	.page-wrapper.grid #maincontent .grid .informacion_del_producto{grid-column:auto / span 12;}
-}
-@media (max-width:550px){.page-wrapper.grid #maincontent .grid .producto_media_display.media{grid-column: auto / span 12;position:relative;top:0;grid-column-start:auto;grid-column-end:span 12;}}
-body:not([dir=rtl]) blockquote{border-left:2px solid #ccc;margin-left:1.5rem;padding-left:1rem;}
-blockquote{display:block;margin-block-start:1em;margin-block-end:1em;margin-inline-start:40px;margin-inline-end:40px;unicode-bidi: isolate;}
-div{display:block;unicode-bidi:isolate;}
-h2{display:block;font-size:1.5em;margin-block-start:0.83em;margin-block-end:0.83em;margin-inline-start:0px;margin-inline-end:0px;font-weight:bold;unicode-bidi:isolate;}
-p{display:block;margin-block-start:1em;margin-block-end:1em;margin-inline-start:0px;margin-inline-end:0px;unicode-bidi:isolate;}
-.page-wrapper.grid{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    line-height: 1.4;}
-strong{font-weight:bold;}
-.mce-content-body{overflow-wrap:break-word;word-wrap:break-word;}
-h3{display:block;font-size:1.17em;margin-block-start:1em;margin-block-end:1em;margin-inline-start:0px;margin-inline-end:0px;font-weight:bold;}
-p{display:block;margin-block-start:1em;margin-block-end:1em;margin-inline-start:0px;margin-inline-end:0px;}
-table{display:table;border-collapse:separate;box-sizing:border-box;text-indent:initial;border-spacing:2px;border-color:gray;}
-tbody{display:table-row-group;vertical-align:middle;border-color:inherit;}
-tr{display:table-row;vertical-align:inherit;border-color:inherit;}
-td{display:table-cell;vertical-align:inherit;}
-.ephox-snooker-resizer-bar{background-color:#b4d7ff;opacity:0;-webkit-user-select:none;-moz-user-select:none;user-select:none;}
-.NewCondition{display:inline-block!important;padding:8px 15px;font-size:14px;letter-spacing:2px;background:#00c800;border-radius:20px;color:#ffffff;}
-.RefurbishedCondition{display:inline-block!important;padding:8px 15px;font-size:14px;letter-spacing:2px;background:#ffd400b5;border-radius:20px;color:#213216;}
-</style>
 <div class="page-margin page-wrapper grid">
 	<main id="maincontent" class="page-main">
 		<br>
@@ -181,6 +50,10 @@ td{display:table-cell;vertical-align:inherit;}
 			$type = ($wo['itemsdata']['product']['type'] == 0) ? '' . $wo['lang']['new'] . '' : '' . $wo['lang']['used'] . '';
 			$condicion = ($wo['itemsdata']['product']['type'] == 0) ? '' . "NewCondition" . '' : '' . "RefurbishedCondition" . '';
 			$condicions = ($wo['itemsdata']['product']['type'] == 0) ? '' . "Nuevo" . '' : '' . "Reacondicionado" . '';
+
+			
+	    $disponibilidad = ($wo['itemsdata']['product']['disponible'] == 1) ? '' . "InStock" . '' : 'OutOfStock';
+	    
 
 			$offerta = false;
 			$marca = false;
@@ -232,34 +105,35 @@ td{display:table-cell;vertical-align:inherit;}
 		?>
 		<div class="columns">
 			<div class="column main_columnas">
-				<div name="bvSeoContainer" itemscope itemtype="https://schema.org/Product" itemid="<?=$wo['config']['site_url']."/".$wo['itemsdata']['id_publicacion'] ?>" style="padding:10px;">
-					<meta itemprop="name" content="<?=$wo['itemsdata']['product']['name'] ?>">
-					<meta itemprop="sku" content="<?=$wo['itemsdata']['product']['sku'] ?>">
-					<meta itemprop="GTIN" content="<?=$wo['itemsdata']['product']['gtin'] ?>">
-					<meta itemprop="mpn" content="<?=$wo['itemsdata']['product']['sku'] ?>">
-					<?php if(!empty($wo['itemsdata']['product']['images'][0]['image_org'])): ?>
-						<link itemprop="image" href="<?php echo $wo['itemsdata']['product']['images'][0]['image_org'];?>">
+				<div name="bvSeoContainer" itemscope itemtype="https://schema.org/Product" itemid="<?=$wo['config']['site_url']."/item/".$wo['itemsdata']['id_publicacion'] ?>" style="padding:10px;">
+	        <meta itemprop="name" content="<?= isset($wo['itemsdata']['product']['name']) ? htmlspecialchars($wo['itemsdata']['product']['name']) : '' ?>">
+					<meta itemprop="sku" content="<?= isset($wo['itemsdata']['product']['sku']) ? htmlspecialchars($wo['itemsdata']['product']['sku']) : '' ?>">
+					<meta itemprop="GTIN" content="<?= isset($wo['itemsdata']['product']['gtin']) ? htmlspecialchars($wo['itemsdata']['product']['gtin']) : '' ?>">
+					<meta itemprop="mpn" content="<?= isset($wo['itemsdata']['product']['sku']) ? htmlspecialchars($wo['itemsdata']['product']['sku']) : '' ?>">
+					<?php if (!empty($wo['itemsdata']['product']['images'][0]['image_org'])): ?>
+					    <link itemprop="image" href="<?= htmlspecialchars($wo['itemsdata']['product']['images'][0]['image_org']) ?>">
 					<?php endif ?>
-					<meta itemprop="description" content="<?php echo html_entity_decode(lui_EditMarkup(br2nl($wo['itemsdata']['product']['description'], true, false, false)));?>">
-
-					<?php if ($marca): ?>
-						<div itemprop="brand" itemtype="https://schema.org/Brand" itemscope="">
-				        	<meta itemprop="name" content="<?=$marca;?>">
-				    	</div>
+					<meta itemprop="description" content="<?= isset($wo['itemsdata']['product']['description']) ? htmlspecialchars(html_entity_decode(lui_EditMarkup(br2nl($wo['itemsdata']['product']['description'], true, false, false)))) : '' ?>">
+					<?php if (isset($marca)): ?>
+					    <div itemprop="brand" itemtype="https://schema.org/Brand" itemscope="">
+					        <meta itemprop="name" content="<?= htmlspecialchars($marca) ?>">
+					    </div>
 					<?php endif ?>
 					
-				    <div itemprop="offers" itemtype="https://schema.org/Offer" itemscope="">
-				    	<meta itemprop="priceCurrency" content="<?=$text;?>">
-				    	<meta itemprop="itemCondition" content="https://schema.org/<?=$condicion;?>" />
-				    	<meta itemprop="price" content="<?=$wo['itemsdata']['product']['price_format'];?>">
-				    	<meta itemprop="itemOffered" content="<?=$wo['itemsdata']['product']['units']; ?>">
-				    	<meta itemprop="availability" content="http://schema.org/<?=$wo['itemsdata']['product']['name'] ?>">
-				    	<meta itemprop="url" content="<?=$wo['config']['site_url']."/".$wo['itemsdata']['id_publicacion'] ?>">
-				    	<?php if (isset($offerta)): ?>
-				    		<meta itemprop="priceValidUntil" content="">
-				    	<?php endif ?>
-				    	
-	                </div>
+			    <div itemprop="offers" itemtype="https://schema.org/Offer" itemscope="">
+		        <meta itemprop="priceCurrency" content="<?= isset($text) ? htmlspecialchars($text) : '' ?>">
+		        <meta itemprop="itemCondition" content="https://schema.org/<?= isset($condicion) ? htmlspecialchars($condicion) : '' ?>">
+		        <meta itemprop="price" content="<?= isset($wo['itemsdata']['product']['price_format']) ? htmlspecialchars($wo['itemsdata']['product']['price_format']) : '' ?>">
+		        <meta itemprop="itemOffered" content="<?= isset($wo['itemsdata']['product']['name']) ? htmlspecialchars($wo['itemsdata']['product']['name']) : '' ?>">
+		        <meta itemprop="availability" content="http://schema.org/<?= isset($disponibilidad) ? htmlspecialchars($disponibilidad) : '' ?>">
+		        <meta itemprop="url" content="<?= isset($wo['config']['site_url']) && isset($wo['itemsdata']['id_publicacion']) ? htmlspecialchars($wo['config']['site_url'] . "/item/" . $wo['itemsdata']['id_publicacion']) : '' ?>">
+			      <?php if (isset($offerta)): ?>
+			      	<meta itemprop="priceValidUntil" content="">
+			      <?php endif ?>
+			    </div>
+					
+
+
 					<div class="hpols-bts-pdp grid">
 						<?php if (!empty($wo['itemsdata']['product']['images'])): ?>
 							<div class="producto_media_display media">
