@@ -96,8 +96,6 @@
 				exit();
 			}
 
-			
-
 			$cantidad_productos = 0;
 			$variantes_atributos = [];
 			$atributos_productos = Mostrar_Atributos_producto($wo['itemsdata']['product']['id']);
