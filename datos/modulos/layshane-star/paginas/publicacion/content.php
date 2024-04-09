@@ -332,29 +332,23 @@
 									<?php else: $atributos_opciones = Mostrar_Opciones_Atributos_producto($wo['atributos']['id']);?>
 										<h4><?=$wo['atributos']['nombre'];?></h4>
 										<div class="contenido_opciones_atriburts">
-											<?php  ?>
 											<?php foreach ($atributos_opciones as $wo['opt_atributos']): ?>
-											    <?php
-												    $isChecked = '';
-							                        if (isset($_SESSION['seleccion_atributos'][$wo['itemsdata']['product']['id']][$wo['atributos']['id']])) {
-							                            if ($_SESSION['seleccion_atributos'][$wo['itemsdata']['product']['id']][$wo['atributos']['id']] == $wo['opt_atributos']['id']) {
-							                                $isChecked = 'checked';
-							                            }
-							                            $selecciones = $_SESSION['seleccion_atributos'][$wo['itemsdata']['product']['id']];
-													    foreach ($selecciones as $atributoId => $opcionId) {
-													        if (!isset($variantes_atributos[$atributoId])) {
-													            $variantes_atributos[$atributoId] = [];
-													        }
-													        $variantes_atributos[$atributoId][] = $opcionId;
-													    }
-
-													} elseif ($wo['opt_atributos']['active'] == 1) {
-													    $isChecked = 'checked';
-													    $variantes_atributos[$wo['atributos']['id']][] = $wo['opt_atributos']['id'];
+												<?php $isChecked = '';
+												if (isset($_SESSION['seleccion_atributos'][$wo['itemsdata']['product']['id']][$wo['atributos']['id']])) {
+													if ($_SESSION['seleccion_atributos'][$wo['itemsdata']['product']['id']][$wo['atributos']['id']] == $wo['opt_atributos']['id']) {
+														$isChecked = 'checked';
 													}
-
-							                    ?>
-
+													$selecciones = $_SESSION['seleccion_atributos'][$wo['itemsdata']['product']['id']];
+													foreach ($selecciones as $atributoId => $opcionId) {
+														if (!isset($variantes_atributos[$atributoId])) {
+															$variantes_atributos[$atributoId] = [];
+														}
+														$variantes_atributos[$atributoId][] = $opcionId;
+													}
+												} elseif ($wo['opt_atributos']['active'] == 1) {
+													$isChecked = 'checked';
+													$variantes_atributos[$wo['atributos']['id']][] = $wo['opt_atributos']['id'];
+												} ?>
 												<div class="lista_de_opciones_de_atributes">
 													<input class="seleccted_atributes_s" type="radio" name="opcion<?=$wo['atributos']['id'];?>" id="atr_opt_list<?=$wo['opt_atributos']['id'];?>" <?=$isChecked; ?> value="<?=$wo['opt_atributos']['precio_adicional']; ?>" data-atributo="<?=$wo['atributos']['id'];?>" data-opcion="<?=$wo['opt_atributos']['id'];?>" onchange="updateSelection()">
 													<label for="atr_opt_list<?=$wo['opt_atributos']['id'];?>"><?=$wo['opt_atributos']['nombre'];?></label>
@@ -378,17 +372,16 @@
 								} else{
 									if ($s_photo_color_id) {
 										$cantidad_productos = $db->where('estado', 1)
-											->where('color', $s_photo_color_id)
-		                                    ->where('producto', $wo['itemsdata']['product']['id'])
-		                                  	->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
-		                                $cantidad_productos = ($cantidad_productos !== null) ? $cantidad_productos : 0;
+										->where('color', $s_photo_color_id)
+										->where('producto', $wo['itemsdata']['product']['id'])
+										->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
+										$cantidad_productos = ($cantidad_productos !== null) ? $cantidad_productos : 0;
 									}else{
 										$cantidad_productos = $db->where('estado', 1)
-		                                    ->where('producto', $wo['itemsdata']['product']['id'])
-		                                  	->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
-		                                $cantidad_productos = ($cantidad_productos !== null) ? $cantidad_productos : 0;
+										->where('producto', $wo['itemsdata']['product']['id'])
+										->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
+										$cantidad_productos = ($cantidad_productos !== null) ? $cantidad_productos : 0;
 									}
-								    
 								}
 							?>
 							<span hidden id="cantidad_products"><?=$cantidad_productos;?></span>

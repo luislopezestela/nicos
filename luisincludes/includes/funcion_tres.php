@@ -5769,14 +5769,14 @@ function lui_GenirateSiteMap($updating = 'daily') {
                     $color_query = mysqli_query($sqlConnect, "SELECT `lang_key` FROM `lui_products_colores` WHERE `id` = '{$fet_data['id_color']}'");
                     $color_data = mysqli_fetch_assoc($color_query);
                     $url = 'item/' . lui_SlugPost($fetched_data['name']) .'/'. lui_SlugPost($wo['lang'][$color_data['lang_key']]);
-                    $sitemap->addItem($url, '0.7', $updating, 'Today');
+                    $sitemap->addItem($url, '1.0', $updating, 'Today');
                 }
             } else {
                 $url = 'item/' . lui_SlugPost($fetched_data['name']);
-                $sitemap->addItem($url, '0.7', $updating, 'Today');
+                $sitemap->addItem($url, '1.0', $updating, 'Today');
             }
         }
-        $sitemap->addItem('tienda', '0.6', $updating, 'Today');
+        $sitemap->addItem('tienda', '1.0', $updating, 'Today');
     }
 
     if ($wo['config']['blogs'] == 1) {

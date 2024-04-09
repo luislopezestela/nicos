@@ -1273,7 +1273,7 @@ $data['page']            = $wo['page'];
 $data['welcome_page']    = 0;
 $data['is_css_file']     = 0;
 $data['css_file_header'] = '';
-$data['welcome_url']     = lui_SeoLink('index.php?link1=welcome');
+$data['welcome_url']     = lui_SeoLink('index.php?link1=home');
 if ($wo['page'] == 'welcome') {
     $data['welcome_page'] = 1;
 }

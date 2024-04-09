@@ -1350,7 +1350,7 @@ if (empty($wo['content'])) {
         include('sources/404.php');
     }
 }
-echo lui_Loadpage('principal');
+echo lui_LoadPage('principal');
 mysqli_close($sqlConnect);
 unset($wo);
 ?>

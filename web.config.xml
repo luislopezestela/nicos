@@ -650,7 +650,6 @@
                <match url="^([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$"  />
                <action type="Rewrite" url="/index.php?link1=item&amp;items={R:1}&amp;opcion={R:2}"  appendQueryString="true" />
             </rule>
-            
             <rule name="rule 162k" stopProcessing="true">
                <match url="^acceder(.*)$"  />
                <action type="Rewrite" url="/index.php?link1=acceder"  appendQueryString="true" />
@@ -662,6 +661,19 @@
             <rule name="rule 164k">
                <match url="^carta(/?|)$"/>
                <action type="Rewrite" url="/index.php?link1=carta"  appendQueryString="true" />
+            </rule>
+
+            <rule name="rule 165k">
+               <match url="^tienda(/?|)$"  ignoreCase="true" />
+               <action type="Rewrite" url="/index.php?link1=tienda"  appendQueryString="true" />
+            </rule>
+            <rule name="rule 166k">
+               <match url="^tienda/([A-Za-z0-9_-]+)$"  />
+               <action type="Rewrite" url="/index.php?link1=tienda&amp;c_id={R:1}"  appendQueryString="true" />
+            </rule>
+            <rule name="rule 167k">
+               <match url="^tienda/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$"  />
+               <action type="Rewrite" url="/index.php?link1=tienda&amp;c_id={R:1}&amp;sub_id={R:2}"  appendQueryString="true" />
             </rule>
          </rules>
       </rewrite>

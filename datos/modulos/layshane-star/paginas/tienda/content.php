@@ -12,13 +12,11 @@
   preloadLink_blogs_s.as = 'style';
   document.head.appendChild(preloadLink_blogs_s);
 
-
 	var sucjsslik_blogs_s  = document.createElement('link');
   sucjsslik_blogs_s.rel = 'stylesheet';
 	sucjsslik_blogs_s.id   = 'style_pag_css';
 	sucjsslik_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
 	document.head.appendChild(sucjsslik_blogs_s);
-	
 </script>
 <?php
 $category_id = (!empty($_GET['c_id'])) ? (int) $_GET['c_id'] : 0;
@@ -220,7 +218,6 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 							      if (miDiv) {
 							      	sessionStorage.setItem('scrollLeft', miDiv.scrollLeft);
 							      }
-							      
 							    }
 							    function restaurarPosicionHorizontal() {
 							      var miDiv = document.getElementById('carousel__content');
@@ -230,10 +227,8 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 							      }
 							      
 							    }
-							    
 							    window.onbeforeunload = guardarPosicionHorizontal;
 							    window.onload = restaurarPosicionHorizontal;
-
 							</script>
 						  
 						</div>
@@ -273,13 +268,13 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 					<?php
 						$data['limit'] = 10;
 						$products = lui_GetProducts($data);
-						if (count($products) > 0) {
 					?>
 					<div id="products" class="productos_en_cuadros">
 						<?php
-						foreach ($products as $key => $wo['product']) {
-							echo lui_LoadPage('products/products-list');
-						}
+						if (count($products) > 0) {
+							foreach ($products as $key => $wo['product']) {
+								echo lui_LoadPage('products/products-list');
+							}
 						} else {
 							echo '<div class="empty_state"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,13A5,5 0 0,1 7,8H9A3,3 0 0,0 12,11A3,3 0 0,0 15,8H17A5,5 0 0,1 12,13M12,3A3,3 0 0,1 15,6H9A3,3 0 0,1 12,3M19,6H17A5,5 0 0,0 12,1A5,5 0 0,0 7,6H5C3.89,6 3,6.89 3,8V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V8C21,6.89 20.1,6 19,6Z"></path></svg>' . $wo['lang']['no_available_products'] . '</div>';
 						}
