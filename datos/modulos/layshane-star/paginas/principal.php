@@ -80,6 +80,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
 <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/boots.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/scripts.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <link rel="preload" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
+<link rel="preload" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
 <?php echo (!empty($wo['config']['tagManager_head'])) ? $wo['config']['tagManager_head'] : ''; ?>
   <link rel="shortcut icon" type="image/png" href="<?php echo $wo['config']['theme_url'];?>/img/icon.png"/>
 <?php if($wo['language_type']=='rtl' && $wo['page']!='welcome'){?>
@@ -130,6 +131,12 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
       $('.lightbox-container').remove();
       document.body.style.overflow = 'auto';
     }
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
+    document.head.appendChild(link);
+    
+
     <?php echo $wo['config']['header_cc']."\n"; ?>
     function Wo_Ajax_Requests_File(){return "<?php echo $wo['config']['site_url'].'/requests.php';?>"}
     function Wo_Ajax_Requests_Filee(){return "<?php echo $wo['config']['site_url'].'/ajax_loading.php';?>"}
@@ -653,7 +660,9 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
     ?>
     <footer>
       <?php
-      if($wo['page'] != 'welcome' && $wo['page'] != 'register' && $wo['page'] != 'get_news_feed' && $wo['page'] != 'forum' && $wo['page'] != 'messages' && $wo['page'] != 'jobs'){echo lui_LoadPage('footer/content');}
+      if($wo['page'] != 'welcome' && $wo['page'] != 'register' && $wo['page'] != 'get_news_feed' && $wo['page'] != 'forum' && $wo['page'] != 'messages' && $wo['page'] != 'jobs') {
+        echo lui_LoadPage('footer/content');
+      }
       ?>
       <nav class="xmcv_conten_menu">
         <div class="header_no_ap_go_lie_footer"></div>
