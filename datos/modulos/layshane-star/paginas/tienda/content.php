@@ -177,7 +177,7 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 						    			$cat_nombre_producs = $wo["lang"][$category["lang_key"]];?>
 						    			<?php if(!empty($wo['products_sub_categories'][$_GET['c_id']])): if($all_categorie){ ?>
 						    				<li class="carousel__item <?php echo $active?>">
-						    					<a href="<?php echo lui_SeoLink('index.php?link1=tienda');?>" data-ajax="?link1=tienda"><svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" viewBox="0 0 512 512" style="padding:50px;" fill="#2097ef"><path d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z"/></svg>
+						    					<a href="<?php echo lui_SeoLink('index.php?link1=tienda');?>" data-ajax="?link1=tienda"><svg xmlns="http://www.w3.org/2000/svg" height="44" width="44" viewBox="0 0 512 512" fill="#2097ef"><path d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z"/></svg>
 						    					</a>
 						    				</li>
 						    			<?php } ?>
