@@ -108,10 +108,6 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
 <?php if($wo['page'] == 'movies' || $wo['page'] == 'watch_movie') { ?>
   <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/movies/style.movies.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" />
 <?php } ?>
-<?php if($wo['page'] == 'tienda') { ?>
-  <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
-  <link id="store_cs" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" />
-<?php } ?>
 <?php if($wo['page'] == 'publicacion' || $wo['page'] == 'cuentas'): ?>
   <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/flickity.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>">
   <script id="flikit" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
@@ -222,28 +218,9 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                 }
               }
             }
-              var urlsssss = $(this).attr('href');
-              var segments = urlsssss.split('/').filter(Boolean);
+            var urlsssss = $(this).attr('href');
+            var segments = urlsssss.split('/').filter(Boolean);
             
-            if (segments[2] == 'tienda'){
-                if ($('#store_cs').length) {
-                  $('#store_cs').remove();
-                }
-                if ($('#store_cslod').length) {
-                      $('#store_cslod').remove();
-                }
-                var preloadstored = document.createElement('link');
-                preloadstored.id = 'store_cslod';
-                preloadstored.rel = 'preload';
-                preloadstored.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_t.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
-                preloadstored.as = 'style';
-                document.head.appendChild(preloadstored);
-                var link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.id = "store_cs";
-                link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_t.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
-                document.head.appendChild(link);
-            }
             if (segments[2] == 'cuentas'){
                 if ($('#flikit').length) {
                       $('#flikit').remove();
@@ -270,16 +247,6 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                   window.location.href = json_data.url;
                 }
                 return false;
-              }
-              if(json_data.page == 'tienda'){
-                if ($('#store_cs').length) {
-                  $('#store_cs').remove();
-                }
-                var link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.id = "store_cs";
-                link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_t.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
-                document.head.appendChild(link);
               }
 
               box.html(data);
@@ -1064,16 +1031,7 @@ $(function() {
                 if (json_data.page == 'products') {
                     $('.content-container').css('margin-top', '55px');
                     $('.ad-placement-header-footer').find('.contnet').css('margin-top', '0');
-                } else if (json_data.page == 'tienda') {
-                    if ($('#store_cs').length) {
-                        $('#store_cs').remove();
-                    }
-                    var link = document.createElement('link');
-                    link.rel = 'stylesheet';
-                    link.id = "store_cs";
-                    link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_t.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
-                    document.head.appendChild(link);
-                }else{
+                } else{
                     if ($('.content-container').length) {
                         $('.content-container').css('margin-top', '55px');
                     }
