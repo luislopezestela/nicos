@@ -12,11 +12,13 @@
   preloadLink_blogs_s.as = 'style';
   document.head.appendChild(preloadLink_blogs_s);
 
-  var sucjsslik_blogs_s  = document.createElement('link');
+
+	var sucjsslik_blogs_s  = document.createElement('link');
   sucjsslik_blogs_s.rel = 'stylesheet';
 	sucjsslik_blogs_s.id   = 'style_pag_css';
 	sucjsslik_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
 	document.head.appendChild(sucjsslik_blogs_s);
+	
 </script>
 <?php
 $category_id = (!empty($_GET['c_id'])) ? (int) $_GET['c_id'] : 0;
@@ -43,196 +45,6 @@ if(!empty($category_name)){
 }
 $section_keys = lui_GetSectionCatKeys('section_product');
 ?>
-<style type="text/css">
-.carousel {
-  padding: 15px 0;
-  padding-top:0;
-  position:relative;
-}
-.carousel h2 {
-  margin: 0;
-}
-.carousel a {
-  text-decoration: none;
-  color: #fff;
-}
-.carousel .carousel__wrapper .carousel__content .carousel__item a figure {
-  aspect-ratio: 1/1;
-  width: 100%;
-  height: 100%;
-  position:relative;
-  object-fit: contain;
-  background-size:contain;
-  background-position:center center;
-  background-repeat:no-repeat;
-  -webkit-transition: all .4s ease-in-out;
-  -o-transition: all .4s ease-in-out;
-  transition: all .4s ease-in-out;
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
-  margin: auto;
-  max-width:100%;
-  max-height:100%;
-  border-radius: clamp(0px, ((100vw - 4px) - 100%) * 9999, 4px);
-}
-.carousel h3 {
-  font-size:16px;
-  width:100%;
-  display:flex;
-  justify-content:center;
-  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 0%, rgb(0 0 0 / 39%) 35%, rgb(0 0 0 / 57%) 75%, rgb(0 0 0 / 63%) 100%);
-  align-items: flex-end;
-  padding:10px 3px;
-  padding-bottom:20px;
-  height:100%;
-  margin:0;
-  text-align:center;
-}
-.carousel .dragging a {
-  user-select: none;
-}
-.carousel .carousel__wrapper {
-  position: relative;
-  margin-bottom: 24px;
-}
-
-@media only screen and (min-width: 1180px) {
-  .carousel .carousel__wrapper.has-arrows .carousel__arrows {
-    display: flex;
-  }
-}
-.carousel .carousel__header {
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-.carousel .carousel__content {
-  overflow-y: hidden;
-  overflow-x: scroll;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  display: flex;
-  -webkit-overflow-scrolling: touch;
-  cursor:grab;
-  grid-gap:24px;
-  list-style: none;
-  padding:20px 10px;
-  padding-left:15px;
-  margin:auto;
-  background:#f0f2f5;
-}
-.carousel .carousel__content::-webkit-scrollbar {
-  display: none;
-}
-
-.carousel .carousel__item{
-	aspect-ratio: 1/1;
-	flex:0 0 auto;
-	display:inline-flex;
-	width:calc(100% / 7 - 1.31rem);
-	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.123);
-  border-radius: 20px;
-  background: rgb(245, 245, 245);
-  overflow:hidden;
-  position:relative;
-  margin:0px;
-}
-@media only screen and (max-width: 1500px) {
-  .carousel .carousel__item{width:calc(100% / 5 - 1.31rem);}
-}
-@media only screen and (max-width: 1200px) {
-  .carousel .carousel__item{width:calc(100% / 4 - 1.03rem)}
-}
-@media only screen and (max-width: 990px) {
-  .carousel .carousel__item{width:calc(100% / 5 - 1.31rem);}
-}
-@media only screen and (max-width: 870px) {
-  .carousel .carousel__item{width:calc(100% / 4 - 1.03rem)}
-}
-@media only screen and (max-width: 620px) {
-  .carousel .carousel__item{width:calc(100% / 3 - 1.03rem)}
-}
-@media only screen and (max-width: 470px) {
-	.carousel .carousel__content{grid-gap:11px;}
-	.columna_xs-6{width:100%;float:none;}
-  .carousel .carousel__item{width:calc(100% / 2 - 3.5rem)}
-}
-@media only screen and (max-width: 390px) {
-	.columna_xs-6{width:100%;float:none;}
-  .carousel .carousel__item{width:calc(100% / 1 - 10rem)}
-}
-@media only screen and (max-width: 330px) {
-	.columna_xs-6{width:100%;float:none;}
-  .carousel .carousel__item{width:calc(100% / 1 - 6rem)}
-}
-@media only screen and (max-width: 290px) {
-	.columna_xs-6{width:100%;float:none;}
-  .carousel .carousel__item{width:calc(100% / 1 - 4rem)}
-}
-.carousel .carousel__item .carousel__description{width:100%;position:absolute;bottom:0;display:flex;top:50%;}
-.carousel .carousel__item a {
-  position:absolute;
-  user-select:none;
-  width:100%;
-  height:100%;
-  max-width:100%;
-  max-height:100%;
-  display:-webkit-box;
-  display:-ms-flexbox;
-  display:flex;
-  margin:0;
-  flex-wrap:wrap;
-  cursor:pointer;
-}
-.carousel .carousel__controls {
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 24px;
-}
-.carousel .carousel__arrow {
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
-  border: 0;
-}
-.carousel .carousel__arrow:before {
-  content: "";
-  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNSIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgMTUgOSI+Cgk8cGF0aCBmaWxsPSIjMzMzMzMzIiBkPSJNNy44NjcgOC41NzRsLTcuMjItNy4yMi43MDctLjcwOEw3Ljg2NyA3LjE2IDE0LjA1Ljk4bC43MDYuNzA3Ii8+Cjwvc3ZnPgo=");
-  background-size: contain;
-  filter: brightness(0);
-  display: block;
-  width: 18px;
-  height: 12px;
-  cursor: pointer;
-}
-.carousel .carousel__arrow.arrow-prev:before {
-  transform: rotate(90deg);
-}
-.carousel .carousel__arrow.arrow-next:before {
-  transform: rotate(-90deg);
-}
-.carousel .carousel__arrow.disabled::before {
-  filter: brightness(3);
-}
-
-.disclaimer a {
-  color: #fff;
-}
-.load-produts .load-more button{width:auto}
-.text_category span{font-family:sans-serif;padding-top:10px;}
-.carousel__content {
-  overflow: auto!important; /* o overflow: scroll; */
-  -webkit-overflow-scrolling: touch!important; /* Mejora la experiencia de desplazamiento en iOS */
-  overscroll-behavior: none!important; /* Evita el desplazamiento en dispositivos táctiles */
-  overscroll-behavior-x: none!important;
-}
-
-</style>
 <div class="header_layshane_tienda" style="text-align:center;">
 	<h1><?php echo $wo['lang']['tienda'] ?> <?=$wo['config']['siteName'];?></h1>
 	<?php if(!$category_id==0): ?>
@@ -476,16 +288,18 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 				</div>
 			</div> 	
 			<div class="posts_load load-produts">
-			    <?php if (count($products) > 0): ?>
-				<div class="load-more">
-                    <button class="btn btn-default text-center pointer" onclick="Wo_LoadProducts();"><?php echo $wo['lang']['load_more_products'] ?></button>
-                </div>
-                <?php endif ?>
+			  <?php if (count($products) > 0): ?>
+					<div class="load-more">
+	            <button class="btn btn-default text-center pointer" onclick="Wo_LoadProducts();"><?php echo $wo['lang']['load_more_products'] ?></button>
+	        </div>
+        <?php endif ?>
 			</div>
 		<div class="clear"></div>
 	</div>
 </div>
 <script>
+
+
 	var COMPONENT_SELECTOR = '.carousel__wrapper';
 	var CONTROLS_SELECTOR = '.carousel__controls';
 	var CONTENT_SELECTOR = '.carousel__content';
@@ -601,7 +415,7 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 		    mx = e.touches[0].pageX - content.offsetLeft;
 		};
 
-		content.addEventListener('touchstart', touchstartHandler);
+		content.addEventListener('touchstart', touchstartHandler,{passive: true});
 		content.addEventListener('touchmove', touchmoveHandler);
 
 
@@ -614,8 +428,6 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 		}
 		document.addEventListener( 'mouseup', mouseupHandler );
 		content.addEventListener( 'touchend', mouseupHandler);
-
-		//content.addEventListener( 'mouseleave', mouseupHandler );
 		document.addEventListener('mouseleave', () => {
 		    isDragStart = false;
 		    isDragging = false;

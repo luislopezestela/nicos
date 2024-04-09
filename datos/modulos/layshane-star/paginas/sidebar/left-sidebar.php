@@ -45,6 +45,47 @@ if (!empty($_GET['link1'])) {
 }
 $wo['sucursales'] = lui_GetSucursalesTypes('');
 ?>
+<style type="text/css">
+	
+@media (min-width:1270px) {
+.columna-4{max-width:400px;width:23.3333333%;}
+.columna-8{width: calc(100% - 400px);}
+}
+@media (min-width:1340px) {
+.columna-4{max-width:400px;width:27.3333333%;}
+.columna-8{width: calc(100% - 400px);}
+}
+@media (min-width:1500px) {
+.columna-4{max-width:400px;width:22.3333333%;}
+.columna-8{width: calc(100% - 400px);}
+}
+@media (min-width:1800px) {
+.columna-4{max-width:400px;width:19.3333333%;}
+.columna-8{width: calc(100% - 400px);}
+}
+@media (min-width: 2070px) {
+.columna-4{max-width:400px;}
+.columna-8{width: calc(100% - 400px);}
+}
+@media (min-width: 2181px){
+.columna-4{max-width:400px;}
+.columna-8{width: calc(100% - 400px);}
+}
+.table-responsive{min-height:.01%;overflow-x:auto}
+@media screen and (max-width: 767px) {
+.table-responsive{width:100%;margin-bottom:15px;overflow-y:hidden;-ms-overflow-style: -ms-autohiding-scrollbar;border:1px solid#ddd}
+.table-responsive>.table{margin-bottom: 0}
+.table-responsive>.table>tbody>tr>td,.table-responsive>.table>tbody>tr>th,.table-responsive>.table>tfoot>tr>td,.table-responsive>.table>tfoot>tr>th,.table-responsive>.table>thead>tr>td,.table-responsive>.table>thead>tr>th{white-space:nowrap}
+.table-responsive>.table-bordered{border:0}
+.table-responsive>.table-bordered>tbody>tr>td:first-child,.table-responsive>.table-bordered>tbody>tr>th:first-child,.table-responsive>.table-bordered>tfoot>tr>td:first-child,.table-responsive>.table-bordered>tfoot>tr>th:first-child,.table-responsive>.table-bordered>thead>tr>td:first-child,.table-responsive>.table-bordered>thead>tr>th:first-child{border-left:0}
+.table-responsive>.table-bordered>tbody>tr>td:last-child,.table-responsive>.table-bordered>tbody>tr>th:last-child,.table-responsive>.table-bordered>tfoot>tr>td:last-child,.table-responsive>.table-bordered>tfoot>tr>th:last-child,.table-responsive>.table-bordered>thead>tr>td:last-child,.table-responsive>.table-bordered>thead>tr>th:last-child{border-right:0}
+.table-responsive>.table-bordered>tbody>tr:last-child>td,.table-responsive>.table-bordered>tbody>tr:last-child>th,.table-responsive>.table-bordered>tfoot>tr:last-child>td,.table-responsive>.table-bordered>tfoot>tr:last-child>th{border-bottom:0}
+}
+.carousel__item.dragging a{pointer-events:none!important;}
+.no-click{pointer-events:none!important;}
+.more_its{mask-image:linear-gradient(to left, transparent 1%, black 13%)!important;}
+
+</style>
 <?php if ($wo['loggedin'] == true && lui_IsMobile() == false) { ?>
 <style type="text/css">
 .wow_content{border-radius:max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;padding:15px 15px 1px;width:100%;word-wrap:break-word;}
@@ -75,6 +116,7 @@ $wo['sucursales'] = lui_GetSucursalesTypes('');
 @media (min-width: 992px){
   .Wo_new_sett_sidee{padding-left:15px;width:30%;}
 }
+
 </style>
 
 <div class="columna-4 Wo_new_sett_sidee sidebar left-sidebar leftcol sidebar_layshane_configuration_menu">

@@ -672,8 +672,8 @@
 
                 <div class="row">
                   <div class="columna-12">
-                    <label for="producto_selec_stock" class="selector_checkuno left_check">
-                      <input type="checkbox" id="producto_selec_stock" name="disponible" <?php echo($wo['product']['disponible'] == 1) ? 'checked' : '';?>>
+                    <label for="producto_selec_disponble" class="selector_checkuno left_check">
+                      <input type="checkbox" id="producto_selec_disponble" name="disponible" <?php echo($wo['product']['disponible'] == 1) ? 'checked' : '';?>>
                       <div class="checkmark"></div>
                       <p>Disponible</p>
                     </label>
@@ -683,8 +683,8 @@
 
                 <div class="row">
                   <div class="columna-12">
-                    <label for="producto_selec_stock" class="selector_checkuno left_check">
-                      <input type="checkbox" id="producto_selec_stock" name="solo_web" <?php echo($wo['product']['solo_web'] == 1) ? 'checked' : '';?>>
+                    <label for="producto_selec_soloweb" class="selector_checkuno left_check">
+                      <input type="checkbox" id="producto_selec_soloweb" name="solo_web" <?php echo($wo['product']['solo_web'] == 1) ? 'checked' : '';?>>
                       <div class="checkmark"></div>
                       <p>Solo por la web</p>
                     </label>

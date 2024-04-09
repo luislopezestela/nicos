@@ -159,9 +159,7 @@ header .barloading{
 			<div class="wow_hdr_innr_left">
 				<a class="brand header-brand" href="<?php echo $wo['config']['site_url']; ?>" data-ajax="?index.php?link1=home" >
 					<picture>
-						<source media="(max-width: 920px)" srcset="<?php echo $wo['config']['theme_url'];?>/img/icono.<?php echo $wo['config']['logo_extension'];?>" width="150" height="30">
-						<source media="(min-width: 920px)" srcset="<?php echo $wo['config']['theme_url'];?>/img/logo.<?php echo $wo['config']['logo_extension'];?>" width="280" height="45">
-						<img decoding="async" rel="preload" width="280" height="45" src="<?php echo $wo['config']['theme_url'];?>/img/logo.<?php echo $wo['config']['logo_extension'];?>" alt="<?php echo $wo['config']['siteName'];?>" title="<?php echo $wo['config']['siteName'];?>">
+						<img decoding="async" rel="preload" width="150" height="30" src="<?php echo $wo['config']['theme_url'];?>/img/logo.<?php echo $wo['config']['logo_extension'];?>" alt="<?php echo $wo['config']['siteName'];?>" title="<?php echo $wo['config']['siteName'];?>">
 					</picture>
 				</a>
 				<nav>
