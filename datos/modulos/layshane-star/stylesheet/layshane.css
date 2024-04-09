@@ -498,7 +498,7 @@ span.language_initial{display:block;overflow:hidden;padding:0!important;border-r
 .product_layshane,.loading_poruductos{display:grid;background:#fff;border-radius:20%;aspect-ratio: 1/1; box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);margin:0px;overflow:hidden;position:relative;}
 .product_layshane a{position:absolute;max-width:100%;max-height:100%;text-align:center; width:100%;height:100%;display:-webkit-box;display:-ms-flexbox;display:flex;margin:0;flex-wrap:wrap;}
 .product_layshane figure{mask-image:linear-gradient(#000 80%, transparent);background-position:center center;background-size:contain;background-repeat:no-repeat;-webkit-transition: all .4s ease-in-out;-o-transition:all .4s ease-in-out;transition:all .4s ease-in-out;width:150px;height:150px;position:relative;max-width:100%;max-height:100%;margin:auto;}
-.name_product{color:#333;-webkit-color:#333;-moz-color:#333;position:absolute;bottom:5px;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;text-align:center;transition:all linear .5s;margin:0;width:100%;padding:10px;font-size:18px}
+.name_product{color:#333;-webkit-color:#333;-moz-color:#333;position:absolute;bottom:5px;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;text-align:center;transition:all linear .5s;margin:0;width:100%;padding:10px 25px;font-size:18px;overflow:hidden;}
 .name_product:hover{opacity:1;}
 .lb-preloader svg,.pace-activity-parent{box-shadow:0 1px 6px 1px rgba(0,0,0,.17)}
 .lb-preloader{background:rgba(0,0,0,.23);bottom:0;height:100%;left:0;overflow:hidden;position:fixed;right:0;top:0;width:100%;z-index:99999;display:none}
