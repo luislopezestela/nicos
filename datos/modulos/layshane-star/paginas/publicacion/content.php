@@ -137,7 +137,7 @@
 													echo '<img class="imagen" src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
 												}else{}
 											}else{
-												echo '<img class="imagen" src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
+												echo '<img class="imagen" src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
 											}
 										}
 									?>
