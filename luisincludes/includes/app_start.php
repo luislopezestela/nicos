@@ -251,35 +251,37 @@ $rtl_langs           = array(
     "hebrew",
     "persian"
 );
+$path = '/';
 if (!isset($_COOKIE["ad-con"])) {
     setcookie("ad-con", htmlentities(json_encode(array(
         "date" => date("Y-m-d"),
         "ads" => array()
-    ))), time() + 10 * 365 * 24 * 60 * 60);
+    ))), time() + 10 * 365 * 24 * 60 * 60, $path);
 }
 $wo["ad-con"] = array();
 if (!empty($_COOKIE["ad-con"])) {
     $wo["ad-con"] = json_decode(html_entity_decode($_COOKIE["ad-con"]));
     $wo["ad-con"] = ToArray($wo["ad-con"]);
 }
+
 if (!is_array($wo["ad-con"]) || !isset($wo["ad-con"]["date"]) || !isset($wo["ad-con"]["ads"])) {
     setcookie("ad-con", htmlentities(json_encode(array(
         "date" => date("Y-m-d"),
         "ads" => array()
-    ))), time() + 10 * 365 * 24 * 60 * 60);
+    ))), time() + 10 * 365 * 24 * 60 * 60, $path);
 }
 if (is_array($wo["ad-con"]) && isset($wo["ad-con"]["date"]) && strtotime($wo["ad-con"]["date"]) < strtotime(date("Y-m-d"))) {
     setcookie("ad-con", htmlentities(json_encode(array(
         "date" => date("Y-m-d"),
         "ads" => array()
-    ))), time() + 10 * 365 * 24 * 60 * 60);
+    ))), time() + 10 * 365 * 24 * 60 * 60, $path);
 }
 
 if (!isset($_COOKIE["_us"])) {
-    setcookie("_us", time() + 60 * 60 * 24, time() + 10 * 365 * 24 * 60 * 60);
+    setcookie("_us", time() + 60 * 60 * 24, time() + 10 * 365 * 24 * 60 * 60, $path);
 }
 if ((isset($_COOKIE["_us"]) && $_COOKIE["_us"] < time()) || 1) {
-    setcookie("_us", time() + 60 * 60 * 24, time() + 10 * 365 * 24 * 60 * 60);
+    setcookie("_us", time() + 60 * 60 * 24, time() + 10 * 365 * 24 * 60 * 60, $path);
 }
 // checking if corrent language is rtl.
 foreach ($rtl_langs as $lang) {
@@ -491,7 +493,7 @@ if (!$wo['config']['can_use_chat']) {
 $wo['config']['report_reasons'] = json_decode($wo['config']['report_reasons'],true);
 
 
-$wo['config']['filesVersion'] = "4.7.17";
+$wo['config']['filesVersion'] = "4.7.18";
 
 if ($wo['config']['filesVersion'] != $wo['config']['version']) {
     ini_set('display_errors', 1);

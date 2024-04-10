@@ -12,6 +12,10 @@
   preloadLink.as = 'script';
   document.head.appendChild(preloadLink);
 
+  var sucjs  = document.createElement('script');
+  sucjs.id   = 'scripts_page';
+  sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
+
 	if ($('#style_pag_css').length) {
     $('#style_pag_css').remove();
   }
@@ -30,12 +34,9 @@
 	sucjsslik_blogs_s.id   = 'style_pag_css';
 	sucjsslik_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>";
 	document.head.appendChild(sucjsslik_blogs_s);
-
-
 </script>
 <div class="page-margin page-wrapper grid loader_pagesf products_itemd">
 	<main id="maincontent" class="page-main">
-		<br>
 		<?php
 			$symbol =  (!empty($wo['currencies'][$wo['itemsdata']['product']['currency']]['symbol'])) ? $wo['currencies'][$wo['itemsdata']['product']['currency']]['symbol'] : $wo['config']['classified_currency_s'];
 			$text =  (!empty($wo['currencies'][$wo['itemsdata']['product']['currency']]['text'])) ? $wo['currencies'][$wo['itemsdata']['product']['currency']]['text'] : $wo['config']['classified_currency'];
@@ -194,6 +195,12 @@
 									?>
 								</div>
 							</div>
+							<span class="copy_url_product_data">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">
+								    <path d="M14.5563 13.2183C13.514 14.2606 11.8241 14.2606 10.7817 13.2183C9.73942 12.1759 9.73942 10.486 10.7817 9.44364L13.1409 7.0845C14.1357 6.08961 15.7206 6.04433 16.7692 6.94866M16.4437 3.78175C17.486 2.73942 19.1759 2.73942 20.2183 3.78175C21.2606 4.82408 21.2606 6.51403 20.2183 7.55636L17.8591 9.9155C16.8643 10.9104 15.2794 10.9557 14.2308 10.0513" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+								    <path d="M21 13C21 16.7712 21 18.6569 19.8284 19.8284C18.6569 21 16.7712 21 13 21H11C7.22876 21 5.34315 21 4.17157 19.8284C3 18.6569 3 16.7712 3 13V11C3 7.22876 3 5.34315 4.17157 4.17157C5.34315 3 7.22876 3 11 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+									</svg>
+								</span>
 						<?php endif ?>
 						<div class="informacion_del_producto">
 							<div class="page-title-wrapper product">
@@ -449,9 +456,25 @@
 
 <script type="text/javascript">
 $(function() {
-	var sucjs  = document.createElement('script');
-    sucjs.id   = 'scripts_page';
-    sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
+document.querySelectorAll('.copy_url_product_data').forEach(function(button) {
+  button.addEventListener('click', function() {
+  	$('.copy_url_product_data').html('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none"><path d="M21.8606 5.39176C22.2875 6.49635 21.6888 7.2526 20.5301 7.99754C19.5951 8.5986 18.4039 9.24975 17.1417 10.363C15.9044 11.4543 14.6968 12.7687 13.6237 14.0625C12.5549 15.351 11.6465 16.586 11.0046 17.5005C10.5898 18.0914 10.011 18.9729 10.011 18.9729C9.60281 19.6187 8.86895 20.0096 8.08206 19.9998C7.295 19.99 6.57208 19.5812 6.18156 18.9251C5.18328 17.248 4.41296 16.5857 4.05891 16.3478C3.11158 15.7112 2 15.6171 2 14.1335C2 12.9554 2.99489 12.0003 4.22216 12.0003C5.08862 12.0323 5.89398 12.373 6.60756 12.8526C7.06369 13.1591 7.54689 13.5645 8.04948 14.0981C8.63934 13.2936 9.35016 12.3653 10.147 11.4047C11.3042 10.0097 12.6701 8.51309 14.1349 7.22116C15.5748 5.95115 17.2396 4.76235 19.0042 4.13381C20.1549 3.72397 21.4337 4.28718 21.8606 5.39176Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    var link = window.location.href;
+    var inputElement = document.createElement('input');
+    inputElement.setAttribute('value', link);
+    document.body.appendChild(inputElement);
+    inputElement.select();
+    inputElement.setSelectionRange(0, 99999);
+    document.execCommand('copy');
+    document.body.removeChild(inputElement);
+
+    setTimeout(function() {
+			$('.copy_url_product_data').html('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none"><path d="M14.5563 13.2183C13.514 14.2606 11.8241 14.2606 10.7817 13.2183C9.73942 12.1759 9.73942 10.486 10.7817 9.44364L13.1409 7.0845C14.1357 6.08961 15.7206 6.04433 16.7692 6.94866M16.4437 3.78175C17.486 2.73942 19.1759 2.73942 20.2183 3.78175C21.2606 4.82408 21.2606 6.51403 20.2183 7.55636L17.8591 9.9155C16.8643 10.9104 15.2794 10.9557 14.2308 10.0513" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path d="M21 13C21 16.7712 21 18.6569 19.8284 19.8284C18.6569 21 16.7712 21 13 21H11C7.22876 21 5.34315 21 4.17157 19.8284C3 18.6569 3 16.7712 3 13V11C3 7.22876 3 5.34315 4.17157 4.17157C5.34315 3 7.22876 3 11 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>');
+	  }, 1500);
+  });
+});
+
+
   document.head.appendChild(sucjs);
 	sucjs.onload = function() {
 		setTimeout(function() {
@@ -494,12 +517,10 @@ $(function() {
 		}
 	};
 });
-</script>
-<script>
-  var selections = {};
-  var basePrice = <?=$precio_subtotal_producto;?>;
 
-  function updateSelection() {
+var selections = {};
+var basePrice = <?=$precio_subtotal_producto;?>;
+function updateSelection() {
       selections = {};
       var selectedRadios = document.querySelectorAll('.seleccted_atributes_s:checked');
       selectedRadios.forEach(function(radio) {

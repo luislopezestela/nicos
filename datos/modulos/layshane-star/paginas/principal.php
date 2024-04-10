@@ -82,19 +82,11 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
 <link rel="preload" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
 <link rel="preload" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
 <?php echo (!empty($wo['config']['tagManager_head'])) ? $wo['config']['tagManager_head'] : ''; ?>
-  <link rel="shortcut icon" type="image/png" href="<?php echo $wo['config']['theme_url'];?>/img/icon.png"/>
-<?php if($wo['language_type']=='rtl' && $wo['page']!='welcome'){?>
-  <link rel="stylesheet" href="<?=$wo['config']['theme_url'].'/stylesheet/bootsrap-rtl.min.css'.$wo['update_cache'].'?version='.$wo['config']['version'];?>">
-  <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/style_rtl.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>">
-<?php } ?>
+<link rel="shortcut icon" type="image/png" href="<?php echo $wo['config']['theme_url'];?>/img/icon.png"/>
 <link rel="stylesheet" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>">
 <?php if($wo['page'] == 'messages') { ?>
   <link href="<?php echo $wo['config']['theme_url'];?>/stylesheet/Krub.css?version=<?php echo $wo['config']['version']; ?>" rel="stylesheet">
 <?php } ?>
-<?php if ($wo['page'] == 'welcome' && $wo['language_type'] == 'rtl') { ?>
-  <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/welcome_rtl.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>">
-<?php } ?>
-
 <script data="scripsjquer" src="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-3.7.0.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
 <?php if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 'edit_product' || $wo['page'] == 'create_product') { ?>
   <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/tinymce/tinymce.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
@@ -103,34 +95,29 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
 <?php if ($wo['loggedin'] == true): ?>
   <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/jqueryform.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <?php endif ?>
-
 <link rel="manifest" href="<?php echo $wo['config']['theme_url'];?>/manifiesto/manifest.php">
 <?php if($wo['page'] == 'movies' || $wo['page'] == 'watch_movie') { ?>
   <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/movies/style.movies.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" />
 <?php } ?>
-<?php if($wo['page'] == 'publicacion' || $wo['page'] == 'cuentas'): ?>
-  <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/flickity.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>">
+<?php if($wo['page'] == 'cuentas'): ?>
   <script id="flikit" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
 <?php endif ?>
 <?php if ($wo['page'] != 'welcome') { ?>
   <script>$(document).ready(function() {$('div.leftcol').theiaStickySidebar({additionalMarginTop:55});});</script>
   <script type="text/javascript">jQuery(document).ready(function() {jQuery('.custom-fixed-element').theiaStickySidebar({additionalMarginTop:55});});</script>
-      <?php }?>
-  <style><?php echo $wo['config']['styles_cc']; ?></style>
-  <style type="text/css">
-    .count_items_carrito{position:absolute;top:0px;right:25px;display:flex;flex-wrap:wrap;font-size:10px;background:var(--header-color);color:var(--header-fondo);border-radius:15px;text-align:center;justify-content:center;align-items:center;line-height:10px;height:16px;letter-spacing:0;}
-    .count_items_carrito span{padding:3px;}
-    .header_no_ap_go_lie{bottom:-6px;background-size:1px 7px;background-repeat:repeat-x;right:0;box-sizing:border-box;pointer-events:none;z-index:0;left:0;height:7px;position:absolute;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAOBAMAAAD3WtBsAAAAFVBMVEUAAAAAAAAAAAAAAAAAAAAAAAD29va1cB7UAAAAB3RSTlMCCwQHGBAaZf6MKAAAABpJREFUCNdjSGNIY3BhCGUQBEJjIFQCQigAACyJAjLNW4w5AAAAAElFTkSuQmCC);}
-  </style>
+<?php }?>
+<style><?php echo $wo['config']['styles_cc']; ?></style>
+<style type="text/css">
+.count_items_carrito{position:absolute;top:0px;right:25px;display:flex;flex-wrap:wrap;font-size:10px;background:var(--header-color);color:var(--header-fondo);border-radius:15px;text-align:center;justify-content:center;align-items:center;line-height:10px;height:16px;letter-spacing:0;}
+.count_items_carrito span{padding:3px;}
+.header_no_ap_go_lie{bottom:-6px;background-size:1px 7px;background-repeat:repeat-x;right:0;box-sizing:border-box;pointer-events:none;z-index:0;left:0;height:7px;position:absolute;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAOBAMAAAD3WtBsAAAAFVBMVEUAAAAAAAAAAAAAAAAAAAAAAAD29va1cB7UAAAAB3RSTlMCCwQHGBAaZf6MKAAAABpJREFUCNdjSGNIY3BhCGUQBEJjIFQCQigAACyJAjLNW4w5AAAAAElFTkSuQmCC);}
+</style>
 <?php if($wo['config']['classified'] == 13){ ?>
   <script src="<?php echo $wo['config']['theme_url'];?>/javascript/html2pdf.bundle.js?version=<?php echo $wo['config']['version']; ?>"></script>
   <script src="<?php echo $wo['config']['theme_url'];?>/javascript/qrcode.js?version=<?php echo $wo['config']['version']; ?>"></script>
 <?php } ?>
   <script type="text/javascript">
-    function Wo_CloseLightbox() {
-      $('.lightbox-container').remove();
-      document.body.style.overflow = 'auto';
-    }
+    function Wo_CloseLightbox(){$('.lightbox-container').remove();document.body.style.overflow = 'auto';}
     var link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
@@ -780,18 +767,15 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
           var targetElement = document.getElementById('var_data_script');
           targetElement.parentNode.insertBefore(script, targetElement.nextSibling);
         });
-
       </script>
       <div id="var_data_script"></div>
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/styck.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/jqueryform.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/autogrow.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/boots.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
-
       <?php if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 'edit_product') { ?>
         <script src="<?php echo $wo['config']['theme_url'];?>/javascript/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
       <?php } ?>
-
       <?php if ($wo['loggedin'] == true) {?>
       <?php if ($wo['config']['google_map'] == 1) { ?>
       <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $wo['config']['google_map_api'];?>&libraries=places"></script>
@@ -873,11 +857,11 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
           $(selector).css({ maxHeight: "160px" })
           $(self).replaceWith('<a href="javascript:void(0)" onclick="ShowReadMoreText(\''+selector+'\',this)">'+text+'</a>')
         }
-         <?php if ($wo['loggedin'] == true) {
+        <?php if ($wo['loggedin'] == true) {
             $havevideo = $db->where('user_id',$wo['user']['id'])->where('processing',1)->getValue(T_POSTS,'COUNT(*)');
             if ($havevideo > 0) { ?>
                   intervalUpdates = setTimeout(function(){ Wo_intervalUpdates(1); }, 6000);
-      <?php   } } ?>
+        <?php   } } ?>
          let f = navigator.userAgent.search("Firefox");
           if (f > -1) {
                 $('.header-brand').attr('href', "<?php echo $wo['config']['site_url']."/?cache=".time(); ?>");
@@ -975,28 +959,7 @@ $(function() {
               Wo_StopLocalStream();
               return false;
             }
-            if (segments[0] == 'item'){
-              if ($('#flikit').length) {
-                    $('#flikit').remove();
-              }
-
-              if ($('#flikitlod').length) {
-                    $('#flikitlod').remove();
-              }
-              var preloadLink = document.createElement('link');
-              preloadLink.id = 'flikitlod';
-              preloadLink.rel = 'preload';
-              preloadLink.href = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-              preloadLink.as = 'script';
-
-              // Agrega el enlace de precarga al encabezado del documento
-              document.head.appendChild(preloadLink);
-
-              var sucjs  = document.createElement('script');
-              sucjs.id   = 'flikit';
-              sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-              document.head.appendChild(sucjs);
-            }
+           
             if (segments[0] == 'cuentas'){
               if ($('#flikit').length) {
                     $('#flikit').remove();
