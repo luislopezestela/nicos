@@ -18,17 +18,22 @@ if(in_array(true, $check_item)){
         $wo['itemsdata'] = lui_PublicacionData($id, $placement, 'not_limited');
         $wo['itemsdata']['page'] = 1;
         $wo['itemsdata']['id_publicacion'] = $id;
+
+        $buscarelidcolor = '';
         if(!empty($wo['itemsdata']['product_id'])){
-            $color_productos_vcol = mysqli_query($sqlConnect, "SELECT `id_producto`, `id_color` FROM `lui_opcion_de_colores_productos` WHERE `id_producto` = '{$wo['itemsdata']['product']['id']}'");
+            $color_productos_vcol = mysqli_query($sqlConnect, "SELECT `id`,`id_producto`, `id_color` FROM `lui_opcion_de_colores_productos` WHERE `id_producto` = '{$wo['itemsdata']['product']['id']}'");
 
             if (mysqli_num_rows($color_productos_vcol) >= 1) {
                 while ($fet_data = mysqli_fetch_assoc($color_productos_vcol)) {
-                    $color_query = mysqli_query($sqlConnect, "SELECT `lang_key` FROM `lui_products_colores` WHERE `id` = '{$fet_data['id_color']}'");
+                    $color_query = mysqli_query($sqlConnect, "SELECT `id`,`lang_key` FROM `lui_products_colores` WHERE `id` = '{$fet_data['id_color']}'");
                     $color_data = mysqli_fetch_assoc($color_query);
                     if ($wo['atributo_items']!=0) {
                         $elcolor_disponible_view = lui_SlugPost($wo['lang'][$color_data['lang_key']]);
                         if($wo['atributo_items']==$elcolor_disponible_view){
+                            $imagen_color_query = mysqli_query($sqlConnect, "SELECT `id`,`image` FROM `lui_products_media` WHERE `id_color` = '{$fet_data['id']}'");
+                            $imagen_color_data = mysqli_fetch_assoc($imagen_color_query);
                             $wo['itemsdata']['product']['coloreds'] = '/'. lui_SlugPost($wo['lang'][$color_data['lang_key']]);
+                            $buscarelidcolor = $imagen_color_data['image'];
                         }
                     }else{
                         $wo['itemsdata']['product']['coloreds'] = '';
@@ -38,6 +43,10 @@ if(in_array(true, $check_item)){
             } else {
                 $wo['itemsdata']['product']['coloreds'] = '';
             }
+
+
+            $wo['itemsdata']['product']['imagen_portada'] = lui_GetMedia($buscarelidcolor);
+            
 
 
             $name = $wo['title']        = FilterStripTags(lui_Secure($wo['itemsdata']['product']['name'])). ' - ' . $wo['config']['siteName'];
