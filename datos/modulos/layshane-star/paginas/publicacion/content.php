@@ -5,17 +5,7 @@
   if ($('#scripts_page_load').length) {
         $('#scripts_page_load').remove();
   }
-  var preloadLink = document.createElement('link');
-  preloadLink.id = 'scripts_page_load';
-  preloadLink.rel = 'preload';
-  preloadLink.href = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-  preloadLink.as = 'script';
-  document.head.appendChild(preloadLink);
-
-  var sucjs  = document.createElement('script');
-  sucjs.id   = 'scripts_page';
-  sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-
+  
 	if ($('#style_pag_css').length) {
     $('#style_pag_css').remove();
   }
@@ -146,10 +136,10 @@
 												$buscar_el_color_por_id = lui_buscar_color_en_colores($color_id['id_color']);
 												$el_colorv = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]);
 												if ($wo['atributo_items']==$el_colorv) {
-													echo '<img decoding="async" alt="'.$wo['itemsdata']['product']['name'].'" title="'.$wo['itemsdata']['product']['name'].'" srcset="'. ($photo['image_org']) .' 400w, '. ($photo['image']) .' 700w" sizes="(min-width: 0px) and (max-width: 1050px) 1050px, (min-width: 1050px) 1050px, 100vw" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
+													echo '<img src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
 												}else{}
 											}else{
-												echo '<img decoding="async" data-flickity-lazyload="'. ($photo['image']) .'" alt="'.$wo['itemsdata']['product']['name'].'" title="'.$wo['itemsdata']['product']['name'].'" srcset="'. ($photo['image_org']) .' 400w, '. ($photo['image']) .' 700w" sizes="(min-width: 0px) and (max-width: 1050px) 1050px, (min-width: 1050px) 1050px, 100vw" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
+												echo '<img src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
 											}
 										}
 									?>
@@ -172,9 +162,9 @@
 													$statuss = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 													curl_close($ch);
 													if($statuss == 200) {
-														echo  "<div><img src='" . ($photo['image_mini']) ."' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
+														echo  "<div><img src='" . ($photo['image_mini']) ."' loading='lazy' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
 													}else{
-														echo  "<div><img src='" . ($photo['image_org']) ."' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
+														echo  "<div><img src='" . ($photo['image_org']) ."' loading='lazy' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
 													}
 													
 												}
@@ -186,9 +176,9 @@
 												$statuss = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 												curl_close($ch);
 												if($statuss == 200) {
-													echo  "<div><img src='" . ($photo['image_mini']) ."' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
+													echo  "<div><img src='" . ($photo['image_mini']) ."' loading='lazy' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
 												}else{
-													echo  "<div><img src='" . ($photo['image_org']) ."' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
+													echo  "<div><img src='" . ($photo['image_org']) ."' loading='lazy' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
 												}
 											}
 										}
@@ -244,11 +234,11 @@
 							?>
 							<?php if ($wo['config']['store_system'] == 'on') { ?>
 								<div class="pr_stars wo_post_prod_full_stars" data-stars="<?php echo $stars; ?>">
-									<svg class="star rating" viewBox="0 0 24 24" data-rating="1"><path d="M6.516,14.323l-1.49,6.452c-0.092,0.399,0.068,0.814,0.406,1.047C5.603,21.94,5.801,22,6,22 c0.193,0,0.387-0.056,0.555-0.168L12,18.202l5.445,3.63c0.348,0.232,0.805,0.223,1.145-0.024c0.338-0.247,0.487-0.68,0.372-1.082 l-1.829-6.4l4.536-4.082c0.297-0.268,0.406-0.686,0.278-1.064c-0.129-0.378-0.47-0.644-0.868-0.676L15.378,8.05l-2.467-5.461 C12.75,2.23,12.393,2,12,2s-0.75,0.23-0.911,0.589L8.622,8.05L2.921,8.503C2.529,8.534,2.192,8.791,2.06,9.16 c-0.134,0.369-0.038,0.782,0.242,1.056L6.516,14.323z"></path></svg>
-									<svg class="star rating" viewBox="0 0 24 24" data-rating="2"><path d="M6.516,14.323l-1.49,6.452c-0.092,0.399,0.068,0.814,0.406,1.047C5.603,21.94,5.801,22,6,22 c0.193,0,0.387-0.056,0.555-0.168L12,18.202l5.445,3.63c0.348,0.232,0.805,0.223,1.145-0.024c0.338-0.247,0.487-0.68,0.372-1.082 l-1.829-6.4l4.536-4.082c0.297-0.268,0.406-0.686,0.278-1.064c-0.129-0.378-0.47-0.644-0.868-0.676L15.378,8.05l-2.467-5.461 C12.75,2.23,12.393,2,12,2s-0.75,0.23-0.911,0.589L8.622,8.05L2.921,8.503C2.529,8.534,2.192,8.791,2.06,9.16 c-0.134,0.369-0.038,0.782,0.242,1.056L6.516,14.323z"></path></svg>
-									<svg class="star rating" viewBox="0 0 24 24" data-rating="3"><path d="M6.516,14.323l-1.49,6.452c-0.092,0.399,0.068,0.814,0.406,1.047C5.603,21.94,5.801,22,6,22 c0.193,0,0.387-0.056,0.555-0.168L12,18.202l5.445,3.63c0.348,0.232,0.805,0.223,1.145-0.024c0.338-0.247,0.487-0.68,0.372-1.082 l-1.829-6.4l4.536-4.082c0.297-0.268,0.406-0.686,0.278-1.064c-0.129-0.378-0.47-0.644-0.868-0.676L15.378,8.05l-2.467-5.461 C12.75,2.23,12.393,2,12,2s-0.75,0.23-0.911,0.589L8.622,8.05L2.921,8.503C2.529,8.534,2.192,8.791,2.06,9.16 c-0.134,0.369-0.038,0.782,0.242,1.056L6.516,14.323z"></path></svg>
-									<svg class="star rating" viewBox="0 0 24 24" data-rating="4"><path d="M6.516,14.323l-1.49,6.452c-0.092,0.399,0.068,0.814,0.406,1.047C5.603,21.94,5.801,22,6,22 c0.193,0,0.387-0.056,0.555-0.168L12,18.202l5.445,3.63c0.348,0.232,0.805,0.223,1.145-0.024c0.338-0.247,0.487-0.68,0.372-1.082 l-1.829-6.4l4.536-4.082c0.297-0.268,0.406-0.686,0.278-1.064c-0.129-0.378-0.47-0.644-0.868-0.676L15.378,8.05l-2.467-5.461 C12.75,2.23,12.393,2,12,2s-0.75,0.23-0.911,0.589L8.622,8.05L2.921,8.503C2.529,8.534,2.192,8.791,2.06,9.16 c-0.134,0.369-0.038,0.782,0.242,1.056L6.516,14.323z"></path></svg>
-									<svg class="star rating" viewBox="0 0 24 24" data-rating="5"><path d="M6.516,14.323l-1.49,6.452c-0.092,0.399,0.068,0.814,0.406,1.047C5.603,21.94,5.801,22,6,22 c0.193,0,0.387-0.056,0.555-0.168L12,18.202l5.445,3.63c0.348,0.232,0.805,0.223,1.145-0.024c0.338-0.247,0.487-0.68,0.372-1.082 l-1.829-6.4l4.536-4.082c0.297-0.268,0.406-0.686,0.278-1.064c-0.129-0.378-0.47-0.644-0.868-0.676L15.378,8.05l-2.467-5.461 C12.75,2.23,12.393,2,12,2s-0.75,0.23-0.911,0.589L8.622,8.05L2.921,8.503C2.529,8.534,2.192,8.791,2.06,9.16 c-0.134,0.369-0.038,0.782,0.242,1.056L6.516,14.323z"></path></svg>
+									<svg class="star rating" viewBox="0 0 24 24" width="18" height="18" data-rating="1"><path d="M6.516,14.323l-1.49,6.452c-0.092,0.399,0.068,0.814,0.406,1.047C5.603,21.94,5.801,22,6,22 c0.193,0,0.387-0.056,0.555-0.168L12,18.202l5.445,3.63c0.348,0.232,0.805,0.223,1.145-0.024c0.338-0.247,0.487-0.68,0.372-1.082 l-1.829-6.4l4.536-4.082c0.297-0.268,0.406-0.686,0.278-1.064c-0.129-0.378-0.47-0.644-0.868-0.676L15.378,8.05l-2.467-5.461 C12.75,2.23,12.393,2,12,2s-0.75,0.23-0.911,0.589L8.622,8.05L2.921,8.503C2.529,8.534,2.192,8.791,2.06,9.16 c-0.134,0.369-0.038,0.782,0.242,1.056L6.516,14.323z"></path></svg>
+									<svg class="star rating" viewBox="0 0 24 24" width="18" height="18" data-rating="2"><path d="M6.516,14.323l-1.49,6.452c-0.092,0.399,0.068,0.814,0.406,1.047C5.603,21.94,5.801,22,6,22 c0.193,0,0.387-0.056,0.555-0.168L12,18.202l5.445,3.63c0.348,0.232,0.805,0.223,1.145-0.024c0.338-0.247,0.487-0.68,0.372-1.082 l-1.829-6.4l4.536-4.082c0.297-0.268,0.406-0.686,0.278-1.064c-0.129-0.378-0.47-0.644-0.868-0.676L15.378,8.05l-2.467-5.461 C12.75,2.23,12.393,2,12,2s-0.75,0.23-0.911,0.589L8.622,8.05L2.921,8.503C2.529,8.534,2.192,8.791,2.06,9.16 c-0.134,0.369-0.038,0.782,0.242,1.056L6.516,14.323z"></path></svg>
+									<svg class="star rating" viewBox="0 0 24 24" width="18" height="18" data-rating="3"><path d="M6.516,14.323l-1.49,6.452c-0.092,0.399,0.068,0.814,0.406,1.047C5.603,21.94,5.801,22,6,22 c0.193,0,0.387-0.056,0.555-0.168L12,18.202l5.445,3.63c0.348,0.232,0.805,0.223,1.145-0.024c0.338-0.247,0.487-0.68,0.372-1.082 l-1.829-6.4l4.536-4.082c0.297-0.268,0.406-0.686,0.278-1.064c-0.129-0.378-0.47-0.644-0.868-0.676L15.378,8.05l-2.467-5.461 C12.75,2.23,12.393,2,12,2s-0.75,0.23-0.911,0.589L8.622,8.05L2.921,8.503C2.529,8.534,2.192,8.791,2.06,9.16 c-0.134,0.369-0.038,0.782,0.242,1.056L6.516,14.323z"></path></svg>
+									<svg class="star rating" viewBox="0 0 24 24" width="18" height="18" data-rating="4"><path d="M6.516,14.323l-1.49,6.452c-0.092,0.399,0.068,0.814,0.406,1.047C5.603,21.94,5.801,22,6,22 c0.193,0,0.387-0.056,0.555-0.168L12,18.202l5.445,3.63c0.348,0.232,0.805,0.223,1.145-0.024c0.338-0.247,0.487-0.68,0.372-1.082 l-1.829-6.4l4.536-4.082c0.297-0.268,0.406-0.686,0.278-1.064c-0.129-0.378-0.47-0.644-0.868-0.676L15.378,8.05l-2.467-5.461 C12.75,2.23,12.393,2,12,2s-0.75,0.23-0.911,0.589L8.622,8.05L2.921,8.503C2.529,8.534,2.192,8.791,2.06,9.16 c-0.134,0.369-0.038,0.782,0.242,1.056L6.516,14.323z"></path></svg>
+									<svg class="star rating" viewBox="0 0 24 24" width="18" height="18" data-rating="5"><path d="M6.516,14.323l-1.49,6.452c-0.092,0.399,0.068,0.814,0.406,1.047C5.603,21.94,5.801,22,6,22 c0.193,0,0.387-0.056,0.555-0.168L12,18.202l5.445,3.63c0.348,0.232,0.805,0.223,1.145-0.024c0.338-0.247,0.487-0.68,0.372-1.082 l-1.829-6.4l4.536-4.082c0.297-0.268,0.406-0.686,0.278-1.064c-0.129-0.378-0.47-0.644-0.868-0.676L15.378,8.05l-2.467-5.461 C12.75,2.23,12.393,2,12,2s-0.75,0.23-0.911,0.589L8.622,8.05L2.921,8.503C2.529,8.534,2.192,8.791,2.06,9.16 c-0.134,0.369-0.038,0.782,0.242,1.056L6.516,14.323z"></path></svg>
 									<span <?php if($wo['loggedin'] == true) { echo 'onclick="ShowProductReviews('.$wo['itemsdata']['product']['id'].')" ';}?>  class="pointer"><?php echo $wo['itemsdata']['product']['reviews_count'] ?> <?php echo $wo['lang']['reviews']; ?></span>
 								</div>
 							<?php } ?>
@@ -456,67 +446,64 @@
 
 <script type="text/javascript">
 $(function() {
-document.querySelectorAll('.copy_url_product_data').forEach(function(button) {
-  button.addEventListener('click', function() {
-  	$('.copy_url_product_data').html('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none"><path d="M21.8606 5.39176C22.2875 6.49635 21.6888 7.2526 20.5301 7.99754C19.5951 8.5986 18.4039 9.24975 17.1417 10.363C15.9044 11.4543 14.6968 12.7687 13.6237 14.0625C12.5549 15.351 11.6465 16.586 11.0046 17.5005C10.5898 18.0914 10.011 18.9729 10.011 18.9729C9.60281 19.6187 8.86895 20.0096 8.08206 19.9998C7.295 19.99 6.57208 19.5812 6.18156 18.9251C5.18328 17.248 4.41296 16.5857 4.05891 16.3478C3.11158 15.7112 2 15.6171 2 14.1335C2 12.9554 2.99489 12.0003 4.22216 12.0003C5.08862 12.0323 5.89398 12.373 6.60756 12.8526C7.06369 13.1591 7.54689 13.5645 8.04948 14.0981C8.63934 13.2936 9.35016 12.3653 10.147 11.4047C11.3042 10.0097 12.6701 8.51309 14.1349 7.22116C15.5748 5.95115 17.2396 4.76235 19.0042 4.13381C20.1549 3.72397 21.4337 4.28718 21.8606 5.39176Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
-    var link = window.location.href;
-    var inputElement = document.createElement('input');
-    inputElement.setAttribute('value', link);
-    document.body.appendChild(inputElement);
-    inputElement.select();
-    inputElement.setSelectionRange(0, 99999);
-    document.execCommand('copy');
-    document.body.removeChild(inputElement);
-
-    setTimeout(function() {
-			$('.copy_url_product_data').html('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none"><path d="M14.5563 13.2183C13.514 14.2606 11.8241 14.2606 10.7817 13.2183C9.73942 12.1759 9.73942 10.486 10.7817 9.44364L13.1409 7.0845C14.1357 6.08961 15.7206 6.04433 16.7692 6.94866M16.4437 3.78175C17.486 2.73942 19.1759 2.73942 20.2183 3.78175C21.2606 4.82408 21.2606 6.51403 20.2183 7.55636L17.8591 9.9155C16.8643 10.9104 15.2794 10.9557 14.2308 10.0513" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path d="M21 13C21 16.7712 21 18.6569 19.8284 19.8284C18.6569 21 16.7712 21 13 21H11C7.22876 21 5.34315 21 4.17157 19.8284C3 18.6569 3 16.7712 3 13V11C3 7.22876 3 5.34315 4.17157 4.17157C5.34315 3 7.22876 3 11 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>');
-	  }, 1500);
-  });
-});
-
-
+	var sucjs  = document.createElement('script');
+  sucjs.id   = 'scripts_page';
+  sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
   document.head.appendChild(sucjs);
 	sucjs.onload = function() {
 		setTimeout(function() {
 			$('.products_itemd').removeClass('loader_pagesf');
 	  }, 500);
-		
 		var lightboxEnabled = true;
 		var flkty_1 = new Flickity('.wo_post_prod_full_img', {
 		    fullscreen: true,
 		    fade: true,
-		    pageDots: false,
-		    bgLazyLoad: true,
-		    lazyLoad: true
+		    pageDots: false
 		});
 
 		var flkty_2 = new Flickity('.wo_post_prod_full_img_slider', {
 		    asNavFor: '.wo_post_prod_full_img',
 		    contain: true,
 		    pageDots: false,
-		    bgLazyLoad: true,
-		    lazyLoad: true,
 		    prevNextButtons: false
 		});
-
 		flkty_1.on('dragStart', () => flkty_1.slider.style.pointerEvents = 'none');
 		flkty_1.on('dragEnd', () => flkty_1.slider.style.pointerEvents = 'auto');
 		flkty_2.on('dragStart', () => flkty_2.slider.style.pointerEvents = 'none');
 		flkty_2.on('dragEnd', () => flkty_2.slider.style.pointerEvents = 'auto');
-		function Wo_OpenAlbumLightBox(image_id, type) {
-			$('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
-			$.get(Wo_Ajax_Requests_File(), {f:'open_album_lightbox', image_id:image_id, type:type}, function(data) {
-				if (data.status == 200) {
-					document.body.style.overflow = 'hidden';
-					$('.lightbox-container').html(data.html);
-				}
-			    if (data.html.length == 0) {
-			       document.body.style.overflow = 'auto';
-			    }
-			});
-		}
 	};
+
+	document.querySelectorAll('.copy_url_product_data').forEach(function(button) {
+	  button.addEventListener('click', function() {
+	  	$('.copy_url_product_data').html('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none"><path d="M21.8606 5.39176C22.2875 6.49635 21.6888 7.2526 20.5301 7.99754C19.5951 8.5986 18.4039 9.24975 17.1417 10.363C15.9044 11.4543 14.6968 12.7687 13.6237 14.0625C12.5549 15.351 11.6465 16.586 11.0046 17.5005C10.5898 18.0914 10.011 18.9729 10.011 18.9729C9.60281 19.6187 8.86895 20.0096 8.08206 19.9998C7.295 19.99 6.57208 19.5812 6.18156 18.9251C5.18328 17.248 4.41296 16.5857 4.05891 16.3478C3.11158 15.7112 2 15.6171 2 14.1335C2 12.9554 2.99489 12.0003 4.22216 12.0003C5.08862 12.0323 5.89398 12.373 6.60756 12.8526C7.06369 13.1591 7.54689 13.5645 8.04948 14.0981C8.63934 13.2936 9.35016 12.3653 10.147 11.4047C11.3042 10.0097 12.6701 8.51309 14.1349 7.22116C15.5748 5.95115 17.2396 4.76235 19.0042 4.13381C20.1549 3.72397 21.4337 4.28718 21.8606 5.39176Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+	    var link = window.location.href;
+	    var inputElement = document.createElement('input');
+	    inputElement.setAttribute('value', link);
+	    document.body.appendChild(inputElement);
+	    inputElement.select();
+	    inputElement.setSelectionRange(0, 99999);
+	    document.execCommand('copy');
+	    document.body.removeChild(inputElement);
+
+	    setTimeout(function() {
+				$('.copy_url_product_data').html('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none"><path d="M14.5563 13.2183C13.514 14.2606 11.8241 14.2606 10.7817 13.2183C9.73942 12.1759 9.73942 10.486 10.7817 9.44364L13.1409 7.0845C14.1357 6.08961 15.7206 6.04433 16.7692 6.94866M16.4437 3.78175C17.486 2.73942 19.1759 2.73942 20.2183 3.78175C21.2606 4.82408 21.2606 6.51403 20.2183 7.55636L17.8591 9.9155C16.8643 10.9104 15.2794 10.9557 14.2308 10.0513" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path d="M21 13C21 16.7712 21 18.6569 19.8284 19.8284C18.6569 21 16.7712 21 13 21H11C7.22876 21 5.34315 21 4.17157 19.8284C3 18.6569 3 16.7712 3 13V11C3 7.22876 3 5.34315 4.17157 4.17157C5.34315 3 7.22876 3 11 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>');
+		  }, 1500);
+	  });
+	});
 });
+
+function Wo_OpenAlbumLightBox(image_id, type) {
+	$('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');
+	$.get(Wo_Ajax_Requests_File(), {f:'open_album_lightbox', image_id:image_id, type:type}, function(data) {
+		if (data.status == 200) {
+			document.body.style.overflow = 'hidden';
+			$('.lightbox-container').html(data.html);
+		}
+	    if (data.html.length == 0) {
+	       document.body.style.overflow = 'auto';
+	    }
+	});
+}
 
 var selections = {};
 var basePrice = <?=$precio_subtotal_producto;?>;

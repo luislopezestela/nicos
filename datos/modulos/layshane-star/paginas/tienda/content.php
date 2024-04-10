@@ -1,4 +1,10 @@
 <script type="text/javascript">
+	if ($('#scripts_page').length) {
+    $('#scripts_page').remove();
+  }
+  if ($('#scripts_page_load').length) {
+        $('#scripts_page_load').remove();
+  }
 	if ($('#style_pag_css').length) {
     $('#style_pag_css').remove();
   }
@@ -12,11 +18,7 @@
   preloadLink_blogs_s.as = 'style';
   document.head.appendChild(preloadLink_blogs_s);
 
-	var sucjsslik_blogs_s  = document.createElement('link');
-  sucjsslik_blogs_s.rel = 'stylesheet';
-	sucjsslik_blogs_s.id   = 'style_pag_css';
-	sucjsslik_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
-	document.head.appendChild(sucjsslik_blogs_s);
+	
 </script>
 <?php
 $category_id = (!empty($_GET['c_id'])) ? (int) $_GET['c_id'] : 0;
@@ -65,7 +67,7 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 		</div>
 	<?php endif ?>
 </div>
-<div class="contenido_layshane_items products wo_market">
+<div class="contenido_layshane_items products wo_market loader_pagesf products_itemd">
 		<div class="sidebar_layshane_items leftcol">
 			<div class="head_productos_fitrar wo_job_head_filter wo_market_head_filter">
 				<div class="buscar_productos_layshane">
@@ -293,8 +295,18 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 	</div>
 </div>
 <script>
-
-
+$(function() {
+	var sucjsslik_blogs_s  = document.createElement('link');
+  sucjsslik_blogs_s.rel = 'stylesheet';
+	sucjsslik_blogs_s.id   = 'style_pag_css';
+	sucjsslik_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
+	document.head.appendChild(sucjsslik_blogs_s);
+	sucjsslik_blogs_s.onload = function() {
+		setTimeout(function() {
+			$('.products_itemd').removeClass('loader_pagesf');
+	  }, 500);
+	};
+});
 	var COMPONENT_SELECTOR = '.carousel__wrapper';
 	var CONTROLS_SELECTOR = '.carousel__controls';
 	var CONTENT_SELECTOR = '.carousel__content';
@@ -412,12 +424,8 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 
 		content.addEventListener('touchstart', touchstartHandler,{passive: true});
 		content.addEventListener('touchmove', touchmoveHandler);
-
-
-		content.addEventListener( 'mousedown', mousedownHandler );
-
-		document.addEventListener( 'mousemove', mousemoveHandler );
-
+		content.addEventListener( 'mousedown', mousedownHandler);
+		document.addEventListener( 'mousemove', mousemoveHandler);
 		if ( component.querySelector( CONTROLS_SELECTOR ) !== undefined ) {
 			content.addEventListener( 'scroll', scrollHandler );
 		}

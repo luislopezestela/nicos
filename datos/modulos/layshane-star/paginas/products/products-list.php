@@ -17,7 +17,7 @@
 		<div class="product-image">
 			<a href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=item&items=<?php echo $wo['product']['seo_id'];?><?=$el_color_b;?>" style="font-size:0;">
 				<?php echo $wo['product']['name']?>
-				<img width="400" height="400" src="<?php echo $wo['product']['images'][0]['image_org'];?>" alt="Imagen">
+				<img width="400" height="400" loading="lazy" src="<?php echo $wo['product']['images'][0]['image_org'];?>" alt="Imagen">
 			</a>
 		</div>
 		<div class="produc_info">
