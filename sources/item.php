@@ -44,9 +44,11 @@ if(in_array(true, $check_item)){
                 $wo['itemsdata']['product']['coloreds'] = '';
             }
 
-
-            $wo['itemsdata']['product']['imagen_portada'] = lui_GetMedia($buscarelidcolor);
-            
+            if ($buscarelidcolor=='') {
+                $wo['itemsdata']['product']['imagen_portada'] = $wo['itemsdata']['product']['images'][0]['image'];
+            }else{
+                $wo['itemsdata']['product']['imagen_portada'] = lui_GetMedia($buscarelidcolor);
+            }
 
 
             $name = $wo['title']        = FilterStripTags(lui_Secure($wo['itemsdata']['product']['name'])). ' - ' . $wo['config']['siteName'];

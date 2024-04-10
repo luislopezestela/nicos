@@ -100,9 +100,7 @@
 					<meta itemprop="sku" content="<?= isset($wo['itemsdata']['product']['sku']) ? htmlspecialchars($wo['itemsdata']['product']['sku']) : '' ?>">
 					<meta itemprop="GTIN" content="<?= isset($wo['itemsdata']['product']['gtin']) ? htmlspecialchars($wo['itemsdata']['product']['gtin']) : '' ?>">
 					<meta itemprop="mpn" content="<?= isset($wo['itemsdata']['product']['sku']) ? htmlspecialchars($wo['itemsdata']['product']['sku']) : '' ?>">
-					<?php if (!empty($wo['itemsdata']['product']['images'][0]['image_org'])): ?>
-					    <link itemprop="image" href="<?= htmlspecialchars($wo['itemsdata']['product']['images'][0]['image_org']) ?>">
-					<?php endif ?>
+					<link itemprop="image" href="<?php echo $wo['itemsdata']['product']['imagen_portada']; ?>">
 					<meta itemprop="description" content="<?= isset($wo['itemsdata']['product']['description']) ? htmlspecialchars(html_entity_decode(lui_EditMarkup(br2nl($wo['itemsdata']['product']['description'], true, false, false)))) : '' ?>">
 					<?php if (isset($marca)): ?>
 					    <div itemprop="brand" itemtype="https://schema.org/Brand" itemscope="">
@@ -111,9 +109,9 @@
 					<?php endif ?>
 					
 			    <div itemprop="offers" itemtype="https://schema.org/Offer" itemscope="">
-		        <meta itemprop="priceCurrency" content="<?= isset($text) ? htmlspecialchars($text) : '' ?>">
 		        <meta itemprop="itemCondition" content="https://schema.org/<?= isset($condicion) ? htmlspecialchars($condicion) : '' ?>">
 		        <meta itemprop="price" content="<?= isset($wo['itemsdata']['product']['price_format']) ? htmlspecialchars($wo['itemsdata']['product']['price_format']) : '' ?>">
+		        <meta itemprop="priceCurrency" content="<?= isset($text) ? htmlspecialchars($text) : '' ?>">
 		        <meta itemprop="itemOffered" content="<?= isset($wo['itemsdata']['product']['name']) ? htmlspecialchars($wo['itemsdata']['product']['name']) : '' ?>">
 		        <meta itemprop="availability" content="http://schema.org/<?= isset($disponibilidad) ? htmlspecialchars($disponibilidad) : '' ?>">
 		        <meta itemprop="url" content="<?= isset($wo['config']['site_url']) && isset($wo['itemsdata']['id_publicacion']) ? htmlspecialchars($wo['config']['site_url'] . "/item/" . $wo['itemsdata']['id_publicacion'].$wo['itemsdata']['product']['coloreds']) : '' ?>">
