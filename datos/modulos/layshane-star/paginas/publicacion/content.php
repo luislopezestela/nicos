@@ -134,7 +134,7 @@
 												$buscar_el_color_por_id = lui_buscar_color_en_colores($color_id['id_color']);
 												$el_colorv = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]);
 												if ($wo['atributo_items']==$el_colorv) {
-													echo '<img class="imagen" src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
+													echo '<img class="imagen" src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
 												}else{}
 											}else{
 												echo '<img class="imagen" src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
@@ -489,7 +489,7 @@ $(function() {
 	  });
 	});
 
-function convertirAJPEG(rutaWebP) {
+function convertirAJPEG(rutaWebP,nombreImagen) {
     var img = new Image();
     img.onload = function() {
         var canvas = document.createElement("canvas");
@@ -497,6 +497,12 @@ function convertirAJPEG(rutaWebP) {
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
+
+        // Agregar marca de agua de texto
+        ctx.font = '20px Arial';
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; // Color del texto semi-transparente
+        ctx.fillText('Layshane Perú', canvas.width - 200, canvas.height - 20);
+
         var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         var tieneTransparencia = false;
         for (var i = 0; i < imageData.data.length; i += 4) {
@@ -507,17 +513,19 @@ function convertirAJPEG(rutaWebP) {
         }
         if (tieneTransparencia) {
             ctx.globalCompositeOperation = "destination-over";
-            ctx.fillStyle = "#ffffff"; // Color blanco
+            ctx.fillStyle = "#ffffff"; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
         var dataURL = canvas.toDataURL("image/jpeg");
         var enlace = document.createElement("a");
         enlace.href = dataURL;
-        enlace.download = "imagen.jpg";
+        enlace.download = nombreImagen.replace(/\.[^/.]+$/, "") + ".jpeg";
         enlace.click();
     };
     img.src = rutaWebP;
 }
+
+
 var menu = document.createElement('div');
 menu.innerHTML = '<button id="descargarJPEGimglayshane" class="boton-menu-layshane-dow">Descargar Imagen</button>' +
                  '<button id="cancelardescargaimg" class="boton-menu-layshane-dow">Cancelar</button>';
@@ -546,10 +554,13 @@ function handleContextMenu(event) {
 
     document.getElementById('descargarJPEGimglayshane').onclick = function() {
         var rutaImagen = event.target.src;
-        convertirAJPEG(rutaImagen);
+        var img = event.target;
+        var nombreImagen = img.title;
+        convertirAJPEG(rutaImagen,nombreImagen);
         menu.style.display = 'none';
         menuAbierto = false;
     };
+
     document.getElementById('cancelardescargaimg').onclick = function() {
       menu.style.display = 'none';
       menuAbierto = false;

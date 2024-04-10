@@ -35,19 +35,7 @@ body{background:#F0F2FD;}
 .pr_stars[data-stars="3"] .star:nth-child(3) ~ .star path {fill: rgb(0 0 0 / 20%);}
 .pr_stars[data-stars="4"] .star:nth-child(4) ~ .star path {fill: rgb(0 0 0 / 20%);}
 .pr_stars[data-stars="5"] .star:nth-child(5) ~ .star path {fill: rgb(0 0 0 / 20%);}
-.boton-menu-layshane-dow {
-  display:block;
-  padding:10px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  text-align: center;
-  background-color:#05050521;
-  color:white;
-  transition:background-color 0.3s;
-  width:100%;
-}
+.boton-menu-layshane-dow{display:block;padding:10px 10px;border:none;border-radius:5px;cursor:pointer;font-size:16px;text-align:center;background-color:#05050521;color:white;transition:background-color 0.3s;width:100%;}
 .boton-menu-layshane-dow:hover{background-color:#1791dc;}
 .wo_post_prod_full_user {display: flex;align-items: center;border: 1px solid #e7e7e7;border-radius: 7px;padding: 10px;margin: 25px 0;}
 .wo_post_prod_full_user .avatar {margin: 0;width: 40px;height: 40px;flex: 0 0 auto;}
