@@ -125,7 +125,7 @@
 					<div class="hpols-bts-pdp grid">
 						<?php if (!empty($wo['itemsdata']['product']['images'])): ?>
 							<div class="producto_media_display media">
-								<div class="wo_post_prod_full_img in-use-carousel flickity-enabled is-draggable" data-flickity-options='{"lazyLoad": 1, "wrapAround": true, "groupCells": true}' tabindex="0">
+								<div class="wo_post_prod_full_img in-use-carousel flickity-enabled is-draggable" tabindex="0">
 									<?php
 									$el_colorv = null;
 										foreach($wo['itemsdata']['product']['images'] as $photo){
