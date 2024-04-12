@@ -1,11 +1,13 @@
 <?php
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(0);
 @ini_set("max_execution_time", 0);
 @ini_set("memory_limit", "-1");
 @set_time_limit(0);
 require_once "./luisincludes/config.php";
 require_once "./luisincludes/librerias/DB/vendor/autoload.php";
 $wo           = array();
-
 $sqlConnect   = $wo["sqlConnect"] = mysqli_connect($host, $username, $password, $dbase, 3306);
 // cre una nueva coneccion
 $mysqlMaria   = new Mysql;
@@ -251,37 +253,34 @@ $rtl_langs           = array(
     "hebrew",
     "persian"
 );
-$path = '/';
 if (!isset($_COOKIE["ad-con"])) {
     setcookie("ad-con", htmlentities(json_encode(array(
         "date" => date("Y-m-d"),
         "ads" => array()
-    ))), time() + 10 * 365 * 24 * 60 * 60, $path);
+    ))), time() + 10 * 365 * 24 * 60 * 60);
 }
 $wo["ad-con"] = array();
 if (!empty($_COOKIE["ad-con"])) {
     $wo["ad-con"] = json_decode(html_entity_decode($_COOKIE["ad-con"]));
     $wo["ad-con"] = ToArray($wo["ad-con"]);
 }
-
 if (!is_array($wo["ad-con"]) || !isset($wo["ad-con"]["date"]) || !isset($wo["ad-con"]["ads"])) {
     setcookie("ad-con", htmlentities(json_encode(array(
         "date" => date("Y-m-d"),
         "ads" => array()
-    ))), time() + 10 * 365 * 24 * 60 * 60, $path);
+    ))), time() + 10 * 365 * 24 * 60 * 60);
 }
 if (is_array($wo["ad-con"]) && isset($wo["ad-con"]["date"]) && strtotime($wo["ad-con"]["date"]) < strtotime(date("Y-m-d"))) {
     setcookie("ad-con", htmlentities(json_encode(array(
         "date" => date("Y-m-d"),
         "ads" => array()
-    ))), time() + 10 * 365 * 24 * 60 * 60, $path);
+    ))), time() + 10 * 365 * 24 * 60 * 60);
 }
-
 if (!isset($_COOKIE["_us"])) {
-    setcookie("_us", time() + 60 * 60 * 24, time() + 10 * 365 * 24 * 60 * 60, $path);
+    setcookie("_us", time() + 60 * 60 * 24, time() + 10 * 365 * 24 * 60 * 60);
 }
 if ((isset($_COOKIE["_us"]) && $_COOKIE["_us"] < time()) || 1) {
-    setcookie("_us", time() + 60 * 60 * 24, time() + 10 * 365 * 24 * 60 * 60, $path);
+    setcookie("_us", time() + 60 * 60 * 24, time() + 10 * 365 * 24 * 60 * 60);
 }
 // checking if corrent language is rtl.
 foreach ($rtl_langs as $lang) {
@@ -490,14 +489,12 @@ if (!$wo['config']['can_use_background']) {
 if (!$wo['config']['can_use_chat']) {
     $wo['config']['chatSystem'] = 0;
 }
+
 $wo['config']['report_reasons'] = json_decode($wo['config']['report_reasons'],true);
-
-
-$wo['config']['filesVersion'] = "4.7.23";
+$wo['config']['filesVersion'] = "4.7.24";
 
 if ($wo['config']['filesVersion'] != $wo['config']['version']) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+    ini_set('display_errors', 0);
+    ini_set('display_startup_errors', 0);
+    error_reporting(0);
 }
-header("Cache-Control: max-age=3600, public");

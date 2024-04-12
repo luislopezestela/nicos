@@ -5396,7 +5396,7 @@ function lui_ShareFile($data = array(), $type = 0, $crop = true) {
                     $explode2  = @end(explode('.', $filename));
                     $explode3  = @explode('.', $filename);
                     $last_file = $explode3[0] . '_small.' . $explode2;
-                    if (lui_Resize_Crop_Image(400, 400, $filename, $last_file, 90)) {
+                    if (lui_Resize_Crop_Image(400, 400, $filename, $last_file, 120)) {
                         if ($second_file != 'gif' && $wo['config']['watermark'] == 1 && !empty($wo['add_watermark']) && $wo['add_watermark'] == true) {
                             watermark_image($last_file);
                         }
@@ -5408,7 +5408,7 @@ function lui_ShareFile($data = array(), $type = 0, $crop = true) {
                     }
 
                     $last_file_mini = $explode3[0] . '_thumbnail.' . $explode2;
-                    if (lui_Resize_Crop_Image(90, 90, $filename, $last_file_mini, 90)) {
+                    if (lui_Resize_Crop_Image(120, 120, $filename, $last_file_mini, 120)) {
                         if ($second_file != 'gif' && $wo['config']['watermark'] == 1 && !empty($wo['add_watermark']) && $wo['add_watermark'] == true) {
                             watermark_image($last_file_mini);
                         }
@@ -5429,7 +5429,7 @@ function lui_ShareFile($data = array(), $type = 0, $crop = true) {
             }
         }
         if (!empty($data['crop'])) {
-            $crop_image = lui_Resize_Crop_Image($data['crop']['width'], $data['crop']['height'], $filename, $filename, 90);
+            $crop_image = lui_Resize_Crop_Image($data['crop']['width'], $data['crop']['height'], $filename, $filename, 120);
         }
         if (empty($data['local_upload'])) {
             if (($wo['config']['amazone_s3'] == 1 || $wo['config']['wasabi_storage'] == 1 || $wo['config']['ftp_upload'] == 1 || $wo['config']['spaces'] == 1 || $wo['config']['cloud_upload'] == 1 || $wo['config']['backblaze_storage'] == 1) && !empty($filename)) {
@@ -5548,7 +5548,7 @@ function lui_ShareFile_desk($data = array(), $type = 0, $crop = true) {
                     $explode2  = @end(explode('.', $filename));
                     $explode3  = @explode('.', $filename);
                     $last_file = $explode3[0] . '_small.' . $explode2;
-                    if (lui_Resize_Crop_Image(400, 400, $filename, $last_file, 90)) {
+                    if (lui_Resize_Crop_Image(400, 400, $filename, $last_file, 120)) {
                         if ($second_file != 'gif' && $wo['config']['watermark'] == 1 && !empty($wo['add_watermark']) && $wo['add_watermark'] == true) {
                             watermark_image($last_file);
                         }
@@ -5560,7 +5560,7 @@ function lui_ShareFile_desk($data = array(), $type = 0, $crop = true) {
                     }
 
                     $last_file_mini = $explode3[0] . '_thumbnail.' . $explode2;
-                    if (lui_Resize_Crop_Image(90, 90, $filename, $last_file_mini, 90)) {
+                    if (lui_Resize_Crop_Image(120, 120, $filename, $last_file_mini, 120)) {
                         if ($second_file != 'gif' && $wo['config']['watermark'] == 1 && !empty($wo['add_watermark']) && $wo['add_watermark'] == true) {
                             watermark_image($last_file_mini);
                         }
@@ -5581,7 +5581,7 @@ function lui_ShareFile_desk($data = array(), $type = 0, $crop = true) {
             }
         }
         if (!empty($data['crop'])) {
-            $crop_image = lui_Resize_Crop_Image($data['crop']['width'], $data['crop']['height'], $filename, $filename, 90);
+            $crop_image = lui_Resize_Crop_Image($data['crop']['width'], $data['crop']['height'], $filename, $filename, 120);
         }
         if (empty($data['local_upload'])) {
             if (($wo['config']['amazone_s3'] == 1 || $wo['config']['wasabi_storage'] == 1 || $wo['config']['ftp_upload'] == 1 || $wo['config']['spaces'] == 1 || $wo['config']['cloud_upload'] == 1 || $wo['config']['backblaze_storage'] == 1) && !empty($filename)) {
@@ -5601,7 +5601,7 @@ function lui_ShareFile_desk($data = array(), $type = 0, $crop = true) {
     }
 }
 
-
+//90
 function lui_DisplaySharedFile($media, $placement = '', $cache = false, $is_video = false) {
     global $wo, $sqlConnect, $db;
     $orginal = $media['filename'];

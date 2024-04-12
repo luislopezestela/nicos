@@ -17,7 +17,7 @@ if (empty($_GET['id']) || !is_numeric($_GET['id'])) {
 $article = lui_GetArticle($_GET['id']);
 $id      = lui_Secure($_GET['id']);
 if (empty($article)) {
-    header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+    header("Location: " . lui_SeoLink('index.php?link1=home'));
     exit();
 }
 $sql_query         = mysqli_query($sqlConnect, "UPDATE `lui_blog` SET `view` = `view` + 1 WHERE `id` = '$id'");

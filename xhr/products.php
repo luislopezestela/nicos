@@ -155,7 +155,7 @@ if ($f == 'products') {
                             'name' => $_FILES['postPhotos']['name'][$i],
                             'size' => $_FILES["postPhotos"]["size"][$i],
                             'type' => $_FILES["postPhotos"]["type"][$i],
-                            'types' => 'jpg,png,jpeg,gif'
+                            'types' => 'jpg,png,jpeg,gif,webp'
                         );
 
                         $color_id         = 0;

@@ -24,6 +24,7 @@
 	sucjsslik_blogs_s.id   = 'style_pag_css';
 	sucjsslik_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>";
 	document.head.appendChild(sucjsslik_blogs_s);
+	
 </script>
 <div class="page-margin page-wrapper grid loader_pagesf products_itemd">
 	<main id="maincontent" class="page-main">
@@ -119,13 +120,15 @@
 			      	<meta itemprop="priceValidUntil" content="">
 			      <?php endif ?>
 			    </div>
-					
-
-
+					<style type="text/css">
+						.carg_over_pr_a{overflow:hidden;display:flex;}
+						.carg_over_a{visibility:hidden;}
+						.carg_over_b{visibility:hidden;height:60px}
+					</style>
 					<div class="hpols-bts-pdp grid">
 						<?php if (!empty($wo['itemsdata']['product']['images'])): ?>
 							<div class="producto_media_display media">
-								<div class="wo_post_prod_full_img in-use-carousel flickity-enabled is-draggable" tabindex="0">
+								<div class="wo_post_prod_full_img in-use-carousel flickity-enabled is-draggable carg_over_pr_a" tabindex="0">
 									<?php
 									$el_colorv = null;
 										foreach($wo['itemsdata']['product']['images'] as $photo){
@@ -142,7 +145,17 @@
 										}
 									?>
 								</div>
-								<div class="wo_post_prod_full_img_slider">
+								
+								<div style="position:absolute;overflow-x:auto;white-space:nowrap;margin-top:15px;text-align:center;width:100%;" class="loated_disoka_a">
+									<div class="flickity-viewport" style="height:64px;touch-action:pan-y;">
+										<div class="flickity-slider" style="left:0px;transform:translateX(27.3%);">
+											<div style="position: absolute; left: 0px; transform: translateX(0%);"><span class="loader_page20" style="aspect-ratio:1;border-radius:3px;margin:2px;width:60px;height:60px;display:block;"></span></div>
+											<div aria-hidden="true" style="position: absolute; left: 0px; transform: translateX(100%);"><span class="loader_page20" style="aspect-ratio:1;border-radius:3px;margin:2px;width:60px;height:60px;display:block;"></span></div>
+											<div aria-hidden="true" style="position: absolute; left: 0px; transform: translateX(200%);"><span class="loader_page20" style="aspect-ratio:1;border-radius:3px;margin:2px;width:60px;height:60px;display:block;"></span></div>
+										</div>
+									</div>
+								</div>
+								<div class="wo_post_prod_full_img_slider loated_disoka_b carg_over_b">
 									<?php
 									$s_photo_color_id = false;
 									$el_colorx = null;
@@ -282,35 +295,38 @@
 										.atributos_from_publication_color{display:flex;width:100%;background:transparent;position:relative;margin:18px auto;}
 										.content_atributos{display:flex;flex-wrap:wrap;}
 										.content_atributos .atribut_product{border: 2px solid transparent; display:flex;border-radius:5px;box-shadow: -10px -10px 20px rgb(255, 255, 255), 10px 10px 20px rgba(0, 0, 0, 0.1);color:#b6b6b6;background:#f4f4f4;list-style:none;margin:7px;}
-										.content_atributos span{position:absolute;top:-17px;left:1px;color:#998;}
+										.content_atributos span{position:absolute;top:-17px;left:1px;color:#333;}
 										.content_atributos .atribut_product a{text-transform:uppercase;padding:6px 8px;text-decoration:none;display:flex;justify-content:center;align-items: center;}
 										.content_atributos .atribut_product a i{display:block;height:20px;width:20px;border-radius:30px;margin:5px;}
 										.btn_sty_go{box-shadow: -10px -10px 20px rgb(255, 255, 255), 10px 10px 20px rgba(0, 0, 0, 0.1);background:#f4f4f4;transition:all .5s;}
 									</style>
 									<div class="atributos_from_publication_color">
 										<div class="content_atributos">
-											<?php foreach ($opciones_del_producto as $color => $valorcolor): $seleccionadocoloor='';?>
+											<?php $nombreColorMostrado = false; foreach ($opciones_del_producto as $color => $valorcolor): $seleccionadocoloor='';?>
 												<?php if (!empty($valorcolor['id_atributo'])): ?>
 													<?php $atributo = $db->where('id',$valorcolor['id_atributo'])->getOne('atributos'); ?>
-													<span><?=$atributo->nombre;?></span>
+													<?php if ($atributo->nombre=='Color' && !$nombreColorMostrado): ?>
+														<span><?=$atributo->nombre;?></span>
+														<?php $nombreColorMostrado = true; ?>
+													<?php endif ?>
 													<?php $buscar_el_color_por_id = lui_buscar_color_en_colores($valorcolor['id_color'])?>
 													<?php $el_color = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]); ?>
 													<?php if($el_color==$wo['atributo_items']): ?>
 														<?php $seleccionadocoloor = 'style="border: 2px solid '.$buscar_el_color_por_id['color'].'!important;"'; ?>
 													<?php endif ?>
 													
-													<li class="atribut_product" <?=$seleccionadocoloor; ?>>
+													<div class="atribut_product" <?=$seleccionadocoloor; ?>>
 														<a href="<?=$wo['itemsdata']['product']['url'].'/'.$el_color?>" data-ajax="?link1=item&items=<?=$wo['itemsdata']['product']['seo_id'].'&opcion='.$el_color;?>"><?=$wo['lang'][$buscar_el_color_por_id['lang_key']]; ?> <i style="background:<?=$buscar_el_color_por_id['color'];?>;"></i></a>
-													</li>
+													</div>
 												<?php else: ?>
 													<?php $buscar_el_color_por_id = lui_buscar_color_en_colores($valorcolor['id_color'])?>
 													<?php $el_color = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]); ?>
 													<?php if($el_color==$wo['atributo_items']): ?>
 														<?php $seleccionadocoloor = 'style="border: 2px solid '.$buscar_el_color_por_id['color'].'!important;"'; ?>
 													<?php endif ?>
-													<li class="atribut_product" <?=$seleccionadocoloor; ?>>
+													<div class="atribut_product" <?=$seleccionadocoloor; ?>>
 														<a href="<?=$wo['itemsdata']['product']['url'].'/'.$el_color?>" data-ajax="?link1=item&items=<?=$wo['itemsdata']['product']['seo_id'].'&opcion='.$el_color;?>"><?=$wo['lang'][$buscar_el_color_por_id['lang_key']]; ?> <i style="background:<?=$buscar_el_color_por_id['color'];?>;"></i></a>
-													</li>
+													</div>
 												<?php endif ?>
 											<?php endforeach ?>
 										</div>
@@ -449,9 +465,11 @@ $(function() {
   sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
   document.head.appendChild(sucjs);
 	sucjs.onload = function() {
-		setTimeout(function() {
+		$('.wo_post_prod_full_img').removeClass('carg_over_pr_a');
+		setTimeout(function() {$('.loated_disoka_a').addClass('carg_over_a');
+		$('.loated_disoka_b').removeClass('carg_over_b');
 			$('.products_itemd').removeClass('loader_pagesf');
-	  }, 500);
+	  }, 400);
 		var lightboxEnabled = true;
 		var flkty_1 = new Flickity('.wo_post_prod_full_img', {
 		    fullscreen: true,
@@ -469,6 +487,8 @@ $(function() {
 		flkty_1.on('dragEnd', () => flkty_1.slider.style.pointerEvents = 'auto');
 		flkty_2.on('dragStart', () => flkty_2.slider.style.pointerEvents = 'none');
 		flkty_2.on('dragEnd', () => flkty_2.slider.style.pointerEvents = 'auto');
+
+		
 	};
 
 	document.querySelectorAll('.copy_url_product_data').forEach(function(button) {
