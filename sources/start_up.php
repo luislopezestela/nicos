@@ -1,10 +1,10 @@
 <?php
 if ($wo['loggedin'] == false) {
-    header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+    header("Location: " . lui_SeoLink('index.php?link1=home'));
     exit();
 }
 if (lui_IsUserComplete($wo['user']['user_id']) === false) {
-    header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+    header("Location: " . lui_SeoLink('index.php?link1=home'));
     exit();
 }
 if ($wo['user']['startup_image'] == 0) {
@@ -18,12 +18,12 @@ if ($wo['user']['startup_image'] == 0) {
             'start_up' => 1,
             'startup_follow' => 1
         ));
-        header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+        header("Location: " . lui_SeoLink('index.php?link1=home'));
         exit();
     }
     $page = 'follow_startup';
 } else {
-    header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+    header("Location: " . lui_SeoLink('index.php?link1=home'));
     exit();
 }
 $wo['description'] = $wo['config']['siteDesc'];

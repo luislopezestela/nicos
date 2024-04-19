@@ -45,15 +45,9 @@ if(in_array(true, $check_item)){
             }
 
             if ($buscarelidcolor=='') {
-                $wo['itemsdata']['product']['imagen_portada'] = $wo['itemsdata']['product']['images'][0]['image_org'];
+                $wo['itemsdata']['product']['imagen_portada'] = $wo['itemsdata']['product']['images'][0]['image'];
             }else{
-                $explora                   = explode('.', $buscarelidcolor);
-                $explode2                  = end($explora);
-                $explode3                  = explode('.', $buscarelidcolor);
-                $fetched_data['image_org_port'] = $explode3[0] . '_small.' . $explode2;
-                $fetched_data['image_org_port'] = lui_GetMedia($fetched_data['image_org_port']);
-
-                $wo['itemsdata']['product']['imagen_portada'] = lui_GetMedia($fetched_data['image_org_port']);
+                $wo['itemsdata']['product']['imagen_portada'] = lui_GetMedia($buscarelidcolor);
             }
 
 

@@ -19,12 +19,15 @@ form{width:360px;}
 .i{color:#d9d9d9;display:flex;justify-content:center;align-items:center;}
 .i i{transition:.3s;}
 .input-div > div{position:relative;height:45px;}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 50px var(--body-background) inset; /* Cambiar el color de fondo a blanco */
+}
 .input-div > div > h5{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#999;font-size:18px;transition:.3s;}
 .input-div:before, .input-div:after{content:'';position:absolute;bottom:-2px;width:0%;height:2px;background-color:var(--boton-fondo);transition:.4s;}
 .input-div:before{right:50%;}
 .input-div:after{left:50%;}
 .input-div.focus:before, .input-div.focus:after{width:50%;}
-.input-div.focus > div > h5{top:-5px;font-size:15px;}
+.input-div.focus > div > h5{top:-5px;font-size:15px;z-index:1;}
 .input-div.focus > .i > i{color:var(--boton-fondo);}
 .input-div > div > input,.input-div > div > select{position:absolute;left:0;top:0;width:100%;height:100%;border:none;outline:none;background:none!important;padding:0.5rem 0.7rem;font-size:1.2rem;color:#555;font-family:'poppins', sans-serif;}
 .input-div.pass{margin-bottom:4px;}

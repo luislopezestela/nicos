@@ -1007,8 +1007,8 @@ table{
 												}
 											})
 										});
-									});
-
+									}); 
+ 
 									$(document).ready(function() {
 										$('.content_resuls_sseach').on('click', '.add_product_compra_list', function(){
 										    let product = $(this).attr('data-id');

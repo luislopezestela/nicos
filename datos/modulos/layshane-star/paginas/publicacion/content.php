@@ -1,32 +1,4 @@
-<script type="text/javascript">
-	if ($('#scripts_page').length) {
-    $('#scripts_page').remove();
-  }
-  if ($('#scripts_page_load').length) {
-        $('#scripts_page_load').remove();
-  }
-  
-	if ($('#style_pag_css').length) {
-    $('#style_pag_css').remove();
-  }
-  if ($('#s_pag_loop').length) {
-    $('#s_pag_loop').remove();
-  }
-  var preloadLink_blogs_s = document.createElement('link');
-  preloadLink_blogs_s.id = 's_pag_loop';
-  preloadLink_blogs_s.rel = 'preload';
-  preloadLink_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>";
-  preloadLink_blogs_s.as = 'style';
-  document.head.appendChild(preloadLink_blogs_s);
-
-  var sucjsslik_blogs_s  = document.createElement('link');
-  sucjsslik_blogs_s.rel = 'stylesheet';
-	sucjsslik_blogs_s.id   = 'style_pag_css';
-	sucjsslik_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>";
-	document.head.appendChild(sucjsslik_blogs_s);
-	
-</script>
-<div class="page-margin page-wrapper grid loader_pagesf products_itemd">
+<div class="page-margin page-wrapper grid  ">
 	<main id="maincontent" class="page-main">
 		<?php
 			$symbol =  (!empty($wo['currencies'][$wo['itemsdata']['product']['currency']]['symbol'])) ? $wo['currencies'][$wo['itemsdata']['product']['currency']]['symbol'] : $wo['config']['classified_currency_s'];
@@ -39,15 +11,10 @@
 		    if ($wo['itemsdata']['product']['units'] > 0) {
 		      $estok = ($wo['itemsdata']['product']['status'] == 0) ? '' . "InStock" . '' : 'OutOfStock';
 		    }
-
 			$type = ($wo['itemsdata']['product']['type'] == 0) ? '' . $wo['lang']['new'] . '' : '' . $wo['lang']['used'] . '';
 			$condicion = ($wo['itemsdata']['product']['type'] == 0) ? '' . "NewCondition" . '' : '' . "RefurbishedCondition" . '';
 			$condicions = ($wo['itemsdata']['product']['type'] == 0) ? '' . "Nuevo" . '' : '' . "Reacondicionado" . '';
-
-			
-	    $disponibilidad = ($wo['itemsdata']['product']['disponible'] == 1) ? '' . "InStock" . '' : 'OutOfStock';
-	    
-
+			$disponibilidad = ($wo['itemsdata']['product']['disponible'] == 1) ? '' . "InStock" . '' : 'OutOfStock';
 			$offerta = false;
 			$marca = false;
 			if($wo['itemsdata']['product']['marca']) {
@@ -120,41 +87,40 @@
 			      	<meta itemprop="priceValidUntil" content="">
 			      <?php endif ?>
 			    </div>
-					<style type="text/css">
-						.carg_over_pr_a{overflow:hidden;display:flex;}
-						.carg_over_a{visibility:hidden;}
-						.carg_over_b{visibility:hidden;height:60px}
-					</style>
+			    <style type="text/css">
+			    	.carg_over_pr_a{aspect-ratio:1;height:100%;width:100%;overflow:hidden;min-width:100%;min-height:100%;max-width:100%;max-height:100%;}
+					.carg_over_pr_a img{width:100;}
+			    </style>
 					<div class="hpols-bts-pdp grid">
 						<?php if (!empty($wo['itemsdata']['product']['images'])): ?>
 							<div class="producto_media_display media">
-								<div class="wo_post_prod_full_img in-use-carousel flickity-enabled is-draggable carg_over_pr_a" tabindex="0">
+								<div class="wo_post_prod_full_img in-use-carousel flickity-enabled is-draggable carg_over_pr_a" data-flickity='{ "imagesLoaded": true }'>
 									<?php
 									$el_colorv = null;
-										foreach($wo['itemsdata']['product']['images'] as $photo){
+										foreach($wo['itemsdata']['product']['images'] as $index => $photo){
 											$color_id = lui_buscar_color_en_opciones($photo['id_color']);
 											if(isset($color_id['id_color'])!=0) {
 												$buscar_el_color_por_id = lui_buscar_color_en_colores($color_id['id_color']);
 												$el_colorv = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]);
 												if ($wo['atributo_items']==$el_colorv) {
-													echo '<img class="imagen" src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
+													if ($index === 0) {
+														echo '<img class="imagen" src="'. $photo['image'] .'" data-flickity-lazyload-src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
+													}else{
+														echo '<img class="imagen" data-flickity-lazyload-src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
+													}
 												}else{}
 											}else{
-												echo '<img class="imagen" src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
+												if ($index === 0) {
+													echo '<img class="imagen" src="'. $photo['image'] .'" data-flickity-lazyload-src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
+												}else{
+													echo '<img class="imagen" data-flickity-lazyload-src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
+												}
 											}
 										}
 									?>
 								</div>
 								
-								<div style="position:absolute;overflow-x:auto;white-space:nowrap;margin-top:15px;text-align:center;width:100%;" class="loated_disoka_a">
-									<div class="flickity-viewport" style="height:64px;touch-action:pan-y;">
-										<div class="flickity-slider" style="left:0px;transform:translateX(27.3%);">
-											<div style="position: absolute; left: 0px; transform: translateX(0%);"><span class="loader_page20" style="aspect-ratio:1;border-radius:3px;margin:2px;width:60px;height:60px;display:block;"></span></div>
-											<div aria-hidden="true" style="position: absolute; left: 0px; transform: translateX(100%);"><span class="loader_page20" style="aspect-ratio:1;border-radius:3px;margin:2px;width:60px;height:60px;display:block;"></span></div>
-											<div aria-hidden="true" style="position: absolute; left: 0px; transform: translateX(200%);"><span class="loader_page20" style="aspect-ratio:1;border-radius:3px;margin:2px;width:60px;height:60px;display:block;"></span></div>
-										</div>
-									</div>
-								</div>
+				
 								<div class="wo_post_prod_full_img_slider loated_disoka_b carg_over_b">
 									<?php
 									$s_photo_color_id = false;
@@ -197,11 +163,11 @@
 								</div>
 							</div>
 							<span class="copy_url_product_data">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">
-								    <path d="M14.5563 13.2183C13.514 14.2606 11.8241 14.2606 10.7817 13.2183C9.73942 12.1759 9.73942 10.486 10.7817 9.44364L13.1409 7.0845C14.1357 6.08961 15.7206 6.04433 16.7692 6.94866M16.4437 3.78175C17.486 2.73942 19.1759 2.73942 20.2183 3.78175C21.2606 4.82408 21.2606 6.51403 20.2183 7.55636L17.8591 9.9155C16.8643 10.9104 15.2794 10.9557 14.2308 10.0513" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-								    <path d="M21 13C21 16.7712 21 18.6569 19.8284 19.8284C18.6569 21 16.7712 21 13 21H11C7.22876 21 5.34315 21 4.17157 19.8284C3 18.6569 3 16.7712 3 13V11C3 7.22876 3 5.34315 4.17157 4.17157C5.34315 3 7.22876 3 11 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-									</svg>
-								</span>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">
+							    <path d="M14.5563 13.2183C13.514 14.2606 11.8241 14.2606 10.7817 13.2183C9.73942 12.1759 9.73942 10.486 10.7817 9.44364L13.1409 7.0845C14.1357 6.08961 15.7206 6.04433 16.7692 6.94866M16.4437 3.78175C17.486 2.73942 19.1759 2.73942 20.2183 3.78175C21.2606 4.82408 21.2606 6.51403 20.2183 7.55636L17.8591 9.9155C16.8643 10.9104 15.2794 10.9557 14.2308 10.0513" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+							    <path d="M21 13C21 16.7712 21 18.6569 19.8284 19.8284C18.6569 21 16.7712 21 13 21H11C7.22876 21 5.34315 21 4.17157 19.8284C3 18.6569 3 16.7712 3 13V11C3 7.22876 3 5.34315 4.17157 4.17157C5.34315 3 7.22876 3 11 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+								</svg>
+							</span>
 						<?php endif ?>
 						<div class="informacion_del_producto">
 							<div class="page-title-wrapper product">
@@ -226,7 +192,7 @@
 								<span class="<?=$condicion;?>"><?=$condicions;?></span>
 								<span style="display:flex;gap:1rem;">
 									<?php if (!empty($wo['itemsdata']['product']['disponible']==1)): ?>
-										<div style="color:#00d200;">En inventario</div>
+										<div style="color:#002fff;">En inventario</div>
 									<?php else: ?>
 										<div style="color:#d20000;">Agotado</div>
 									<?php endif ?>
@@ -278,14 +244,12 @@
 								$precio_subtotal_producto = $wo['itemsdata']['product']['price'];
 							}
 
-							
 							if ($precio_de_atributos > 0) {
 								$suma_precios_atributs = $precio_de_atributos;
 								$precio_tota_del_producto = $suma_precios_atributs+$precio_subtotal_producto;
 							}else{
 								$precio_tota_del_producto = $precio_subtotal_producto;
 							}
-							
 							
 							echo '<div class="wo_post_prod_full_price">' . $symbol . '<span id="total_price">' .number_format($precio_tota_del_producto, 2,".",".") . '</span> (' . $text . ')</div>';
 							?>
@@ -341,7 +305,7 @@
 								<?php foreach($atributos_productos as $wo['atributos']): ?>
 									<?php if($wo['atributos']['nombre']=='Color'): ?>
 									<?php else: $atributos_opciones = Mostrar_Opciones_Atributos_producto($wo['atributos']['id']);?>
-										<h4><?=$wo['atributos']['nombre'];?></h4>
+										<span><?=$wo['atributos']['nombre'];?></span>
 										<div class="contenido_opciones_atriburts">
 											<?php foreach ($atributos_opciones as $wo['opt_atributos']): ?>
 												<?php $isChecked = '';
@@ -400,10 +364,23 @@
 								<div class=" wo_post_prod_full_btns">
 									<?php if ($wo['config']['store_system'] == 'on') { ?>
 										<?php if (!empty($cantidad_productos) && $cantidad_productos > 0) { ?>
+											<?php $opciones_del_producto = lui_poner_en_lista_las_opciones($wo['product']['id']) ?>
+											<?php //$color_nombre_atributo = $db->where('id_producto', $wo['product']['id'])->getOne('atributos')?>
 											<br><br>
-											<button class="flex buttton_add_cart_list button3  contact btn-main btn btn-mat " disabled onclick="AddProductToCart_layshane(this,'<?php echo($wo['itemsdata']['product']['id']); ?>','add')">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z" /></svg> <?php echo($wo['lang']['buy_now']) ?>
-											</button>
+											<?php if ($opciones_del_producto): ?>
+											<?php else: ?>
+												<?php $existencia_atributes = false; foreach ($atributos as $wo['atributos_b']): ?>
+													<?php if($wo['atributos_b']['nombre']=='Color'): ?>
+													<?php else: ?>
+														<?php $existencia_atributes = true; ?>
+													<?php endif ?>
+												<?php endforeach ?>
+
+												<button class="flex buttton_add_cart_list button3  contact btn-main btn btn-mat <?php echo ($existencia_atributes==true ? 'menu-link_us_add': 'add_product_compra_list'); ?>" data-col="" data-id="<?php echo($wo['itemsdata']['product']['id']); ?>">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z" /></svg> <?php echo($wo['lang']['buy_now']) ?>
+												</button>
+											<?php endif ?>
+											
 											<br><br>
 										<?php }?>
 									<?php } ?>
@@ -416,14 +393,13 @@
 							<?php if($wo['loggedin'] == false): ?>
 								<div class="selected-information alert alert-info">
 									<p>Para realizar una compra, es necesario
-									<a style="color:var(--boton-fondo);font-weight:700;" href="<?php echo lui_SeoLink('index.php?link1=acceder');?>"> Acceder </a> al sistema,
-									 si es nuevo debe <a style="color:var(--boton-fondo);font-weight:700;" href="<?php echo lui_SeoLink('index.php?link1=register');?>"> Registrarse </a>. (es requerido por su seguridad al momento de comprar). Hacemos que tus compras sean mas seguras.</p>
+									<a style="color:#000;font-weight:700;" href="<?php echo lui_SeoLink('index.php?link1=acceder');?>"> Acceder </a> al sistema,
+									 si es nuevo debe <a style="color:#000;font-weight:700;" href="<?php echo lui_SeoLink('index.php?link1=register');?>"> Registrarse </a>. (es requerido por su seguridad al momento de comprar). Hacemos que tus compras sean mas seguras.</p>
 								</div>
 							<?php endif ?>
 							<br><br>
 						</div>
 					</div>
-					
 					
 					<?php
 						$fields = lui_GetCustomFields('product'); 
@@ -457,40 +433,31 @@
 		</div>
 	</main>
 </div>
-
 <script type="text/javascript">
-$(function() {
-	var sucjs  = document.createElement('script');
-  sucjs.id   = 'scripts_page';
-  sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-  document.head.appendChild(sucjs);
-	sucjs.onload = function() {
-		$('.wo_post_prod_full_img').removeClass('carg_over_pr_a');
-		setTimeout(function() {$('.loated_disoka_a').addClass('carg_over_a');
-		$('.loated_disoka_b').removeClass('carg_over_b');
-			$('.products_itemd').removeClass('loader_pagesf');
-	  }, 400);
-		var lightboxEnabled = true;
-		var flkty_1 = new Flickity('.wo_post_prod_full_img', {
-		    fullscreen: true,
-		    fade: true,
-		    pageDots: false
-		});
+$(document).ready(function() {
+	$(document).on('click', '.add_product_compra_list', function(){
+	    let product = $(this).attr('data-id');
+	    let prod_co = $(this).attr('data-col');
+	    if (product){
+	        $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bdd', {value: product,color:prod_co}, function (data) {
+	        	console.log(data)
+	        });
+	    }
+	});
+});
 
-		var flkty_2 = new Flickity('.wo_post_prod_full_img_slider', {
-		    asNavFor: '.wo_post_prod_full_img',
-		    contain: true,
-		    pageDots: false,
-		    prevNextButtons: false
-		});
-		flkty_1.on('dragStart', () => flkty_1.slider.style.pointerEvents = 'none');
-		flkty_1.on('dragEnd', () => flkty_1.slider.style.pointerEvents = 'auto');
-		flkty_2.on('dragStart', () => flkty_2.slider.style.pointerEvents = 'none');
-		flkty_2.on('dragEnd', () => flkty_2.slider.style.pointerEvents = 'auto');
-
-		
-	};
-
+function Agregar_producto_al_carrito(self,id,type) {
+  qty = 1;
+  if ($('#cart_product_qty').length > 0) {
+    qty = $('#cart_product_qty').val();
+  }
+  $.post(Wo_Ajax_Requests_File() + '?f=products&s=add_cart&hash=' + $('.main_session').val(), {product_id: id,qty:qty}, function(data, textStatus, xhr) {
+    if (data.status == 200){
+      $('.count_items_carrito_cou').html(data.totalunidades);
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', function() {
 	document.querySelectorAll('.copy_url_product_data').forEach(function(button) {
 	  button.addEventListener('click', function() {
 	  	$('.copy_url_product_data').html('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none"><path d="M21.8606 5.39176C22.2875 6.49635 21.6888 7.2526 20.5301 7.99754C19.5951 8.5986 18.4039 9.24975 17.1417 10.363C15.9044 11.4543 14.6968 12.7687 13.6237 14.0625C12.5549 15.351 11.6465 16.586 11.0046 17.5005C10.5898 18.0914 10.011 18.9729 10.011 18.9729C9.60281 19.6187 8.86895 20.0096 8.08206 19.9998C7.295 19.99 6.57208 19.5812 6.18156 18.9251C5.18328 17.248 4.41296 16.5857 4.05891 16.3478C3.11158 15.7112 2 15.6171 2 14.1335C2 12.9554 2.99489 12.0003 4.22216 12.0003C5.08862 12.0323 5.89398 12.373 6.60756 12.8526C7.06369 13.1591 7.54689 13.5645 8.04948 14.0981C8.63934 13.2936 9.35016 12.3653 10.147 11.4047C11.3042 10.0097 12.6701 8.51309 14.1349 7.22116C15.5748 5.95115 17.2396 4.76235 19.0042 4.13381C20.1549 3.72397 21.4337 4.28718 21.8606 5.39176Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
@@ -510,41 +477,38 @@ $(function() {
 	});
 
 function convertirAJPEG(rutaWebP,nombreImagen) {
-    var img = new Image();
-    img.onload = function() {
-        var canvas = document.createElement("canvas");
-        var ctx = canvas.getContext("2d");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+  var img = new Image();
+  img.onload = function() {
+    var canvas = document.createElement("canvas");
+    var ctx = canvas.getContext("2d");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    ctx.font = '20px Arial';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillText('Layshane Perú', canvas.width - 200, canvas.height - 20);
 
-        // Agregar marca de agua de texto
-        ctx.font = '20px Arial';
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; // Color del texto semi-transparente
-        ctx.fillText('Layshane Perú', canvas.width - 200, canvas.height - 20);
-
-        var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        var tieneTransparencia = false;
-        for (var i = 0; i < imageData.data.length; i += 4) {
-            if (imageData.data[i + 3] < 255) {
-                tieneTransparencia = true;
-                break;
-            }
-        }
-        if (tieneTransparencia) {
-            ctx.globalCompositeOperation = "destination-over";
-            ctx.fillStyle = "#ffffff"; 
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-        var dataURL = canvas.toDataURL("image/jpeg");
-        var enlace = document.createElement("a");
-        enlace.href = dataURL;
-        enlace.download = nombreImagen.replace(/\.[^/.]+$/, "") + ".jpeg";
-        enlace.click();
-    };
-    img.src = rutaWebP;
+    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    var tieneTransparencia = false;
+    for (var i = 0; i < imageData.data.length; i += 4) {
+      if (imageData.data[i + 3] < 255) {
+        tieneTransparencia = true;
+        break;
+      }
+    }
+    if (tieneTransparencia) {
+      ctx.globalCompositeOperation = "destination-over";
+      ctx.fillStyle = "#ffffff"; 
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    var dataURL = canvas.toDataURL("image/jpeg");
+    var enlace = document.createElement("a");
+    enlace.href = dataURL;
+    enlace.download = nombreImagen.replace(/\.[^/.]+$/, "") + ".jpeg";
+    enlace.click();
+  };
+  img.src = rutaWebP;
 }
-
 
 var menu = document.createElement('div');
 menu.innerHTML = '<button id="descargarJPEGimglayshane" class="boton-menu-layshane-dow">Descargar Imagen</button>' +
@@ -559,62 +523,62 @@ menu.style.gap = '0.35rem';
 menu.style.display = 'none';
 var menuAbierto = false;
 function handleContextMenu(event) {
-    event.preventDefault();
-    var x = event.clientX;
-    var y = event.clientY;
+  event.preventDefault();
+  var x = event.clientX;
+  var y = event.clientY;
 
-    if (menuAbierto) {
-        menu.style.display = 'none';
-    }
-    menu.style.left = x + 'px';
-    menu.style.top = y + 'px';
-    document.body.appendChild(menu);
-    menu.style.display = 'flex';
-    menuAbierto = true;
+  if (menuAbierto) {
+      menu.style.display = 'none';
+  }
+  menu.style.left = x + 'px';
+  menu.style.top = y + 'px';
+  document.body.appendChild(menu);
+  menu.style.display = 'flex';
+  menuAbierto = true;
 
-    document.getElementById('descargarJPEGimglayshane').onclick = function() {
-        var rutaImagen = event.target.src;
-        var img = event.target;
-        var nombreImagen = img.title;
-        convertirAJPEG(rutaImagen,nombreImagen);
-        menu.style.display = 'none';
-        menuAbierto = false;
-    };
-
-    document.getElementById('cancelardescargaimg').onclick = function() {
+  document.getElementById('descargarJPEGimglayshane').onclick = function() {
+      var rutaImagen = event.target.src;
+      var img = event.target;
+      var nombreImagen = img.title;
+      convertirAJPEG(rutaImagen,nombreImagen);
       menu.style.display = 'none';
       menuAbierto = false;
-    };
+  };
+
+  document.getElementById('cancelardescargaimg').onclick = function() {
+    menu.style.display = 'none';
+    menuAbierto = false;
+  };
 }
 function cerrarMenu(event) {
-    if (menuAbierto) {
-        if (!menu.contains(event.target)) {
-            if (event.target.disabled) {
-                return;
-            }
-            menu.style.display = 'none';
-            menuAbierto = false;
-        }
+  if (menuAbierto) {
+    if (!menu.contains(event.target)) {
+      if (event.target.disabled) {
+        return;
+      }
+      menu.style.display = 'none';
+      menuAbierto = false;
     }
+  }
 }
 
 function cerrarMenuImagen(event) {
-    if (menuAbierto && event.target.classList.contains('imagen')) {
-        menu.style.display = 'none';
-        menuAbierto = false;
-    }
+  if (menuAbierto && event.target.classList.contains('imagen')) {
+    menu.style.display = 'none';
+    menuAbierto = false;
+  }
 }
 function cerrarMenuClicDerecho(event) {
-    if (menuAbierto && event.button === 2) {
-        menu.style.display = 'none';
-        menuAbierto = false;
-    }
+  if (menuAbierto && event.button === 2) {
+    menu.style.display = 'none';
+    menuAbierto = false;
+  }
 }
 function cerrarMenuEnToque(event) {
-    if (menuAbierto && !menu.contains(event.target) && !event.target.classList.contains('imagen')) {
-        menu.style.display = 'none';
-        menuAbierto = false;
-    }
+  if (menuAbierto && !menu.contains(event.target) && !event.target.classList.contains('imagen')) {
+    menu.style.display = 'none';
+    menuAbierto = false;
+  }
 }
 var imagenes = document.querySelectorAll('.imagen');
 imagenes.forEach(function(imagen) {

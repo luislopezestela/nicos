@@ -4,15 +4,22 @@
   <title><?=$wo['title'];?></title>
   <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
   <meta name="application-name" content="<?=$wo['config']['siteName'];?>">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="<?=$wo['config']['header_background'];?>">
-  <meta name="apple-mobile-web-app-status-bar-style" content="<?=$wo['config']['header_background'];?>">
-  <meta name="msapplication-navbutton-color" content="<?=$wo['config']['header_background'];?>">
   <meta name="title" content="<?=$wo['title'];?>">
   <meta name="description" content="<?=$wo['description'];?>">
   <meta name="keywords" content="<?=$wo['keywords'];?>">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
   <meta name="pinterest-rich-pin" content="false" />
+  <?php if ($_COOKIE['mode'] == 'night') { ?>
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#212121" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#212121">
+    <meta name="msapplication-navbutton-color" content="#212121">
+  <?php } else { ?>
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="<?=$wo['config']['header_background'];?>" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="<?=$wo['config']['header_background'];?>">
+    <meta name="msapplication-navbutton-color" content="<?=$wo['config']['header_background'];?>">
+  <?php } ?>
   <?=$wo['lang_og_meta'];
 if($wo['page']=='maintenance'){ ?>
   <meta name="robots" content="noindex">
@@ -76,11 +83,12 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
   $link_text = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";?>
   <link rel="canonical" href="<?=($link_text)?>"/>
 <?php } ?>
+
 <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-3.7.0.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/boots.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/scripts.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <link rel="preload" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
-<link rel="preload" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
+<link rel="preload" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?>?version=<?php echo $wo['config']['version']; ?>" as="style">
 <?php echo (!empty($wo['config']['tagManager_head'])) ? $wo['config']['tagManager_head'] : ''; ?>
 <link rel="shortcut icon" type="image/png" href="<?php echo $wo['config']['theme_url'];?>/img/icon.png"/>
 <link rel="stylesheet" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>">
@@ -88,6 +96,10 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
   <link href="<?php echo $wo['config']['theme_url'];?>/stylesheet/Krub.css?version=<?php echo $wo['config']['version']; ?>" rel="stylesheet">
 <?php } ?>
 <script data="scripsjquer" src="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-3.7.0.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+<?php if($wo['page'] == 'start_up'): ?>
+  <script src="<?php echo $wo['config']['theme_url'];?>/javascript/jquery.ui.touch-punch.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+<?php endif ?>
+
 <?php if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 'edit_product' || $wo['page'] == 'create_product') { ?>
   <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/tinymce/tinymce.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
   <script src="<?php echo $wo['config']['theme_url'];?>/javascript/tinymce/tinymce.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
@@ -95,17 +107,25 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
 <?php if ($wo['loggedin'] == true): ?>
   <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/jqueryform.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <?php endif ?>
-<link rel="manifest" href="<?php echo $wo['config']['theme_url'];?>/manifiesto/manifest.php">
+<link rel="manifest" href="<?php echo $wo['config']['theme_url'];?>/manifiesto/manifest.php?version=<?php echo $wo['config']['version']; ?>">
 <?php if($wo['page'] == 'movies' || $wo['page'] == 'watch_movie') { ?>
   <link rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/movies/style.movies.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" />
 <?php } ?>
-<?php if($wo['page'] == 'cuentas'): ?>
-  <script id="flikit" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+<?php if($wo['page'] == 'cuentas' || $wo['page'] == 'publicacion'): ?>
+  <link id="scripts_page_load" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <?php endif ?>
-<?php if ($wo['page'] != 'welcome') { ?>
-  <script>$(document).ready(function() {$('div.leftcol').theiaStickySidebar({additionalMarginTop:55});});</script>
-  <script type="text/javascript">jQuery(document).ready(function() {jQuery('.custom-fixed-element').theiaStickySidebar({additionalMarginTop:55});});</script>
-<?php }?>
+<?php if($wo['page'] == 'publicacion'): ?>
+  <link id="s_pag_loop" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>" as="style">
+  <link id="style_pag_css" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>">
+<?php endif ?>
+<?php if($wo['page'] == 'checkout'): ?>
+  <link id="s_pag_loop" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/carrito_estilos.css?version=<?php echo $wo['config']['version']; ?>" as="style">
+  <link class="style_pag_css" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/carrito_estilos.css?version=<?php echo $wo['config']['version']; ?>">
+<?php endif ?>
+<?php if($wo['page'] == 'tienda'): ?>
+  <link id="s_pag_loop" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css?version=<?php echo $wo['config']['version']; ?>" as="style">
+  <link class="style_pag_css" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css?version=<?php echo $wo['config']['version']; ?>">
+<?php endif ?>
 <style><?php echo $wo['config']['styles_cc']; ?></style>
 <style type="text/css">
 .count_items_carrito{position:absolute;top:0px;right:25px;display:flex;flex-wrap:wrap;font-size:10px;background:var(--header-color);color:var(--header-fondo);border-radius:15px;text-align:center;justify-content:center;align-items:center;line-height:10px;height:16px;letter-spacing:0;}
@@ -120,10 +140,8 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
     function Wo_CloseLightbox(){$('.lightbox-container').remove();document.body.style.overflow = 'auto';}
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
+    link.href = "<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?>?version=<?php echo $wo['config']['version']; ?>";
     document.head.appendChild(link);
-    
-
     <?php echo $wo['config']['header_cc']."\n"; ?>
     function Wo_Ajax_Requests_File(){return "<?php echo $wo['config']['site_url'].'/requests.php';?>"}
     function Wo_Ajax_Requests_Filee(){return "<?php echo $wo['config']['site_url'].'/ajax_loading.php';?>"}
@@ -140,7 +158,6 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
         var scrollLeft = sessionStorage.getItem('scrollLeft') || 0;
         miDiv.scrollLeft = scrollLeft;
       }
-      
     }
     function Wo_UpdateLocation(position) {
       if(!position){return false;}
@@ -149,6 +166,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
       });
       return false;
     }
+
     var websiteUrl = "<?php echo $wo['config']['site_url'];?>";
     $(function(){
       var urlss = window.location.href;
@@ -208,15 +226,93 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
             }
             var urlsssss = $(this).attr('href');
             var segments = urlsssss.split('/').filter(Boolean);
-            
-            if (segments[2] == 'cuentas'){
-                if ($('#flikit').length) {
-                      $('#flikit').remove();
+            function removePreviousStylesheet() {
+              var currentClass = 'style_pag_css_' + segments[2];
+              var previousStylesheets = document.querySelectorAll('link[class^="style_pag_css_"]');
+              previousStylesheets.forEach(function(stylesheet) {
+                if (!stylesheet.classList.contains(currentClass)) {
+                    stylesheet.parentNode.removeChild(stylesheet);
                 }
+              });
+            }
+
+            var styles = {
+              'tienda': 'layshane_t.css',
+              'checkout': 'carrito_estilos.css',
+              'item': 'publications_style.css',
+            };
+
+            function ensureUniqueStylesheet() {
+              var currentPage = segments[2];
+              if (currentPage in styles) {
+                var styleName = styles[currentPage];
+                var currentClass = 'style_pag_css_' + currentPage;
+                var existingStylesheet = document.querySelector('link.' + currentClass);
+
+                if (!existingStylesheet) {
+                  var newStylesheet = document.createElement('link');
+                  newStylesheet.rel = 'stylesheet';
+                  newStylesheet.className = currentClass;
+                  newStylesheet.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/" + styleName + "<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
+                  document.head.appendChild(newStylesheet);
+                }
+              }
+            }
+            ensureUniqueStylesheet();
+
+            function removePreviousScripts() {
+              var currentClass = 'script_pag_js_' + segments[2];
+              var previousScripts = document.querySelectorAll('script[class^="script_pag_js_"]');
+              previousScripts.forEach(function(escripts) {
+                if (!escripts.classList.contains(currentClass)) {
+                    escripts.parentNode.removeChild(escripts);
+                }
+              });
+            }
+            var scripts = {
+              'item': 'flickity.pkgd.min.js',
+            };
+
+            function ensureUniqueScripitss() {
+              var currentPage = segments[2];
+              if (currentPage in scripts) {
+                var scriptName = scripts[currentPage];
+                var currentClass = 'script_pag_js_' + currentPage;
+                var existingStylesheet = document.querySelector('script.' + currentClass);
+
+                if (!existingStylesheet) {
+                  var newScriptsdata = document.createElement('script');
+                  newScriptsdata.className = currentClass;
+                  newScriptsdata.src = "<?php echo $wo['config']['theme_url'];?>/javascript/" + scriptName + "?version=<?php echo $wo['config']['version']; ?>";
+                  //document.head.appendChild(newScriptsdata);
+                  var targetElement = document.getElementById('var_data_script_a');
+                  targetElement.parentNode.insertBefore(newScriptsdata, targetElement.nextSibling);
+                }
+              }
+            }
+            if(segments[2] == 'item') {
+                ensureUniqueScripitss();
+              }
+
+            if (segments[2] == 'cuentas'){
                 var sucjs  = document.createElement('script');
-                sucjs.id   = 'flikit';
+                sucjs.id   = 'scripts_page';
                 sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
                 document.head.appendChild(sucjs);
+                sucjs.onload = function() {
+                var currentScriptsje = document.getElementById('scripts_page');
+                  if (currentScriptsje) {
+                      currentScriptsje.parentNode.removeChild(currentScriptsje);
+                  }
+                };
+
+            }else{
+              if ($('#scripts_page').length) {
+                $('#scripts_page').remove();
+              }
+              if ($('#scripts_page_load').length) {
+                $('#scripts_page_load').remove();
+              }
             }
             $.post(Wo_Ajax_Requests_Filee() + url, {url:url}, function (data) {
               if($('.user-details').length >0){
@@ -250,24 +346,25 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
               Wo_CleanRecordNodes();
               Wo_stopRecording();
               Wo_StopLocalStream();
+           
               if(json_data.page == 'home') {
                 window.history.pushState({state:'new'},'', websiteUrl);
               }else{
                 window.history.pushState({state:'new'},'', json_data.url);
               }
-              if ($('.postText').length) {
-                $('.postText').autogrow({vertical: true, horizontal: false, height: 200});
+              if(json_data.page == 'tienda') {
+                layshane_carousel_views();
               }
               
-           
-              if(json_data.page == 'products'){
-                $('.content-container').css('margin-top', '55px');
-                $('.ad-placement-header-footer').find('.contnet').css('margin-top', '0');
-              }else{
-                if ($('.content-container').length) {
-                  $('.content-container').css('margin-top', '55px');
-                }
-              }
+
+              
+              $('.postText').autogrow({vertical: true, horizontal: false, height: 200});
+              window.onpopstate = function(event) {
+                $(window).unbind('popstate');
+                window.location.href = document.location;
+              };
+
+              
               document.title = decodeHtml(json_data.title);
               document_title = decodeHtml(json_data.title);
               $("html, body").animate({ scrollTop: 0 }, 55);
@@ -277,6 +374,12 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
               }
               
               $(document).ready(function(){
+                if(json_data.page == 'publicacion') {
+                  view_images_prod()
+                }
+                removePreviousStylesheet();
+                removePreviousScripts()
+
                 if ($('div.leftcol').length) {
                   $('div.leftcol').theiaStickySidebar({additionalMarginTop: 55});
                 }
@@ -288,6 +391,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                 }
               });
               $('#users-reacted-modal').modal("hide");
+              contnet
             }).fail(function() {
             })
             .always(function() {
@@ -759,6 +863,26 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
           const node_socket_flow = "0"
           </script>
       <?php } ?>
+      <?php if($wo['page'] == 'cuentas'): ?>
+        <script id="scripts_page" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+      <?php endif ?>
+      <div id="var_data_script_a"></div>
+      <?php if($wo['page'] == 'publicacion'): ?>
+        <script id="scripts_page" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+        <script type="text/javascript">
+          document.addEventListener("DOMContentLoaded", function() {
+            view_images_prod()
+          });
+        </script>
+      <?php endif ?>
+      <?php if($wo['page'] == 'tienda'): ?>
+        <script type="text/javascript">
+          document.addEventListener("DOMContentLoaded", function() {
+          layshane_carousel_views();
+          });
+        </script>
+      <?php endif ?>
+
       <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
           var script = document.createElement('script');
@@ -769,9 +893,13 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
         });
       </script>
       <div id="var_data_script"></div>
+      
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/styck.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/jqueryform.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/autogrow.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
+      <?php if($wo['page'] == 'start_up'): ?>
+        <script src="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-ui.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+      <?php endif ?>
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/boots.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <?php if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 'edit_product') { ?>
         <script src="<?php echo $wo['config']['theme_url'];?>/javascript/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
@@ -790,24 +918,15 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
       <?php } } ?>
       <div class="extra-css"></div>
       <?php if ($wo['page'] != 'welcome') { ?>
-      <script>document.addEventListener('DOMContentLoaded', function(){
-        var leftcol = document.querySelector('div.leftcol');if(leftcol){
-        leftcol.classList.add('theiaStickySidebar');
-        leftcol.classList.add('additionalMarginTop');
-        leftcol.style.additionalMarginTop = '55px';}});
-        document.addEventListener('DOMContentLoaded', function(){
-        var customFixedElement = document.querySelectorAll('.custom-fixed-element');
-        if(customFixedElement.length > 0){
-        customFixedElement.forEach(function(element) {
-            element.classList.add('theiaStickySidebar');
-            element.style.additionalMarginTop = '55px';
-        });}});
-      </script>
+        <script>$(function() {$('div.leftcol').theiaStickySidebar({additionalMarginTop:55});});</script>
+        <script type="text/javascript">$(function() {jQuery('.custom-fixed-element').theiaStickySidebar({additionalMarginTop:55});});</script>
       <?php }?>
+  
 
       <!-- End 'JS FILES' -->
       <?php echo lui_LoadPage('timeago/content'); ?>
       <?php if($wo['loggedin'] == true) { echo lui_LoadPage('extra_js/content'); }?>
+      <?php echo lui_LoadPage('extra_js/inline');?>
       <!-- Audio FILES -->
       <?php if ($wo['loggedin'] == true) { ?>
       <audio id="notification-sound" class="sound-controls" preload="auto">
@@ -892,143 +1011,9 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
            $('#publisher-box-sticker-cont-'+id).html(sticker);
 
          }
-function supports_history_api() {
-  return !!(window.history && history.pushState);
-}
-$(function() {
-    if(!supports_history_api()){ return; }
-    window.addEventListener("popstate", function(e) {
-        if (typeof(check_wallet) != 'undefined') {
-            clearInterval(check_wallet);
-        }
-        Wo_CloseLightbox();
-        $('body').removeAttr('no-more-posts');
-
-        if ($('.postText').length && $('.postText').val().length > 0) {
-          if (!confirm("<?php echo html_entity_decode($wo['lang']['havent_finished_post'], ENT_QUOTES) ?>")) {
-              return false;
-          } else {
-              $('.postText').val("");
-          }
-        }
-        var segments = window.location.pathname.split('/').filter(Boolean);
-        var link1 = "home";
-        var items = null;
-        var opcion = null;
-        var c_id = null;
-        var sub_id = null;
-        if (segments.length > 0) {
-          link1 = segments[0];
-          if (segments.length > 1) {
-            if(segments[0]=='item'){
-              items = segments[1];
-              if (segments.length > 2) {
-                opcion = segments[2];
-              }
-            }else if(segments[0]=='tienda'){
-              c_id = segments[1];
-              if (segments.length > 2) {
-                sub_id = segments[2];
-              }
-            }
-          }
-        }
-
-        var params = {};
-        if (link1) params.link1 = link1;
-        if (items) params.items = items;
-        if (opcion) params.opcion = opcion;
-        if (c_id) params.c_id = c_id;
-        if (sub_id) params.sub_id = sub_id;
-        var url = '?' + $.param(params);
-        Wo_StartBar();
-        window.post = 0;
-        var box = $('#contnet');
-        var ISAPI = $('#ISAPI').val();
-        e.preventDefault();
-        if (!ISAPI) {
-          if(segments[0] == 'home'){
-            $('#load-more-posts').hide();
-              document.getElementById('posts').innerHTML = '<div class="paage_loader_s"><div class="titulo_loader_w loader_layshane"></div></div><div class="loading_poruductos_cont"><div class="loading_poruductos"><div class="loader_layshane"></div></div><div class="loading_poruductos"><div class="loader_layshane"></div></div><div class="loading_poruductos"><div class="loader_layshane"></div></div><div class="loading_poruductos"><div class="loader_layshane"></div></div></div>';
-              loadposts();
-              $("html, body").animate({ scrollTop: 0 }, 100);
-              $('.user-details, .pac-container, .lightbox-container').remove();
-              Wo_clearPRecording();
-              Wo_CleanRecordNodes();
-              Wo_stopRecording();
-              Wo_StopLocalStream();
-              return false;
-            }
-           
-            if (segments[0] == 'cuentas'){
-              if ($('#flikit').length) {
-                    $('#flikit').remove();
-              }
-              var sucjs  = document.createElement('script');
-              sucjs.id   = 'flikit';
-              sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-              document.head.appendChild(sucjs);
-            }
-            $.post(Wo_Ajax_Requests_Filee() + url, { url: url }, function(data) {
-                if ($('.user-details').length > 0) {
-                    $('.user-details').remove();
-                }
-                json_data = JSON.parse($(data).filter('#json-data').val());
-                box.html(data);
-                if (json_data.is_css_file == 1) {
-                    $('.styled-profile').remove();
-                    $('footer').append(json_data.css_file);
-                    $('.extra-css').html(json_data.css_file_header);
-                } else {
-                    $('.styled-profile').attr('href', '');
-                    $('.extra-css').empty();
-                }
-                Wo_clearPRecording();
-                Wo_CleanRecordNodes();
-                Wo_stopRecording();
-                Wo_StopLocalStream();
-                if ($('.postText').length) {
-                    $('.postText').autogrow({ vertical: true, horizontal: false, height: 200 });
-                }
-
-                if (json_data.page == 'products') {
-                    $('.content-container').css('margin-top', '55px');
-                    $('.ad-placement-header-footer').find('.contnet').css('margin-top', '0');
-                } else{
-                    if ($('.content-container').length) {
-                        $('.content-container').css('margin-top', '55px');
-                    }
-                }
-
-                document.title = decodeHtml(json_data.title);
-                document_title = decodeHtml(json_data.title);
-                $("html, body").animate({ scrollTop: 0 }, 55);
-                Wo_FinishBar();
-                if ($('#hidden-content').length) {
-                    $('#hidden-content').empty();
-                }
-
-                $(document).ready(function() {
-                    if ($('div.leftcol').length) {
-                        $('div.leftcol').theiaStickySidebar({ additionalMarginTop: 55 });
-                    }
-                    var corousel_Datas = document.getElementById('carousel__content');
-                    if (corousel_Datas) {
-                        if (document.body.contains(corousel_Datas)) {
-                            restaurarPosicionHorizontal();
-                        }
-                    }
-                });
-
-                $('#users-reacted-modal').modal("hide");
-            }).fail(function() {}).always(function() {
-                Wo_FinishBar();
-            });
-            $('.user-details, .pac-container, .lightbox-container').remove();
-        }
-    });
-});
-      
+        $(window).on("popstate", function (e) {
+          location.reload();
+        });
       <?php echo $wo['config']['footer_cc']; ?>
     </script>
     <?php if ($wo['page'] != 'get_news_feed') { ?>

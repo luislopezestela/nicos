@@ -208,7 +208,6 @@ RewriteRule ^oauth$ index.php?link1=oauth [NC,QSA]
 RewriteRule ^boosted-pages(/?|)$ index.php?link1=boosted-pages [NC,QSA]
 RewriteRule ^boosted-posts(/?|)$ index.php?link1=boosted-posts [NC,QSA]
 
-
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^setting/([A-Za-z0-9_-]+)$  index.php?link1=setting&page=$1 [NC,QSA]
@@ -224,10 +223,6 @@ RewriteRule ^([A-Za-z0-9_]+)/([^\/]+)(\/|)$  index.php?link1=timeline&u=$1&type=
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([^\/]+)(\/|)$  index.php?link1=timeline&u=$1 [QSA]
-
-
-
-
 
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html
@@ -251,6 +246,9 @@ RewriteRule ^([^\/]+)(\/|)$  index.php?link1=timeline&u=$1 [QSA]
   AddOutputFilterByType DEFLATE font/ttf
   AddOutputFilterByType DEFLATE font/otf
   AddOutputFilterByType DEFLATE font/opentype
+  AddOutputFilterByType DEFLATE image/webp
+  AddOutputFilterByType DEFLATE application/x-httpd-php
+  AddOutputFilterByType DEFLATE application/javascript .js .min.js
   BrowserMatch ^Mozilla/4 gzip-only-text/html
   BrowserMatch ^Mozilla/4\.0[678] no-gzip
   BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
@@ -265,6 +263,7 @@ ExpiresByType image/jpg "access plus 1 year"
 ExpiresByType image/jpeg "access plus 1 year"
 ExpiresByType image/gif "access plus 1 year"
 ExpiresByType image/png "access plus 1 year"
+ExpiresByType image/webp "access plus 1 year"
 ExpiresByType text/css "access plus 1 month"
 ExpiresByType application/pdf "access plus 1 month"
 ExpiresByType text/x-javascript "access plus 1 month"
@@ -273,7 +272,7 @@ ExpiresByType image/x-icon "access plus 1 year"
 ExpiresDefault "access plus 1 month"
 </IfModule>
 ## EXPIRES CACHING ##
-AddType application/x-httpd-php .json
+
 
 <ifModule mod_headers.c>
   Header unset Connection

@@ -1633,7 +1633,7 @@ function lui_UploadImage($file, $name, $type, $type_file, $user_id = 0, $placeme
     if (!file_exists('upload/photos/' . date('Y') . '/' . date('m'))) {
         mkdir('upload/photos/' . date('Y') . '/' . date('m'), 0777, true);
     }
-    $allowed           = 'jpg,png,jpeg,gif';
+    $allowed           = 'jpg,png,jpeg,gif,webp';
     $new_string        = pathinfo($name, PATHINFO_FILENAME) . '.' . strtolower(pathinfo($name, PATHINFO_EXTENSION));
     $extension_allowed = explode(',', $allowed);
     $file_extension    = pathinfo($new_string, PATHINFO_EXTENSION);

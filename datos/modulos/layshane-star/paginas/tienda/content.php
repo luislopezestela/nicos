@@ -1,25 +1,3 @@
-<script type="text/javascript">
-	if ($('#scripts_page').length) {
-    $('#scripts_page').remove();
-  }
-  if ($('#scripts_page_load').length) {
-        $('#scripts_page_load').remove();
-  }
-	if ($('#style_pag_css').length) {
-    $('#style_pag_css').remove();
-  }
-  if ($('#s_pag_loop').length) {
-    $('#s_pag_loop').remove();
-  }
-  var preloadLink_blogs_s = document.createElement('link');
-  preloadLink_blogs_s.id = 's_pag_loop';
-  preloadLink_blogs_s.rel = 'preload';
-  preloadLink_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
-  preloadLink_blogs_s.as = 'style';
-  document.head.appendChild(preloadLink_blogs_s);
-
-	
-</script>
 <?php
 $category_id = (!empty($_GET['c_id'])) ? (int) $_GET['c_id'] : 0;
 $category_sub_id = (!empty($_GET['sub_id'])) ? (int) $_GET['sub_id'] : 0;
@@ -67,7 +45,7 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 		</div>
 	<?php endif ?>
 </div>
-<div class="contenido_layshane_items products wo_market loader_pagesf products_itemd">
+<div class="contenido_layshane_items products wo_market">
 		<div class="sidebar_layshane_items leftcol">
 			<div class="head_productos_fitrar wo_job_head_filter wo_market_head_filter">
 				<div class="buscar_productos_layshane">
@@ -278,7 +256,7 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 								echo lui_LoadPage('products/products-list');
 							}
 						} else {
-							echo '<div class="empty_state"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,13A5,5 0 0,1 7,8H9A3,3 0 0,0 12,11A3,3 0 0,0 15,8H17A5,5 0 0,1 12,13M12,3A3,3 0 0,1 15,6H9A3,3 0 0,1 12,3M19,6H17A5,5 0 0,0 12,1A5,5 0 0,0 7,6H5C3.89,6 3,6.89 3,8V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V8C21,6.89 20.1,6 19,6Z"></path></svg>' . $wo['lang']['no_available_products'] . '</div>';
+							echo '<div class="empty_state" style="position:absolute;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,13A5,5 0 0,1 7,8H9A3,3 0 0,0 12,11A3,3 0 0,0 15,8H17A5,5 0 0,1 12,13M12,3A3,3 0 0,1 15,6H9A3,3 0 0,1 12,3M19,6H17A5,5 0 0,0 12,1A5,5 0 0,0 7,6H5C3.89,6 3,6.89 3,8V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V8C21,6.89 20.1,6 19,6Z"></path></svg>' . $wo['lang']['no_available_products'] . '</div>';
 						}
 						?>
 					</div>
@@ -294,150 +272,8 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 		<div class="clear"></div>
 	</div>
 </div>
+
 <script>
-$(function() {
-	var sucjsslik_blogs_s  = document.createElement('link');
-  sucjsslik_blogs_s.rel = 'stylesheet';
-	sucjsslik_blogs_s.id   = 'style_pag_css';
-	sucjsslik_blogs_s.href = "<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
-	document.head.appendChild(sucjsslik_blogs_s);
-	sucjsslik_blogs_s.onload = function() {
-		setTimeout(function() {
-			$('.products_itemd').removeClass('loader_pagesf');
-	  }, 500);
-	};
-});
-	var COMPONENT_SELECTOR = '.carousel__wrapper';
-	var CONTROLS_SELECTOR = '.carousel__controls';
-	var CONTENT_SELECTOR = '.carousel__content';
-	var components = document.querySelectorAll( COMPONENT_SELECTOR );
-
-
-	for ( let i = 0; i < components.length; i++ ) {
-		const component = components[ i ];
-		const content = component.querySelector( CONTENT_SELECTOR );
-		let isDragStart = false, isDragging = false;
-		let x = 0;
-		let mx = 0;
-		const maxScrollWidth = content.scrollWidth - content.clientWidth / 2 - content.clientWidth / 2;
-		const nextButton = component.querySelector( '.arrow-next' );
-		const prevButton = component.querySelector( '.arrow-prev' );
-
-		if ( maxScrollWidth !== 0 ) {
-			component.classList.add( 'has-arrows' );
-		}
-
-		if ( nextButton ) {
-			nextButton.addEventListener( 'click', function ( event ) {
-				event.preventDefault();
-				x = content.clientWidth / 2 + content.scrollLeft + 0;
-				content.scroll( {
-					left: x,
-					behavior: 'smooth',
-				} );
-			} );
-		}
-
-		if ( prevButton ) {
-			prevButton.addEventListener( 'click', function ( event ) {
-				event.preventDefault();
-				x = content.clientWidth / 2 - content.scrollLeft + 0;
-				content.scroll( {
-					left: -x,
-					behavior: 'smooth',
-				} );
-			} );
-		}
-
-		/**
-		 * @param {object} e event object.
-		 */
-		const mousemoveHandler = ( e ) => {
-			if(!isDragStart) return;
-			e.preventDefault();
-    	isDragging = true;
-    	content.classList.add("dragging");
-    	content.classList.add("no-click");
-			const mx2 = e.pageX - content.offsetLeft;
-			if ( mx ) {
-				content.scrollLeft = content.sx + mx - mx2;
-			}
-		};
-
-		/**
-		 * @param {object} e event object. 
-		 */
-		const mousedownHandler = ( e ) => {
-			isDragStart = true;
-			content.sx = content.scrollLeft;
-			mx = e.pageX - content.offsetLeft;
-		};
-
-		const scrollHandler = () => {
-			toggleArrows();
-		};
-		const toggleArrows = () => {
-			if ( content.scrollLeft > maxScrollWidth - 10 ) {
-				nextButton.classList.add( 'disabled' );
-				content.classList.remove("more_its");
-			} else if ( content.scrollLeft < 10 ) {
-				prevButton.classList.add( 'disabled' );
-				content.classList.add("more_its");
-			} else {
-				content.classList.add("more_its");
-				nextButton.classList.remove( 'disabled' );
-				prevButton.classList.remove( 'disabled' );
-			}
-		};
-		const mouseupHandler = () => {
-			isDragStart = false;
-			mx = 0;
-			content.classList.remove( 'dragging' );
-			content.classList.remove("no-click");
-			if(!isDragging) return;
-    	isDragging = false;
-		};
-
-		/**
-		 * @param {object} e event object.
-		 */
-		const touchmoveHandler = (e) => {
-		    if (!isDragStart) return;
-		    e.preventDefault();
-		    isDragging = true;
-		    content.classList.add("dragging");
-		    content.classList.add("no-click");
-		    const mx2 = e.touches[0].pageX - content.offsetLeft;
-		    if (mx) {
-		        content.scrollLeft = content.sx + mx - mx2;
-		    }
-		};
-
-		/**
-		 * @param {object} e event object. 
-		 */
-		const touchstartHandler = (e) => {
-		    isDragStart = true;
-		    content.sx = content.scrollLeft;
-		    mx = e.touches[0].pageX - content.offsetLeft;
-		};
-
-		content.addEventListener('touchstart', touchstartHandler,{passive: true});
-		content.addEventListener('touchmove', touchmoveHandler);
-		content.addEventListener( 'mousedown', mousedownHandler);
-		document.addEventListener( 'mousemove', mousemoveHandler);
-		if ( component.querySelector( CONTROLS_SELECTOR ) !== undefined ) {
-			content.addEventListener( 'scroll', scrollHandler );
-		}
-		document.addEventListener( 'mouseup', mouseupHandler );
-		content.addEventListener( 'touchend', mouseupHandler);
-		document.addEventListener('mouseleave', () => {
-		    isDragStart = false;
-		    isDragging = false;
-		});
-	}
-
-
 $('.wow_main_blogs_bg').css('height', ($('.wow_main_float_head').height()) + 'px');
 
 function changePriceSortValue(price_sort) {

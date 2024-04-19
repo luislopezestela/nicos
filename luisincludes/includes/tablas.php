@@ -139,5 +139,5 @@ define('T_USER_LANGUAGES', 'lui_userlanguages');
 define('T_LANG_ISO', 'lui_langiso');
 define('T_PENDING_PAYMENTS', 'lui_pendingpayments');
 define('T_UPLOADED_MEDIA', 'lui_uploadedmedia');
-
+define('T_VENTAS', 'ventas');
 ?>

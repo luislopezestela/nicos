@@ -14,7 +14,7 @@
 <?php endif ?>
 <?php $atributos = Mostrar_Atributos_producto($wo['product']['id']); ?>
 <?php $opciones_del_producto = lui_poner_en_lista_las_opciones($wo['product']['id']) ?>
-
+ 
 <?php if ($opciones_del_producto): ?>
 	<?php foreach ($opciones_del_producto as $color => $valorcolor): $seleccionadocoloor='';?>
 		<?php $buscar_el_color_por_id = lui_buscar_color_en_colores($valorcolor['id_color'])?>

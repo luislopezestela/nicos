@@ -54,3 +54,4 @@ if ($f == 'update_user_avatar_picture') {
     echo json_encode($data);
     exit();
 }
+

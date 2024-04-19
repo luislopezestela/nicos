@@ -1141,5 +1141,4 @@ function Wo_OpenBannedMenu(type = 'notification'){
   }
 }
 
-
 </script>

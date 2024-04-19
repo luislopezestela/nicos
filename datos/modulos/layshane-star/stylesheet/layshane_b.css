@@ -845,7 +845,7 @@ span.product-list {
 .col,
 .columna_lg_4,
 .columna-1,.columna-2,.columna-3,.columna-4,.columna-5,.columna-6,.columna-7,.columna-8,.columna-9,.columna-10,.columna-11,.columna-12,
-.columna_sm-1,.columna_sm-2,.columna_sm-3,.columna_sm-4,.columna_sm-10,
+.columna_sm-1,.columna_sm-2,.columna_sm-3,.columna_sm-4,.columna_sm-5,.columna_sm-6,.columna_sm-10,
 .columna_xs-1,.columna_xs-2,.columna_xs-6,
 .col-md-6{
     position:relative;
@@ -891,6 +891,10 @@ span.product-list {
   .columna_sm-4{
     float:left;
     width:33.33333333%;
+  }
+  .columna_sm-6{
+    float:left;
+    width:50%;
   }
   .columna_sm-10 {
     width: 83.33333333%;
@@ -1040,115 +1044,27 @@ span.product-list{position:absolute;color:#fff;background:rgb(255 83 83);padding
 .btn-loading {position: relative;box-shadow: none;}
 .btn-loading:before {display: none;}
 .btn-loading:after {top: 0;right: 0;bottom: 0;left: 0;opacity: 1;width: 100%;height: 100%;padding: 0 16px;border-radius: max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;transform: none;background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='50px' height='50px' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='xMidYMid'%3e%3crect x='0' y='0' fill='none' class='bk'%3e%3c/rect%3e%3ccircle cx='50' cy='50' r='40' stroke='%23fff' fill='none' stroke-width='6' stroke-linecap='round'%3e%3canimate attributeName='stroke-dashoffset' dur='1.5s' repeatCount='indefinite' from='0' to='502'%3e%3c/animate%3e%3canimate attributeName='stroke-dasharray' dur='1.5s' repeatCount='indefinite' values='150.6 100.4;1 250;150.6 100.4'%3e%3c/animate%3e%3c/circle%3e%3c/svg%3e");background-position: center;background-repeat: no-repeat;background-size: 24px;transition: none;}
-
 /* checkbox  blanco y verde*/
-.selector_checkuno input {
-  position: relative;
-  opacity: 1;
-  -webkit-appearance: none;
-  cursor: pointer;
-  height: 50px;
-  width: 50px;
-  box-shadow: -10px -10px 15px rgba(255,255,255,0.5),
-  10px 10px 15px rgba(0,0,70,0.12);
-  border-radius: 50%;
-  border: 8px solid #ececec;
-  outline: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: .5s;
-}
-.glyphicon-alert:before {
-    content: "\e209"
-}
-.alert {
-    padding: 15px;
-    border: 1px solid transparent;
-    border-radius: 4px
-}
-
-.alert h4 {
-    margin-top: 0;
-    color: inherit
-}
-
-.alert>p,.alert>ul {
-    margin-bottom: 0
-}
-
-.alert>p+p {
-    margin-top: 5px
-}
-
-.alert-dismissable,.alert-dismissible {
-    padding-right: 35px
-}
-
-.alert-dismissable .close,.alert-dismissible .close {
-    position: relative;
-    top: -2px;
-    right: -21px;
-    color: inherit
-}
-
-.alert-white {
-    color: #666;
-    background-color: #fff;
-    border-color: #a84849
-}
-
-.alert-success {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6
-}
-
-.alert-success hr {
-    border-top-color: #c9e2b3
-}
-
-.alert-success .alert-link {
-    color: #2b542c
-}
-
-.alert-info {
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1
-}
-
-.alert-info hr {
-    border-top-color: #a6e1ec
-}
-
-.alert-info .alert-link {
-    color: #245269
-}
-
-.alert-warning {
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc
-}
-
-.alert-warning hr {
-    border-top-color: #f7e1b5
-}
-
-.alert-warning .alert-link {
-    color: #66512c
-}
-
-.alert-danger {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1
-}
-
-.alert-danger hr {
-    border-top-color: #e4b9c0
-}
+.selector_checkuno input{position:relative;opacity:1;-webkit-appearance:none;cursor:pointer;height:50px;width:50px;box-shadow:-10px -10px 15px rgba(255,255,255,0.5),10px 10px 15px rgba(0,0,70,0.12);border-radius:50%;border:8px solid #ececec;outline:none;display:flex;justify-content:center;align-items:center;transition:.5s;}
+.glyphicon-alert:before{content: "\e209"}
+.alert{padding:15px;border:1px solid transparent;border-radius:4px}
+.alert h4{margin-top:0;color:inherit}
+.alert>p,.alert>ul{margin-bottom: 0}
+.alert>p+p{margin-top:5px}
+.alert-dismissable,.alert-dismissible{padding-right:35px}
+.alert-dismissable .close,.alert-dismissible .close{position:relative;top:-2px;right:-21px;color:inherit}
+.alert-white{color:#666;background-color:#fff;border-color:#a84849}
+.alert-success{color:#3c763d;background-color:#dff0d8;border-color:#d6e9c6}
+.alert-success hr{border-top-color: #c9e2b3}
+.alert-success .alert-link{color:#2b542c}
+.alert-info{color:#000000;background-color:#ADD8E6;border-color:#bce8f1}
+.alert-info hr{border-top-color:#a6e1ec}
+.alert-info .alert-link{color:#245269}
+.alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color: #faebcc}
+.alert-warning hr{border-top-color:#f7e1b5}
+.alert-warning .alert-link{color:#66512c}
+.alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}
+.alert-danger hr{border-top-color:#e4b9c0}
 
 .alert-danger .alert-link {
     color: #843534
@@ -1167,13 +1083,10 @@ span.product-list{position:absolute;color:#fff;background:rgb(255 83 83);padding
 .wow_form_fields .bootstrap-tagsinput input {box-shadow: none;width: auto;}
 /*Alerts*/
 .alert {border:0;font-weight:bold;font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;}
-.alert-info {background-color: rgba(33, 150, 243, 0.1);color: #2196F3;}
-.alert-success {background-color: rgba(76, 175, 80, 0.1);color: #4CAF50;}
-.alert-warning {background-color: rgba(243, 148, 64, 0.1);color: #f39440;}
-.alert-danger {background-color: rgba(244, 67, 54, 0.1);color: #F44336;}
-.ui-icon-alert {
-    background-position: 0 -144px
-}
+.alert-success {background-color:rgba(76, 175, 80, 0.1);color: #4CAF50;}
+.alert-warning {background-color:rgba(243, 148, 64, 0.1);color: #f39440;}
+.alert-danger {background-color:rgba(244, 67, 54, 0.1);color: #F44336;}
+.ui-icon-alert{background-position:0 -144px}
 /*Empty State*/
 .empty_state{margin:85px 0;font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;font-size: 15px;color:#6d6d6d;text-align: center;width:100%;}
 .empty_state svg{display: block;margin: 0 auto 15px;width: 60px;height: 60px;color: #ffffff;background-color: #607D8B;border-radius: 50%;padding: 14px;opacity: 0.7;}
