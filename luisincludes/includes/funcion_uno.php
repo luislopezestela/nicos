@@ -1065,6 +1065,7 @@ function lui_GetLanguages() {
     ));
     return $languages_name;
 }
+
 function lui_SlugPost($string) {
     $slug = url_slug($string, array(
         'delimiter' => '-',

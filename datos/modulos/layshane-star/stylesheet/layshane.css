@@ -246,7 +246,8 @@ svg.feather{vertical-align:middle;margin-top:0px;width:19px;height:19px;}
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAOBAMAAAD3WtBsAAAAFVBMVEUAAAAAAAAAAAAAAAAAAAAAAAD29va1cB7UAAAAB3RSTlMCCwQHGBAaZf6MKAAAABpJREFUCNdjSGNIY3BhCGUQBEJjIFQCQigAACyJAjLNW4w5AAAAAElFTkSuQmCC);
 }
 .xmcv_conten_menu ul li .sixteen-font-size{margin-right:0!important;}
-.xmcv_conten_menu ul li .sixteen-font-size .count_items_carrito{top:6px;right:27px;padding:3px;}
+.xmcv_conten_menu ul li .sixteen-font-size .count_items_carrito{top:6px;right:27px;user-select:none;}
+.xmcv_conten_menu ul li .sixteen-font-size .count_items_carrito_cou{padding:3px;display:block!important;}
 .wow_hdr_innr_left .nav{display:none!important;}
 .container-fluid .navbar-right{display:flex;justify-content:flex-end;}
 .container-fluid .navbar-right li.dropdown{display:flex;justify-content:center;align-items:center;}

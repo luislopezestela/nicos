@@ -525,7 +525,6 @@ function lui_DeleteProductImage($id) {
     }
     return false;
 }
-
 function lui_GetProductImages(int $id = 0) {
     global $wo, $sqlConnect;
     $data      = array();
@@ -547,6 +546,36 @@ function lui_GetProductImages(int $id = 0) {
             $data[]                    = $fetched_data;
         }
     }
+    return $data;
+}
+function lui_GetProductImages_color(int $id = 0,int $el_color = 0) {
+    global $wo, $sqlConnect;
+    $data      = array();
+    $id        = lui_Secure($id);
+    $color_productos_vcol = mysqli_query($sqlConnect, "SELECT `id`,`id_producto`, `id_color` FROM `lui_opcion_de_colores_productos` WHERE `id_producto` = '{$id}' AND `id_color` = '{$el_color}'");
+
+    if (mysqli_num_rows($color_productos_vcol) >= 1) {
+        while ($fet_data = mysqli_fetch_assoc($color_productos_vcol)) {
+            $query_one = "SELECT `id`,`image`,`product_id`,`id_color` FROM " . T_PRODUCTS_MEDIA . " WHERE `product_id` = {$id} AND `id_color` = {$fet_data['id']} ORDER BY `id` DESC";
+            $sql       = mysqli_query($sqlConnect, $query_one);
+            if (mysqli_num_rows($sql)) {
+                while ($fetched_data = mysqli_fetch_assoc($sql)) {
+                    $explora                   = explode('.', $fetched_data['image']);
+                    $explode2                  = end($explora);
+                    $explode3                  = explode('.', $fetched_data['image']);
+                    $fetched_data['image_org'] = $explode3[0] . '_small.' . $explode2;
+                    $fetched_data['image_org'] = lui_GetMedia($fetched_data['image_org']);
+
+                    $fetched_data['image_mini'] = $explode3[0] . '_thumbnail.' . $explode2;
+                    $fetched_data['image_mini'] = lui_GetMedia($fetched_data['image_mini']);
+
+                    $fetched_data['image']     = lui_GetMedia($fetched_data['image']);
+                    $data[]                    = $fetched_data;
+                }
+            }
+        }
+    }
+
     return $data;
 }
 function lui_ProductImageData($data = array()) {
@@ -9352,4 +9381,151 @@ function fecha_restante($data){
         $fechaa_restante = $y_year.' '.$y_month.' '.$y_days;
     }
     return $fechaa_restante;
+}
+function convertirNumeroAFecha($numero) {
+    global $wo, $sqlConnect, $db;
+    if ($numero <= 0) {
+        return 'Sin garantia';
+    }
+
+    $años = floor($numero / 12);
+    $meses = $numero % 12;
+
+    $partesFecha = [];
+
+    if ($años > 0) {
+        $partesFecha[] = $años . ($años == 1 ? ' '.$wo['lang']['year'] : ' '.$wo['lang']['years']);
+    }
+
+    if ($meses > 0) {
+        $partesFecha[] = $meses .($meses == 1 ? ' '.$wo['lang']['month'] :' '. $wo['lang']['months']);
+    }
+
+    $resultado = 'Garantia '.implode(' y ', $partesFecha);
+    return $resultado;
+}
+function numeroATexto($numero,$moneda) {
+    // Arreglo con las palabras para representar las unidades
+    $unidades = array(
+        '', 'un', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'
+    );
+
+    // Arreglo con las palabras para representar las decenas
+    $decenas = array(
+        '', 'diez', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'
+    );
+
+    // Arreglo con las palabras para representar las centenas
+    $centenas = array(
+        '', 'cien', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'
+    );
+
+    // Arreglo con las palabras para representar los miles
+    $miles = array(
+        '', 'mil', 'dos mil', 'tres mil', 'cuatro mil', 'cinco mil', 'seis mil', 'siete mil', 'ocho mil', 'nueve mil'
+    );
+
+    // Dividir el número en partes enteras y decimales
+    $partes = explode('.', $numero);
+
+    // Convertir la parte entera a texto
+    $parteEntera = '';
+    $numeroEntero = (int)$partes[0];
+
+    // Convertir los miles
+    $mil = floor($numeroEntero / 1000);
+    $restoMil = $numeroEntero % 1000;
+
+    if ($mil > 0) {
+        $parteEntera .= $miles[$mil] . ' ';
+    }
+
+    // Convertir las centenas
+    $centena = floor($restoMil / 100);
+    $restoCentena = $restoMil % 100;
+
+    if ($centena > 0) {
+        if ($centena == 1 && $restoCentena > 0) {
+            $parteEntera .= 'ciento ';
+        } else {
+            $parteEntera .= $centenas[$centena] . ' ';
+        }
+    }
+
+    // Convertir las decenas
+    $decena = floor($restoCentena / 10);
+    $unidad = $restoCentena % 10;
+
+    if ($decena > 0) {
+        if ($decena == 1) {
+            if ($unidad > 0) {
+                $parteEntera .= $unidades[$unidad] . ' y ';
+            } else {
+                $parteEntera .= 'diez ';
+            }
+        } else {
+            $parteEntera .= $decenas[$decena] . ' ';
+            if ($unidad > 0) {
+                $parteEntera .= 'y ' . $unidades[$unidad] . ' ';
+            }
+        }
+    } else {
+        if ($unidad > 0) {
+            $parteEntera .= $unidades[$unidad] . ' ';
+        }
+    }
+
+    // Convertir la parte decimal a texto si existe
+    $parteDecimal = '';
+    if (isset($partes[1])) {
+        $parteDecimal = ' con ' . $partes[1] . '/100';
+    }
+
+    // Unir la parte entera y la parte decimal
+    $texto = ucfirst($parteEntera . $parteDecimal);
+
+    // Agregar la moneda al inicio
+    $texto = 'SON: ' . $texto .' '. $moneda;
+
+    return $texto;
+}
+
+function obtener_ultimo_tc(){
+    $url = "https://www.sunat.gob.pe/a/txt/tipoCambio.txt";
+
+    $curl = curl_init();
+
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
+
+    $response = curl_exec($curl);
+    $http_status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+    curl_close($curl);
+
+    if ($http_status_code == 200 && $response != "") {
+        $arr = explode('|', trim($response));
+        if (count($arr) >= 3) {
+            $fecha  = \DateTime::createFromFormat("d/m/Y", trim($arr[0]));
+            $result = [
+                "fecha"  => trim($fecha->format("Y-m-d")),
+                "compra" => trim($arr[1]),
+                "venta"  => trim($arr[2]),
+            ];
+            return [
+                'success' => true,
+                'result'  => $result,
+            ];
+        }
+        return [
+            'success' => false,
+            'message' => 'No se ha podido obtener resultado.'
+        ];
+    }
+
+    return [
+        'success' => false,
+        'message' => 'SUNAT no responde.'
+    ];
 }

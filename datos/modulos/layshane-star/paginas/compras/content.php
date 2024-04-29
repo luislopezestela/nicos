@@ -496,705 +496,704 @@ table{
 			</div>
 			<br><br>
 			<div class="add_reaction_form_alert"></div>
-	    	<?php if (!empty($comprapendiente_sear)): ?>
-	    		<?php $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->where('sucursal',$wo['user']['sucursal'])->getOne("compras"); ?>
+	    <?php if (!empty($comprapendiente_sear)): ?>
+	    	<?php $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->where('sucursal',$wo['user']['sucursal'])->getOne("compras"); ?>
 				<?php $comprapendiente2 = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','2')->where('sucursal',$wo['user']['sucursal'])->getOne("compras"); ?>
-	    		<?php if(isset($comprapendiente->completado)): ?>
-		    		<?php if ($comprapendiente->num_doc == 0): ?>
-		    			<div class="agregar_compras_en_imventario">
-		    				<span style="padding:8px;color:#666;font-size:15px;">Nueva compra con:</span>
-		    				<br><br>
-				    		<div class="opciones_para_agregar_compra">
-				    			<div class="agregar_compra_comprobante">
-				    				<input type="radio" name="tipo_compra_doc" id="compra_con_nota" value="boleta_simple" <?php if($comprapendiente->documento=='BS'){echo("checked");}?>>
-				    				<label for="compra_con_nota">Boleta simple</label>
-				    			</div>
-				    			<div class="agregar_compra_comprobante">
-				    				<input type="radio" name="tipo_compra_doc" id="compra_con_boleta" value="boleta" <?php if($comprapendiente->documento=='B'){echo("checked");}?>>
-				    				<label for="compra_con_boleta">Boleta</label>
-				    			</div>
-				    			<div class="agregar_compra_comprobante">
-				    				<input type="radio" name="tipo_compra_doc" id="compra_con_factura" value="factura" <?php if($comprapendiente->documento=='F'){echo("checked");}?>>
-				    				<label for="compra_con_factura">Factura</label>
+	    	<?php if(isset($comprapendiente->completado)): ?>
+		    	<?php if ($comprapendiente->num_doc == 0): ?>
+	    			<div class="agregar_compras_en_imventario">
+	    				<span style="padding:8px;color:#666;font-size:15px;">Nueva compra con:</span>
+	    				<br><br>
+			    		<div class="opciones_para_agregar_compra">
+			    			<div class="agregar_compra_comprobante">
+			    				<input type="radio" name="tipo_compra_doc" id="compra_con_nota" value="boleta_simple" <?php if($comprapendiente->documento=='BS'){echo("checked");}?>>
+			    				<label for="compra_con_nota">Boleta simple</label>
+			    			</div>
+			    			<div class="agregar_compra_comprobante">
+			    				<input type="radio" name="tipo_compra_doc" id="compra_con_boleta" value="boleta" <?php if($comprapendiente->documento=='B'){echo("checked");}?>>
+			    				<label for="compra_con_boleta">Boleta</label>
+			    			</div>
+			    			<div class="agregar_compra_comprobante">
+			    				<input type="radio" name="tipo_compra_doc" id="compra_con_factura" value="factura" <?php if($comprapendiente->documento=='F'){echo("checked");}?>>
+			    				<label for="compra_con_factura">Factura</label>
+			    			</div>
+			    		</div>
+			    	</div>
+			    	<br>
+			    	<hr>
+			    	<br>
+				  <?php else: ?>
+			    	<div class="contenido_datos_new_compra" id="<?='compra_pendiente'.$comprapendiente->id;?>">
+			    		<?php if($comprapendiente->documento=='BS'): ?>
+			    			<?php $numero_documento_a = $comprapendiente->num_doc;?>
+				    		<div class="document_title"><span>Boleta simple</span></div>
+				    	<?php elseif($comprapendiente->documento=='B'): ?>
+				    		<?php $numero_documento_a = $comprapendiente->numero_documento;?>
+				    		<div class="document_title"><span>Boleta</span></div>
+				    	<?php elseif($comprapendiente->documento=='F'): ?>
+				    		<?php $numero_documento_a = $comprapendiente->numero_documento;?>
+				    		<div class="document_title"><span>Factura</span></div>
+				    	<?php endif ?>
+			    		<div class="comprobante">
+			    			<div class="comprobante_number">
+			    				<h2 class="numdoc_line"><?=$comprapendiente->documento.'-'.$comprapendiente->num_doc;?></h2>
+			    				<input class="typenumber_nop" type="number" name="numero_documento" placeholder="Numero documento" value="<?=$numero_documento_a;?>" autocomplete="off">
+			    			</div>
+			    			<div class="datos_proveedor_box datos_proveedor_box_ad">
+			    				<?php $proveedor_ver = $db->where('id',$comprapendiente->proveedor)->getOne("lui_proveedores"); ?>
+			    				<?php if($proveedor_ver): ?>
+			    					<h5><?=$proveedor_ver->razon_social; ?></h5>
+			    					<p>R.U.C. <?=$proveedor_ver->ruc; ?></p>
+			    				<?php else: ?>
+			    					Seleccione un proveedor
+			    				<?php endif ?>
+				    		</div>
+			    			<div class="proveedores_lista_caja disabled_provedores_list">
+			    				<div class="lista_proveedor">
+	                                <?php foreach ($wo['proveedores'] as $proveedor): ?>
+	                                	<div id="<?=$proveedor['id'];?>">
+		                                	<input id="proveedor_selecteds_<?=$proveedor['id'];?>" type="radio" name="proveedor_compra" value="<?=$proveedor['id'];?>" <?php if($proveedor['id']==$comprapendiente->proveedor){echo "checked";} ?>>
+					    					<label for="proveedor_selecteds_<?=$proveedor['id'];?>">
+					    						<h5><?=$proveedor['razon_social']; ?></h5>
+						    					<p>R.U.C. <?=$proveedor['ruc']; ?></p>
+					    					</label>
+				    					</div>
+	                                <?php endforeach ?>
+			    				</div>
+			    			</div>
+			    			<div class="address_data_proveedor datos_proveedor_box_direccion">
+			    				<?php $proveedor_sucursal_view = $db->where('id',$comprapendiente->proveedor_sucursal)->getOne("sucursal_proveedor"); ?>
+			    				<?php if($proveedor_sucursal_view): ?>
+			    					<span><?=$proveedor_sucursal_view->direccion;?>,<?=$proveedor_sucursal_view->distrito;?>,<?=$proveedor_sucursal_view->departamento;?></span>
+			    				<?php else: ?>
+			    					<span>Seleccione direccion del proveedor</span>
+			    				<?php endif ?>
+			    			</div>
+			    			<div class="listar_direcciones_del_proveedor disabled_provedores_list">
+			    				<?php $wo['proveedores_address'] = lui_GetProveedoresSucursal($comprapendiente->proveedor); ?>
+			    				<div class="lista_proveedor">
+				    				<?php foreach ($wo['proveedores_address'] as $proveedor_address): ?>
+		                                <div id="<?=$proveedor_address['id'];?>">
+			                                <input id="proveedor_selecteds_address_<?=$proveedor_address['id'];?>" type="radio" name="proveedor_compra_address" value="<?=$proveedor_address['id'];?>" <?php if($proveedor_address['id'] == $comprapendiente->proveedor_sucursal){echo "checked";} ?>>
+						    				<label for="proveedor_selecteds_address_<?=$proveedor_address['id'];?>"><?=$proveedor_address['direccion']; ?></label>
+					    				</div>
+		                            <?php endforeach ?>
+	                            </div>
+			    			</div>
+
+			    			<div class="date_comprovante_compra">
+			    				<label for="date_order">Fecha de compra </label>
+			    				<input id="date_order" type="date" name="fecha" value="<?=date('Y-m-d') ?>">
+			    			</div>
+			    			<div class="incluir_guia_remicion_data">
+			    				<input id="incluir_guia_remicion" type="checkbox" name="guia_remicion" <?php if($comprapendiente->guia==1){echo "checked";} ?>>
+			    				<label for="incluir_guia_remicion">Incluir guia de remicion - remitente</label>
+			    			</div>
+			    			<div class="contenido_guia_remicion_con ">
+			    				<div class="contenido_guia_remicion <?php if($comprapendiente->guia!=1){echo "disabled_provedores_list";} ?>">
+				    				<input type="number" name="numero_de_guia" placeholder="Numero guia" value="<?=$comprapendiente->numero_guia;?>">
 				    			</div>
 				    		</div>
-				    	</div>
-				    	<br>
-				    	<hr>
-				    	<br>
-				    <?php else: ?>
-				    	<div class="contenido_datos_new_compra" id="<?='compra_pendiente'.$comprapendiente->id;?>">
-				    		<?php if($comprapendiente->documento=='BS'): ?>
-				    			<?php $numero_documento_a = $comprapendiente->num_doc;?>
-					    		<div class="document_title"><span>Boleta simple</span></div>
-					    	<?php elseif($comprapendiente->documento=='B'): ?>
-					    		<?php $numero_documento_a = $comprapendiente->numero_documento;?>
-					    		<div class="document_title"><span>Boleta</span></div>
-					    	<?php elseif($comprapendiente->documento=='F'): ?>
-					    		<?php $numero_documento_a = $comprapendiente->numero_documento;?>
-					    		<div class="document_title"><span>Factura</span></div>
-					    	<?php endif ?>
-				    		<div class="comprobante">
-				    			<div class="comprobante_number">
-				    				<h2 class="numdoc_line"><?=$comprapendiente->documento.'-'.$comprapendiente->num_doc;?></h2>
-				    				<input class="typenumber_nop" type="number" name="numero_documento" placeholder="Numero documento" value="<?=$numero_documento_a;?>" autocomplete="off">
-				    			</div>
-				    			<div class="datos_proveedor_box datos_proveedor_box_ad">
-				    				<?php $proveedor_ver = $db->where('id',$comprapendiente->proveedor)->getOne("lui_proveedores"); ?>
-				    				<?php if($proveedor_ver): ?>
-				    					<h5><?=$proveedor_ver->razon_social; ?></h5>
-				    					<p>R.U.C. <?=$proveedor_ver->ruc; ?></p>
-				    				<?php else: ?>
-				    					Seleccione un proveedor
-				    				<?php endif ?>
-					    		</div>
-				    			<div class="proveedores_lista_caja disabled_provedores_list">
-				    				<div class="lista_proveedor">
-		                                <?php foreach ($wo['proveedores'] as $proveedor): ?>
-		                                	<div id="<?=$proveedor['id'];?>">
-			                                	<input id="proveedor_selecteds_<?=$proveedor['id'];?>" type="radio" name="proveedor_compra" value="<?=$proveedor['id'];?>" <?php if($proveedor['id']==$comprapendiente->proveedor){echo "checked";} ?>>
-						    					<label for="proveedor_selecteds_<?=$proveedor['id'];?>">
-						    						<h5><?=$proveedor['razon_social']; ?></h5>
-							    					<p>R.U.C. <?=$proveedor['ruc']; ?></p>
-						    					</label>
-					    					</div>
-		                                <?php endforeach ?>
-				    				</div>
-				    			</div>
-				    			<div class="address_data_proveedor datos_proveedor_box_direccion">
-				    				<?php $proveedor_sucursal_view = $db->where('id',$comprapendiente->proveedor_sucursal)->getOne("sucursal_proveedor"); ?>
-				    				<?php if($proveedor_sucursal_view): ?>
-				    					<span><?=$proveedor_sucursal_view->direccion;?>,<?=$proveedor_sucursal_view->distrito;?>,<?=$proveedor_sucursal_view->departamento;?></span>
-				    				<?php else: ?>
-				    					<span>Seleccione direccion del proveedor</span>
-				    				<?php endif ?>
-				    			</div>
-				    			<div class="listar_direcciones_del_proveedor disabled_provedores_list">
-				    				<?php $wo['proveedores_address'] = lui_GetProveedoresSucursal($comprapendiente->proveedor); ?>
-				    				<div class="lista_proveedor">
-					    				<?php foreach ($wo['proveedores_address'] as $proveedor_address): ?>
-			                                <div id="<?=$proveedor_address['id'];?>">
-				                                <input id="proveedor_selecteds_address_<?=$proveedor_address['id'];?>" type="radio" name="proveedor_compra_address" value="<?=$proveedor_address['id'];?>" <?php if($proveedor_address['id'] == $comprapendiente->proveedor_sucursal){echo "checked";} ?>>
-							    				<label for="proveedor_selecteds_address_<?=$proveedor_address['id'];?>"><?=$proveedor_address['direccion']; ?></label>
-						    				</div>
-			                            <?php endforeach ?>
-		                            </div>
-				    			</div>
+				    		<style type="text/css">
+				    			.contenido_currensy_order{display:flex;padding:10px;position:relative;width:100%;flex-wrap:wrap;gap:0.5em;margin-bottom:2rem;}
+				    			.contenido_currensy_order label{display:block;width:100%;}
+				    			.selected_curremcy_order{display:block;position:relative;width:100%;max-width:200px;padding:10px;border:1px solid #ccc;border-radius:3px;outline:none;cursor:pointer;}
+				    		</style>
+				    		<div class="contenido_currensy_order">
+								<label for="currency_order"><?php echo $wo['lang']['currency']; ?></label>
+								<select name="currency" id="currency_order" class="selected_curremcy_order">
+									<?php $chec_currecny_default='';?>
+									<?php foreach ($wo['currencies'] as $key => $currency) { ?>
+										<?php if($comprapendiente->currency==$currency['text']): ?>
+											<?php $chec_currecny_default='selected';?>
+											<option value="<?php echo $currency['text'];?>" <?=$chec_currecny_default;?>><?php echo  $currency['text'] ?> (<?php echo  $currency['symbol'] ?>)</option>
+										<?php else: ?>
+											<option value="<?php echo $currency['text'];?>"><?php echo  $currency['text'] ?> (<?php echo  $currency['symbol'] ?>)</option>
+										<?php endif ?>
+									<?php } ?>
+								</select>
+							</div>
+				    		<style type="text/css">
+				    			.buscar_productos_a_comprar{position:relative;display:none;}
+				    			.listar_productos_a_comprar{display:flex;flex-wrap:wrap;width:100%;border-radius:5px;position:relative;}
+				    			.active_seach_item{display:flex;flex-wrap:wrap;width:100%;}
+				    			.cont_atributes_listas_compras{display:flex;flex-wrap:wrap;gap:1rem;position:fixed;bottom:0;background-color:#FFF;width:100%;max-width:1200px;z-index:1;left:0;right:0;justify-content:center;margin:auto;border:none;border-radius:15px 15px 0 0;padding:20px;max-height: calc(100% - 120px);overflow: auto;}
+				    			.cont_atributes_listas_compras_title{display:block;width:100%;}
+				    			.atributes_listas_compras{display:flex;flex-direction:column;background-color:#fff;overflow:hidden;width:100%;margin:10px auto;}
+				    			.atributes_listas_compras input[type="radio"]{display:none;}
+				    			.atributes_listas_compras .lista_de_opciones_de_atributes label{display:flex;align-items:center;padding:20px;cursor:pointer;transition:background-color 0.3s ease-in-out;}
+				    			.radio-circle{width:20px;height:20px;border:2px solid #3498db;border-radius:50%;margin-right:10px;transition:border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;}
+								.radio-text{font-size:1rem;color:#333;transition:color 0.3s ease-in-out;}
+								.atributes_listas_compras .lista_de_opciones_de_atributes input[type="radio"]:checked + label{background-color:#3498db;}
+								.atributes_listas_compras input[type="radio"]:checked + label .radio-circle{border-color:#fff;background-color:#3498db;}
+								.atributes_listas_compras input[type="radio"]:checked + label .radio-text{color:#FFF;}
+								.cont_ats_title{padding:10px;width:100%;font-size:17px;border-bottom:2px solid #ccca;}
+								.placeholder_atri{width:100%;position:fixed;background:rgba(0, 0, 0, 0.73);top:0;bottom:0;left:0;right:0;z-index:1040;}
+								.header_title_viewas_more_items{display:flex;flex-wrap:wrap;width:100%;gap:1rem;justify-content:space-between;align-items:center;padding:20px;position:sticky;top:0;background-color:#FFF;z-index:1;}
+								.submenu_add_irtd_docmt,
+								.submenu_add_irtd{z-index:1040;overflow:hidden;max-height:calc(100% - 120px);height:100vh;display:block;overflow-y:auto;padding:0;}
+								.submenu_add_irtd_docmt table,
+								.submenu_add_irtd table{padding:20px;padding-top:0;}
+								.submenu_add_irtd_docmt table .table__thead,
+								.submenu_add_irtd table .table__thead{top:80px;position:sticky;z-index:1;background:#F8F8F8;}
+								.main_closed_view_more_items_orrder{position:fixed;top:20px;width:100%;max-width:1200px;margin:auto;display: flex;left:10px;right:0;z-index:10000;}
+								.closed_view_more_items_orrder{aspect-ratio:1/1;border-radius:100%;display:flex;align-items:center;padding:20px;background-color:#F9F9F9}
+								.closed_view_more_items_orrder svg{margin:0!important;width:30px;height:30px;}
+								.precio_compra_invo_s{display:flex;width:100%;justify-content:flex-start;align-items:center;gap:1rem;}
+								.precio_compra_invo_s span{font-size:15px;}
+								.input_number_laysh,
+								.precio_compra_invo_s .precio_compra_inputs{border:2px dashed #ccc;padding:10px;outline:none;transition:all .5s;}
+								.input_number_laysh:focus,
+								.precio_compra_invo_s .precio_compra_inputs:focus{border-color:#555;border-radius:4px;}
+								.input_number_laysh[type="number"]::-webkit-inner-spin-button,
+								.input_number_laysh[type="number"]::-webkit-outer-spin-button,
+								.precio_compra_invo_s .precio_compra_inputs[type="number"]::-webkit-inner-spin-button,
+								.precio_compra_invo_s .precio_compra_inputs[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
+								.input_number_laysh[type="number"],
+								.precio_compra_invo_s .precio_compra_inputs[type="number"]{-moz-appearance: textfield; /* Firefox */}
+								.dell-button{display:flex;flex-direction:column;align-items:center;justify-content:center;width:55px;height:55px;border-radius:15px;background-color:rgb(255, 95, 95);cursor:pointer;border:3px solid rgb(255, 201, 201);transition-duration:0.3s;}
+								.dell-bottom{width:15px;}
+								.dell-top{width:17px;transform-origin:right;transition-duration:0.3s;}
+								.dell-button:hover .dell-top{transform:rotate(45deg);}
+								.dell-button:hover{background-color:rgb(255, 0, 0);}
+								.dell-button:active{transform: scale(0.9);}
+								.menu_atrr{overflow:hidden!important;}
+								.layshane-btn_cr{width:130px;height:40px;color:#fff;border-radius:5px;padding:10px 25px;font-family:'Lato', sans-serif;font-weight:500;background:transparent;cursor:pointer;transition:all 0.3s ease;position:relative;display:inline-flex;box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),7px 7px 20px 0px rgba(0,0,0,.1),4px 4px 5px 0px rgba(0,0,0,.1);outline: none;justify-content:center;align-items:center;}
+								.btn_layshane-1{background:rgb(255, 95, 95);background:linear-gradient(0deg, #f94141 0%, rgb(255, 95, 95) 100%);border: none;}
+								.btn_layshane-1:before{height:0%;width:2px;}
+								.btn_layshane-1:hover{box-shadow: 4px 4px 6px 0 rgba(255,255,255,.5),-4px -4px 6px 0 rgba(116, 125, 136, .5), inset -4px -4px 6px 0 rgba(255,255,255,.2),inset 4px 4px 6px 0 rgba(0, 0, 0, .4);}
+				    		</style>
+				    		<br>
+				    		<div class="buscador_layshane_s1">
+                    <input required="" type="text" class="input" name="buscar_items" id="search_item" value="" autocomplete="off">
+                    <span class="barload_lay"></span>
+                    <label class="label" for="search_item" style="user-select:none;">
+                     	<?php foreach ($buscar_letras as $indice => $letr_lang_s): ?>
+                    		<?php echo "<span class=\"label-char\" style=\"--index: $indice;text-transform:uppercase;\"> $letr_lang_s </span>"; ?>
+                      <?php endforeach ?>
+                  </label>
+                </div>
 
-				    			<div class="date_comprovante_compra">
-				    				<label for="date_order">Fecha de compra </label>
-				    				<input id="date_order" type="date" name="fecha" value="<?=date('Y-m-d') ?>">
-				    			</div>
-				    			<div class="incluir_guia_remicion_data">
-				    				<input id="incluir_guia_remicion" type="checkbox" name="guia_remicion" <?php if($comprapendiente->guia==1){echo "checked";} ?>>
-				    				<label for="incluir_guia_remicion">Incluir guia de remicion - remitente</label>
-				    			</div>
-				    			<div class="contenido_guia_remicion_con ">
-				    				<div class="contenido_guia_remicion <?php if($comprapendiente->guia!=1){echo "disabled_provedores_list";} ?>">
-					    				<input type="number" name="numero_de_guia" placeholder="Numero guia" value="<?=$comprapendiente->numero_guia;?>">
-					    			</div>
-					    		</div>
-					    		<style type="text/css">
-					    			.contenido_currensy_order{display:flex;padding:10px;position:relative;width:100%;flex-wrap:wrap;gap:0.5em;margin-bottom:2rem;}
-					    			.contenido_currensy_order label{display:block;width:100%;}
-					    			.selected_curremcy_order{display:block;position:relative;width:100%;max-width:200px;padding:10px;border:1px solid #ccc;border-radius:3px;outline:none;cursor:pointer;}
-					    		</style>
-					    		<div class="contenido_currensy_order">
-									<label for="currency_order"><?php echo $wo['lang']['currency']; ?></label>
-									<select name="currency" id="currency_order" class="selected_curremcy_order">
-										<?php $chec_currecny_default='';?>
-										<?php foreach ($wo['currencies'] as $key => $currency) { ?>
-											<?php if($comprapendiente->currency==$currency['text']): ?>
-												<?php $chec_currecny_default='selected';?>
-												<option value="<?php echo $currency['text'];?>" <?=$chec_currecny_default;?>><?php echo  $currency['text'] ?> (<?php echo  $currency['symbol'] ?>)</option>
-											<?php else: ?>
-												<option value="<?php echo $currency['text'];?>"><?php echo  $currency['text'] ?> (<?php echo  $currency['symbol'] ?>)</option>
-											<?php endif ?>
-										<?php } ?>
-									</select>
-								</div>
-					    		<style type="text/css">
-					    			.buscar_productos_a_comprar{position:relative;display:none;}
-					    			.listar_productos_a_comprar{display:flex;flex-wrap:wrap;width:100%;border-radius:5px;position:relative;}
-					    			.active_seach_item{display:flex;flex-wrap:wrap;width:100%;}
-					    			.cont_atributes_listas_compras{display:flex;flex-wrap:wrap;gap:1rem;position:fixed;bottom:0;background-color:#FFF;width:100%;max-width:1200px;z-index:1;left:0;right:0;justify-content:center;margin:auto;border:none;border-radius:15px 15px 0 0;padding:20px;max-height: calc(100% - 120px);overflow: auto;}
-					    			.cont_atributes_listas_compras_title{display:block;width:100%;}
-					    			.atributes_listas_compras{display:flex;flex-direction:column;background-color:#fff;overflow:hidden;width:100%;margin:10px auto;}
-					    			.atributes_listas_compras input[type="radio"]{display:none;}
-					    			.atributes_listas_compras .lista_de_opciones_de_atributes label{display:flex;align-items:center;padding:20px;cursor:pointer;transition:background-color 0.3s ease-in-out;}
-					    			.radio-circle{width:20px;height:20px;border:2px solid #3498db;border-radius:50%;margin-right:10px;transition:border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;}
-									.radio-text{font-size:1rem;color:#333;transition:color 0.3s ease-in-out;}
-									.atributes_listas_compras .lista_de_opciones_de_atributes input[type="radio"]:checked + label{background-color:#3498db;}
-									.atributes_listas_compras input[type="radio"]:checked + label .radio-circle{border-color:#fff;background-color:#3498db;}
-									.atributes_listas_compras input[type="radio"]:checked + label .radio-text{color:#FFF;}
-									.cont_ats_title{padding:10px;width:100%;font-size:17px;border-bottom:2px solid #ccca;}
-									.placeholder_atri{width:100%;position:fixed;background:rgba(0, 0, 0, 0.73);top:0;bottom:0;left:0;right:0;z-index:1040;}
-									.header_title_viewas_more_items{display:flex;flex-wrap:wrap;width:100%;gap:1rem;justify-content:space-between;align-items:center;padding:20px;position:sticky;top:0;background-color:#FFF;z-index:1;}
-									.submenu_add_irtd_docmt,
-									.submenu_add_irtd{z-index:1040;overflow:hidden;max-height:calc(100% - 120px);height:100vh;display:block;overflow-y:auto;padding:0;}
-									.submenu_add_irtd_docmt table,
-									.submenu_add_irtd table{padding:20px;padding-top:0;}
-									.submenu_add_irtd_docmt table .table__thead,
-									.submenu_add_irtd table .table__thead{top:80px;position:sticky;z-index:1;background:#F8F8F8;}
-									.main_closed_view_more_items_orrder{position:fixed;top:20px;width:100%;max-width:1200px;margin:auto;display: flex;left:10px;right:0;z-index:10000;}
-									.closed_view_more_items_orrder{aspect-ratio:1/1;border-radius:100%;display:flex;align-items:center;padding:20px;background-color:#F9F9F9}
-									.closed_view_more_items_orrder svg{margin:0!important;width:30px;height:30px;}
-									.precio_compra_invo_s{display:flex;width:100%;justify-content:flex-start;align-items:center;gap:1rem;}
-									.precio_compra_invo_s span{font-size:15px;}
-									.input_number_laysh,
-									.precio_compra_invo_s .precio_compra_inputs{border:2px dashed #ccc;padding:10px;outline:none;transition:all .5s;}
-									.input_number_laysh:focus,
-									.precio_compra_invo_s .precio_compra_inputs:focus{border-color:#555;border-radius:4px;}
-									.input_number_laysh[type="number"]::-webkit-inner-spin-button,
-									.input_number_laysh[type="number"]::-webkit-outer-spin-button,
-									.precio_compra_invo_s .precio_compra_inputs[type="number"]::-webkit-inner-spin-button,
-									.precio_compra_invo_s .precio_compra_inputs[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
-									.input_number_laysh[type="number"],
-									.precio_compra_invo_s .precio_compra_inputs[type="number"]{-moz-appearance: textfield; /* Firefox */}
-									.dell-button{display:flex;flex-direction:column;align-items:center;justify-content:center;width:55px;height:55px;border-radius:15px;background-color:rgb(255, 95, 95);cursor:pointer;border:3px solid rgb(255, 201, 201);transition-duration:0.3s;}
-									.dell-bottom{width:15px;}
-									.dell-top{width:17px;transform-origin:right;transition-duration:0.3s;}
-									.dell-button:hover .dell-top{transform:rotate(45deg);}
-									.dell-button:hover{background-color:rgb(255, 0, 0);}
-									.dell-button:active{transform: scale(0.9);}
-									.menu_atrr{overflow:hidden!important;}
-									.layshane-btn_cr{width:130px;height:40px;color:#fff;border-radius:5px;padding:10px 25px;font-family:'Lato', sans-serif;font-weight:500;background:transparent;cursor:pointer;transition:all 0.3s ease;position:relative;display:inline-flex;box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),7px 7px 20px 0px rgba(0,0,0,.1),4px 4px 5px 0px rgba(0,0,0,.1);outline: none;justify-content:center;align-items:center;}
-									.btn_layshane-1{background:rgb(255, 95, 95);background:linear-gradient(0deg, #f94141 0%, rgb(255, 95, 95) 100%);border: none;}
-									.btn_layshane-1:before{height:0%;width:2px;}
-									.btn_layshane-1:hover{box-shadow: 4px 4px 6px 0 rgba(255,255,255,.5),-4px -4px 6px 0 rgba(116, 125, 136, .5), inset -4px -4px 6px 0 rgba(255,255,255,.2),inset 4px 4px 6px 0 rgba(0, 0, 0, .4);}
-					    		</style>
-					    		<br>
-					    		<div class="buscador_layshane_s1">
-			                        <input required="" type="text" class="input" name="buscar_items" id="search_item" value="" autocomplete="off">
-			                        <span class="barload_lay"></span>
-			                        <label class="label" for="search_item" style="user-select:none;">
-				                       	<?php foreach ($buscar_letras as $indice => $letr_lang_s): ?>
-				                      		<?php echo "<span class=\"label-char\" style=\"--index: $indice;text-transform:uppercase;\"> $letr_lang_s </span>"; ?>
-				                        <?php endforeach ?>
-				                    </label>
-			                    </div>
+		            <div class="noti_sech" style="width:100%;user-select:none;"></div>
+		            <div class="buscar_productos_a_comprar">
+			    				<div class="con_layshane_tbles" style="background-color:transparent;margin-top:0;">
+			    					<div class="container">
+			    						<div class="row--top-20">
+			    								<div class="table-container">
+			    									<table class="table" style="background-color:#F8F8F8;">
+			    										<thead class="table__thead">
+			    											<tr>
+			    												<th class="table__th">Producto</th>
+			    												<th class="table__th">MODELO</th>
+			    												<th class="table__th">SKU</th>
+			    											</tr>
+			    										</thead>
+			    										<tbody class="table__tbody content_resuls_sseach">
+				                			</tbody>
+			    									</table>
+			    								</div>
+			    						</div>
+			    					</div>
+			    				</div>
+			    			</div>
+			    			<script>
+							$(document).ready(function(){
+							    $('.content_resuls_sseach').on('click', '.menu-link_us_add', function(e){
+							        var $submenu_add_irtd = $(this).find('.submenu_add_irtd');
+							        $('.submenu_add_irtd').not($submenu_add_irtd).slideUp();
+							        $submenu_add_irtd.slideToggle();
+							        var $subme_add_holder = $(this).find('.placeholder_atri');
+							        $('.placeholder_atri').not($subme_add_holder).slideUp();
+							        $subme_add_holder.slideToggle();
+							    });
+							    $('.content_resuls_sseach').on('click', '.submenu_add_irtd', function(event){
+							        event.stopPropagation();
+							    });
+							});
+							</script>
 
-			                   <div class="noti_sech" style="width:100%;user-select:none;"></div>
-			                    <div class="buscar_productos_a_comprar">
-				    				<div class="con_layshane_tbles" style="background-color:transparent;margin-top:0;">
-				    					<div class="container">
-				    						<div class="row--top-20">
-				    								<div class="table-container">
-				    									<table class="table" style="background-color:#F8F8F8;">
-				    										<thead class="table__thead">
-				    											<tr>
-				    												<th class="table__th">Producto</th>
-				    												<th class="table__th">MODELO</th>
-				    												<th class="table__th">SKU</th>
-				    											</tr>
-				    										</thead>
-				    										<tbody class="table__tbody content_resuls_sseach">
-					                						</tbody>
-				    									</table>
-				    								</div>
-				    						</div>
-				    					</div>
-				    				</div>
-				    			</div>
-				    			<script>
-								$(document).ready(function(){
-								    $('.content_resuls_sseach').on('click', '.menu-link_us_add', function(e){
-								        var $submenu_add_irtd = $(this).find('.submenu_add_irtd');
-								        $('.submenu_add_irtd').not($submenu_add_irtd).slideUp();
-								        $submenu_add_irtd.slideToggle();
+			    			<div class="listar_productos_a_comprar">
+			    				<div class="con_layshane_tbles" style="background-color:transparent;">
+			    					<div class="container">
+			    						<div class="row row--top-20">
+			    							<div class="columna-12">
+			    								<div class="table-container">
+			    									<table class="table" style="background-color:#F8F8F8;">
+			    										<thead class="table__thead">
+			    											<tr>
+			    												<th class="table__th">Producto</th>
+			    												<th class="table__th">Modelo</th>
+			    												<th class="table__th">SKU</th>
+			    												<th class="table__th">Cantidad</th>
+			    												<th class="table__th">Precio</th>
+			    												<th class="table__th">Sub Total</th>
+			    											</tr>
+			    										</thead>
+			    										<tbody class="table__tbody contet_items_de_doc_compr">
+				                							<?php 
+															$items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->get('imventario');
+															$indexdefault_currency = array_search($comprapendiente->currency, array_column($wo['currencies'], 'text'));
+															$html = "";
+															$productos_vistos = [];
+															foreach ($items_compra as $value) {
+															    $producto = lui_GetProduct($value->producto);
+															    $producto_id = $producto['id'];
+															    if (in_array($producto_id, $productos_vistos)) {
+															        continue;
+															    }
+															    $variantes_color = [];
+															    foreach ($items_compra as $item) {
+															        if ($item->producto == $producto_id) {
+															            $variantes_color[] = $item;
+															        }
+															    }
+															    $variantes_atributos = [];
+															    $atributos = $db->objectbuilder()->where('id_imventario', $value->id)->get('imventario_atributos');
+															    foreach ($atributos as $atributo) {
+															        $variantes_atributos[$atributo->id_atributo][] = $atributo->id_atributo_opciones;
+															    }
+															    $identificador_unico = $comprapendiente->id . '_' . $producto_id;
+															    foreach ($variantes_atributos as $atributo => $opciones) {
+															        $identificador_unico .= '_' . implode('_', $opciones);
+															    }
+															    if (in_array($identificador_unico, $productos_vistos)) {
+															        continue;
+															    }
+															    
+															    $wo['product']['id'] = $producto['id'];
+															    $wo['product']['id_productos'] =  $identificador_unico;
+															    $wo['product']['id_imventarios'] =  $value->id;
+															    $wo['product']['units'] = $producto['units'];
+															    $wo['product']['images'] = $producto['images'];
+															    $wo['product']['name'] = $producto['name'];
+															    $wo['product']['modelo'] = $producto['modelo'];
+															    $wo['product']['sku'] = $producto['sku'];
+															    $wo['product']['comprap'] = $comprapendiente->id;
+															    $wo['product']['symbol'] = (!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $producto['currency'];
 
-								        var $subme_add_holder = $(this).find('.placeholder_atri');
-								        $('.placeholder_atri').not($subme_add_holder).slideUp();
-								        $subme_add_holder.slideToggle();
-								    });
-								    $('.content_resuls_sseach').on('click', '.submenu_add_irtd', function(event){
-								        event.stopPropagation();
-								    });
-								});
-								</script>
-
-				    			<div class="listar_productos_a_comprar">
-				    				<div class="con_layshane_tbles" style="background-color:transparent;">
-				    					<div class="container">
-				    						<div class="row row--top-20">
-				    							<div class="columna-12">
-				    								<div class="table-container">
-				    									<table class="table" style="background-color:#F8F8F8;">
-				    										<thead class="table__thead">
-				    											<tr>
-				    												<th class="table__th">Producto</th>
-				    												<th class="table__th">Modelo</th>
-				    												<th class="table__th">SKU</th>
-				    												<th class="table__th">Cantidad</th>
-				    												<th class="table__th">Precio</th>
-				    												<th class="table__th">Sub Total</th>
-				    											</tr>
-				    										</thead>
-				    										<tbody class="table__tbody contet_items_de_doc_compr">
-					                							<?php 
-																$items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->get('imventario');
-																$indexdefault_currency = array_search($comprapendiente->currency, array_column($wo['currencies'], 'text'));
-																$html = "";
-																$productos_vistos = [];
-																foreach ($items_compra as $value) {
-																    $producto = lui_GetProduct($value->producto);
-																    $producto_id = $producto['id'];
-																    if (in_array($producto_id, $productos_vistos)) {
-																        continue;
-																    }
-																    $variantes_color = [];
-																    foreach ($items_compra as $item) {
-																        if ($item->producto == $producto_id) {
-																            $variantes_color[] = $item;
+															    $wo['product']['inventario'] = $variantes_color[0]->id;
+															    $wo['product']['color'] = $variantes_color[0]->color;
+															    $wo['product']['precio'] = $variantes_color[0]->precio;
+																$cantidad_productos = 0;
+																if (!empty($variantes_atributos)) {
+																    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante = {$comprapendiente->id}";
+																    foreach ($variantes_atributos as $atributo => $opciones) {
+																        foreach ($opciones as $opcion) {
+																            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
 																        }
 																    }
-																    $variantes_atributos = [];
-																    $atributos = $db->objectbuilder()->where('id_imventario', $value->id)->get('imventario_atributos');
-																    foreach ($atributos as $atributo) {
-																        $variantes_atributos[$atributo->id_atributo][] = $atributo->id_atributo_opciones;
-																    }
-																    $identificador_unico = $comprapendiente->id . '_' . $producto_id;
-																    foreach ($variantes_atributos as $atributo => $opciones) {
-																        $identificador_unico .= '_' . implode('_', $opciones);
-																    }
-																    if (in_array($identificador_unico, $productos_vistos)) {
-																        continue;
-																    }
-																    
-																    $wo['product']['id'] = $producto['id'];
-																    $wo['product']['id_productos'] =  $identificador_unico;
-																    $wo['product']['id_imventarios'] =  $value->id;
-																    $wo['product']['units'] = $producto['units'];
-																    $wo['product']['images'] = $producto['images'];
-																    $wo['product']['name'] = $producto['name'];
-																    $wo['product']['modelo'] = $producto['modelo'];
-																    $wo['product']['sku'] = $producto['sku'];
-																    $wo['product']['comprap'] = $comprapendiente->id;
-																    $wo['product']['symbol'] = (!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $producto['currency'];
-
-																    $wo['product']['inventario'] = $variantes_color[0]->id;
-																    $wo['product']['color'] = $variantes_color[0]->color;
-																    $wo['product']['precio'] = $variantes_color[0]->precio;
-																	$cantidad_productos = 0;
-																	if (!empty($variantes_atributos)) {
-																	    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante = {$comprapendiente->id}";
-																	    foreach ($variantes_atributos as $atributo => $opciones) {
-																	        foreach ($opciones as $opcion) {
-																	            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
-																	        }
-																	    }
-																	    $cantidad_productos = $db->rawQueryOne($sql)->cantidad;
-																	} else{
-																	    $cantidad_productos = $db->where('id_comprobante', $comprapendiente->id)->where('producto', $wo['product']['id'])->where('color', $wo['product']['color'])->getValue('imventario', 'COUNT(*)');
-																	}
-
-
-																    $wo['product']['cantidad'] = $cantidad_productos;
-																    $html .= lui_LoadPage('compras/lista_compra');
-																    $productos_vistos[] = $identificador_unico;
+																    $cantidad_productos = $db->rawQueryOne($sql)->cantidad;
+																} else{
+																    $cantidad_productos = $db->where('id_comprobante', $comprapendiente->id)->where('producto', $wo['product']['id'])->where('color', $wo['product']['color'])->getValue('imventario', 'COUNT(*)');
 																}
-																echo $html;
-																?>
-					                						</tbody>
-				    									</table>
-				    									<?php
-				    										//require_once('./luisincludes/librerias/vendor/picqer/php-barcode-generator/vendor/autoload.php'); 
-				    										//$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
-				    										//echo $generator->getBarcode($barcodes['code'], $generator::TYPE_CODE_128); 
-				    									?>
-				    								</div>
-				    								<br>
-				    								<style type="text/css">
-				    									.contenido_ct_footer_document_order{display:flex;justify-content:flex-end;align-items:center;flex-wrap:wrap;width:100%;}
-				    									.footer_document_order{width:100%;max-width:400px;display:flex;flex-wrap:wrap;gap:1rem;}
-				    									.footer_document_order_li{display:flex;flex-wrap:wrap;width:100%;justify-content:space-between;padding:10px;gap:1em;}
-				    									.head_doc_li{font-weight:bold;font-family:arial;text-align:right;}
-				    									.bt_conain_sty{display:flex;width:100%;justify-content:flex-end;}
-				    									.alert_400{padding:10px;border:2px solid #ff00005c;width:100%;text-align:center;border-radius:5px;background:#ffc4c357;color:#f23232;font-weight:900;transition:all 0.5s;user-select:none;text-wrap:wrap;}
-				    									
-				    								</style>
-				    								<?php
-				    								$total_productos_grupo = 0;
-													$total_productos_lista = 0;
-													$total_productos_price = 0.00;
 
-				    								$total_productos_grupo = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
-				    								$total_productos_lista = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
-				    								if ($total_productos_lista>0) {
-				    									$total_productos_price = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
-				    								}
-				    								
-				    								if($comprapendiente->garantia_m == 0) {
-				    									$cantidad_de_garantia = 0;
-				    									$end_date_de_garantia = false;
-				    								}else{
-				    									$cantidad_de_garantia = $comprapendiente->garantia_m;
-				    									$end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($comprapendiente->garantia);
-				    								}
-				    								
-				    								?>
 
-				    								<div class="contenido_ct_footer_document_order">
-				    									<div class="footer_document_order" style="gap:0.2em;">
-				    										<span style="width:100%;">Garantia de compra</span>
-				    										<input class="input_number_laysh update_garant_dt" type="number" name="garantia_compra" value="<?=$cantidad_de_garantia;?>" autocomplete="off"><br>
-				    										<p style="width:100%;" class="result_m_text_gar"><?=$end_date_de_garantia?></p>
-				    									</div>
-				    									<div class="footer_document_order">
-				    										<div class="footer_document_order_li">
-				    											<span class="head_doc_li">Items:</span>
-				    											<span class="head_doc_co" id="items_st_total"><?=$total_productos_grupo;?></span>
-				    										</div>
-				    										<div class="footer_document_order_li">
-				    											<span class="head_doc_li">Cantidad:</span>
-				    											<span class="head_doc_co" id="cantidad_st_total"><?=$total_productos_lista;?></span>
-				    										</div>
-				    										<div class="footer_document_order_li">
-				    											<span class="head_doc_li">Total: </span>
-				    											<span><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $producto['currency'];?>
-				    											<span class="head_doc_co" id="price_st_total">
-				    												 <?=number_format($total_productos_price, 2, ',', '.');?>
+															    $wo['product']['cantidad'] = $cantidad_productos;
+															    $html .= lui_LoadPage('compras/lista_compra');
+															    $productos_vistos[] = $identificador_unico;
+															}
+															echo $html;
+															?>
+				                						</tbody>
+			    									</table>
+			    									<?php
+			    										//require_once('./luisincludes/librerias/vendor/picqer/php-barcode-generator/vendor/autoload.php'); 
+			    										//$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
+			    										//echo $generator->getBarcode($barcodes['code'], $generator::TYPE_CODE_128); 
+			    									?>
+			    								</div>
+			    								<br>
+			    								<style type="text/css">
+			    									.contenido_ct_footer_document_order{display:flex;justify-content:flex-end;align-items:center;flex-wrap:wrap;width:100%;}
+			    									.footer_document_order{width:100%;max-width:400px;display:flex;flex-wrap:wrap;gap:1rem;}
+			    									.footer_document_order_li{display:flex;flex-wrap:wrap;width:100%;justify-content:space-between;padding:10px;gap:1em;}
+			    									.head_doc_li{font-weight:bold;font-family:arial;text-align:right;}
+			    									.bt_conain_sty{display:flex;width:100%;justify-content:flex-end;}
+			    									.alert_400{padding:10px;border:2px solid #ff00005c;width:100%;text-align:center;border-radius:5px;background:#ffc4c357;color:#f23232;font-weight:900;transition:all 0.5s;user-select:none;text-wrap:wrap;}
+			    									
+			    								</style>
+			    								<?php
+			    								$total_productos_grupo = 0;
+												$total_productos_lista = 0;
+												$total_productos_price = 0.00;
+
+			    								$total_productos_grupo = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
+			    								$total_productos_lista = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
+			    								if ($total_productos_lista>0) {
+			    									$total_productos_price = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
+			    								}
+			    								
+			    								if($comprapendiente->garantia_m == 0) {
+			    									$cantidad_de_garantia = 0;
+			    									$end_date_de_garantia = false;
+			    								}else{
+			    									$cantidad_de_garantia = $comprapendiente->garantia_m;
+			    									$end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($comprapendiente->garantia);
+			    								}
+			    								
+			    								?>
+
+			    								<div class="contenido_ct_footer_document_order">
+			    									<div class="footer_document_order" style="gap:0.2em;">
+			    										<span style="width:100%;">Garantia de compra</span>
+			    										<input class="input_number_laysh update_garant_dt" type="number" name="garantia_compra" value="<?=$cantidad_de_garantia;?>" autocomplete="off"><br>
+			    										<p style="width:100%;" class="result_m_text_gar"><?=$end_date_de_garantia?></p>
+			    									</div>
+			    									<div class="footer_document_order">
+			    										<div class="footer_document_order_li">
+			    											<span class="head_doc_li">Items:</span>
+			    											<span class="head_doc_co" id="items_st_total"><?=$total_productos_grupo;?></span>
+			    										</div>
+			    										<div class="footer_document_order_li">
+			    											<span class="head_doc_li">Cantidad:</span>
+			    											<span class="head_doc_co" id="cantidad_st_total"><?=$total_productos_lista;?></span>
+			    										</div>
+			    										<div class="footer_document_order_li">
+			    											<span class="head_doc_li">Total: </span>
+			    											<span><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $producto['currency'];?>
+			    											<span class="head_doc_co" id="price_st_total">
+			    												 <?=number_format($total_productos_price, 2, ',', '.');?>
+			    											</span>
+			    											</span>
+			    										</div>
+			    										<div class="order_for_credid">
+			    											<label class="chechedcaja22_label" for="credit_order">
+			    												<input class="chechedcaja22" id="credit_order" type="checkbox" value="1">
+			    												Comprar a credito
+			    											</label>
+			    										</div>
+			    										<div class="alert_400 hidden">
+			    											No se pudo mostrar el producto.
+			    										</div>
+			    										<div class="bt_conain_sty">
+				    										<button class="btncompletecompra endcompra" data="<?=$comprapendiente->id;?>">
+				    											<span class="default">Completar compra</span>
+				    											<span class="success">Finalizado
+				    												<svg viewbox="0 0 12 10">
+				    													<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+				    												</svg>
 				    											</span>
-				    											</span>
-				    										</div>
-				    										<div class="order_for_credid">
-				    											<label class="chechedcaja22_label" for="credit_order">
-				    												<input class="chechedcaja22" id="credit_order" type="checkbox" value="1">
-				    												Comprar a credito
-				    											</label>
-				    										</div>
-				    										<div class="alert_400 hidden">
-				    											No se pudo mostrar el producto.
-				    										</div>
-				    										<div class="bt_conain_sty">
-					    										<button class="btncompletecompra endcompra" data="<?=$comprapendiente->id;?>">
-					    											<span class="default">Completar compra</span>
-					    											<span class="success">Finalizado
-					    												<svg viewbox="0 0 12 10">
-					    													<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-					    												</svg>
-					    											</span>
-					    											<div class="box"></div>
-					    											<div class="drone">
-					    												<svg class="wing left">
-					    													<use xlink:href="#droneWing"></use>
-					    												</svg>
-																	    <svg class="wing right">
-																	      <use xlink:href="#droneWing"></use>
-																	    </svg>
-																	    <svg class="body">
-																	      <use xlink:href="#droneBody"></use>
-																	    </svg>
-																	    <svg class="grab">
-																	      <use xlink:href="#droneGrab"></use>
-																	    </svg>
-																	  </div>
-																	</button>
-																	<svg xmlns="http://www.w3.org/2000/svg" style="display: none">
-																	  <symbol id="droneBody" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 14" fill="currentColor" stroke="none">
-																	    <path d="M38,0.5 C38,0.223857625 38.2238576,5.07265313e-17 38.5,0 C38.7761424,-5.07265313e-17 39,0.223857625 39,0.5 L39,4 C39.5522847,4 40,4.44771525 40,5 L40,6 L40.5,6 C41.3284271,6 42,6.67157288 42,7.5 C42,8.32842712 41.3284271,9 40.5,9 L30,9 L30,9.86761924 C30,10.5701449 29.6314023,11.2211586 29.0289915,11.5826051 L25.4750236,13.7149859 C25.1641928,13.9014843 24.80852,14 24.4460321,14 L17.5539679,14 C17.19148,14 16.8358072,13.9014843 16.5249764,13.7149859 L12.9710085,11.5826051 C12.3685977,11.2211586 12,10.5701449 12,9.86761924 L12,9 L1.5,9 C0.671572875,9 1.01453063e-16,8.32842712 0,7.5 C-1.01453063e-16,6.67157288 0.671572875,6 1.5,6 L2,6 L2,5 C2,4.44771525 2.44771525,4 3,4 L3,0.5 C3,0.223857625 3.22385763,5.07265313e-17 3.5,0 C3.77614237,-5.07265313e-17 4,0.223857625 4,0.5 L4,4 C4.55228475,4 5,4.44771525 5,5 L5,6 L12.005,6 L12.0064818,5.97128221 C12.0580908,5.33141252 12.414937,4.75103782 12.9710085,4.41739491 L16.5249764,2.28501415 C16.8358072,2.09851567 17.19148,2 17.5539679,2 L24.4460321,2 C24.80852,2 25.1641928,2.09851567 25.4750236,2.28501415 L29.0289915,4.41739491 C29.5934099,4.75604592 29.952577,5.34889137 29.9956355,6.0001358 L37,6 L37,5 C37,4.44771525 37.4477153,4 38,4 L38,0.5 Z"></path>
-																	  </symbol>
-																	  <symbol id="droneGrab" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 14" fill="none" stroke="currentColor">
-																	    <path d="M5,13 L1,13 C1,7.66666667 3.33333333,3.66666667 8,1 L17.996238,1 C22.6654127,3 25,7 25,13 L21.0005587,13" stroke-width="2" stroke-linecap="round"></path>
-																	  </symbol>
-																	  <symbol id="droneWing" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 2" fill="currentColor" stroke="none">
-																	    <path d="M13,2 C12.4477153,2 12,1.55228475 12,1 C12,0.44771525 12.4477153,0 13,0 C13.5522847,0 21,0.44771525 21,1 C21,1.55228475 13.5522847,2 13,2 Z"></path>
-																	    <path d="M8,2 C7.44771525,2 0,1.55228475 0,1 C0,0.44771525 7.44771525,0 8,0 C8.55228475,0 9,0.44771525 9,1 C9,1.55228475 8.55228475,2 8,2 Z"></path>
-																	  </symbol>
-																	</svg>
-					    									</div>
-
+				    											<div class="box"></div>
+				    											<div class="drone">
+				    												<svg class="wing left">
+				    													<use xlink:href="#droneWing"></use>
+				    												</svg>
+																    <svg class="wing right">
+																      <use xlink:href="#droneWing"></use>
+																    </svg>
+																    <svg class="body">
+																      <use xlink:href="#droneBody"></use>
+																    </svg>
+																    <svg class="grab">
+																      <use xlink:href="#droneGrab"></use>
+																    </svg>
+																  </div>
+																</button>
+																<svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+																  <symbol id="droneBody" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 14" fill="currentColor" stroke="none">
+																    <path d="M38,0.5 C38,0.223857625 38.2238576,5.07265313e-17 38.5,0 C38.7761424,-5.07265313e-17 39,0.223857625 39,0.5 L39,4 C39.5522847,4 40,4.44771525 40,5 L40,6 L40.5,6 C41.3284271,6 42,6.67157288 42,7.5 C42,8.32842712 41.3284271,9 40.5,9 L30,9 L30,9.86761924 C30,10.5701449 29.6314023,11.2211586 29.0289915,11.5826051 L25.4750236,13.7149859 C25.1641928,13.9014843 24.80852,14 24.4460321,14 L17.5539679,14 C17.19148,14 16.8358072,13.9014843 16.5249764,13.7149859 L12.9710085,11.5826051 C12.3685977,11.2211586 12,10.5701449 12,9.86761924 L12,9 L1.5,9 C0.671572875,9 1.01453063e-16,8.32842712 0,7.5 C-1.01453063e-16,6.67157288 0.671572875,6 1.5,6 L2,6 L2,5 C2,4.44771525 2.44771525,4 3,4 L3,0.5 C3,0.223857625 3.22385763,5.07265313e-17 3.5,0 C3.77614237,-5.07265313e-17 4,0.223857625 4,0.5 L4,4 C4.55228475,4 5,4.44771525 5,5 L5,6 L12.005,6 L12.0064818,5.97128221 C12.0580908,5.33141252 12.414937,4.75103782 12.9710085,4.41739491 L16.5249764,2.28501415 C16.8358072,2.09851567 17.19148,2 17.5539679,2 L24.4460321,2 C24.80852,2 25.1641928,2.09851567 25.4750236,2.28501415 L29.0289915,4.41739491 C29.5934099,4.75604592 29.952577,5.34889137 29.9956355,6.0001358 L37,6 L37,5 C37,4.44771525 37.4477153,4 38,4 L38,0.5 Z"></path>
+																  </symbol>
+																  <symbol id="droneGrab" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 14" fill="none" stroke="currentColor">
+																    <path d="M5,13 L1,13 C1,7.66666667 3.33333333,3.66666667 8,1 L17.996238,1 C22.6654127,3 25,7 25,13 L21.0005587,13" stroke-width="2" stroke-linecap="round"></path>
+																  </symbol>
+																  <symbol id="droneWing" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 2" fill="currentColor" stroke="none">
+																    <path d="M13,2 C12.4477153,2 12,1.55228475 12,1 C12,0.44771525 12.4477153,0 13,0 C13.5522847,0 21,0.44771525 21,1 C21,1.55228475 13.5522847,2 13,2 Z"></path>
+																    <path d="M8,2 C7.44771525,2 0,1.55228475 0,1 C0,0.44771525 7.44771525,0 8,0 C8.55228475,0 9,0.44771525 9,1 C9,1.55228475 8.55228475,2 8,2 Z"></path>
+																  </symbol>
+																</svg>
 				    									</div>
-				    									
-				    									
-				    								</div>
-				    							</div>
-				    						</div>
-				    					</div>
-				    				</div>
-				    			</div>
-				    			<script type="text/javascript">
-				    				var isProcessing = false;
-				    				$(document).ready(function() {
-					    				$('.endcompra').click(function(e) {
-					    					if (isProcessing) return;
-											isProcessing = true;
-					    					var unt = $('#price_st_total').html();
-					    					var untformat = unt.replace(/\s/g, '');
-											var dat = $('#date_order').val();
-										    let button = $(this);
-										    let id_compr = $(this).attr('data');
-										    let currency = $('#currency_order').val();
-										    var comprascontent = document.querySelector('a[data-ajax="?link1=compras"]');
-										    if ($('#credit_order').prop('checked')) {
-										    	var crediboxon = $('#credit_order').val();
-										    }else{
-										    	var crediboxon = 0;
-										    }
 
-										    var credi = crediboxon;
-										    if(!button.hasClass('animatebtncompra')) {
-										        button.addClass('animatebtncompra');
-										        $.ajax({
-													url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=finalizar_compra&hash=' + $('.main_session').val(),
-													data: {price_dat:untformat,fecha:dat,credito:credi,currency:currency},
-													type: 'POST',
-													success: function (data){
-														console.log(data)
-														if(data.status==200){
-															$('.alert_400').html('');
-															$('.alert_400').addClass('hidden');
-															if(data.estadop==1){
-																setTimeout(() => {
-														            button.removeClass('animatebtncompra');
-														            $('#compra_pendiente'+id_compr).remove();
-														            $('.btn_prin_compra').removeClass('cancelar_order_in_pages');
-														            $('.btn_prin_compra').addClass('create_order_in_pages');
-														            $('.btn_prin_compra').html('<?php echo $wo['lang']['buy'] ?>');
-														            if (comprascontent) {
-      																		comprascontent.click();
-      																	}
-														        }, 6500);
-													        }
-													        if (data.estadop==2){
-													        	if (comprascontent) {
-																	comprascontent.click();
-																}
-																button.removeClass('animatebtncompra');
-													        }
-														}
-														if(data.status==400){
-															$('.alert_400').html(data.message);
-															$('.alert_400').removeClass('hidden');
-															button.removeClass('animatebtncompra');
-														}
-														isProcessing = false;
-													}
-												})
-										        
-										    }
+			    									</div>
+			    									
+			    									
+			    								</div>
+			    							</div>
+			    						</div>
+			    					</div>
+			    				</div>
+			    			</div>
+			    			<script type="text/javascript">
+			    				var isProcessing = false;
+			    				$(document).ready(function() {
+				    				$('.endcompra').click(function(e) {
+				    					if (isProcessing) return;
+										isProcessing = true;
+				    					var unt = $('#price_st_total').html();
+				    					var untformat = unt.replace(/\s/g, '');
+										var dat = $('#date_order').val();
+									    let button = $(this);
+									    let id_compr = $(this).attr('data');
+									    let currency = $('#currency_order').val();
+									    var comprascontent = document.querySelector('a[data-ajax="?link1=compras"]');
+									    if ($('#credit_order').prop('checked')) {
+									    	var crediboxon = $('#credit_order').val();
+									    }else{
+									    	var crediboxon = 0;
+									    }
 
-										});
-										$(document).on('change','#currency_order',function(){
-											if (isProcessing) return;
-											isProcessing = true;
-											var unt = $(this).val();
-											var comprascontent = document.querySelector('a[data-ajax="?link1=compras"]');
-											$.ajax({
-												url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=change_currency&hash=' + $('.main_session').val(),
-												data: {currency:unt},
+									    var credi = crediboxon;
+									    if(!button.hasClass('animatebtncompra')) {
+									        button.addClass('animatebtncompra');
+									        $.ajax({
+												url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=finalizar_compra&hash=' + $('.main_session').val(),
+												data: {price_dat:untformat,fecha:dat,credito:credi,currency:currency},
 												type: 'POST',
 												success: function (data){
-													if (data.status==200){
-														if (comprascontent) {
-															comprascontent.click();
-														}
+													console.log(data)
+													if(data.status==200){
+														$('.alert_400').html('');
+														$('.alert_400').addClass('hidden');
+														if(data.estadop==1){
+															setTimeout(() => {
+													            button.removeClass('animatebtncompra');
+													            $('#compra_pendiente'+id_compr).remove();
+													            $('.btn_prin_compra').removeClass('cancelar_order_in_pages');
+													            $('.btn_prin_compra').addClass('create_order_in_pages');
+													            $('.btn_prin_compra').html('<?php echo $wo['lang']['buy'] ?>');
+													            if (comprascontent) {
+    																		comprascontent.click();
+    																	}
+													        }, 6500);
+												        }
+												        if (data.estadop==2){
+												        	if (comprascontent) {
+																comprascontent.click();
+															}
+															button.removeClass('animatebtncompra');
+												        }
+													}
+													if(data.status==400){
+														$('.alert_400').html(data.message);
+														$('.alert_400').removeClass('hidden');
+														button.removeClass('animatebtncompra');
 													}
 													isProcessing = false;
 												}
 											})
-										});
+									        
+									    }
 
-										$('.listar_productos_a_comprar').on('keyup','.update_garant_dt',function(){
-											var unt = $(this).val();
-											var dat = $('#date_order').val();
-											$.ajax({
-												url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=garantia_compra&hash=' + $('.main_session').val(),
-												data: {garantia:unt,fecha:dat},
-												type: 'POST',
-												success: function (data){
-													$('.result_m_text_gar').html(data.garantia);
-												}
-											})
-										});
-									}); 
- 
-									$(document).ready(function() {
-										$('.content_resuls_sseach').on('click', '.add_product_compra_list', function(){
-										    let product = $(this).attr('data-id');
-										    let prod_co = $(this).attr('data-col');
-										    if (product){
-										        $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_add', {value: product,color:prod_co}, function (data) {
-										            if (data.status == 200){
-										            	var elementoExistente = $('.item_dats_invoice[data-producto="' + data.producto + '"]'); 
-										                if(elementoExistente.length === 0){
-										                    $('.contet_items_de_doc_compr').append(data.html);
-										                } else {
-										                	elementoExistente.replaceWith(data.html);
-										                }
-										                $('#items_st_total').html(data.total_items);
-														$('#cantidad_st_total').html(data.total_lista);
-														$('#price_st_total').html(data.total_precio);
-										            }
-										        });
-										    }
-										});
 									});
-
-									$(document).ready(function() {
-									    $('.content_resuls_sseach').on('submit', '.form_producto', function(e) {
-									        e.preventDefault();
-									        var form = $(this);
-									        $.ajax({
-									            type: 'POST',
-									            url: Wo_Ajax_Requests_File() + '?f=product_compra_list_addc',
-									            data: form.serialize(),
-									            success: function(data) {
-									                if (data.status == 200){
-										            	var elementoExistente = $('.item_dats_invoice[data-producto="' + data.producto + '"]'); 
-										                if(elementoExistente.length === 0){
-										                    $('.contet_items_de_doc_compr').append(data.html);
-										                } else {
-										                	elementoExistente.replaceWith(data.html);
-										                }
-										                $('#items_st_total').html(data.total_items);
-														$('#cantidad_st_total').html(data.total_lista);
-														$('#price_st_total').html(data.total_precio);
-										            }
-									            },
-									            error: function(xhr, status, error) {
-									                console.error(xhr.responseText);
-									            }
-									        });
-									    });
-
-									    $('.content_resuls_sseach').on('submit', '.form_productos', function(e) {
-									        e.preventDefault();
-									        var form = $(this);
-									        $.ajax({
-									            type: 'POST',
-									            url: Wo_Ajax_Requests_File() + '?f=product_compra_list_addc_lop',
-									            data: form.serialize(),
-									            success: function(data) {
-									                if (data.status == 200){
-										            	var elementoExistente = $('.item_dats_invoice[data-producto="' + data.producto + '"]'); 
-										                if(elementoExistente.length === 0){
-										                    $('.contet_items_de_doc_compr').append(data.html);
-										                } else {
-										                	elementoExistente.replaceWith(data.html);
-										                }
-										                $('#items_st_total').html(data.total_items);
-														$('#cantidad_st_total').html(data.total_lista);
-														$('#price_st_total').html(data.total_precio);
-										            }
-									            },
-									            error: function(xhr, status, error) {
-									                console.error(xhr.responseText);
-									            }
-									        });
-									    });
-									});
-
-									$(document).ready(function() {
-									    $('.content_resuls_sseach').on('click', '.menu-link_us_add_b', function(e) {
-									    	let product = $(this).attr('data-id');
-										    let prod_co = $(this).attr('data-col');
-										    let prod_coc = $(this).attr('data-colc');
-
-										    let atribut = 'atributo_'+prod_coc+'[]';
-									
-										    var data = {};
-										    data[atribut] = prod_co;
-										    data['producto'] = product;
-										    data['color'] = prod_co;
-
-									        $.ajax({
-									            type: 'POST',
-									            url: Wo_Ajax_Requests_File() + '?f=product_compra_list_addc',
-									            data: data,
-									            success: function(data) {
-									                if (data.status == 200){
-										            	var elementoExistente = $('.item_dats_invoice[data-producto="' + data.producto + '"]'); 
-										                if(elementoExistente.length === 0){
-										                    $('.contet_items_de_doc_compr').append(data.html);
-										                } else {
-										                	elementoExistente.replaceWith(data.html);
-										                }
-										                $('#items_st_total').html(data.total_items);
-														$('#cantidad_st_total').html(data.total_lista);
-														$('#price_st_total').html(data.total_precio);
-										            }
-									            },
-									            error: function(xhr, status, error) {
-									                console.error(xhr.responseText);
-									            }
-									        });
-									    });
-									});
-
-									$('.contet_items_de_doc_compr').on('keyup','.precio_compra_inputs_a',function(){
-										var numbers_ac_pl = $(this).attr('data-id');
-										var prices_av     = $(this).val();
-										var cant_stks     = $(this).attr('data-ct');
-										var indentfi      = $(this).attr('data-ident');
+									$(document).on('change','#currency_order',function(){
+										if (isProcessing) return;
+										isProcessing = true;
+										var unt = $(this).val();
+										var comprascontent = document.querySelector('a[data-ajax="?link1=compras"]');
 										$.ajax({
-											url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=precio_compra_inputs&hash=' + $('.main_session').val(),
-											data: {docnum:numbers_ac_pl,price_dat:prices_av},
+											url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=change_currency&hash=' + $('.main_session').val(),
+											data: {currency:unt},
 											type: 'POST',
 											success: function (data){
-												let tsubs         = prices_av*cant_stks;
-												$('.precio_compra_inputs_totalsub_'+indentfi).html(tsubs);
-												$('#items_st_total').html(data.total_items);
-												$('#cantidad_st_total').html(data.total_lista);
-												$('#price_st_total').html(data.total_precio);
+												if (data.status==200){
+													if (comprascontent) {
+														comprascontent.click();
+													}
+												}
+												isProcessing = false;
 											}
 										})
 									});
 
-									$('.contet_items_de_doc_compr').on('keyup', '.precio_compra_inputs_b', function () {
-									    var productId = $(this).attr('data-id');
-									    var newPrice = $(this).val();
-									    var quantity = $(this).attr('data-ct');
-									    var attributes = $(this).attr('data-atributos');
-									    var uniqueIdentifier = productId;
-									    if (attributes) {
-									        uniqueIdentifier += '_' + attributes;
-									    }
-									    var formData = {
-									        docnum: uniqueIdentifier,
-									        price_dat: newPrice,
-									        attributes: attributes,
-									        quantity: quantity
-									    };
-
-									    $.ajax({
-									        url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=precio_compra_inputs_atri&hash=' + $('.main_session').val(),
-									        data: formData,
-									        type: 'POST',
-									        success: function (data) {
-									            var subtotal = newPrice * quantity;
-									            $('.precio_compra_inputs_totalsub_' + data.identifier).html(subtotal);
-									            $('#items_st_total').html(data.total_items);
-												$('#cantidad_st_total').html(data.total_lista);
-												$('#price_st_total').html(data.total_precio);
-									     
-									        },
-									        error: function (xhr, status, error) {
-									        }
-									    });
+									$('.listar_productos_a_comprar').on('keyup','.update_garant_dt',function(){
+										var unt = $(this).val();
+										var dat = $('#date_order').val();
+										$.ajax({
+											url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=garantia_compra&hash=' + $('.main_session').val(),
+											data: {garantia:unt,fecha:dat},
+											type: 'POST',
+											success: function (data){
+												$('.result_m_text_gar').html(data.garantia);
+											}
+										})
 									});
+								}); 
 
-									$('.contet_items_de_doc_compr').on('click', '.menu_item_compras_la', function(e){
-								        var $submenu_add_irtd_docmt = $(this).find('.submenu_add_irtd_docmt');
-								        $('.submenu_add_irtd_docmt').not($submenu_add_irtd_docmt).slideUp();
-								        $submenu_add_irtd_docmt.slideToggle();
-								        var $subme_add_holder = $(this).find('.placeholder_atri');
-								        $('.placeholder_atri').not($subme_add_holder).slideUp();
-								        $subme_add_holder.slideToggle();
-								        $('body').toggleClass("menu_atrr");
+								$(document).ready(function() {
+									$('.content_resuls_sseach').on('click', '.add_product_compra_list', function(){
+									    let product = $(this).attr('data-id');
+									    let prod_co = $(this).attr('data-col');
+									    if (product){
+									        $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_add', {value: product,color:prod_co}, function (data) {
+									            if (data.status == 200){
+									            	var elementoExistente = $('.item_dats_invoice[data-producto="' + data.producto + '"]'); 
+									                if(elementoExistente.length === 0){
+									                    $('.contet_items_de_doc_compr').append(data.html);
+									                } else {
+									                	elementoExistente.replaceWith(data.html);
+									                }
+									                $('#items_st_total').html(data.total_items);
+													$('#cantidad_st_total').html(data.total_lista);
+													$('#price_st_total').html(data.total_precio);
+									            }
+									        });
+									    }
+									});
+								});
+
+								$(document).ready(function() {
+								    $('.content_resuls_sseach').on('submit', '.form_producto', function(e) {
+								        e.preventDefault();
+								        var form = $(this);
+								        $.ajax({
+								            type: 'POST',
+								            url: Wo_Ajax_Requests_File() + '?f=product_compra_list_addc',
+								            data: form.serialize(),
+								            success: function(data) {
+								                if (data.status == 200){
+									            	var elementoExistente = $('.item_dats_invoice[data-producto="' + data.producto + '"]'); 
+									                if(elementoExistente.length === 0){
+									                    $('.contet_items_de_doc_compr').append(data.html);
+									                } else {
+									                	elementoExistente.replaceWith(data.html);
+									                }
+									                $('#items_st_total').html(data.total_items);
+													$('#cantidad_st_total').html(data.total_lista);
+													$('#price_st_total').html(data.total_precio);
+									            }
+								            },
+								            error: function(xhr, status, error) {
+								                console.error(xhr.responseText);
+								            }
+								        });
 								    });
-								    $('.contet_items_de_doc_compr').on('click', '.submenu_add_irtd_docmt', function(event){
-								        event.stopPropagation();
+
+								    $('.content_resuls_sseach').on('submit', '.form_productos', function(e) {
+								        e.preventDefault();
+								        var form = $(this);
+								        $.ajax({
+								            type: 'POST',
+								            url: Wo_Ajax_Requests_File() + '?f=product_compra_list_addc_lop',
+								            data: form.serialize(),
+								            success: function(data) {
+								                if (data.status == 200){
+									            	var elementoExistente = $('.item_dats_invoice[data-producto="' + data.producto + '"]'); 
+									                if(elementoExistente.length === 0){
+									                    $('.contet_items_de_doc_compr').append(data.html);
+									                } else {
+									                	elementoExistente.replaceWith(data.html);
+									                }
+									                $('#items_st_total').html(data.total_items);
+													$('#cantidad_st_total').html(data.total_lista);
+													$('#price_st_total').html(data.total_precio);
+									            }
+								            },
+								            error: function(xhr, status, error) {
+								                console.error(xhr.responseText);
+								            }
+								        });
 								    });
-								    $('.contet_items_de_doc_compr').on('click', '.precio_compra_inputs', function(event){
-								        event.stopPropagation();
+								});
+
+								$(document).ready(function() {
+								    $('.content_resuls_sseach').on('click', '.menu-link_us_add_b', function(e) {
+								    	let product = $(this).attr('data-id');
+									    let prod_co = $(this).attr('data-col');
+									    let prod_coc = $(this).attr('data-colc');
+
+									    let atribut = 'atributo_'+prod_coc+'[]';
+								
+									    var data = {};
+									    data[atribut] = prod_co;
+									    data['producto'] = product;
+									    data['color'] = prod_co;
+
+								        $.ajax({
+								            type: 'POST',
+								            url: Wo_Ajax_Requests_File() + '?f=product_compra_list_addc',
+								            data: data,
+								            success: function(data) {
+								                if (data.status == 200){
+									            	var elementoExistente = $('.item_dats_invoice[data-producto="' + data.producto + '"]'); 
+									                if(elementoExistente.length === 0){
+									                    $('.contet_items_de_doc_compr').append(data.html);
+									                } else {
+									                	elementoExistente.replaceWith(data.html);
+									                }
+									                $('#items_st_total').html(data.total_items);
+													$('#cantidad_st_total').html(data.total_lista);
+													$('#price_st_total').html(data.total_precio);
+									            }
+								            },
+								            error: function(xhr, status, error) {
+								                console.error(xhr.responseText);
+								            }
+								        });
 								    });
-								</script>
-					    	</div>
+								});
+
+								$('.contet_items_de_doc_compr').on('keyup','.precio_compra_inputs_a',function(){
+									var numbers_ac_pl = $(this).attr('data-id');
+									var prices_av     = $(this).val();
+									var cant_stks     = $(this).attr('data-ct');
+									var indentfi      = $(this).attr('data-ident');
+									$.ajax({
+										url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=precio_compra_inputs&hash=' + $('.main_session').val(),
+										data: {docnum:numbers_ac_pl,price_dat:prices_av},
+										type: 'POST',
+										success: function (data){
+											let tsubs         = prices_av*cant_stks;
+											$('.precio_compra_inputs_totalsub_'+indentfi).html(tsubs);
+											$('#items_st_total').html(data.total_items);
+											$('#cantidad_st_total').html(data.total_lista);
+											$('#price_st_total').html(data.total_precio);
+										}
+									})
+								});
+
+								$('.contet_items_de_doc_compr').on('keyup', '.precio_compra_inputs_b', function () {
+								    var productId = $(this).attr('data-id');
+								    var newPrice = $(this).val();
+								    var quantity = $(this).attr('data-ct');
+								    var attributes = $(this).attr('data-atributos');
+								    var uniqueIdentifier = productId;
+								    if (attributes) {
+								        uniqueIdentifier += '_' + attributes;
+								    }
+								    var formData = {
+								        docnum: uniqueIdentifier,
+								        price_dat: newPrice,
+								        attributes: attributes,
+								        quantity: quantity
+								    };
+
+								    $.ajax({
+								        url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=precio_compra_inputs_atri&hash=' + $('.main_session').val(),
+								        data: formData,
+								        type: 'POST',
+								        success: function (data) {
+								            var subtotal = newPrice * quantity;
+								            $('.precio_compra_inputs_totalsub_' + data.identifier).html(subtotal);
+								            $('#items_st_total').html(data.total_items);
+											$('#cantidad_st_total').html(data.total_lista);
+											$('#price_st_total').html(data.total_precio);
+								     
+								        },
+								        error: function (xhr, status, error) {
+								        }
+								    });
+								});
+
+								$('.contet_items_de_doc_compr').on('click', '.menu_item_compras_la', function(e){
+							        var $submenu_add_irtd_docmt = $(this).find('.submenu_add_irtd_docmt');
+							        $('.submenu_add_irtd_docmt').not($submenu_add_irtd_docmt).slideUp();
+							        $submenu_add_irtd_docmt.slideToggle();
+							        var $subme_add_holder = $(this).find('.placeholder_atri');
+							        $('.placeholder_atri').not($subme_add_holder).slideUp();
+							        $subme_add_holder.slideToggle();
+							        $('body').toggleClass("menu_atrr");
+							    });
+							    $('.contet_items_de_doc_compr').on('click', '.submenu_add_irtd_docmt', function(event){
+							        event.stopPropagation();
+							    });
+							    $('.contet_items_de_doc_compr').on('click', '.precio_compra_inputs', function(event){
+							        event.stopPropagation();
+							    });
+							</script>
 				    	</div>
-				    	<br>
-				    	<hr>
-				    	<br>
+			    	</div>
+			    	<br>
+			    	<hr>
+			    	<br>
 
 		    		<?php endif ?>
 		    		<script type="text/javascript">
@@ -1926,9 +1925,9 @@ table{
 						})
 					});
 		    	</script>
-	        <?php endif ?>
-	        <div class="clearfix"></div>
-	    </div>
+	    <?php endif ?>
+	    <div class="clearfix"></div>
+	  </div>
 	</div>
 </div>
 

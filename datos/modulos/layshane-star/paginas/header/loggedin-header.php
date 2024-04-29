@@ -30,12 +30,17 @@ if ($followers_alert == 0) {
 $totalcarrito = 0;
 $totalcomprasencarrito = 0;
 if($wo['loggedin'] == true){
-	$items = $db->where('user_id',$wo['user']['user_id'])->get(T_USERCARD);
-	if(!empty($items)){
-		foreach($items as $key => $item){
-			$totalcarrito += $item->units;
-		}
+	$comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->getOne(T_VENTAS);
+	if (!empty($comprapendiente)) {
+		$totalcarrito = $db->where('estado','0')->where('id_comprobante_v',$comprapendiente->id)->getValue('imventario','COUNT(*)');
 	}
+	
+	//$items = $db->where('user_id',$wo['user']['user_id'])->get(T_USERCARD);
+	//if(!empty($items)){
+	//	foreach($items as $key => $item){
+	//		$totalcarrito += $item->units;
+	//	}
+	//}
 }
 $totalcomprasencarrito = $totalcarrito;
 ?>
@@ -56,11 +61,11 @@ svg:not(:root){overflow-clip-margin:content-box;overflow:hidden;}
 			<circle cx="9" cy="21" r="1"></circle>
 			<circle cx="20" cy="21" r="1"></circle>
 			<path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-			<?php if ($totalcomprasencarrito > 0): ?>
-	            <div class="count_items_carrito">
-	               <span class="count_items_carrito_cou"><?=$totalcomprasencarrito;?></span>
-	            </div>
-	         <?php endif ?>
+			<div class="count_items_carrito">
+				<?php if ($totalcomprasencarrito > 0): ?>
+		            <span class="count_items_carrito_cou"><?=$totalcomprasencarrito;?></span>
+		        <?php endif ?>
+	        </div>
 		</a>
 	</li>
 	<li class="dropdown messages-notification-container" onclick="<?php echo(((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] == 1)) ? "Wo_OpenBannedMenu('message');" : 'Wo_OpenMessagesMenu();')) ?>">

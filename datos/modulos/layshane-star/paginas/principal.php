@@ -118,10 +118,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
   <link id="s_pag_loop" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>" as="style">
   <link id="style_pag_css" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>">
 <?php endif ?>
-<?php if($wo['page'] == 'checkout'): ?>
-  <link id="s_pag_loop" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/carrito_estilos.css?version=<?php echo $wo['config']['version']; ?>" as="style">
-  <link class="style_pag_css" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/carrito_estilos.css?version=<?php echo $wo['config']['version']; ?>">
-<?php endif ?>
+
 <?php if($wo['page'] == 'tienda'): ?>
   <link id="s_pag_loop" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css?version=<?php echo $wo['config']['version']; ?>" as="style">
   <link class="style_pag_css" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css?version=<?php echo $wo['config']['version']; ?>">
@@ -179,7 +176,10 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
         <?php endif; ?>
       var box = $('#contnet');
       var ISAPI = $('#ISAPI').val();
+      
       $(document).on('click', 'a[data-ajax]', function(e) {
+        var carritoAbierto = false;
+        var productoItemAbierto = false;
           var corousel_Data = document.getElementById('carousel__content');
           if (corousel_Data){
             if(document.body.contains(corousel_Data)){
@@ -314,6 +314,25 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                 $('#scripts_page_load').remove();
               }
             }
+         
+
+            // URL que deseas comparar (puede ser obtenida dinámicamente)
+            var urlDeseada = urlsssss; // Esta función debe ser implementada por ti
+            var paginaActual = window.location.href
+            // Función para verificar si la URL deseada es igual a la URL actual
+            function esIgual(url1, url2) {
+                return url1 === url2;
+            }
+
+            // Verificar si la URL actual coincide con la URL deseada
+            if (paginaActual.includes('checkout')) {
+                carritoAbierto = true;
+            } else if (paginaActual.includes('item') && esIgual(window.location.href, urlDeseada)) {
+                productoItemAbierto = true;
+            }
+
+
+
             $.post(Wo_Ajax_Requests_Filee() + url, {url:url}, function (data) {
               if($('.user-details').length >0){
                 $('.user-details').remove();
@@ -350,15 +369,24 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
               if(json_data.page == 'home') {
                 window.history.pushState({state:'new'},'', websiteUrl);
               }else{
-                window.history.pushState({state:'new'},'', json_data.url);
+                if (json_data.page === 'checkout') {
+                  if (carritoAbierto===false) {
+                    window.history.pushState({state:'new'}, '', json_data.url);
+                  }
+                }else if (json_data.page === 'publicacion') {
+                  if (productoItemAbierto===false) {
+                    window.history.pushState({state:'new'}, '', json_data.url);
+                  }
+                }else{
+                  window.history.pushState({state:'new'}, '', json_data.url);
+                }
               }
               if(json_data.page == 'tienda') {
                 layshane_carousel_views();
               }
-              
 
-              
               $('.postText').autogrow({vertical: true, horizontal: false, height: 200});
+
               window.onpopstate = function(event) {
                 $(window).unbind('popstate');
                 window.location.href = document.location;
@@ -728,6 +756,10 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
 .posts-count:empty{padding:0;border:0;box-shadow:none!important}
 .posts-count:hover{background-color:#0062b6;}
   </style>
+<?php if($wo['page'] == 'checkout'): ?>
+  <link id="s_pag_loop" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/carrito_estilos.css?version=<?php echo $wo['config']['version']; ?>" as="style">
+  <link class="style_pag_css" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/carrito_estilos.css?version=<?php echo $wo['config']['version']; ?>">
+<?php endif ?>
 </head>
 
 <body <?php if ($wo['config']['chatSystem'] == 0) { ?> chat-off="true" <?php } ?>>
@@ -786,12 +818,16 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
         </li>
         <?php $totalcarrito = 0; ?>
           <?php if ($wo['loggedin'] == true) {
-            $items = $db->where('user_id',$wo['user']['user_id'])->get(T_USERCARD);
-            if(!empty($items)){
-              foreach($items as $key => $item) {
-                $totalcarrito += $item->units;
-              }
+            $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->getOne(T_VENTAS);
+            if (!empty($comprapendiente)) {
+              $totalcarrito = $db->where('estado','0')->where('id_comprobante_v',$comprapendiente->id)->getValue('imventario','COUNT(*)');
             }
+            //$items = $db->where('user_id',$wo['user']['user_id'])->get(T_USERCARD);
+            //if(!empty($items)){
+              //foreach($items as $key => $item) {
+                //$totalcarrito += $item->units;
+              //}
+            //}
           }
         $totalcomprasencarrito = $totalcarrito; ?>
         <li>
@@ -800,9 +836,11 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
               <path d="M3.87289 17.0194L2.66933 9.83981C2.48735 8.75428 2.39637 8.21152 2.68773 7.85576C2.9791 7.5 3.51461 7.5 4.58564 7.5H19.4144C20.4854 7.5 21.0209 7.5 21.3123 7.85576C21.6036 8.21152 21.5126 8.75428 21.3307 9.83981L20.1271 17.0194C19.7282 19.3991 19.5287 20.5889 18.7143 21.2945C17.9 22 16.726 22 14.3782 22H9.62182C7.27396 22 6.10003 22 5.28565 21.2945C4.47127 20.5889 4.27181 19.3991 3.87289 17.0194Z" stroke="currentColor" stroke-width="1.5" />
               <path d="M17.5 7.5C17.5 4.46243 15.0376 2 12 2C8.96243 2 6.5 4.46243 6.5 7.5" stroke="currentColor" stroke-width="1.5" />
             </svg>
-            <?php if ($totalcomprasencarrito > 0): ?>
-              <div class="count_items_carrito"><p class="count_items_carrito_cou"><?=$totalcomprasencarrito;?></p></div>
-            <?php endif ?>
+            <div class="count_items_carrito">
+              <?php if ($totalcomprasencarrito > 0): ?>
+                <span class="count_items_carrito_cou"><?=$totalcomprasencarrito;?></span>
+              <?php endif ?>
+            </div>
             <span>&nbsp;<?php echo $wo['lang']['carrito'] ?></span>
           </a>
         </li>
@@ -1011,9 +1049,8 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
            $('#publisher-box-sticker-cont-'+id).html(sticker);
 
          }
-        $(window).on("popstate", function (e) {
-          location.reload();
-        });
+
+        
       <?php echo $wo['config']['footer_cc']; ?>
     </script>
     <?php if ($wo['page'] != 'get_news_feed') { ?>
@@ -1050,6 +1087,7 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
     <!-- HTML NOTIFICATION POPUP -->
     <div id="notification-popup"></div>
     <!-- HTML NOTIFICATION POPUP -->
+    <a href="<?php echo $wo['config']['site_url'].'/checkout';?>" data-ajax="?link1=checkout" id="load_checkout" style="display: none;"></a>
     <div id="select-language" class="modal fade" data-keyboard="false">
       <div class="lang_select_modal">
         <div class="modal-body">
@@ -1071,6 +1109,9 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
       </div>
     </div>
     <script type="text/javascript">
+      $(window).on("popstate", function (e) {
+          location.reload();
+        });
       /*Language Select*/
       document.addEventListener("DOMContentLoaded", function(){
         appendImageToElement(".language_select .English", "<?php echo $wo['config']['theme_url']; ?>/img/flags/united-states.svg", "layshane");

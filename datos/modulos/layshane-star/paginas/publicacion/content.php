@@ -1,6 +1,7 @@
 <div class="page-margin page-wrapper grid  ">
 	<main id="maincontent" class="page-main">
 		<?php
+			$color_seleccionado_productos = '';
 			$symbol =  (!empty($wo['currencies'][$wo['itemsdata']['product']['currency']]['symbol'])) ? $wo['currencies'][$wo['itemsdata']['product']['currency']]['symbol'] : $wo['config']['classified_currency_s'];
 			$text =  (!empty($wo['currencies'][$wo['itemsdata']['product']['currency']]['text'])) ? $wo['currencies'][$wo['itemsdata']['product']['currency']]['text'] : $wo['config']['classified_currency'];
 			$status = '<span class="product-description">' . $wo['lang']['currently_unavailable'] . '</span>';
@@ -20,6 +21,7 @@
 			if($wo['itemsdata']['product']['marca']) {
 				$marca = $wo['itemsdata']['product']['marca'];
 			}
+			
 			if(!empty($wo['itemsdata']['product']['images'])){
 				$color_idc = lui_buscar_color_en_opciones_redir($wo['itemsdata']['product']['id'],1);
 				if(!empty($color_idc)){
@@ -48,6 +50,7 @@
 						header('Location: ' . $wo['itemsdata']['product']['url'].'/'.$el_colorvc);
 						exit();
 					}
+
 				}
 			
 			}else{
@@ -57,6 +60,8 @@
 
 			$cantidad_productos = 0;
 			$variantes_atributos = [];
+			$attributeOptions = [];
+			$atributosseleccionados_pr = [];
 			$atributos_productos = Mostrar_Atributos_producto($wo['itemsdata']['product']['id']);
 			//unset($_SESSION['seleccion_atributos']);
 			$producto_id = $wo['itemsdata']['product']['id'];
@@ -100,6 +105,7 @@
 										foreach($wo['itemsdata']['product']['images'] as $index => $photo){
 											$color_id = lui_buscar_color_en_opciones($photo['id_color']);
 											if(isset($color_id['id_color'])!=0) {
+												$color_seleccionado_productos = $color_id['id_color'];
 												$buscar_el_color_por_id = lui_buscar_color_en_colores($color_id['id_color']);
 												$el_colorv = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]);
 												if ($wo['atributo_items']==$el_colorv) {
@@ -301,9 +307,13 @@
 							<?php endif ?>
 							
 							
-							<div class="content_atributos_c">
+							<div class="content_atributos_c"><?php // unset($_SESSION['seleccion_atributos']) ?>
 								<?php foreach($atributos_productos as $wo['atributos']): ?>
 									<?php if($wo['atributos']['nombre']=='Color'): ?>
+										<?php $atributosseleccionados_pr['atributo_'.$wo['atributos']['id']][] = $wo['itemsdata']['product']['elcolorseleccionadourl']; ?>
+										<?php  $variantes_atributos[$wo['atributos']['id']][] = $wo['itemsdata']['product']['elcolorseleccionadourl'];;
+											   $attributeOptions[] = $wo['itemsdata']['product']['elcolorseleccionadourl'];;
+										?>
 									<?php else: $atributos_opciones = Mostrar_Opciones_Atributos_producto($wo['atributos']['id']);?>
 										<span><?=$wo['atributos']['nombre'];?></span>
 										<div class="contenido_opciones_atriburts">
@@ -317,12 +327,19 @@
 													foreach ($selecciones as $atributoId => $opcionId) {
 														if (!isset($variantes_atributos[$atributoId])) {
 															$variantes_atributos[$atributoId] = [];
+															$atributosseleccionados_pr['atributo_'.$atributoId][] = $opcionId;
+															$attributeOptions[] = $opcionId;
 														}
+
 														$variantes_atributos[$atributoId][] = $opcionId;
+														
+														
 													}
 												} elseif ($wo['opt_atributos']['active'] == 1) {
 													$isChecked = 'checked';
 													$variantes_atributos[$wo['atributos']['id']][] = $wo['opt_atributos']['id'];
+													$attributeOptions[] = $wo['opt_atributos']['id'];
+													$atributosseleccionados_pr['atributo_'.$wo['atributos']['id']][] = $wo['opt_atributos']['id'];
 												} ?>
 												<div class="lista_de_opciones_de_atributes">
 													<input class="seleccted_atributes_s" type="radio" name="opcion<?=$wo['atributos']['id'];?>" id="atr_opt_list<?=$wo['opt_atributos']['id'];?>" <?=$isChecked; ?> value="<?=$wo['opt_atributos']['precio_adicional']; ?>" data-atributo="<?=$wo['atributos']['id'];?>" data-opcion="<?=$wo['opt_atributos']['id'];?>" onchange="updateSelection()">
@@ -343,7 +360,7 @@
 								        }
 								    }
 								    $cantidad_prod = $db->rawQueryOne($sql)->cantidad;
-								    $cantidad_productos =	($cantidad_prod !== null) ? $cantidad_prod : 0;
+								    $cantidad_productos = ($cantidad_prod !== null) ? $cantidad_prod : 0;
 								} else{
 									if ($s_photo_color_id) {
 										$cantidad_productos = $db->where('estado', 1)
@@ -361,22 +378,70 @@
 							?>
 							<span hidden id="cantidad_products"><?=$cantidad_productos;?></span>
 							<?php if ($wo['loggedin']) { ?>
+								<?php $producto_agotado = ''; ?>
+								<?php $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->getOne(T_VENTAS); ?>
 								<div class=" wo_post_prod_full_btns">
 									<?php if ($wo['config']['store_system'] == 'on') { ?>
 										<?php if (!empty($cantidad_productos) && $cantidad_productos > 0) { ?>
-											<?php $opciones_del_producto = lui_poner_en_lista_las_opciones($wo['product']['id']) ?>
-											<?php //$color_nombre_atributo = $db->where('id_producto', $wo['product']['id'])->getOne('atributos')?>
+											<?php $opciones_del_producto = lui_poner_en_lista_las_opciones($wo['itemsdata']['product']['id']) ?>
 											<br><br>
 											<?php if ($opciones_del_producto): ?>
-											<?php else: ?>
-												<?php $existencia_atributes = false; foreach ($atributos as $wo['atributos_b']): ?>
+												<?php $color_nombre_atributo = $db->where('id_producto', $wo['itemsdata']['product']['id'])->getOne('atributos')?>
+												<?php $existencia_atributes = false; foreach ($atributos_productos as $wo['atributos_b']): ?>
 													<?php if($wo['atributos_b']['nombre']=='Color'): ?>
 													<?php else: ?>
 														<?php $existencia_atributes = true; ?>
 													<?php endif ?>
 												<?php endforeach ?>
+												<?php if ($existencia_atributes==false){
+													$uniqueIdentifier = $wo['itemsdata']['product']['id'].'_'.$wo['itemsdata']['product']['elcolorseleccionadourl'];
+												}else{
+													$attributeString = implode('_', $attributeOptions);
+													$uniqueIdentifier = $wo['itemsdata']['product']['id'].'_'.$attributeString;
+												}
+												?>
+												<?php if (!empty($comprapendiente)): ?>
+													<?php $atributos_producto_en_carrito = $comprapendiente->id . '_' .$uniqueIdentifier;?>
+													<?php $total_productos_listas_stok = $db->where('estado','0')->where('atributo', $atributos_producto_en_carrito)->where('id_comprobante_v',$comprapendiente->id)->getValue('imventario','COUNT(*)'); ?>
+													<?php if ($total_productos_listas_stok < $cantidad_productos): ?>
+													<?php else: ?>
+														<?php $producto_agotado = 'disabled'; ?>
+													<?php endif ?>
+												<?php else: ?>
+													<?php $total_productos_listas_stok=false; ?>
+												<?php endif ?>
+												
+												<button class="flex buttton_add_cart_list button3  contact btn-main btn btn-mat menu-link_us_add_b" data-colc="<?=$uniqueIdentifier;?>" data-col="<?=$wo['itemsdata']['product']['elcolorseleccionadourl'];?>" data-id="<?php echo($wo['itemsdata']['product']['id']); ?>" <?=$producto_agotado; ?>>
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z" /></svg> <?php echo($wo['lang']['buy_now']) ?>
+												</button>
+											<?php else: ?>
+												<?php $existencia_atributes = false;
+												foreach ($atributos_productos as $wo['atributos_b']): ?>
+													<?php if($wo['atributos_b']['nombre']=='Color'): ?>
+													<?php else: ?>
+														<?php $existencia_atributes = true; ?>
+													<?php endif ?>
+												<?php endforeach ?>
+												<?php if ($existencia_atributes==false) {
+													$uniqueIdentifier = $wo['itemsdata']['product']['id'];
+												}else{
+													$attributeString = implode('_', $attributeOptions);
+													$uniqueIdentifier = $wo['itemsdata']['product']['id'].'_'.$attributeString;
+												}
+												
+												?>
 
-												<button class="flex buttton_add_cart_list button3  contact btn-main btn btn-mat <?php echo ($existencia_atributes==true ? 'menu-link_us_add': 'add_product_compra_list'); ?>" data-col="" data-id="<?php echo($wo['itemsdata']['product']['id']); ?>">
+												<?php if (!empty($comprapendiente)): ?>
+													<?php $atributos_producto_en_carrito = $comprapendiente->id . '_' .$uniqueIdentifier;?>
+													<?php $total_productos_listas_stok = $db->where('estado','0')->where('atributo', $atributos_producto_en_carrito)->where('id_comprobante_v',$comprapendiente->id)->getValue('imventario','COUNT(*)'); ?>
+													<?php if ($total_productos_listas_stok < $cantidad_productos): ?>
+													<?php else: ?>
+														<?php $producto_agotado = 'disabled'; ?>
+													<?php endif ?>
+												<?php else: ?>
+													<?php $total_productos_listas_stok=false; ?>
+												<?php endif ?>
+												<button class="flex buttton_add_cart_list button3  contact btn-main btn btn-mat <?php echo ($existencia_atributes==true ? 'menu-link_us_add_b': 'add_product_compra_list'); ?>" data-colc="<?=$uniqueIdentifier;?>" data-col="" data-id="<?php echo($wo['itemsdata']['product']['id']); ?>" <?=$producto_agotado; ?>>
 													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z" /></svg> <?php echo($wo['lang']['buy_now']) ?>
 												</button>
 											<?php endif ?>
@@ -432,20 +497,58 @@
 			</div>
 		</div>
 	</main>
+	<a href="<?=$wo['config']['site_url']."/item/".$wo['itemsdata']['id_publicacion'].$wo['itemsdata']['product']['coloreds']; ?>" data-ajax="?link1=item&items=<?=$wo['itemsdata']['product']['seo_id'].$wo['itemsdata']['product']['coloreds_b'];?>" id="load_proeducto_item" style="display: none;"></a>
 </div>
 <script type="text/javascript">
+
 $(document).ready(function() {
 	$(document).on('click', '.add_product_compra_list', function(){
 	    let product = $(this).attr('data-id');
 	    let prod_co = $(this).attr('data-col');
 	    if (product){
 	        $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bdd', {value: product,color:prod_co}, function (data) {
-	        	console.log(data)
+	        	console.log(data)                
+	        	if (data.status==200) {
+	        		$('.count_items_carrito').html('<span class="count_items_carrito_cou">'+data.total_lista+'</span>');
+	        	}
+	        	if (data.sin_stock==1) {
+	        		$('.add_product_compra_list').attr('disabled', "disabled");
+	        	}
 	        });
 	    }
 	});
-});
 
+	$('.wo_post_prod_full_btns').on('click', '.menu-link_us_add_b', function(e) {
+    	let product = $(this).attr('data-id');
+	    let prod_co = $(this).attr('data-col');
+	    var atribut = <?php echo json_encode($atributosseleccionados_pr); ?>;
+	    var data = atribut;
+	    data['producto'] = product;
+	    data['color'] = prod_co;
+	    console.log(data)
+	    console.log('--')
+        $.ajax({
+            type: 'POST',
+            url: Wo_Ajax_Requests_File() + '?f=product_compra_list_bddc',
+            data: data,
+            success: function(data) {
+                console.log(data)                
+	        	if (data.status==200) {
+	        		$('.count_items_carrito').html('<span class="count_items_carrito_cou">'+data.total_lista+'</span>');
+	        	}
+	        	if (data.sin_stock==1) {
+	        		$('.menu-link_us_add_b').attr('disabled', "disabled");
+	        	}
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+function LoadProductosItems() {
+  $('#load_proeducto_item').click();
+}
 function Agregar_producto_al_carrito(self,id,type) {
   qty = 1;
   if ($('#cart_product_qty').length > 0) {
@@ -633,6 +736,7 @@ function updateSelection() {
       	}else{
       		$('.buttton_add_cart_list').removeClass('hidden');
       	}
+      	LoadProductosItems()
           if (data.status == 200) {
           }
       });

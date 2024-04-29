@@ -778,7 +778,141 @@ function AddProductToCart_layshane(self,id,type) {
     }
   });
 }
+function ChangeQtya(self,product_id,prod_co) {
+  if (product_id){
+      $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bdd', {value: product_id,color:prod_co}, function (data) {
+        if (data.status==200) {
+          if (data.total_lista>0) {
+            $('.count_items_carrito').html('<span class="count_items_carrito_cou">'+data.total_lista+'</span>');
+          }else{
+            $('.count_items_carrito').html('');
+          }
+          $('.total_items_order').html(data.total_lista);
+        }
+        if (data.sin_stock==1) {
+          $('.add_product_compra_list').attr('disabled', "disabled");
+        }
+      });
+  }
+  LoadCheckout();
+}
+function ChangeQtyb(self,product_id,prod_co) {
+  if (product_id){
+      $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bdd_del', {value: product_id,color:prod_co}, function (data) {
+        if (data.status==200) {
+          if (data.total_lista>0) {
+            $('.count_items_carrito').html('<span class="count_items_carrito_cou">'+data.total_lista+'</span>');
+          }else{
+            $('.count_items_carrito').html('');
+          }
+          $('.total_items_order').html(data.total_lista);
+        }
+        if (data.sin_stock==1) {
+          $('.add_product_compra_list').attr('disabled', "disabled");
+        }else{
+          $('.add_product_compra_list').attr('disabled', "");
+        }
+      });
+  }
+  LoadCheckout();
+}
+function ChangeQtyc(self,product_id,prod_co) {
+  qty = $(self).val();
+  if (product_id){
+      $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bdd_num', {cantidad:qty, value: product_id,color:prod_co}, function (data) {
+        if (data.status==200) {
+          if (data.total_lista>0) {
+            $('.count_items_carrito').html('<span class="count_items_carrito_cou">'+data.total_lista+'</span>');
+          }else{
+            $('.count_items_carrito').html('');
+          }
+          $('.total_items_order').html(data.total_lista);
+        }
+        if (data.sin_stock==1) {
+          $('.add_product_compra_list').attr('disabled', "disabled");
+        }else{
+          $('.add_product_compra_list').attr('disabled', "");
+        }
+      });
+  }
+  LoadCheckout();
+}
 
+//ChangeQtya_col 
+function ChangeQtya_col(self,product_id,prod_co,atributo) {
+  if (product_id){
+    var atribut = atributo;
+    var data = atribut;
+      data['producto'] = product_id;
+      data['color'] = prod_co;
+
+      $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bddc', data, function (data) {
+        if (data.status==200) {
+          if (data.total_lista>0) {
+            $('.count_items_carrito').html('<span class="count_items_carrito_cou">'+data.total_lista+'</span>');
+          }else{
+            $('.count_items_carrito').html('');
+          }
+          $('.total_items_order').html(data.total_lista);
+        }
+        if (data.sin_stock==1) {
+          $('.add_product_compra_list').attr('disabled', "disabled");
+        }
+      });
+  }
+  LoadCheckout();
+}
+function ChangeQtyb_col(self,product_id,prod_co,atributo) {
+  if (product_id){
+    var atribut = atributo;
+    var data = atribut;
+      data['producto'] = product_id;
+      data['color'] = prod_co;
+      $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bddc_del', data, function (data) {
+        if (data.status==200) {
+          if (data.total_lista>0) {
+            $('.count_items_carrito').html('<span class="count_items_carrito_cou">'+data.total_lista+'</span>');
+          }else{
+            $('.count_items_carrito').html('');
+          }
+          $('.total_items_order').html(data.total_lista);
+        }
+        if (data.sin_stock==1) {
+          $('.add_product_compra_list').attr('disabled', "disabled");
+        }else{
+          $('.add_product_compra_list').attr('disabled', "");
+        }
+      });
+  }
+  LoadCheckout();
+}
+function ChangeQtyc_col(self,product_id,prod_co,atributo) {
+  qty = $(self).val();
+  if (product_id){
+    var atribut = atributo;
+    var data = atribut;
+      data['producto'] = product_id;
+      data['color'] = prod_co;
+      data['cantidad'] = qty;
+
+      $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bddc_num', data, function (data) {
+        if (data.status==200) {
+          if (data.total_lista>0) {
+            $('.count_items_carrito').html('<span class="count_items_carrito_cou">'+data.total_lista+'</span>');
+          }else{
+            $('.count_items_carrito').html('');
+          }
+          $('.total_items_order').html(data.total_lista);
+        }
+        if (data.sin_stock==1) {
+          $('.add_product_compra_list').attr('disabled', "disabled");
+        }else{
+          $('.add_product_compra_list').attr('disabled', "");
+        }
+      });
+  }
+  LoadCheckout();
+}
 function ChangeQty(self,product_id) {
   qty = $(self).val();
   $.post(Wo_Ajax_Requests_File() + '?f=products&s=change_qty&hash=' + $('.main_session').val(), {product_id: product_id,qty: qty}, function(data, textStatus, xhr) {
@@ -786,6 +920,39 @@ function ChangeQty(self,product_id) {
     LoadCheckout();
   });
 }
+
+function order_pl(current,lista) {
+  $.ajax({
+    url: Wo_Ajax_Requests_File() + '?f=comprar_producto_b&s='+current+'&hash=' + $('.main_session').val(), 
+    data: {lista: lista},
+    type: 'POST',
+    success: function (data) {
+      console.log(data)
+    }
+  })
+}
+function order_pl_add(current) {
+  $.ajax({
+    url: Wo_Ajax_Requests_File() + '?f=comprar_producto_b&s='+current+'&hash=' + $('.main_session').val(), 
+    type: 'POST',
+    success: function (data) {
+      console.log(data)
+    }
+  })
+}
+function order_pl_addres_type(current) {
+  var docs = $(current).val();
+  $.ajax({
+    url: Wo_Ajax_Requests_File() + '?f=order_opcion&s=opcion_compra&hash=' + $('.main_session').val(),
+    data: {modo_compra:docs},
+    type: 'POST',
+    success: function (data) {
+      console.log(data)
+    }
+  })
+  LoadCheckout();
+}
+
 function LoadCheckout() {
   $('#load_checkout').click();
 }

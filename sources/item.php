@@ -32,16 +32,21 @@ if(in_array(true, $check_item)){
                         if($wo['atributo_items']==$elcolor_disponible_view){
                             $imagen_color_query = mysqli_query($sqlConnect, "SELECT `id`,`image` FROM `lui_products_media` WHERE `id_color` = '{$fet_data['id']}'");
                             $imagen_color_data = mysqli_fetch_assoc($imagen_color_query);
+                            $wo['itemsdata']['product']['elcolorseleccionadourl'] = $color_data['id'];
                             $wo['itemsdata']['product']['coloreds'] = '/'. lui_SlugPost($wo['lang'][$color_data['lang_key']]);
+                            $wo['itemsdata']['product']['coloreds_b'] = '&opcion='. lui_SlugPost($wo['lang'][$color_data['lang_key']]);
                             $buscarelidcolor = $imagen_color_data['image'];
                         }
                     }else{
+                        $wo['itemsdata']['product']['elcolorseleccionadourl'] = '';
                         $wo['itemsdata']['product']['coloreds'] = '';
                     }
                     
                 }
             } else {
+                $wo['itemsdata']['product']['elcolorseleccionadourl'] = '';
                 $wo['itemsdata']['product']['coloreds'] = '';
+                $wo['itemsdata']['product']['coloreds_b'] = '';
             }
 
             if ($buscarelidcolor=='') {
