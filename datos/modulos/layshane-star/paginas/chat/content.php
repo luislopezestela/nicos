@@ -66,7 +66,7 @@ function Wo_EditGChat(e,group_id){
 
 function socketSide(){
   <?php if ($wo['config']['node_socket_flow'] == "1") { ?>
-//    console.log("user status change registered")
+    console.log("Cambio de estado de usuario registrado")
     socket.on("user_status_change", (data)=>{
       var online_users_container = $('.online-users');
       var offline_users_container = $('.offline-users');
@@ -81,7 +81,7 @@ function socketSide(){
         offline_users_container.html(data.offline_users);
       }
     })
-    // console.log("Typing registered")
+     console.log("Escribiendo...")
     socket.on("typing",(data)=>{
     var inputs = $("input.chat-user-id");
     if (inputs.length > 0) {

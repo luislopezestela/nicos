@@ -126,6 +126,14 @@ function layshane_carousel_views() {
         isDragStart = false;
         isDragging = false;
     });
+    content.addEventListener('wheel', function(e) {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          content.style.pointerEvents = 'none';
+          setTimeout(function() {
+              content.style.pointerEvents = 'auto';
+          }, 100); // Restablece las interacciones después de 100 ms
+      }
+    }, { passive: false });
   }
 };
 function view_images_prod() {

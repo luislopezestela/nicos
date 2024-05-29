@@ -38,12 +38,12 @@ if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
 body{background-color:#F0F2FD;}
 .content_imventario_layshane{display:grid;flex-wrap:wrap;gap:2rem;width:100%;grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));}
 .card{overflow:hidden;position:relative;text-align:left;border-radius:0.5rem;user-select:none;box-shadow:0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);background-color:#fff;}
-.div_image_v{background:#47c9a2;border-bottom:none;position:relative;text-align:center;margin:-20px -20px 0;border-radius:5px 5px 0 0;padding:35px;}
+.div_image_v{background:#3498db;border-bottom:none;position:relative;text-align:center;margin:-20px -20px 0;border-radius:5px 5px 0 0;padding:35px;}
 .header{padding:1.25rem 1rem 1rem 1rem;}
-.image{display:flex;margin-left:auto;margin-right:auto;background-color:#e2feee;flex-shrink:0;justify-content:center;align-items:center;width:4rem;height:4rem;border-radius:9999px;animation:animate .6s linear alternate-reverse infinite;transition:.6s ease;}
-.image svg{color:#0afa2a;width:2rem;height:2rem;}
+.image{display:flex;margin-left:auto;margin-right:auto;background-color:rgba(250, 250, 250, 0.35);flex-shrink:0;justify-content:center;align-items:center;width:4rem;height:4rem;border-radius:9999px;animation:animate .6s linear alternate-reverse infinite;transition:.6s ease;}
+.image svg{width:2rem;height:2rem;color:#fff}
 .content{margin-top:0.75rem;text-align:center;}
-.title{color:#066e29;font-size:1rem;font-weight:600;line-height:1.5rem;}
+.title{color:#2980b9;font-size:1rem;font-weight:600;line-height:1.5rem;}
 .message{margin-top:0.5rem;color:#595b5f;font-size:0.875rem;line-height:1.25rem;}
 @keyframes animate{from{transform:scale(1);}to{transform:scale(1.09);}}
 </style>
@@ -94,7 +94,7 @@ body{background-color:#F0F2FD;}
             <div class="header"> 
               <div class="div_image_v">
                 <div class="image">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="#f1c40f" height="16" width="18" viewBox="0 0 576 512"><path d="M248 0H208c-26.5 0-48 21.5-48 48V160c0 35.3 28.7 64 64 64H352c35.3 0 64-28.7 64-64V48c0-26.5-21.5-48-48-48H328V80c0 8.8-7.2 16-16 16H264c-8.8 0-16-7.2-16-16V0zM64 256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H224c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H184v80c0 8.8-7.2 16-16 16H120c-8.8 0-16-7.2-16-16V256H64zM352 512H512c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H472v80c0 8.8-7.2 16-16 16H408c-8.8 0-16-7.2-16-16V256H352c-15 0-28.8 5.1-39.7 13.8c4.9 10.4 7.7 22 7.7 34.2V464c0 12.2-2.8 23.8-7.7 34.2C323.2 506.9 337 512 352 512z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="16" width="18" viewBox="0 0 576 512"><path d="M248 0H208c-26.5 0-48 21.5-48 48V160c0 35.3 28.7 64 64 64H352c35.3 0 64-28.7 64-64V48c0-26.5-21.5-48-48-48H328V80c0 8.8-7.2 16-16 16H264c-8.8 0-16-7.2-16-16V0zM64 256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H224c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H184v80c0 8.8-7.2 16-16 16H120c-8.8 0-16-7.2-16-16V256H64zM352 512H512c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H472v80c0 8.8-7.2 16-16 16H408c-8.8 0-16-7.2-16-16V256H352c-15 0-28.8 5.1-39.7 13.8c4.9 10.4 7.7 22 7.7 34.2V464c0 12.2-2.8 23.8-7.7 34.2C323.2 506.9 337 512 352 512z"/></svg>
                 </div>
               </div>
               <div class="content">
@@ -107,7 +107,13 @@ body{background-color:#F0F2FD;}
             <div class="header"> 
               <div class="div_image_v">
                 <div class="image">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="#f1c40f" height="16" width="18" viewBox="0 0 576 512"><path d="M248 0H208c-26.5 0-48 21.5-48 48V160c0 35.3 28.7 64 64 64H352c35.3 0 64-28.7 64-64V48c0-26.5-21.5-48-48-48H328V80c0 8.8-7.2 16-16 16H264c-8.8 0-16-7.2-16-16V0zM64 256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H224c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H184v80c0 8.8-7.2 16-16 16H120c-8.8 0-16-7.2-16-16V256H64zM352 512H512c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H472v80c0 8.8-7.2 16-16 16H408c-8.8 0-16-7.2-16-16V256H352c-15 0-28.8 5.1-39.7 13.8c4.9 10.4 7.7 22 7.7 34.2V464c0 12.2-2.8 23.8-7.7 34.2C323.2 506.9 337 512 352 512z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                    <path d="M3 2H4.30116C5.48672 2 6.0795 2 6.4814 2.37142C6.88331 2.74285 6.96165 3.36307 7.11834 4.60351L8.24573 13.5287C8.45464 15.1826 8.5591 16.0095 9.09497 16.5048C9.63085 17 10.4212 17 12.002 17H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    <circle cx="11.5" cy="19.5" r="1.5" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="18.5" cy="19.5" r="1.5" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M18 14H16C14.1144 14 13.1716 14 12.5858 13.4142C12 12.8284 12 11.8856 12 10V8C12 6.11438 12 5.17157 12.5858 4.58579C13.1716 4 14.1144 4 16 4H18C19.8856 4 20.8284 4 21.4142 4.58579C22 5.17157 22 6.11438 22 8V10C22 11.8856 22 12.8284 21.4142 13.4142C20.8284 14 19.8856 14 18 14Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M16.5 7L17.5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
                 </div>
               </div>
               <div class="content">
@@ -120,7 +126,13 @@ body{background-color:#F0F2FD;}
             <div class="header"> 
               <div class="div_image_v">
                 <div class="image">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="#f1c40f" height="16" width="18" viewBox="0 0 576 512"><path d="M248 0H208c-26.5 0-48 21.5-48 48V160c0 35.3 28.7 64 64 64H352c35.3 0 64-28.7 64-64V48c0-26.5-21.5-48-48-48H328V80c0 8.8-7.2 16-16 16H264c-8.8 0-16-7.2-16-16V0zM64 256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H224c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H184v80c0 8.8-7.2 16-16 16H120c-8.8 0-16-7.2-16-16V256H64zM352 512H512c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H472v80c0 8.8-7.2 16-16 16H408c-8.8 0-16-7.2-16-16V256H352c-15 0-28.8 5.1-39.7 13.8c4.9 10.4 7.7 22 7.7 34.2V464c0 12.2-2.8 23.8-7.7 34.2C323.2 506.9 337 512 352 512z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                    <path d="M11 22C10.1818 22 9.40019 21.6698 7.83693 21.0095C3.94564 19.3657 2 18.5438 2 17.1613C2 16.7742 2 10.0645 2 7M11 22L11 11.3548M11 22C11.6167 22 12.12 21.8124 13 21.4372M20 7V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M16 15L19 18M19 18L22 21M19 18L16 21M19 18L22 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    <path d="M7.32592 9.69138L4.40472 8.27785C2.80157 7.5021 2 7.11423 2 6.5C2 5.88577 2.80157 5.4979 4.40472 4.72215L7.32592 3.30862C9.12883 2.43621 10.0303 2 11 2C11.9697 2 12.8712 2.4362 14.6741 3.30862L17.5953 4.72215C19.1984 5.4979 20 5.88577 20 6.5C20 7.11423 19.1984 7.5021 17.5953 8.27785L14.6741 9.69138C12.8712 10.5638 11.9697 11 11 11C10.0303 11 9.12883 10.5638 7.32592 9.69138Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M5 12L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M16 4L6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
                 </div>
               </div>
               <div class="content">
@@ -133,7 +145,14 @@ body{background-color:#F0F2FD;}
             <div class="header"> 
               <div class="div_image_v">
                 <div class="image">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="#f1c40f" height="16" width="18" viewBox="0 0 576 512"><path d="M248 0H208c-26.5 0-48 21.5-48 48V160c0 35.3 28.7 64 64 64H352c35.3 0 64-28.7 64-64V48c0-26.5-21.5-48-48-48H328V80c0 8.8-7.2 16-16 16H264c-8.8 0-16-7.2-16-16V0zM64 256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H224c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H184v80c0 8.8-7.2 16-16 16H120c-8.8 0-16-7.2-16-16V256H64zM352 512H512c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H472v80c0 8.8-7.2 16-16 16H408c-8.8 0-16-7.2-16-16V256H352c-15 0-28.8 5.1-39.7 13.8c4.9 10.4 7.7 22 7.7 34.2V464c0 12.2-2.8 23.8-7.7 34.2C323.2 506.9 337 512 352 512z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                    <path d="M8 16H15.2632C19.7508 16 20.4333 13.1808 21.261 9.06908C21.4998 7.88311 21.6192 7.29013 21.3321 6.89507C21.045 6.5 20.4947 6.5 19.3941 6.5H19M6 6.5H7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    <path d="M10.5 7C10.5 7 11.5 7 12.5 9C12.5 9 15.6765 4 18.5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M8 16L5.37873 3.51493C5.15615 2.62459 4.35618 2 3.43845 2H2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    <path d="M8.88 16H8.46857C7.10522 16 6 17.1513 6 18.5714C6 18.8081 6.1842 19 6.41143 19H17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="10.5" cy="20.5" r="1.5" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="17.5" cy="20.5" r="1.5" stroke="currentColor" stroke-width="1.5" />
+                  </svg>
                 </div>
               </div>
               <div class="content">
@@ -331,6 +350,7 @@ body{background-color:#F0F2FD;}
                     <tbody class="table__tbody">
                       <?php foreach ($imventario as $inv): ?>
                         <?php $compra = $db->where('id', $inv->id_comprobante)->where('sucursal',$wo['user']['sucursal'])->getOne("compras"); ?>
+                        <?php $venta = $db->where('id', $inv->id_comprobante_v)->where('sucursal',$wo['user']['sucursal'])->getOne("ventas"); ?>
                         <?php $producto = lui_GetProduct($inv->producto); ?>
                         <tr class="table-row table-row--chris <?=($inv->anulado==1) ? 'table-row--red' : '';?>">
                           <td class="table-row__td">
@@ -353,13 +373,23 @@ body{background-color:#F0F2FD;}
                             <div class="table-row__info">
                               <p class="table-row__name"><?=$producto['name'];?></p>
                               <?php if ($inv->anulado==0): ?>
-                                <?php if($compra->garantia_m == 0) {
-                                  $cantidad_de_garantia = 0;
-                                  $end_date_de_garantia = false;
-                                }else{
-                                  $cantidad_de_garantia = $compra->garantia_m;
-                                  $end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($compra->garantia);
-                                } ?>
+                                <?php if ($inv->tipo == 'compra'): ?>
+                                  <?php if($compra->garantia_m == 0) {
+                                    $cantidad_de_garantia = 0;
+                                    $end_date_de_garantia = false;
+                                  }else{
+                                    $cantidad_de_garantia = $compra->garantia_m;
+                                    $end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($compra->garantia);
+                                  } ?>
+                                <?php elseif($inv->tipo == 'venta'): ?>
+                                  <?php if($venta->garantia_m == 0) {
+                                    $cantidad_de_garantia = 0;
+                                    $end_date_de_garantia = false;
+                                  }else{
+                                    $cantidad_de_garantia = $venta->garantia_m;
+                                    $end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($venta->garantia);
+                                  } ?>
+                                <?php endif ?>
                                 <span class="table-row__small"><?=$end_date_de_garantia ?></span>
                               <?php else: ?>
                                 <span class="table-row__small status--red status">Anulado</span>
@@ -393,22 +423,45 @@ body{background-color:#F0F2FD;}
                         </td>
                         <td  data-column="Fecha" class="table-row__td">
                           <p class="table-row__status">
-                            <?=date('Y-m-d', strtotime($inv->fecha)); ?>
+                            <?php if ($inv->tipo == 'compra'): ?>
+                              <?=date('Y-m-d', strtotime($inv->fecha)); ?>
+                            <?php elseif($inv->tipo == 'venta'): ?>
+                              <?php if ($venta->completado==2): ?>
+                                <span>Pendiente</span><br>
+                                <span><?=date('Y-m-d', strtotime($venta->fecha)); ?></span>
+                                
+                              <?php else: ?>
+                                <?=date('Y-m-d', strtotime($inv->fecha)); ?>
+                              <?php endif ?>
+                            <?php endif ?>
                           </p>
                         </td>
                         <td data-column="Cantidad" class="table-row__td">
                           <p class="table-row__policy"><?=$inv->cantidad; ?></p>
                         </td>
                         <td data-column="Documento" class="table-row__td">
-                          <?php if ($compra->documento=='B'): ?>
-                            <p class="table-row__policy"><?=$compra->documento.'0'.$compra->numero_documento;?></p>
-                            <span class="table-row__small">Boleta</span>
-                          <?php elseif($compra->documento=='BS'): ?>
-                            <p class="table-row__policy"><?=$compra->documento.'0'.$compra->numero_documento;?></p>
-                            <span class="table-row__small">Nota simple</span>
-                          <?php elseif($compra->documento=='F'): ?>
-                            <p class="table-row__policy"><?=$compra->documento.'0'.$compra->numero_documento;?></p>
-                            <span class="table-row__small">Factura</span>
+                          <?php if ($inv->tipo == 'compra'): ?>
+                            <?php if ($compra->documento=='B'): ?>
+                              <p class="table-row__policy"><?=$compra->documento.'0'.$compra->numero_documento;?></p>
+                              <span class="table-row__small">Boleta</span>
+                            <?php elseif($compra->documento=='BS'): ?>
+                              <p class="table-row__policy"><?=$compra->documento.'0'.$compra->numero_documento;?></p>
+                              <span class="table-row__small">Nota simple</span>
+                            <?php elseif($compra->documento=='F'): ?>
+                              <p class="table-row__policy"><?=$compra->documento.'0'.$compra->numero_documento;?></p>
+                              <span class="table-row__small">Factura</span>
+                            <?php endif ?>
+                          <?php elseif($inv->tipo == 'venta'): ?>
+                            <?php if ($venta->documento=='B'): ?>
+                              <p class="table-row__policy"><?=$venta->documento.'0'.$venta->numero_documento;?></p>
+                              <span class="table-row__small">Boleta</span>
+                            <?php elseif($venta->documento=='BS'): ?>
+                              <p class="table-row__policy"><?=$venta->documento.'0'.$venta->numero_documento;?></p>
+                              <span class="table-row__small">Nota simple</span>
+                            <?php elseif($venta->documento=='F'): ?>
+                              <p class="table-row__policy"><?=$venta->documento.'0'.$venta->numero_documento;?></p>
+                              <span class="table-row__small">Factura</span>
+                            <?php endif ?>
                           <?php endif ?>
                         </td>
                       </tr>

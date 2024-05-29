@@ -62,6 +62,7 @@ RewriteRule ^create-album$ index.php?link1=create-album [QSA]
 RewriteRule ^create-album/([A-Za-z0-9_-]+)$ index.php?link1=create-album&album=$1  [QSA]
 RewriteRule ^$ index.php?link1=home [QSA]
 RewriteRule ^ventas(/?|)$ index.php?link1=ventas [NC,QSA]
+RewriteRule ^pos(/?|)$ index.php?link1=pos [NC,QSA]
 RewriteRule ^setting/([A-Za-z0-9_]+)/$  index.php?link1=setting&user=$1 [NC,QSA]
 RewriteRule ^setting/([A-Za-z0-9_]+)/([A-Za-z0-9_-]+)$  index.php?link1=setting&user=$1&page=$2 [NC,QSA]
 RewriteRule ^page-setting/([^\/]+)(\/|)$  index.php?link1=page-setting&page=$1 [QSA]
@@ -272,8 +273,6 @@ ExpiresByType image/x-icon "access plus 1 year"
 ExpiresDefault "access plus 1 month"
 </IfModule>
 ## EXPIRES CACHING ##
-
-
 <ifModule mod_headers.c>
   Header unset Connection
   Header set Connection keep-alive
@@ -285,4 +284,3 @@ ExpiresDefault "access plus 1 month"
 <FilesMatch "\.(js|css|svg|woff2|webp|png|mp3)$">
     Header set Cache-Control "max-age=31536000, public"
 </FilesMatch>
-AddType application/x-httpd-php .json

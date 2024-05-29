@@ -39,7 +39,7 @@ if ($f == 'product_compra_list_bdd_num') {
         }
         if ($comprapendiente) {
             $total_productos_listas_stok = $db->where('estado','0')->where('atributo', $uniqueIdentifier)->where('id_comprobante_v',$comprapendiente_ids)->getValue('imventario','COUNT(*)');
-            $productos_stock_disponibles = $db->where('estado', 1)
+            $productos_stock_disponibles = $db->where('estado', [1, 2], 'IN')
             ->where('producto', $producto['id'])
             ->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
 

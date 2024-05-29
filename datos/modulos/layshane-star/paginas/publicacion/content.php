@@ -311,8 +311,8 @@
 								<?php foreach($atributos_productos as $wo['atributos']): ?>
 									<?php if($wo['atributos']['nombre']=='Color'): ?>
 										<?php $atributosseleccionados_pr['atributo_'.$wo['atributos']['id']][] = $wo['itemsdata']['product']['elcolorseleccionadourl']; ?>
-										<?php  $variantes_atributos[$wo['atributos']['id']][] = $wo['itemsdata']['product']['elcolorseleccionadourl'];;
-											   $attributeOptions[] = $wo['itemsdata']['product']['elcolorseleccionadourl'];;
+										<?php  $variantes_atributos[$wo['atributos']['id']][] = $wo['itemsdata']['product']['elcolorseleccionadourl'];
+											   $attributeOptions[] = $wo['itemsdata']['product']['elcolorseleccionadourl'];
 										?>
 									<?php else: $atributos_opciones = Mostrar_Opciones_Atributos_producto($wo['atributos']['id']);?>
 										<span><?=$wo['atributos']['nombre'];?></span>
@@ -352,7 +352,7 @@
 							</div>
 							<?php
 							    if (!empty($variantes_atributos)) {
-								    $sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$wo['itemsdata']['product']['id']} AND estado = 1";
+								    $sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$wo['itemsdata']['product']['id']} AND (estado = 1 OR estado = 2) ";
 								    $subqueries = [];
 								    foreach ($variantes_atributos as $atributo => $opciones) {
 								        foreach ($opciones as $opcion) {
@@ -363,20 +363,20 @@
 								    $cantidad_productos = ($cantidad_prod !== null) ? $cantidad_prod : 0;
 								} else{
 									if ($s_photo_color_id) {
-										$cantidad_productos = $db->where('estado', 1)
+										$cantidad_productos = $db->where('estado', [1, 2], 'IN')
 										->where('color', $s_photo_color_id)
 										->where('producto', $wo['itemsdata']['product']['id'])
 										->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
 										$cantidad_productos = ($cantidad_productos !== null) ? $cantidad_productos : 0;
 									}else{
-										$cantidad_productos = $db->where('estado', 1)
+										$cantidad_productos = $db->where('estado', [1, 2], 'IN')
 										->where('producto', $wo['itemsdata']['product']['id'])
 										->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
 										$cantidad_productos = ($cantidad_productos !== null) ? $cantidad_productos : 0;
 									}
 								}
 							?>
-							<span hidden id="cantidad_products"><?=$cantidad_productos;?></span>
+							<span  id="cantidad_products"><?=$cantidad_productos;?></span>
 							<?php if ($wo['loggedin']) { ?>
 								<?php $producto_agotado = ''; ?>
 								<?php $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->getOne(T_VENTAS); ?>

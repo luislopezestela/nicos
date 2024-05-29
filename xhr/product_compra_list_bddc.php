@@ -121,7 +121,7 @@ if($f == 'product_compra_list_bddc') {
 			$total_productos_listas_stok = $db->where('estado','0')->where('atributo', $uniqueIdentifier)->where('id_comprobante_v',$comprapendiente_ids)->getValue('imventario','COUNT(*)');
 
 			if (!empty($atributosaddcc)) {
-			    $sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND estado = 1";
+			    $sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND (estado = 1 OR estado = 2)";
 			    $subqueries = [];
 
 			    foreach ($atributosaddcc as $atributos) {
@@ -137,13 +137,13 @@ if($f == 'product_compra_list_bddc') {
 			    $cantidad_productos = ($cantidad_prod !== null) ? $cantidad_prod : 0;
 			} else{
 				if ($_POST['color']!="") {
-					$cantidad_productos = $db->where('estado', 1)
+					$cantidad_productos = $db->where('estado', [1, 2], 'IN')
 					->where('color', $_POST['color'])
 					->where('producto', $producto['id'])
 					->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
 					$cantidad_productos = ($cantidad_productos !== null) ? $cantidad_productos : 0;
 				}else{
-					$cantidad_productos = $db->where('estado', 1)
+					$cantidad_productos = $db->where('estado', [1, 2], 'IN')
 					->where('producto', $producto['id'])
 					->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
 					$cantidad_productos = ($cantidad_productos !== null) ? $cantidad_productos : 0;

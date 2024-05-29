@@ -23,13 +23,13 @@
                     <form class="email-settings" method="POST">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Comando CronJob</label>
+                                <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Comando CronJob</span>
                                 <p class="form-control">*/5 * * * * curl <?php echo $wo['config']['site_url'] ;?>/cron-job.php &>/dev/null</p>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Ultima ejecucion de CronJob</label>
+                                <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Ultima ejecucion de CronJob</span>
                                 <p class="form-control"><?php echo !empty($wo['config']['cronjob_last_run']) ? date("d-m-Y h:i:s",$wo['config']['cronjob_last_run']): ''; ?></p>
                             </div>
                         </div>

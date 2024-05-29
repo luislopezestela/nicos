@@ -23,7 +23,7 @@
                     <h6 class="card-title">Configuracion de chat</h6>
                     <form class="chat-settings" method="POST">
                         <div class="float-left">
-                            <label for="chatSystem" class="main-label">Sistema de chat </label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Sistema de chat </span>
 							<div class="dropdown user_filter_drop">
 								<button class="btn btn-light" data-toggle="dropdown">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
@@ -62,7 +62,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="message_seen" class="main-label">Alerta de mensaje visto</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Alerta de mensaje visto</span>
                             <br><small class="admin-info">Comprueba si el mensaje se vio en el sistema de chat. Recomendado para servidores potentes. <br> Tenga en cuenta que esta funcion solo se puede cambiar para Ajax, en NodeJS siempre esta activada.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -73,7 +73,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="message_typing" class="main-label">Sistema de escritura del usuario</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Sistema de escritura del usuario</span>
                             <br><small class="admin-info">Comprueba si el usuario esta escribiendo en el sistema de chat. Recomendado para servidores potentes. <br> Tenga en cuenta que esta funcion solo se puede cambiar para Ajax, en NodeJS siempre esta activada.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -94,7 +94,7 @@
                     <h6 class="card-title">Configuracion de la API de Agora</h6>
                     <form class="agora-settings" method="POST">
                         <div class="float-left">
-                            <label for="agora_chat_video" class="main-label">Videollamadas de Agora</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Videollamadas de Agora</span>
                             <br><small class="admin-info">Habilite Agora para iniciar el servicio de chat de video en su sitio web. <br> Tenga en cuenta que habilitar Agora deshabilitará Twilio. Agora solo admite videollamadas.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -109,25 +109,25 @@
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">ID aplicacion</label>
+                                <label class="form-label" for="agora_chat_app_id">ID aplicacion</label>
                                 <input type="text" id="agora_chat_app_id" name="agora_chat_app_id" class="form-control" value="<?php echo $wo['config']['agora_chat_app_id'];?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Certificado de aplicacion</label>
+                                <label class="form-label" for="agora_chat_app_certificate">Certificado de aplicacion</label>
                                 <input type="text" id="agora_chat_app_certificate" name="agora_chat_app_certificate" class="form-control" value="<?php echo $wo['config']['agora_chat_app_certificate'];?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">ID del cliente</label>
+                                <label class="form-label" for="agora_chat_customer_id">ID del cliente</label>
                                 <input type="text" id="agora_chat_customer_id" name="agora_chat_customer_id" class="form-control" value="<?php echo $wo['config']['agora_chat_customer_id'];?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Cliente Secret</label>
+                                <label class="form-label" for="agora_chat_customer_certificate">Cliente Secret</label>
                                 <input type="text" id="agora_chat_customer_certificate" name="agora_chat_customer_certificate" class="form-control" value="<?php echo $wo['config']['agora_chat_customer_certificate'];?>">
                             </div>
                         </div>
@@ -144,7 +144,7 @@
                     <h6 class="card-title">Configuración de chat de video y audio</h6>
                     <form class="email-settings" method="POST">
                         <div class="float-left">
-                            <label for="video_chat" class="main-label">Videollamadas </label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Videollamadas </span>
 							<div class="dropdown user_filter_drop">
 								<button class="btn btn-light" data-toggle="dropdown">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
@@ -184,7 +184,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="audio_chat" class="main-label">Llamadas de audio</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Llamadas de audio</span>
 							<div class="dropdown user_filter_drop">
 								<button class="btn btn-light" data-toggle="dropdown">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
@@ -230,7 +230,7 @@
                     <h6 class="card-title">Configuracion de API Twilio</h6>
                     <form class="twilio-settings" method="POST">
                         <div class="float-left">
-                            <label for="twilio_video_chat" class="main-label">Llamadas de video/audio de Twilio</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Llamadas de video/audio de Twilio</span>
                             <br><small class="admin-info">Habilite Twilio para iniciar el servicio de chat de video en su sitio web. <br> Tenga en cuenta que habilitar Twilio deshabilitará Agora. Twilio admite llamadas de video y audio.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -245,19 +245,19 @@
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Cuenta realSid</label>
+                                <label class="form-label" for="video_accountSid">Cuenta realSid</label>
                                 <input type="text" id="video_accountSid" name="video_accountSid" class="form-control" value="<?php echo $wo['config']['video_accountSid'];?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">apiKeySid</label>
+                                <label class="form-label" for="video_apiKeySid">apiKeySid</label>
                                 <input type="text" id="video_apiKeySid" name="video_apiKeySid" class="form-control" value="<?php echo $wo['config']['video_apiKeySid'];?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">apiKeySecret</label>
+                                <label class="form-label" for="video_apiKeySecret">apiKeySecret</label>
                                 <input type="password" id="video_apiKeySecret" name="video_apiKeySecret" class="form-control" value="<?php echo $wo['config']['video_apiKeySecret'];?>">
                             </div>
                         </div>

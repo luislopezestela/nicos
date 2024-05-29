@@ -731,7 +731,7 @@ table{
 			    										</thead>
 			    										<tbody class="table__tbody contet_items_de_doc_compr">
 				                							<?php 
-															$items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->get('imventario');
+															$items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante',$comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->get('imventario');
 															$indexdefault_currency = array_search($comprapendiente->currency, array_column($wo['currencies'], 'text'));
 															$html = "";
 															$productos_vistos = [];
@@ -817,10 +817,10 @@ table{
 												$total_productos_lista = 0;
 												$total_productos_price = 0.00;
 
-			    								$total_productos_grupo = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
-			    								$total_productos_lista = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
+			    								$total_productos_grupo = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->getValue('imventario','COUNT(DISTINCT orden)');
+			    								$total_productos_lista = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->getValue('imventario','COUNT(*)');
 			    								if ($total_productos_lista>0) {
-			    									$total_productos_price = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
+			    									$total_productos_price = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->getValue('imventario','SUM(precio)');
 			    								}
 			    								
 			    								if($comprapendiente->garantia_m == 0) {
@@ -1391,10 +1391,10 @@ table{
 								$total_productos_lista = 0;
 								$total_productos_price = 0.00;
 
-								$total_productos_grupo = $db->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
-								$total_productos_lista = $db->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
+								$total_productos_grupo = $db->where('estado','2')->where('id_comprobante',$comprapendiente2->id)->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
+								$total_productos_lista = $db->where('estado','2')->where('id_comprobante',$comprapendiente2->id)->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
 								if ($total_productos_lista>0) {
-									$total_productos_price = $db->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
+									$total_productos_price = $db->where('estado','2')->where('id_comprobante',$comprapendiente2->id)->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
 								}
 								
 								if($comprapendiente2->garantia_m == 0) {

@@ -21,7 +21,7 @@
 					
                     <form class="email-settings" method="POST">
                         <div class="float-left">
-                            <label for="node_socket_flow" class="main-label">NodeJS</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">NodeJS</span>
                             <br><small class="admin-info">Obtenga mensajes en tiempo real, notificaciones en tiempo real y reduzca la carga del servidor en un 80 % menos.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -33,7 +33,7 @@
                         <hr>
 
                         <div class="float-left">
-                            <label for="nodejs_ssl" class="main-label">Conexion NodeJs SSL</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Conexion NodeJs SSL</span>
                             <br><small class="admin-info">Habilite esta caracteristica si esta utilizando su sitio bajo SSL.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -45,7 +45,7 @@
                         <hr>
 
                         <div class="float-left">
-                            <label for="nodejs_live_notification" class="main-label">Barra de notificaciones en vivo</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Barra de notificaciones en vivo</span>
                             <br><small class="admin-info">Habilite esta funcion y los usuarios recibiran notificaciones fijas en la parte inferior izquierda de la pantalla.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -57,27 +57,27 @@
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Puerto NodeJs HTTP</label>
+                                <label class="form-label" for="nodejs_port">Puerto NodeJs HTTP</label>
                                 <input type="number" id="nodejs_port" name="nodejs_port" class="form-control" value="<?php echo $wo['config']['nodejs_port']?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Puerto NodeJs HTTPS (SSL)</label>
+                                <label class="form-label" for="nodejs_ssl_port">Puerto NodeJs HTTPS (SSL)</label>
                                 <input type="number" id="nodejs_ssl_port" name="nodejs_ssl_port" class="form-control" value="<?php echo $wo['config']['nodejs_ssl_port']?>">
                             </div>
                         </div>
                        
                          <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Ruta de clave de certificado SSL de NodeJs (.key)</label>
+                                <label class="form-label" for="nodejs_key_path">Ruta de clave de certificado SSL de NodeJs (.key)</label>
                                 <input type="text" id="nodejs_key_path" name="nodejs_key_path" class="form-control" value="<?php echo $wo['config']['nodejs_key_path']?>">
                                 <small class="admin-info">Solo se requiere si NodeJS SSL esta habilitado.</small>
                             </div>
                         </div>
                          <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Ruta del certificado SSL de NodeJs (.crt)</label>
+                                <label class="form-label" for="nodejs_cert_path">Ruta del certificado SSL de NodeJs (.crt)</label>
                                 <input type="text" id="nodejs_cert_path" name="nodejs_cert_path" class="form-control" value="<?php echo $wo['config']['nodejs_cert_path']?>">
                                 <small class="admin-info">Solo se requiere si NodeJS SSL esta habilitado.</small>
                             </div>
@@ -86,7 +86,7 @@
                             <hr>
 
                          <div class="float-left">
-                            <label for="redis" class="main-label">Servidor Redis</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Servidor Redis</span>
                             <br><small class="admin-info">Habilite esta funcion para establecer una conexion de socket más rapida.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -98,7 +98,7 @@
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Puerto Redis</label>
+                                <label class="form-label" for="redis_port">Puerto Redis</label>
                                 <input type="number" id="redis_port" name="redis_port" class="form-control" value="<?php echo $wo['config']['redis_port']?>">
                                 <small class="admin-info">El puerto Redis del servidor no debe ser el mismo que el puerto nodejs.</small>
                             </div>

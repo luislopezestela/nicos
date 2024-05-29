@@ -10,7 +10,7 @@ if ($f == "comprar_producto_a") {
                 'precio' => $_POST['price_dat']
             );
 
-            $db->where('producto',$_POST['docnum'])->where('estado', '0')->where('id_sucursal',$wo['user']['sucursal'])->update('imventario', $dataarray);
+            $db->where('producto',$_POST['docnum'])->where('estado', '0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->update('imventario', $dataarray);
             $total_productos_grupo = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
             $total_productos_lista = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
             if($total_productos_lista>0) {
@@ -698,9 +698,9 @@ if ($f == "comprar_producto_a") {
                             if ($moneda_seleccionado_de_compra == $moneda_seleccionado_de_banco) {
                                 $total_productos_lista = 0;
                                 $total_productos_price = 0;
-                                $total_productos_lista = $db->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
+                                $total_productos_lista = $db->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente2->id)->getValue('imventario','COUNT(*)');
                                 if ($total_productos_lista>0) {
-                                    $total_productos_price = $db->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
+                                    $total_productos_price = $db->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente2->id)->getValue('imventario','SUM(precio)');
                                 }
                                 if ($cantida_dinero >= $total_productos_price) {
                                     $fechaHora = date("Y-m-d H:i:s");

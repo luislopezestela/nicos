@@ -21,7 +21,7 @@
                     <div class="social-settings-alert"></div>
                     <form class="social-settings" method="POST">
                         <div class="float-left">
-                            <label for="facebookLogin" class="main-label">Facebook Login</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Facebook Login</span>
                             <br><small class="admin-info">Habilite la posibilidad de que los usuarios inicien sesion en su sitio utilizando su cuenta de Facebook.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -32,7 +32,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="VkontakteLogin" class="main-label">Vkontakte Login</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Vkontakte Login</span>
                             <br><small class="admin-info">Habilite la posibilidad de que los usuarios inicien sesion en su sitio con su cuenta de Vkontakte.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -43,7 +43,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="twitterLogin" class="main-label">Twitter Login</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Twitter Login</span>
                             <br><small class="admin-info">Habilite la posibilidad de que los usuarios inicien sesion en su sitio utilizando su cuenta de Twitter.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -54,7 +54,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="linkedinLogin" class="main-label">Linkedin Login</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Linkedin Login</span>
                             <br><small class="admin-info">Habilite la posibilidad de que los usuarios inicien sesion en su sitio utilizando su cuenta de Linkedin.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -65,7 +65,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="instagramLogin" class="main-label">Instagram Login</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Instagram Login</span>
                             <br><small class="admin-info">Habilite la posibilidad de que los usuarios inicien sesion en su sitio con su cuenta de Instagram.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -86,7 +86,7 @@
                     <h6 class="card-title">Configurar claves API de inicio de sesion social</h6>
                     <form class="api-settings" method="POST">
                         <div class="alert alert-info">Tenga en cuenta que algunos sitios web pueden requerir la verificación de la aplicación.</div>
-                        <label class="form-label main-label" style="background: #1877F2; color: #fff; margin-bottom: 12px;">Facebook Configuracion</label>
+                        <label class="form-label main-label" for="facebookAppId" style="background: #1877F2; color: #fff; margin-bottom: 12px;">Facebook Configuracion</label>
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="text" id="facebookAppId" name="facebookAppId" class="form-control" value="<?php echo $wo['config']['facebookAppId']?>" placeholder="Application ID">
@@ -99,7 +99,7 @@
                         </div>
                         <hr>
 
-                        <label class="form-label main-label" style="background: #1DA1F2; color: #fff; margin-bottom: 12px;">Twitter Configuracion</label>
+                        <label class="form-label main-label" for="twitterAppId" style="background: #1DA1F2; color: #fff; margin-bottom: 12px;">Twitter Configuracion</label>
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="text" id="twitterAppId" name="twitterAppId" class="form-control" value="<?php echo $wo['config']['twitterAppId']?>" placeholder="Consumer Key">
@@ -112,7 +112,7 @@
                         </div>
                         <hr>
 
-                        <label class="form-label main-label" style="background: #0077B5; color: #fff; margin-bottom: 12px;">LinkedIn Configuracion</label>
+                        <label class="form-label main-label" for="linkedinAppId" style="background: #0077B5; color: #fff; margin-bottom: 12px;">LinkedIn Configuracion</label>
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="text" id="linkedinAppId" name="linkedinAppId" class="form-control" value="<?php echo $wo['config']['linkedinAppId']?>"  placeholder="Application ID">
@@ -125,7 +125,7 @@
                         </div>
                         <hr>
 
-                        <label class="form-label main-label" style="background: #2787F5; color: #fff; margin-bottom: 12px;">Vkontakte Configuracion</label>
+                        <label class="form-label main-label" for="VkontakteAppId" style="background: #2787F5; color: #fff; margin-bottom: 12px;">Vkontakte Configuracion</label>
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="text" id="VkontakteAppId" name="VkontakteAppId" class="form-control" value="<?php echo $wo['config']['VkontakteAppId']?>" placeholder="Application ID">
@@ -138,7 +138,7 @@
                         </div>
                         <hr>
 
-                        <label class="form-label main-label" style="background: #AA2996; color: #fff; margin-bottom: 12px;">Instagram Configuracion</label>
+                        <label class="form-label main-label" for="instagramAppId" style="background: #AA2996; color: #fff; margin-bottom: 12px;">Instagram Configuracion</label>
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="text" id="instagramAppId" name="instagramAppId" class="form-control" value="<?php echo $wo['config']['instagramAppId']?>" placeholder="Application ID">

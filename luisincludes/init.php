@@ -1,11 +1,11 @@
 <?php
-@ini_set('session.cookie_httponly',1);
-@ini_set('session.use_only_cookies',1);
-if (!version_compare(PHP_VERSION, '8.1.0', '>=')) {
-    exit("Required PHP_VERSION >= 8.1.0 , Su version de PHP es : " . PHP_VERSION . "\n");
+@ini_set('session.cookie_httponly', 1);
+@ini_set('session.use_only_cookies', 1);
+if (version_compare(PHP_VERSION, '8.1.0', '<')) {
+    exit("Required PHP_VERSION >= 8.1.0 , Your PHP version is: " . PHP_VERSION . "\n");
 }
 if (!function_exists("mysqli_connect")) {
-    exit("Se requiere MySQLi para ejecutar la aplicacion, comuniquese con su alojamiento para habilitar php mysqli.");
+    exit("MySQLi extension is required to run the application. Please enable the PHP MySQLi extension in your server configuration.");
 }
 date_default_timezone_set('UTC');
 session_start();
@@ -16,4 +16,5 @@ require_once('includes/funcion_general.php');
 require_once('includes/tablas.php');
 require_once('includes/funcion_uno.php');
 require_once('includes/funcion_dos.php');
-require_once('includes/funcion_tres.php'); 
+require_once('includes/funcion_tres.php');
+?>

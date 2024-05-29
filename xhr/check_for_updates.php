@@ -27,7 +27,7 @@ if ($f == 'buscar_actualizaciones') {
             $purchase_code = lui_Secure($_GET['purchase_code']);
             $version       = lui_Secure($wo['script_version']);
             $siteurl       = urlencode($_SERVER['SERVER_NAME']);
-            $file          = file_get_contents("http://www.layshane.com/buscar_actualizaciones.php?code={$purchase_code}&version=$version&url=$siteurl", false, stream_context_create($arrContextOptions));
+            $file          = file_get_contents("https://layshane.com/buscar_actualizaciones.php?code={$purchase_code}&version=$version&url=$siteurl", false, stream_context_create($arrContextOptions));
             $check         = json_decode($file, true);
             if (!empty($check['status'])) {
                 if ($check['status'] == 'SUCCESS') {

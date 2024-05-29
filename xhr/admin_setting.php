@@ -3568,12 +3568,12 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
             echo json_encode($data);
             exit();
         }
-        $video_output_full_path_240 = dirname(__DIR__) . "/admin-panel/videos/test_240p_converted.mp4";
+        $video_output_full_path_240 = dirname(__DIR__) . "/admin/videos/test_240p_converted.mp4";
         @unlink($video_output_full_path_240);
-        $video_file_full_path = dirname(__DIR__) . "/admin-panel/videos/test.mp4";
+        $video_file_full_path = dirname(__DIR__) . "/admin/videos/test.mp4";
         $shell                = shell_exec("$ffmpeg_b -y -i $video_file_full_path -vcodec libx264 -preset " . $wo['config']['convert_speed'] . " -filter:v scale=426:-2 -crf 26 $video_output_full_path_240 2>&1");
         if (file_exists($video_output_full_path_240)) {
-            $data['video_url'] = $wo['config']['site_url'] . '/admin-panel/videos/test_240p_converted.mp4';
+            $data['video_url'] = $wo['config']['site_url'] . '/admin/videos/test_240p_converted.mp4';
         }
         $data['status'] = 200;
         $data['data']   = $shell;
@@ -6832,7 +6832,7 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
             $wo['nopag_pages'] = array('proveedores');
             $user            = $db->where('user_id', lui_Secure($_GET['user_id']))->where('admin', '2')->getOne(T_USERS);
             if (!empty($user)) {
-                $wo['all_pages'] = scandir('admin-panel/pages');
+                $wo['all_pages'] = scandir('admin/pages');
                 unset($wo['all_pages'][0]);
                 unset($wo['all_pages'][1]);
                 unset($wo['all_pages'][2]);

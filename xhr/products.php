@@ -1375,6 +1375,25 @@ if ($f == 'products') {
         echo json_encode($data);
         exit();
     }
+
+    if ($s == 'load_orderss') {
+        $wo['html'] = '';
+        if (!empty($_POST['id']) && is_numeric($_POST['id']) && $_POST['id'] > 0) {
+            $wo['orders'] = $db->where('sucursal', $wo['user']['sucursal'])->where('id',lui_Secure($_POST['id']),'<')->orderBy('id', 'DESC')->get(T_VENTAS, 10); /// T_USER_ORDERS
+            if (!empty($wo['orders'])) {
+                foreach ($wo['orders'] as $key => $wo['order']) {
+                    $wo['comprass'] = $wo['order'];
+                    $wo['html'] .= lui_LoadPage('orders/lista');
+                }
+                $data['status'] = 200;
+            }
+        }
+        $data['html'] = $wo['html'];
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
     if ($s == 'load_reviews') {
         $wo['html'] = '';
         if (!empty($_POST['id']) && is_numeric($_POST['id']) && $_POST['id'] > 0 && !empty($_POST['product_id']) && is_numeric($_POST['product_id']) && $_POST['product_id'] > 0) {

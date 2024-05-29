@@ -50,31 +50,8 @@ if ($f == "comprar_producto_b") {
             	if ($comprapendiente->documento==null) {
             		$comprobante_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado', '0')->where('web', '1')->getOne(T_VENTAS);
 					if (!empty($comprobante_user) && ($comprobante_user->user_id == $wo['user']['user_id'])) {
-						$cant_ventas = $db->where('documento', 'B')->where('completado', '1')->getValue(T_VENTAS, 'COUNT(*)');
-	                   	if($cant_ventas > 0){
-	                        $numeroventa="00".$cant_ventas+1;
-	                    }else{
-	                        $numeroventa="001";
-	                    }
-
-	                    $lastGroupNumberRow = $db->orderBy('numero_documento', 'desc')->where('documento','B')->getOne(T_VENTAS, 'numero_documento');
-	                    if($lastGroupNumberRow){
-	                        $lastGroupNumber = $lastGroupNumberRow->numero_documento;
-	                    } else{
-	                        $lastGroupNumber = null;
-	                    }
-	                    if(!$lastGroupNumber) {
-	                        $nextGroupNumber = 1;
-	                    } else{
-	                        $sameIdentifierProducts = $db->where('numero_documento','')->where('documento','B')->get(T_VENTAS);
-	                        if($sameIdentifierProducts) {
-	                            $nextGroupNumber = $sameIdentifierProducts[0]->numero_documento;
-	                        }else{
-	                            $nextGroupNumber = $lastGroupNumber + 1;
-	                        }
-	                    }
-
-	                    $dataarray = array('documento' => 'B', 'num_doc' => $numeroventa, 'numero_documento' => $nextGroupNumber,'user_document' => 'DNI', 'estado' => '2');
+						
+	                    $dataarray = array('documento' => 'B', 'user_document' => 'DNI', 'estado' => '2');
 	                    $dataarray_b = array('doc_order' => 'boleta', 'comprobante_dni' => null);
 						$db->where('user_id',$comprobante_user->user_id)->where('completado', '0')->update(T_VENTAS, $dataarray);
 						$db->where('user_id',$comprobante_user->user_id)->update(T_USERS, $dataarray_b);
@@ -443,6 +420,201 @@ if ($f == "comprar_producto_b") {
             	$data['message'] = 'El dni no es valido';
 				$_SESSION['messages_carito'] = $data['message'];
 			}
+    	}
+    	header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
+    if ($s == 'opcion_compra_end') {
+    	if (!empty($_POST)) {
+    		if (!empty($_POST['hash'])) {
+		    	require_once './luisincludes/librerias/PhpSpreadsheet-master/vendor/mpdf/mpdf/vendor/autoload.php';
+		        $generator = new Mpdf\Barcode();
+		        $comprapendiente4 = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->where('estado','4')->getOne(T_VENTAS);
+		        $fechaHora = date("Y-m-d H:i:s");
+		        if ($wo['user']['mode_pay']==0) {
+		        	$data['status'] = 400;
+		        	$data['message'] = 'Selecciona el modo de pago.';
+					$_SESSION['messages_carito'] = $data['message'];
+		        }elseif ($wo['user']['mode_pay']==1) {
+                    if (isset($comprapendiente4->completado)) {
+                    	$hash_id = uniqid(rand(11111,999999));
+                        $dataarrayd = array(
+                        	'hash_id'          => $hash_id,
+                            'completado'       => '2',
+                            'estado'           => '1',
+                            'fecha'            => $fechaHora,
+                            'sucursal'         => $wo['user']['sucursal_entrega'],
+                            'duracion_reserva' => $wo['config']['reserva_duracion_compra'],
+                            'time'             => time(),
+                            'donde_paga'       => $wo['user']['mode_pay']
+                        );
+                        $inventarios = array(
+                            'estado'      => 2,
+                            'id_sucursal' => $wo['user']['sucursal_entrega']
+                        );
+                        $db->where('id',$comprapendiente4->id)
+                           ->update(T_VENTAS, $dataarrayd);
+                        
+                        $db->where('id_comprobante_v',$comprapendiente4->id)
+                           ->where('estado', '0')
+                           ->update('imventario', $inventarios);
+
+
+                        $data['status'] = 200;
+			        	if (!empty($_SESSION['messages_carito'])) {
+			            	unset($_SESSION['messages_carito']);
+			            }
+                    }else{
+                        $data['status'] = 400;
+                    }
+		        }else{
+		        	$data['status'] = 400;
+		        	$data['message'] = 'Error de datos.';
+					$_SESSION['messages_carito'] = $data['message'];
+		        }
+		    }else{
+		    	$data['status'] = 400;
+		    	$data['message'] = 'Error de datos.';
+				$_SESSION['messages_carito'] = $data['message'];
+		    }
+	    }else{
+	    	$data['status'] = 400;
+	    }
+    	header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+    if ($s == 'change_order_pend') {
+    	if (!empty($_POST)) {
+    		if (!empty($_POST['hash'])) {
+    			if (!empty($_POST['hash_id'])) {
+    				$verificar_venta = $db->where('hash_id',$_POST['hash_id'])->where('estado_venta',0)->getOne(T_VENTAS);
+    				if ($verificar_venta) {
+    					$recibir_compra = array(
+		    				'estado_venta'    => 1,
+	                        'id_del_vendedor' => $wo['user']['user_id']
+		                );
+		                $db->where('hash_id',$_POST['hash_id'])
+		                           ->update(T_VENTAS, $recibir_compra);
+		    			$data['status'] = 200;
+			        	if (!empty($_SESSION['messages_orden'])) {
+			            	unset($_SESSION['messages_orden']);
+			            }
+    				}else{
+    					$data['status'] = 400;
+		    			$data['message'] = 'Error de datos.';
+    				}
+	    			
+	            }else{
+    				$data['status'] = 400;
+		    		$data['message'] = 'Error de datos.';
+    			}
+    		}else{
+    			$data['status'] = 400;
+		    	$data['message'] = 'Error de datos.';
+    		}
+    	}else{
+    		$data['status'] = 400;
+    	}
+    	header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
+    if ($s == 'change_orders_pen') {
+    	if (!empty($_POST)) {
+    		if (!empty($_POST['hash'])) {
+    			if (!empty($_POST['hash_id'])) {
+    				if($_POST['opcion_data']=='recibir_pedido') {
+    					$verificar_venta = $db->where('hash_id',$_POST['hash_id'])->where('estado_venta',0)->getOne(T_VENTAS);
+    					if ($verificar_venta) {
+	    					$recibir_pedido = array(
+		    					'estado_venta'    => 1,
+	                        	'id_del_vendedor' => $wo['user']['user_id']
+			                );
+			                $db->where('hash_id',$_POST['hash_id'])
+			                           ->update(T_VENTAS, $recibir_pedido);
+			    			$data['status'] = 200;
+				        	if (!empty($_SESSION['messages_orden'])) {
+				            	unset($_SESSION['messages_orden']);
+				            }
+			            }else{
+			            	$data['status'] = 400;
+		    				$data['message'] = 'Error de datos.';
+			            }
+    				}elseif($_POST['opcion_data']=='aceptar_pedido') {
+    					$verificar_pedido = $db->where('hash_id',$_POST['hash_id'])->where('estado_venta',1)->where('id_del_vendedor',$wo['user']['user_id'])->getOne(T_VENTAS);
+    					if ($verificar_pedido) {
+	    					$aceptar_pedido = array(
+		    					'estado_venta'      => 2
+			                );
+			                $db->where('hash_id',$_POST['hash_id'])
+			                           ->update(T_VENTAS, $aceptar_pedido);
+			    			$data['status'] = 200;
+				        	if (!empty($_SESSION['messages_orden'])) {
+				            	unset($_SESSION['messages_orden']);
+				            }
+				        }else{
+			            	$data['status'] = 400;
+		    				$data['message'] = 'Error de datos.';
+			            }
+    				}elseif($_POST['opcion_data']=='preparar_pedido') {
+    					$verificar_pedido = $db->where('estado_venta',3)->where('id_del_vendedor',$wo['user']['user_id'])->getOne(T_VENTAS);
+    					if ($verificar_pedido) {
+		    				$preparar_pedido_pre = array(
+		    					'estado_venta'      => 2
+			                );
+			                $db->where('estado_venta',3)
+			                    ->update(T_VENTAS, $preparar_pedido_pre);
+    					}
+    					$verificar_pedido = $db->where('hash_id',$_POST['hash_id'])->where('estado_venta',2)->where('id_del_vendedor',$wo['user']['user_id'])->getOne(T_VENTAS);
+    					if ($verificar_pedido) {
+	    					$preparar_pedido = array(
+		    					'estado_venta'      => 3
+			                );
+			                $db->where('hash_id',$_POST['hash_id'])
+			                           ->update(T_VENTAS, $preparar_pedido);
+			    			$data['status'] = 200;
+				        	if (!empty($_SESSION['messages_orden'])) {
+				            	unset($_SESSION['messages_orden']);
+				            }
+				        }else{
+			            	$data['status'] = 400;
+		    				$data['message'] = 'Error de datos.';
+			            }
+			            
+    				}elseif($_POST['opcion_data']=='rechazar_orden') {
+    					$verificar_pedido = $db->where('hash_id',$_POST['hash_id'])->where('estado_venta',1)->where('id_del_vendedor',$wo['user']['user_id'])->getOne(T_VENTAS);
+    					if ($verificar_pedido) {
+	    					$rechazar_orden = array(
+		    					'estado_venta'      => 11
+			                );
+			                $db->where('hash_id',$_POST['hash_id'])
+			                           ->update(T_VENTAS, $rechazar_orden);
+			    			$data['status'] = 200;
+				        	if (!empty($_SESSION['messages_orden'])) {
+				            	unset($_SESSION['messages_orden']);
+				            }
+				        }else{
+			            	$data['status'] = 400;
+		    				$data['message'] = 'Error de datos.';
+			            }
+    				}else{
+    					$data['status'] = 400;
+		    			$data['message'] = 'Error de datos.';
+    				}
+	            }else{
+    				$data['status'] = 400;
+		    		$data['message'] = 'Error de datos.';
+    			}
+    		}else{
+    			$data['status'] = 400;
+		    	$data['message'] = 'Error de datos.';
+    		}
+    	}else{
+    		$data['status'] = 400;
     	}
     	header("Content-type: application/json");
         echo json_encode($data);

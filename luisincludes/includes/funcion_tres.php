@@ -9404,10 +9404,10 @@ function convertirNumeroAFecha($numero) {
     $resultado = 'Garantia '.implode(' y ', $partesFecha);
     return $resultado;
 }
-function numeroATexto($numero,$moneda) {
+function numeroATexto($numero, $moneda) {
     // Arreglo con las palabras para representar las unidades
     $unidades = array(
-        '', 'un', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'
+        '', 'un', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'
     );
 
     // Arreglo con las palabras para representar las decenas
@@ -9417,12 +9417,22 @@ function numeroATexto($numero,$moneda) {
 
     // Arreglo con las palabras para representar las centenas
     $centenas = array(
-        '', 'cien', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'
+        '', 'ciento', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'
     );
 
     // Arreglo con las palabras para representar los miles
     $miles = array(
         '', 'mil', 'dos mil', 'tres mil', 'cuatro mil', 'cinco mil', 'seis mil', 'siete mil', 'ocho mil', 'nueve mil'
+    );
+
+    // Arreglo con las palabras para representar los millones
+    $millones = array(
+        '', 'un millón', 'dos millones', 'tres millones', 'cuatro millones', 'cinco millones', 'seis millones', 'siete millones', 'ocho millones', 'nueve millones'
+    );
+
+    // Arreglo con las palabras para representar las decenas de millones
+    $decenas_millones = array(
+        '', 'diez millones', 'veinte millones', 'treinta millones', 'cuarenta millones', 'cincuenta millones', 'sesenta millones', 'setenta millones', 'ochenta millones', 'noventa millones'
     );
 
     // Dividir el número en partes enteras y decimales
@@ -9432,17 +9442,49 @@ function numeroATexto($numero,$moneda) {
     $parteEntera = '';
     $numeroEntero = (int)$partes[0];
 
-    // Convertir los miles
-    $mil = floor($numeroEntero / 1000);
-    $restoMil = $numeroEntero % 1000;
+    // Convertir los millones
+    $millon = floor($numeroEntero / 1000000);
+    $restoMillon = $numeroEntero % 1000000;
 
-    if ($mil > 0) {
-        $parteEntera .= $miles[$mil] . ' ';
+    if ($millon > 0) {
+        if ($millon == 1) {
+            $parteEntera .= 'un millón ';
+        } else {
+            $parteEntera .= $millones[$millon] . ' ';
+        }
     }
 
+    // Convertir las decenas de millones
+    $decenasMillon = floor($restoMillon / 10000000);
+    $restoDecenasMillon = $restoMillon % 10000000;
+
+    if ($decenasMillon > 0) {
+        $parteEntera .= $decenas_millones[$decenasMillon] . ' ';
+    }
+
+    // Convertir los miles
+    $miles = floor($restoDecenasMillon / 1000);
+    $restoMiles = $restoDecenasMillon % 1000;
+
+    if ($miles > 0) {
+        if ($miles < 10) {
+            $parteEntera .= $unidades[$miles] . ' mil ';
+        } else if ($miles < 20) {
+            $parteEntera .= $unidades[$miles] . ' mil ';
+        } else {
+            $decena_mil = floor($miles / 10);
+            $unidad_mil = $miles % 10;
+            if ($unidad_mil > 0) {
+                $parteEntera .= $decenas[$decena_mil] . ' y ' . $unidades[$unidad_mil] . ' mil ';
+            } else {
+                $parteEntera .= $decenas[$decena_mil] . ' mil ';
+            }
+        }
+    }
+    
     // Convertir las centenas
-    $centena = floor($restoMil / 100);
-    $restoCentena = $restoMil % 100;
+    $centena = floor($restoMiles / 100);
+    $restoCentena = $restoMiles % 100;
 
     if ($centena > 0) {
         if ($centena == 1 && $restoCentena > 0) {
@@ -9459,7 +9501,11 @@ function numeroATexto($numero,$moneda) {
     if ($decena > 0) {
         if ($decena == 1) {
             if ($unidad > 0) {
-                $parteEntera .= $unidades[$unidad] . ' y ';
+                if ($unidad < 6) {
+                    $parteEntera .= $unidades[$unidad + 10] . ' ';
+                } else {
+                    $parteEntera .= 'dieci' . $unidades[$unidad] . ' ';
+                }
             } else {
                 $parteEntera .= 'diez ';
             }
@@ -9478,7 +9524,8 @@ function numeroATexto($numero,$moneda) {
     // Convertir la parte decimal a texto si existe
     $parteDecimal = '';
     if (isset($partes[1])) {
-        $parteDecimal = ' con ' . $partes[1] . '/100';
+        $decimales = str_pad($partes[1], 2, '0', STR_PAD_RIGHT);
+        $parteDecimal = ' con ' . $decimales . '/100';
     }
 
     // Unir la parte entera y la parte decimal
@@ -9489,6 +9536,7 @@ function numeroATexto($numero,$moneda) {
 
     return $texto;
 }
+
 
 function obtener_ultimo_tc(){
     $url = "https://www.sunat.gob.pe/a/txt/tipoCambio.txt";
@@ -9528,4 +9576,203 @@ function obtener_ultimo_tc(){
         'success' => false,
         'message' => 'SUNAT no responde.'
     ];
+}
+
+function estadodeventaVendedor(int $estado): array {
+    $estado_ventas = '';
+    $texto_venta = '';
+    $background = '';
+    $icono_uno = '';
+    $icono_dos = '';
+    $boton_fondo = '';
+    $boton_action = '';
+    $boton_texto  = '';
+    switch ($estado) {
+        case 0:
+            $estado_ventas = 'Pendiente';
+            $texto_venta = 'Pedido pendiente';
+            $background = '#bf9f08';
+            $boton_fondo = '#05983be3';
+            $boton_action = 'recibir_pedido';
+            $boton_texto  = 'Recibir pedido';
+            $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>';
+            $icono_dos = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>';
+            break;
+        case 1:
+            $estado_ventas = 'Recibido';
+            $texto_venta = 'Pedido recibido';
+            $background = '#0276dde3';
+            $boton_fondo = '#05983be3';
+            $boton_action = 'aceptar_pedido';
+            $boton_texto  = 'Aceptar pedido';
+            $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" /></svg>';
+            $icono_dos = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>';
+            break;
+        case 2:
+            $estado_ventas = 'Pedido aceptado, en espera de preparación';
+            $texto_venta = 'Pedido aceptado';
+            $background = '#0276dde3';
+            $boton_fondo = '#05983be3';
+            $boton_action = 'preparar_pedido';
+            $boton_texto  = 'Preparar pedido';
+            $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6" stroke="currentColor"><path fill="currentColor" d="M7.493 18.5c-.425 0-.82-.236-.975-.632A7.48 7.48 0 0 1 6 15.125c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75A.75.75 0 0 1 15 2a2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23h-.777ZM2.331 10.727a11.969 11.969 0 0 0-.831 4.398 12 12 0 0 0 .52 3.507C2.28 19.482 3.105 20 3.994 20H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 0 1-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227Z" /></svg>';
+            $icono_dos = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>';
+            break;
+        case 3:
+            $estado_ventas = 'Preparando pedido';
+            $texto_venta = 'Preparando el pedido';
+            $background = '#05983be3';
+            $boton_fondo = '#4e0598e3';
+            $boton_action = 'listo_pedido';
+            $boton_texto  = 'El pedido esta listo';
+            $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6" stroke="currentColor"><path fill="currentColor" d="M7.493 18.5c-.425 0-.82-.236-.975-.632A7.48 7.48 0 0 1 6 15.125c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75A.75.75 0 0 1 15 2a2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23h-.777ZM2.331 10.727a11.969 11.969 0 0 0-.831 4.398 12 12 0 0 0 .52 3.507C2.28 19.482 3.105 20 3.994 20H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 0 1-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227Z" /></svg>';
+            $icono_dos = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>';
+            break;
+        case 4:
+            $estado_ventas = 'Empaquetando';
+            $texto_venta = 'Empaquetando pedido';
+            break;
+        case 5:
+            $estado_ventas = 'Listo para entregar';
+            $texto_venta = 'Pedido listo para entregar';
+            break;
+        case 6:
+            $estado_ventas = 'En camino a destino';
+            $texto_venta = 'Pedido en camino';
+            break;
+        case 7:
+            $estado_ventas = 'Llego a destino';
+            $texto_venta = 'Pedido Llego a su destino';
+            break;
+        case 8:
+            $estado_ventas = 'Entregado';
+            $texto_venta = 'Pedido entregado';
+            break;
+        case 9:
+            $estado_ventas = 'Cancelado';
+            $texto_venta = 'Pedido cancelado';
+            break;
+        case 10:
+            $estado_ventas = 'Anulado';
+            $texto_venta = 'Pedido anulado';
+            break;
+        case 11:
+            $estado_ventas = 'Rechazado';
+            $texto_venta = 'Pedido rechazado';
+            $background = '#b12020e3';
+            $boton_fondo = '#05983be3';
+            $boton_action = 'aceptar_pedido';
+            $boton_texto  = 'Reactivar y Aceptar pedido';
+            $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" /></svg>';
+            $icono_dos = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>';
+            break;
+        default:
+            $estado_ventas = 'Estado desconocido';
+            $texto_venta = 'Pedido desconocido';
+            break;
+    }
+    return [
+        'estado_ventas' => $estado_ventas,
+        'texto_venta' => $texto_venta,
+        'background' => $background,
+        'boton_fondo' => $boton_fondo,
+        'boton_action' => $boton_action,
+        'boton_texto' => $boton_texto,
+        'icono_uno' => $icono_uno,
+        'icono_dos' => $icono_dos
+    ];
+}
+function estadodeventaCliente(int $estado): array {
+    $estado_ventas = '';
+    $texto_venta = '';
+    $background = '';
+    $icono_uno = '';
+    $icono_dos = '';
+    switch ($estado) {
+        case 0:
+            $estado_ventas = 'Pendiente';
+            $texto_venta = 'Su pedido esta en lista de espera';
+            $background = '#bf9f08';
+            break;
+        case 1:
+            $estado_ventas = 'Recibimos tu pedido';
+            $texto_venta = 'Tu pedido fue recibido por un acesor de ventas';
+            break;
+        case 2:
+            $estado_ventas = 'Tu pedido fue aceptado';
+            $texto_venta = 'Tu pedido fue aceptado por un acesor de ventas';
+            break;
+        case 3:
+            $estado_ventas = 'Se esta preparando tu pedido';
+            $texto_venta = 'Se esta preparando tu pedido ';
+            break;
+        case 4:
+            $estado_ventas = 'Tu pedido se esta empaquetando';
+            $texto_venta = 'Tu pedido esta en proceso de empaquetado y pronto estara listo';
+            break;
+        case 5:
+            $estado_ventas = 'Tu pedido esta listo para entregar';
+            $texto_venta = 'Tu pedido esta listo y ya puedes recogerlo';
+            break;
+        case 6:
+            $estado_ventas = 'Tu pedido esta en camino';
+            $texto_venta = 'Tu pedido ya esta en camino';
+            break;
+        case 7:
+            $estado_ventas = 'Tu pedido a llegado';
+            $texto_venta = 'Tu pedido ya esta en el lugar de entrega';
+            break;
+        case 8:
+            $estado_ventas = 'Tu pedido fue entregado';
+            $texto_venta = 'Tu pedido fue entregado con exito';
+            break;
+        case 9:
+            $estado_ventas = 'Tu pedido fue cancelado';
+            $texto_venta = 'Cancelaste el pedido, resta -29 puntos al acesor de ventas y -19 puntos al cliente';
+            break;
+        case 10:
+            $estado_ventas = 'Tu pedido fue anulado';
+            $texto_venta = 'El pedido fue anulado por el area administrativa, Esto sucede si el cliente no recoge el pedido dentro del tiempo indicado al momento de realizar la compra -39 puntos agregados al record del cliente';
+            break;
+        case 11:
+            $estado_ventas = 'Tu pedido fue rechazado';
+            $texto_venta = 'Tu pedido fue rechazado por el el acesor de ventas';
+            break;
+        default:
+            $estado_ventas = 'Estado desconocido';
+            $texto_venta = 'Estado del pedido desconocido';
+            break;
+    }
+    return [
+        'estado_ventas' => $estado_ventas,
+        'texto_venta' => $texto_venta,
+        'background' => $background,
+        'icono_uno' => $icono_uno,
+        'icono_dos' => $icono_dos
+    ];
+}
+
+function generarNumeroDocumento($tipo) {
+    global $wo, $sqlConnect, $db;
+    $lastNumDocRow = $db->orderBy('num_doc', 'desc')
+                        ->where('documento', $tipo)
+                        ->getOne(T_VENTAS, 'num_doc');
+    if ($lastNumDocRow) {
+        $lastNumDoc = (int)$lastNumDocRow->num_doc;
+    } else {
+        $lastNumDoc = 0;
+    }
+    
+    $nuevoNumero = $lastNumDoc + 1;
+
+    $prefijo = '';
+    if ($tipo == 'B') {
+        $prefijo = 'EB01-';
+    } elseif ($tipo == 'BS') {
+        $prefijo = 'EN01-';
+    } elseif ($tipo == 'F') {
+        $prefijo = 'E001-';
+    }
+    $numDocCompleto = $prefijo . $nuevoNumero;
+    return $numDocCompleto;
 }

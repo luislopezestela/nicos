@@ -178,6 +178,8 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
       var ISAPI = $('#ISAPI').val();
       
       $(document).on('click', 'a[data-ajax]', function(e) {
+        var posAbierto = false;
+        var ordenAbierto = false;
         var carritoAbierto = false;
         var productoItemAbierto = false;
           var corousel_Data = document.getElementById('carousel__content');
@@ -324,11 +326,15 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                 return url1 === url2;
             }
 
-            // Verificar si la URL actual coincide con la URL deseada
+            // Verificar si la URL actual coincide con la URL deseada posAbierto
             if (paginaActual.includes('checkout')) {
                 carritoAbierto = true;
             } else if (paginaActual.includes('item') && esIgual(window.location.href, urlDeseada)) {
                 productoItemAbierto = true;
+            } else if (paginaActual.includes('order') && esIgual(window.location.href, urlDeseada)) {
+                ordenAbierto = true;
+            } else if (paginaActual.includes('pos') && esIgual(window.location.href, urlDeseada)) {
+                posAbierto = true;
             }
 
 
@@ -375,6 +381,14 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                   }
                 }else if (json_data.page === 'publicacion') {
                   if (productoItemAbierto===false) {
+                    window.history.pushState({state:'new'}, '', json_data.url);
+                  }
+                }else if (json_data.page === 'order') {
+                  if (ordenAbierto===false) {
+                    window.history.pushState({state:'new'}, '', json_data.url);
+                  }
+                }else if (json_data.page === 'pos') {
+                  if (posAbierto===false) {
                     window.history.pushState({state:'new'}, '', json_data.url);
                   }
                 }else{
@@ -914,6 +928,14 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
         </script>
       <?php endif ?>
       <?php if($wo['page'] == 'tienda'): ?>
+        <script type="text/javascript">
+          document.addEventListener("DOMContentLoaded", function() {
+          layshane_carousel_views();
+          });
+        </script>
+      <?php endif ?>
+
+      <?php if($wo['page'] == 'pos'): ?>
         <script type="text/javascript">
           document.addEventListener("DOMContentLoaded", function() {
           layshane_carousel_views();

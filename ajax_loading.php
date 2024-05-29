@@ -60,6 +60,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                     case 'ventas':
                         include('sources/ventas.php');
                         break;
+                    case 'pos':
+                        include('sources/pos.php');
+                        break;
                     case 'carta':
                         include('sources/carta.php');
                         break;
@@ -501,6 +504,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                     case 'ventas':
                         include('sources/ventas.php');
                         break;
+                    case 'pos':
+                        include('sources/pos.php');
+                        break;
                     case 'servicios':
                         include('sources/servicios.php');
                         break;
@@ -724,6 +730,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                 break;
             case 'ventas':
                 include('sources/ventas.php');
+                break;
+            case 'pos':
+                include('sources/pos.php');
                 break;
             case 'carta':
                 include('sources/carta.php');

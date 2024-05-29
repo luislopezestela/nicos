@@ -27,7 +27,7 @@
                     <div class="site-settings-alert"></div>
                     <form class="site-settings" method="POST">
                         <div class="float-left">
-                            <label for="social_share_twitter" class="main-label">Twitter</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Twitter</span>
                             <br><small class="admin-info">Comparte publicaciones en Twitter.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -39,7 +39,7 @@
                         <hr>
 
                         <div class="float-left">
-                            <label for="social_share_facebook" class="main-label">Facebook</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Facebook</span>
                             <br><small class="admin-info">Comparte publicaciones en Facebook.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -51,7 +51,7 @@
                         <hr>
 
                         <div class="float-left">
-                            <label for="social_share_whatsup" class="main-label">Whatsapp</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Whatsapp</span>
                             <br><small class="admin-info">Comparte publicaciones en Whatsapp.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -63,7 +63,7 @@
                         <hr>
 
                         <div class="float-left">
-                            <label for="social_share_pinterest" class="main-label">Pinterest</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Pinterest</span>
                             <br><small class="admin-info">Comparte publicaciones en Pinterest.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -75,7 +75,7 @@
                         <hr>
                         
                         <div class="float-left">
-                            <label for="social_share_linkedin" class="main-label">Linkedin</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Linkedin</span>
                             <br><small class="admin-info">Comparte publicaciones en Linkedin.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -87,7 +87,7 @@
                         <hr>
 
                         <div class="float-left">
-                            <label for="social_share_telegram" class="main-label">Telegram</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Telegram</span>
                             <br><small class="admin-info">Comparte publicaciones en Telegram.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -105,7 +105,7 @@
                     <h6 class="card-title">Configuracion de imagenes para adultos</h6>
                     <form class="adult-settings small-p" method="POST">
                         <div class="float-left">
-                            <label for="adult_images" class="main-label">Filtracion de imagenes para adultos</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Filtracion de imagenes para adultos</span>
                             <br><small class="admin-info">Habilite esta función para difuminar o eliminar publicaciones que contengan contenido para adultos usando Google AI.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -126,7 +126,7 @@
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Clave de API de vision</label>
+                                <label class="form-label" for="vision_api_key">Clave de API de vision</label>
                                 <input type="text" id="vision_api_key" name="vision_api_key" class="form-control" value="<?php echo $wo['config']['vision_api_key']?>">
                                 <small class="admin-info">Tu clave API de Google Vision.</small>
                             </div>
@@ -156,7 +156,7 @@
                     <div class="store-settings-alert"></div>
                     <form class="site-settings2" method="POST">
                         <div class="float-left">
-                            <label for="memories_system" class="main-label">Sistema de Memorias</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Sistema de Memorias</span>
                             <br><small class="admin-info">Mostrar memorias de publicaciones para los usuarios, anualmente.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -167,7 +167,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="watermark" class="main-label">Superposicion de marca de agua</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Superposicion de marca de agua</span>
                             <br><small class="admin-info">Esta caracteristica creara una marca de agua superpuesta sobre imagenes y videos. <br> La ruta del icono utilizado es: <?php echo "./datos/modulos/{$wo['config']['theme']}/img/icon.png";?></small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -178,7 +178,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="shout_box_system" class="main-label">Sistema de caja de gritos</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Sistema de caja de gritos</span>
 							<div class="dropdown user_filter_drop">
 								<button class="btn btn-light" data-toggle="dropdown">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
@@ -218,7 +218,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="colored_posts_system" class="main-label">Publicaciones de colores</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Publicaciones de colores</span>
 							<div class="dropdown user_filter_drop">
 								<button class="btn btn-light" data-toggle="dropdown">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
@@ -259,7 +259,7 @@
                         <hr>
 
                         <div class="float-left">
-                            <label for="post_approval" class="main-label">Aprobacion de publicacion</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Aprobacion de publicacion</span>
                             <br><small class="admin-info">La publicacion se enviara a los administradores y moderadores para su aprobación antes de publicarla.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -271,7 +271,7 @@
                         <hr>
 
                         <div class="float-left">
-                            <label for="popular_posts" class="main-label">Publicaciones y comentarios populares</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Publicaciones y comentarios populares</span>
                             <br><small class="admin-info">Mostrar publicaciones y comentarios populares esta semana. <br>Cuando esta habilitado, puede ver el enlace en la barra lateral izquierda de la pagina de inicio.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -283,7 +283,7 @@
                         <hr>
 
                         <div class="float-left">
-                            <label for="comment_reports" class="main-label">Informes de comentarios</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Informes de comentarios</span>
                             <br><small class="admin-info">Permitir a los usuarios reportar comentarios.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -295,7 +295,7 @@
                         <hr>
 
                         <div class="float-left">
-                            <label for="post_location" class="main-label">Ubicacion</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Ubicacion</span>
                             <br><small class="admin-info">Permitir a los usuarios publicar ubicacion.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -307,7 +307,7 @@
                         <hr>
 
                         <div class="float-left">
-                            <label for="post_feelings" class="main-label">Sentimientos</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Sentimientos</span>
                             <br><small class="admin-info">Permitir a los usuarios publicar sentimientos.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -319,7 +319,7 @@
                         <hr>
 
                         <div class="float-left">
-                            <label for="post_poll" class="main-label">Encuesta</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Encuesta</span>
 							<div class="dropdown user_filter_drop">
 								<button class="btn btn-light" data-toggle="dropdown">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
@@ -392,7 +392,7 @@
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Recuento de limite de publicación</label>
+                                <label class="form-label" for="post_limit">Recuento de limite de publicación</label>
                                 <input type="text" id="post_limit" name="post_limit" class="form-control" value="<?php echo $wo['config']['post_limit']?>">
                                 <small class="admin-info">¿Cuántas publicaciones puede crear un usuario en una hora?</small>
                             </div>

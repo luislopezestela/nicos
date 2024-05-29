@@ -263,13 +263,13 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 				</div>
 			</div> 	
 			<div class="posts_load load-produts">
-			  <?php if (count($products) > 0): ?>
+			  	<?php if (count($products) > 0): ?>
 					<div class="load-more">
-	            <button class="btn btn-default text-center pointer" onclick="Wo_LoadProducts();"><?php echo $wo['lang']['load_more_products'] ?></button>
-	        </div>
-        <?php endif ?>
+			            <button class="btn btn-default text-center pointer" onclick="Wo_LoadProducts();"><?php echo $wo['lang']['load_more_products'] ?></button>
+			        </div>
+       	 		<?php endif ?>
 			</div>
-		<div class="clear"></div>
+			<div class="clear"></div>
 	</div>
 </div>
 

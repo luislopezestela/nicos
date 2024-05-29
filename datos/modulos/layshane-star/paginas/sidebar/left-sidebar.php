@@ -26,6 +26,7 @@ $pages_array = array(
 	'wallet',
 	'cuentas',
 	'ventas',
+	'pos',
   'my-blogs',
   'my-products',
   'purchased',
@@ -213,6 +214,14 @@ $wo['sucursales'] = lui_GetSucursalesTypes('');
 						<?php endif ?>
 					<?php endif ?>
 					<?php if (lui_IsAdmin() || lui_IsModerator()): ?>
+					<li class="pos <?php echo ($wo['paginas_sidebar'] == 'pos') ? 'active': '';?>">
+						<a href="<?=lui_SeoLink('index.php?link1=pos');?>" data-ajax="?link1=pos">
+							<span style="color:#3498db;">
+								<svg xmlns="http://www.w3.org/2000/svg" style="fill:none;" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10z" /><path d="M7 20h10" /><path d="M9 16v4" /><path d="M15 16v4" /></svg>
+							</span>
+							Punto de venta
+						</a>
+					</li>
 					<li class="ventas <?php echo ($wo['paginas_sidebar'] == 'ventas') ? 'active': '';?>">
 						<a href="<?=lui_SeoLink('index.php?link1=ventas');?>" data-ajax="?link1=ventas">
 							<span style="color:#3498db;">
@@ -221,7 +230,7 @@ $wo['sucursales'] = lui_GetSucursalesTypes('');
 							Ventas
 						</a>
 					</li>
-					<li class="orders <?php echo ($wo['paginas_sidebar'] == 'orders') ? 'active': '';?>">
+					<li class="orders <?php echo ($wo['paginas_sidebar'] == 'orders' OR $wo['paginas_sidebar'] == 'order') ? 'active': '';?>">
 						<a href="<?php echo lui_SeoLink('index.php?link1=orders');?>" data-ajax="?link1=orders">
 							<span style="color:#3498db;">
 								<svg xmlns="http://www.w3.org/2000/svg" style="fill:none;" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M9 13h-2" /><path d="M13 10h-6" /><path d="M11 7h-4" /></svg>

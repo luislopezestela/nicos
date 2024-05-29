@@ -698,6 +698,7 @@ span.product-list {
 }
 
 @media (max-width:992px) {
+  .wo_settings_page{padding:0!important;}
   .wo_image_lightbox .story-img .changer.previous-btn{left:-10px}
 .wo_image_lightbox .story-img .changer.next-btn{right:-10px}
 }

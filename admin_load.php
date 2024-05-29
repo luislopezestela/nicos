@@ -4,17 +4,17 @@ $is_admin     = lui_IsAdmin();
 $is_moderoter = lui_IsModerator();
 if ($wo['config']['maintenance_mode'] == 1) {
     if ($wo['loggedin'] == false) {
-        header("Location: " . lui_SeoLink('index.php?link1=welcome') . $wo['marker'] . 'm=true');
+        header("Location: " . lui_SeoLink('index.php?link1=home') . $wo['marker'] . 'm=true');
         exit();
     } else {
         if ($is_admin === false) {
-            header("Location: " . lui_SeoLink('index.php?link1=welcome') . $wo['marker'] . 'm=true');
+            header("Location: " . lui_SeoLink('index.php?link1=home') . $wo['marker'] . 'm=true');
             exit();
         }
     }
 }
 if ($is_admin == false && $is_moderoter == false) {
-    header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+    header("Location: " . lui_SeoLink('index.php?link1=home'));
     exit();
 }
 if (!empty($_GET)) {
@@ -47,7 +47,7 @@ if (!empty($path['page']) && in_array($path['page'], $files) && file_exists('adm
 $wo['user']['permission'] = json_decode($wo['user']['permission'] ??'' , true);
 if (!empty($wo['user']['permission'][$page])) {
   if (!empty($wo['user']['permission']) && $wo['user']['permission'][$page] == 0) {
-      header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+      header("Location: " . lui_SeoLink('index.php?link1=home'));
       exit();
   }
 }

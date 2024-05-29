@@ -34,7 +34,7 @@ if (!isEnabled('shell_exec')) {
                     <div class="upload-settings-alert"></div>
                     <form class="upload-settings" method="POST">
                         <div class="float-left">
-                            <label for="fileSharing" class="main-label">Carga y uso compartido de archivos</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Carga y uso compartido de archivos</span>
                             <br><small class="admin-info">Al habilitar esta función, el usuario puede compartir y cargar archivos en su sitio.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -46,7 +46,7 @@ if (!isEnabled('shell_exec')) {
                         <hr>
 
                         <div class="float-left">
-                            <label for="video_upload" class="main-label">Subir y compartir videos</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Subir y compartir videos</span>
 							<div class="dropdown user_filter_drop">
 								<button class="btn btn-light" data-toggle="dropdown">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
@@ -86,7 +86,7 @@ if (!isEnabled('shell_exec')) {
                         <hr>
 
                         <div class="float-left">
-                            <label for="audio_upload" class="main-label">Subir y compartir audio</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Subir y compartir audio</span>
 							<div class="dropdown user_filter_drop">
 								<button class="btn btn-light" data-toggle="dropdown">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
@@ -126,7 +126,7 @@ if (!isEnabled('shell_exec')) {
                         <hr>
 
                         <div class="float-left">
-                            <label for="css_upload" class="main-label">Carga y modificaciones de CSS</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Carga y modificaciones de CSS</span>
                             <br><small class="admin-info">Permita que los usuarios carguen su propio archivo CSS para diseñar su perfil.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -149,14 +149,14 @@ if (!isEnabled('shell_exec')) {
                     <form class="upload-settings" method="POST">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Extensiones permitidas</label>
+                                <label class="form-label" for="allowedExtenstion">Extensiones permitidas</label>
                                 <input type="text" id="allowedExtenstion" name="allowedExtenstion" class="form-control" value="<?php echo $wo['config']['allowedExtenstion']?>">
                                 <small class="admin-info">Solo ese tipo de archivos que el usuario puede cargar en su sitio. (separados con coma,)</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Tipos MIME permitidos</label>
+                                <label class="form-label" for="mime_types">Tipos MIME permitidos</label>
                                 <input type="text" id="mime_types" name="mime_types" class="form-control" value="<?php echo $wo['config']['mime_types']?>">
                                 <small class="admin-info">Solo los archivos de tipo MIME que el usuario puede cargar en su sitio. (separados con coma,)</small>
                             </div>
@@ -192,7 +192,7 @@ if (!isEnabled('shell_exec')) {
 
                     <form class="ffmpeg-settings" method="POST">
                         <div class="float-left">
-                            <label for="ffmpeg_system" class="main-label">Sistema FFMPEG</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Sistema FFMPEG</span>
                             <br><small class="admin-info">Este sistema comprimira, convertira y optimizara videos a mp4. <br>Este sistema requiere que "ffmpeg" este instalado en su servidor.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -212,7 +212,7 @@ if (!isEnabled('shell_exec')) {
                                 <?php if (!$wo['config']['ffmpeg']): ?>
                                 <div class="alert alert-danger">El binario FFmpeg no existe en la ruta: <?php echo $wo['config']['ffmpeg_binary_file'] ?></div>
                                 <?php else: ?>
-                                <label class="form-label ">Ruta del archivo binario FFMPEG</label>
+                                <label class="form-label" for="ffmpeg_binary_file">Ruta del archivo binario FFMPEG</label>
                                 <?php endif; ?>
                                 <input type="text" id="ffmpeg_binary_file" name="ffmpeg_binary_file" class="form-control" value="<?php echo $wo['config']['ffmpeg_binary_file'] ?>">
                                 <small class="admin-info">Ejemplo: Linux(/usr/bin/ffmpeg) or Windows(C:\\ffmpeg\bin\ffmpeg.exe)</small>
@@ -221,7 +221,7 @@ if (!isEnabled('shell_exec')) {
 
                         <?php if ($wo['config']['ffmpeg'] && $enabled == true): ?>
                             <hr>
-                        <label for="comments_default_num" class="">Convertir velocidad de video</label>
+                        <label for="convert_speed" class="">Convertir velocidad de video</label>
                         <select class="form-control show-tick" id="convert_speed" name="convert_speed">
                             <option value="ultrafast" <?php echo ($wo['config']['convert_speed'] == 'ultrafast') ? 'selected': '';?>>Ultrarrapido</option>
                             <option value="superfast" <?php echo ($wo['config']['convert_speed'] == 'superfast') ? 'selected': '';?>>Super rapido</option>
@@ -238,14 +238,14 @@ if (!isEnabled('shell_exec')) {
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label ">Extensiones permitidas</label>
+                                <label class="form-label" for="allowedffmpegExtenstion">Extensiones permitidas</label>
                                 <input type="text" id="allowedffmpegExtenstion" name="allowedffmpegExtenstion" class="form-control" value="<?php echo $wo['config']['allowedffmpegExtenstion']?>">
                                 <small class="admin-info">Solo ese tipo de videos que el usuario puede cargar en su sitio. (separados con coma,)</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label ">Tipos MIME permitidos</label>
+                                <label class="form-label" for="ffmpeg_mime_types">Tipos MIME permitidos</label>
                                 <input type="text" id="ffmpeg_mime_types" name="ffmpeg_mime_types" class="form-control" value="<?php echo $wo['config']['ffmpeg_mime_types']?>">
                                 <small class="admin-info">Solo los videos de tipo MIME que el usuario puede cargar en su sitio. (separados con coma,)</small>
                             </div>
@@ -268,7 +268,7 @@ if (!isEnabled('shell_exec')) {
                     <form class="debug-settings" method="POST">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Registro de depuración</label>
+                                <label class="form-label" for="debug_ffmpeg">Registro de depuración</label>
                                 <textarea name="debug_ffmpeg" id="debug_ffmpeg" class="form-control" cols="30" rows="5" style="height: 700px !important;" disabled>Haga clic en Depurar FFMPEG para mostrar los resultados de la prueba.</textarea>
                             </div>
                         </div>
@@ -291,7 +291,7 @@ if (!isEnabled('shell_exec')) {
                     <h6 class="card-title">Configuración de Amazon S3</h6>
                     <form class="general-settings" method="POST">
                         <div class="float-left">
-                            <label for="amazone_s3" class="main-label">Almacenamiento de Amazon S3</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Almacenamiento de Amazon S3</span>
                             <br><small class="admin-info">Habilite Amazon Storage para almacenar sus archivos en Amazon S3.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -303,36 +303,36 @@ if (!isEnabled('shell_exec')) {
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Nombre del cubo de Amazon</label>
+                                <label class="form-label" for="bucket_name">Nombre del cubo de Amazon</label>
                                 <input type="text" id="bucket_name" name="bucket_name" class="form-control" value="<?php echo $wo['config']['bucket_name']?>">
                                 <small class="admin-info">Tu Amazon S3 <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html" target="_blank">Nombre del segmento</a></small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Clave de Amazon S3</label>
+                                <label class="form-label" for="amazone_s3_key">Clave de Amazon S3</label>
                                 <input type="text" id="amazone_s3_key" name="amazone_s3_key" class="form-control" value="<?php echo $wo['config']['amazone_s3_key']?>">
                                 <small class="admin-info">Tu clave de Amazon de <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html" target="_blank">Credenciales de AWS</a></small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Clave secreta de Amazon S3</label>
+                                <label class="form-label" for="amazone_s3_s_key">Clave secreta de Amazon S3</label>
                                 <input type="text" id="amazone_s3_s_key" name="amazone_s3_s_key" class="form-control" value="<?php echo $wo['config']['amazone_s3_s_key']?>">
                                 <small class="admin-info">Tu secreto de Amazon de <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html" target="_blank">Credenciales de AWS </a></small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Punto de enlace personalizado de Amazon S3 (opcional)</label>
-                                <input type="text" name="amazon_endpoint" class="form-control" value="<?php echo ($wo['config']['amazon_endpoint']);?>">
+                                <label class="form-label" for="amazon_endpoint">Punto de enlace personalizado de Amazon S3 (opcional)</label>
+                                <input type="text" name="amazon_endpoint" id="amazon_endpoint" class="form-control" value="<?php echo ($wo['config']['amazon_endpoint']);?>">
                                 <small class="admin-info">Su nombre de dominio personalizado de Amazon, por ejemplo: https://customCDNdomain.com</small>
                             </div>
                         </div>
                         <div class="clearfix"></div>
                         <hr>
                         <label for="region">Región del deposito de Amazon S3</label>
-                        <select class="form-control show-tick" id="region" name="region">
+                        <select class="form-control show-tick" id="region" name="region" autocomplete="off">
                           <option value="us-east-2" <?php echo ($wo['config']['region'] == 'us-east-2')   ? ' selected' : '';?> >US East (Ohio) us-east-2</option>
                           <option value="us-east-1" <?php echo ($wo['config']['region'] == 'us-east-1')   ? ' selected' : '';?> >US East (N. Virginia) us-east-1</option>
                           <option value="us-west-1" <?php echo ($wo['config']['region'] == 'us-west-1')   ? ' selected' : '';?> >US West (N. California) us-west-1</option>
@@ -380,7 +380,7 @@ if (!isEnabled('shell_exec')) {
                     <h6 class="card-title">Configuración de Espacios Digitalocean</h6>
                     <form class="spaces-settings" method="POST">
                          <div class="float-left">
-                            <label for="spaces" class="main-label">Almacenamiento de Espacios Digitalocean</label>
+                           <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Almacenamiento de Espacios Digitalocean</span>
                             <br><small class="admin-info">Habilite Digitalocean Storage para almacenar sus archivos en Digitalocean Spaces.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -392,29 +392,29 @@ if (!isEnabled('shell_exec')) {
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Nombre del espacio del océano digital</label>
+                                <label class="form-label" for="space_name">Nombre del espacio del océano digital</label>
                                 <input type="text" id="space_name" name="space_name" class="form-control" value="<?php echo $wo['config']['space_name']?>">
                                 <small class="admin-info">Su nombre de Digitalocean Space Bucket.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Clave de Digitalocean</label>
+                                <label class="form-label" for="spaces_key">Clave de Digitalocean</label>
                                 <input type="text" id="spaces_key" name="spaces_key" class="form-control" value="<?php echo $wo['config']['spaces_key']?>">
                                 <small class="admin-info">Tu clave de credenciales del Espacio Digitalocean.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Digitalocean Secret</label>
+                                <label class="form-label" for="spaces_secret">Digitalocean Secret</label>
                                 <input type="text" id="spaces_secret" name="spaces_secret" class="form-control" value="<?php echo $wo['config']['spaces_secret']?>">
                                 <small class="admin-info">Tu clave secreta de credenciales de Digitalocean Space.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Digitalocean Punto final personalizado (opcional)</label>
-                                <input type="text" name="spaces_endpoint" class="form-control" value="<?php echo ($wo['config']['spaces_endpoint']);?>">
+                                <label class="form-label" for="spaces_endpoint">Digitalocean Punto final personalizado (opcional)</label>
+                                <input type="text" name="spaces_endpoint" id="spaces_endpoint" class="form-control" value="<?php echo ($wo['config']['spaces_endpoint']);?>">
                                 <small class="admin-info">Su nombre de dominio personalizado de Digitalocean, por ejemplo: https://customCDNdomain.com</small>
                             </div>
                         </div>
@@ -461,7 +461,7 @@ if (!isEnabled('shell_exec')) {
                     <h6 class="card-title">Configuracion Wasabi</h6>
                     <form class="wasabi_storage-settings" method="POST">
                          <div class="float-left">
-                            <label for="wasabi_storage" class="main-label">Almacenamiento de wasabi</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Almacenamiento de wasabi</span>
                             <br><small class="admin-info">Habilite Wasabi Storage para almacenar sus archivos en Wasabi Spaces.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -473,29 +473,29 @@ if (!isEnabled('shell_exec')) {
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Wasabi Bucket Nombre</label>
+                                <label class="form-label" for="wasabi_bucket_name">Wasabi Bucket Nombre</label>
                                 <input type="text" id="wasabi_bucket_name" name="wasabi_bucket_name" class="form-control" value="<?php echo $wo['config']['wasabi_bucket_name']?>">
                                 <small class="admin-info">Tu nombre de Wasabi Bucket.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Wasabi Access Key</label>
+                                <label class="form-label" for="wasabi_access_key">Wasabi Access Key</label>
                                 <input type="text" id="wasabi_access_key" name="wasabi_access_key" class="form-control" value="<?php echo $wo['config']['wasabi_access_key']?>">
                                 <small class="admin-info">Tu Wasabi Access Key.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Wasabi Secret Key</label>
+                                <label class="form-label" for="wasabi_secret_key">Wasabi Secret Key</label>
                                 <input type="text" id="wasabi_secret_key" name="wasabi_secret_key" class="form-control" value="<?php echo $wo['config']['wasabi_secret_key']?>">
                                 <small class="admin-info">Tu Wasabi Secret Key.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Punto final personalizado de Wasabi (opcional)</label>
-                                <input type="text" name="wasabi_endpoint" class="form-control" value="<?php echo ($wo['config']['wasabi_endpoint']);?>">
+                                <label class="form-label" for="wasabi_endpoint">Punto final personalizado de Wasabi (opcional)</label>
+                                <input type="text" name="wasabi_endpoint" id="wasabi_endpoint" class="form-control" value="<?php echo ($wo['config']['wasabi_endpoint']);?>">
                                 <small class="admin-info">Su nombre de dominio personalizado Wasabi, por ejemplo: https://customCDNdomain.com</small>
                             </div>
                         </div>
@@ -542,7 +542,7 @@ if (!isEnabled('shell_exec')) {
                     <small>Importante: Esto puede ralentizar la velocidad de carga/eliminación de su sitio, asegúrese de utilizar un servidor FTP rápido.</small><br><br>
                     <form class="ftp-settings" method="POST">
                          <div class="float-left">
-                            <label for="ftp_upload" class="main-label">Almacenamiento FTP</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Almacenamiento FTP</span>
                             <br><small class="admin-info">Habilite el almacenamiento FTP para almacenar sus archivos en su propio servidor FTP.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -554,42 +554,42 @@ if (!isEnabled('shell_exec')) {
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Nombre de host FTP</label>
+                                <label class="form-label" for="ftp_host">Nombre de host FTP</label>
                                 <input type="text" id="ftp_host" name="ftp_host" class="form-control" value="<?php echo $wo['config']['ftp_host']?>">
                                 <small class="admin-info">Su nombre de host FTP, podría ser IP o nombre de dominio.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Nombre de usuario FTP</label>
+                                <label class="form-label" for="ftp_username">Nombre de usuario FTP</label>
                                 <input type="text" id="ftp_username" name="ftp_username" class="form-control" value="<?php echo $wo['config']['ftp_username']?>">
                                 <small class="admin-info">El nombre de usuario de su cuenta FTP.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Contraseña FTP</label>
+                                <label class="form-label" for="ftp_password">Contraseña FTP</label>
                                 <input type="text" id="ftp_password" name="ftp_password" class="form-control" value="<?php echo $wo['config']['ftp_password']?>">
                                 <small class="admin-info">La contraseña de su cuenta FTP.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Puerto FTP</label>
+                                <label class="form-label" for="ftp_port">Puerto FTP</label>
                                 <input type="text" id="ftp_port" name="ftp_port" class="form-control" value="<?php echo $wo['config']['ftp_port']?>">
                                 <small class="admin-info">El puerto de su servidor FTP.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Ruta FTP</label>
+                                <label class="form-label" for="ftp_path">Ruta FTP</label>
                                 <input type="text" id="ftp_path" name="ftp_path" class="form-control" value="<?php echo $wo['config']['ftp_path']?>">
                                 <small class="admin-info">La ruta a /subir archivos.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Extremo FTP</label>
+                                <label class="form-label" for="ftp_endpoint">Extremo FTP</label>
                                 <input type="text" id="ftp_endpoint" name="ftp_endpoint" class="form-control" value="<?php echo $wo['config']['ftp_endpoint']?>">
                                 <small class="admin-info">IP o dominio donde apunta el servidor FTP, ejemplo: layshaneftpstorage.com</small>
                             </div>
@@ -613,7 +613,7 @@ if (!isEnabled('shell_exec')) {
 
                     <form class="drive-settings" method="POST">
                          <div class="float-left">
-                            <label for="cloud_upload" class="main-label">Almacenamiento en la nube de Google</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Almacenamiento en la nube de Google</span>
                             <br><small class="admin-info">Habilite Google Cloud Storage para almacenar sus archivos en Google Cloud.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -625,21 +625,21 @@ if (!isEnabled('shell_exec')) {
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Nombre del depósito de Google Cloud</label>
+                                <label class="form-label" for="cloud_bucket_name">Nombre del depósito de Google Cloud</label>
                                 <input type="text" id="cloud_bucket_name" name="cloud_bucket_name" class="form-control" value="<?php echo $wo['config']['cloud_bucket_name']?>">
                                 <small class="admin-info">La contraseña de su cuenta FTP.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line focused">
-                                <label class="form-label">Archivo de la nube de Google</label>
+                                <label class="form-label" for="cloud_file">Archivo de la nube de Google</label>
                                 <input type="file" id="cloud_file" name="cloud_file" class="form-control">
                                 <small class="admin-info">Debería ser un archivo JSON.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Ruta del archivo de Google Cloud</label>
+                                <label class="form-label" for="cloud_file_path">Ruta del archivo de Google Cloud</label>
                                 <input type="text" id="cloud_file_path" class="form-control" value="<?php echo $wo['config']['cloud_file_path']?>" readonly>
                                 <small class="admin-info">Ruta a su archivo de Google Cloud en su servidor.</small>
                             </div>
@@ -647,8 +647,8 @@ if (!isEnabled('shell_exec')) {
                         <div class="clearfix"></div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Punto final personalizado de Google Cloud (opcional)</label>
-                                <input type="text" name="cloud_endpoint" class="form-control" value="<?php echo ($wo['config']['cloud_endpoint']);?>">
+                                <label class="form-label" for="cloud_endpoint">Punto final personalizado de Google Cloud (opcional)</label>
+                                <input type="text" name="cloud_endpoint" id="cloud_endpoint" class="form-control" value="<?php echo ($wo['config']['cloud_endpoint']);?>">
                                 <small class="admin-info">Su nombre de dominio personalizado de Google Cloud, por ejemplo: https://customCDNdomain.com</small>
                             </div>
                         </div>
@@ -668,7 +668,7 @@ if (!isEnabled('shell_exec')) {
                     <h6 class="card-title">Configuración de Backblaze</h6>
                     <form class="backblaze_storage-settings" method="POST">
                          <div class="float-left">
-                            <label for="backblaze_storage" class="main-label">Almacenamiento Backblaze</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Almacenamiento Backblaze</span>
                             <br><small class="admin-info">Habilite Backblaze Storage para almacenar sus archivos en Backblaze Spaces.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -680,35 +680,35 @@ if (!isEnabled('shell_exec')) {
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Identificación del depósito Backblaze</label>
+                                <label class="form-label" for="backblaze_bucket_id">Identificación del depósito Backblaze</label>
                                 <input type="text" id="backblaze_bucket_id" name="backblaze_bucket_id" class="form-control" value="<?php echo $wo['config']['backblaze_bucket_id']?>">
                                 <small class="admin-info">Su identificación de Backblaze Bucket.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Nombre del depósito Backblaze</label>
+                                <label class="form-label" for="backblaze_bucket_name">Nombre del depósito Backblaze</label>
                                 <input type="text" id="backblaze_bucket_name" name="backblaze_bucket_name" class="form-control" value="<?php echo $wo['config']['backblaze_bucket_name']?>">
                                 <small class="admin-info">Su nombre de cubo Backblaze.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Región del cubo Backblaze</label>
+                                <label class="form-label" for="backblaze_bucket_region">Región del cubo Backblaze</label>
                                 <input type="text" id="backblaze_bucket_region" name="backblaze_bucket_region" class="form-control" value="<?php echo $wo['config']['backblaze_bucket_region']?>">
                                 <small class="admin-info">Tu región de Backblaze Bucket.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Backblaze Access Key ID</label>
+                                <label class="form-label" for="backblaze_access_key_id">Backblaze Access Key ID</label>
                                 <input type="text" id="backblaze_access_key_id" name="backblaze_access_key_id" class="form-control" value="<?php echo $wo['config']['backblaze_access_key_id'] ?>">
                                 <small class="admin-info">Tu Backblaze Access Key ID.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Backblaze Access Key</label>
+                                <label class="form-label" for="backblaze_access_key">Backblaze Access Key</label>
                                 <input type="text" id="backblaze_access_key" name="backblaze_access_key" class="form-control" value="<?php echo $wo['config']['backblaze_access_key'] ?>">
                                 <small class="admin-info">Tu Backblaze Access Key.</small>
                             </div>
@@ -716,8 +716,8 @@ if (!isEnabled('shell_exec')) {
                         <div class="clearfix"></div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Punto final personalizado de Backblaze (opcional)</label>
-                                <input type="text" name="backblaze_endpoint" class="form-control" value="<?php echo ($wo['config']['backblaze_endpoint']);?>">
+                                <label class="form-label" for="backblaze_endpoint">Punto final personalizado de Backblaze (opcional)</label>
+                                <input type="text" name="backblaze_endpoint" id="backblaze_endpoint" class="form-control" value="<?php echo ($wo['config']['backblaze_endpoint']);?>">
                                 <small class="admin-info">Su nombre de dominio personalizado Backblaze, por ejemplo: https://customCDNdomain.com</small>
                             </div>
                         </div>

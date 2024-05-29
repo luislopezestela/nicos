@@ -14,7 +14,7 @@ if ($f == 'g_s_pr') {
                 $sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad 
                         FROM imventario 
                         WHERE producto = {$producto_id} 
-                        AND estado = 1";
+                        AND (estado = 1 OR estado = 2)";
 
                 foreach ($selecciones as $atributoId => $opcionId) {
                     $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = $atributoId AND id_atributo_opciones = $opcionId)";

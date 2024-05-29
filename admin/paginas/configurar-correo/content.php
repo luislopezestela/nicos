@@ -29,7 +29,7 @@
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Correo predeterminado del sitio web</label>
+                                <label class="form-label" for="siteEmail">Correo predeterminado del sitio web</label>
                                 <input type="text" id="siteEmail" name="siteEmail" class="form-control" value="<?php echo $wo['config']['siteEmail']; ?>">
                                 <small class="admin-info">Este es el correo predeterminado de su sitio web, se utilizara para enviar correos a los usuarios.</small>
                             </div>
@@ -37,28 +37,28 @@
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Host SMTP</label>
+                                <label class="form-label" for="smtp_host">Host SMTP</label>
                                 <input type="text" id="smtp_host" name="smtp_host" class="form-control" value="<?php echo $wo['config']['smtp_host'];?>">
                                 <small class="admin-info">El nombre de host de su cuenta SMTP puede ser IP, dominio o subdominio.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Usuario SMTP</label>
+                                <label class="form-label" for="smtp_username">Usuario SMTP</label>
                                 <input type="text" id="smtp_username" name="smtp_username" class="form-control" value="<?php echo $wo['config']['smtp_username'];?>">
                                 <small class="admin-info">Your SMTP account username.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Contraseña SMTP</label>
+                                <label class="form-label" for="smtp_password">Contraseña SMTP</label>
                                 <input type="password" id="smtp_password" name="smtp_password" class="form-control" value="<?php echo openssl_decrypt($wo['config']['smtp_password'], "AES-128-ECB", 'mysecretkey1234');?>">
                                 <small class="admin-info">La contraseña de su cuenta SMTP.</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Puerto SMTP</label>
+                                <label class="form-label" for="smtp_port">Puerto SMTP</label>
                                 <input type="text" id="smtp_port" name="smtp_port" class="form-control" value="<?php echo $wo['config']['smtp_port'];?>">
                                 <small class="admin-info">¿Que puerto utiliza su servidor SMTP? el 587 mas utilizado para TLS y el 465 para cifrado SSL. </small>
                             </div>
@@ -99,13 +99,13 @@
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Su numero de celular</label>
+                                <label class="form-label" for="sms_phone_number">Su numero de celular</label>
                                 <input type="text" id="sms_phone_number" name="sms_phone_number" class="form-control" value="<?php echo $wo['config']['sms_phone_number'];?>">
                                 <small class="admin-info">Configure el numero predeterminado de su sitio web, se utilizará para enviar SMS a los usuarios, por ejemplo (+51 982..)</small>
                             </div>
                         </div>
                         <hr>
-                        <label  class="main-label">Configuracion BulkSMS</label><br><br>
+                        <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Configuracion BulkSMS</span><br><br>
                         <!-- <div class="form-group form-float">
                             <div class="form-line">
                                 <label class="form-label">BulkSMS Eapi_URL</label>
@@ -114,61 +114,61 @@
                         </div> -->
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">BulkSMS Username</label>
+                                <label class="form-label" for="sms_username">BulkSMS Username</label>
                                 <input type="text" id="sms_username" name="sms_username" class="form-control" value="<?php echo $wo['config']['sms_username'];?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">BulkSMS Password</label>
+                                <label class="form-label" for="sms_password">BulkSMS Password</label>
                                 <input type="password" id="sms_password" name="sms_password" class="form-control" value="<?php echo $wo['config']['sms_password'];?>">
                             </div>
                         </div>
                        <hr>
-                       <label  class="main-label">Twilio Configuration</label><br><br>
+                       <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Twilio Configuration</span><br><br>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Twilio account_sid</label>
+                                <label class="form-label" for="sms_twilio_username">Twilio account_sid</label>
                                 <input type="text" id="sms_twilio_username" name="sms_twilio_username" class="form-control" value="<?php echo $wo['config']['sms_twilio_username'];?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Twilio auth_token</label>
+                                <label class="form-label" for="sms_twilio_password">Twilio auth_token</label>
                                 <input type="text" id="sms_twilio_password" name="sms_twilio_password" class="form-control" value="<?php echo $wo['config']['sms_twilio_password'];?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Twilio Phone number</label>
+                                <label class="form-label" for="sms_t_phone_number">Twilio Phone number</label>
                                 <input type="text" id="sms_t_phone_number" name="sms_t_phone_number" class="form-control" value="<?php echo $wo['config']['sms_t_phone_number'];?>">
                             </div>
                         </div>
                         <hr>
-                        <label  class="main-label">Infobip Configuration</label><br><br>
+                        <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Infobip Configuration</span><br><br>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Infobip API Key</label>
+                                <label class="form-label" for="infobip_api_key">Infobip API Key</label>
                                 <input type="text" id="infobip_api_key" name="infobip_api_key" class="form-control" value="<?php echo $wo['config']['infobip_api_key'];?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Infobip Base URL</label>
+                                <label class="form-label" for="infobip_base_url">Infobip Base URL</label>
                                 <input type="text" id="infobip_base_url" name="infobip_base_url" class="form-control" value="<?php echo $wo['config']['infobip_base_url'];?>">
                             </div>
                         </div>
                         <hr>
-                        <label  class="main-label">Msg91 Configuration</label><br><br>
+                        <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Msg91 Configuration</span><br><br>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Msg91 AuthKey</label>
+                                <label class="form-label" for="msg91_authKey">Msg91 AuthKey</label>
                                 <input type="text" id="msg91_authKey" name="msg91_authKey" class="form-control" value="<?php echo $wo['config']['msg91_authKey'];?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Msg91 DLT ID</label>
+                                <label class="form-label" for="msg91_dlt_id">Msg91 DLT ID</label>
                                 <input type="text" id="msg91_dlt_id" name="msg91_dlt_id" class="form-control" value="<?php echo $wo['config']['msg91_dlt_id'];?>">
                             </div>
                         </div>
@@ -191,7 +191,7 @@
                     <form class="debug-settings" method="POST">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Registro de depuracion</label>
+                                <label class="form-label" for="debug_email">Registro de depuracion</label>
                                 <textarea name="debug_email" id="debug_email" class="form-control" cols="30" rows="5" style="height: 700px !important;" disabled>Haga clic en Depurar capacidad de entrega de correo para mostrar los resultados de la prueba.</textarea>
                             </div>
                         </div>

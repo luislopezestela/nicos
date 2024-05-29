@@ -24,7 +24,7 @@
                     <h6 class="card-title"><?=$wo['langadmin']['configuracion-general']; ?></h6>
                     <form class="general-settings" method="POST">
                         <div class="float-left">
-                            <label for="developer_mode" class="main-label">Modo desarrollador</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Modo desarrollador</span>
                             <br><small class="admin-info">Al habilitar el modo de desarrollador, se habilitará el informe de errores, <br>no se recomienda habilitar este modo sin la ayuda de un desarrollador,<br> esto puede ocasionar algunos problemas en su sitio web.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -35,7 +35,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="maintenance_mode" class="main-label">Modo de mantenimiento</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Modo de mantenimiento</span>
                             <br><small class="admin-info">Convierta todo el sitio en Mantenimiento. <br> Puede recuperar el sitio visitando /admincp o /admin-cp</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -46,7 +46,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="useSeoFrindly" class="main-label">URL compatible con SEO</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">URL compatible con SEO</span>
                             <br><small class="admin-info">Habilite la carga fluida para ahorrar ancho de banda.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -57,7 +57,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="developers_page" class="main-label">Desarrolladores (Sistema API)</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Desarrolladores (Sistema API)</span>
                             <br><small class="admin-info">Mostrar la página de /desarrolladores a todos los usuarios para solicitudes de API.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -68,7 +68,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="profile_privacy" class="main-label">Usuarios de la página de bienvenida</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Usuarios de la página de bienvenida</span>
                             <br><small class="admin-info">Permita que los usuarios no registrados vean los perfiles de usuario en la página de bienvenida.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -78,7 +78,7 @@
                         </div>
                         <div class="clearfix"></div>
                         <hr>
-                        <label for="defualtLang" class="main-label">Idioma predeterminado</label>
+                        <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Idioma predeterminado</span>
                         <br><small class="admin-info">Establezca el idioma predeterminado de su sitio.</small>
                         <div class="form-group">
                             <select class="form-control show-tick" id="defualtLang" name="defualtLang">
@@ -121,18 +121,18 @@
                     <h6 class="card-title">Configuración de usuario</h6>
                     <form class="user2-settings" method="POST">
                         <div class="float-left">
-                            <label for="online_sidebar" class="main-label">Usuarios en línea</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Usuarios en línea</span>
                         <br><small class="admin-info">Mostrar usuarios activos actuales en la página de inicio.</small>
                         </div>
                         <div class="form-group float-right switcher">
-                            <input type="hidden" name="online_sidebar" value="0" />
+                            <input type="hidden" name="online_sidebar"  value="0" />
                             <input type="checkbox" name="online_sidebar" id="chck-online_sidebar" value="1" <?php echo ($wo['config']['online_sidebar'] == 1) ? 'checked': '';?>>
                             <label for="chck-online_sidebar" class="check-trail"><span class="check-handler"></span></label>
                         </div>
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="user_lastseen" class="main-label">Estado visto por última vez por el usuario</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Estado visto por última vez por el usuario</span>
                            <br><small class="admin-info">Permita que los usuarios establezcan su estado, en línea y último activo.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -143,7 +143,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="deleteAccount" class="main-label">Eliminación de cuenta de usuario</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Eliminación de cuenta de usuario</span>
                             <br><small class="admin-info">Permitir a los usuarios eliminar sus cuentas.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -154,7 +154,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="profile_back" class="main-label">Cambio de fondo de perfil </label>
+                            <label for="profile_background_request" class="main-label">Cambio de fondo de perfil </label>
                             <select class="form-control show-tick" id="profile_background_request" name="profile_background_request" onchange="SelectProModel('can_use_background',this)">
                               <option value="admin" <?php echo ($wo['config']['profile_background_request'] == 'admin')   ? ' selected' : '';?> ><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"> <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path> <circle cx="12" cy="7" r="4"></circle> </svg>Administrador</option>
                               <option value="all" <?php echo ($wo['config']['profile_background_request'] == 'all')   ? ' selected' : '';?> ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"> <circle cx="12" cy="12" r="10"></circle> <line x1="2" y1="12" x2="22" y2="12"></line> <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path> </svg> Todos los usuarios</option>
@@ -171,7 +171,7 @@
                         <div class="clearfix"></div>
                         <hr>
                          <div class="float-left">
-                            <label for="connectivitySystem" class="main-label">Sistema de amigos</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Sistema de amigos</span>
                         <br><small class="admin-info">Elija entre el sistema Seguir y amigo. <br> <span style="color: #c48a36">Si cambia el sistema a otro, se eliminarán todos los seguidores, seguidores y amigos existentes.</span></small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -182,14 +182,14 @@
                         <div class="clearfix"></div>
                         <div class="form-group">
                             <div class="form-line">
-                                <label class="form-label" class="main-label">Límite del sistema de conectividad</label>
-                                <input type="text" name="connectivitySystemLimit" class="form-control" value="<?php echo $wo['config']['connectivitySystemLimit']?>"><small class="admin-info">¿Cuántos amigos puede tener cada usuario?</small>
+                                <label class="main-label" for="connectivitySystemLimit">Límite del sistema de conectividad</label>
+                                <input type="text" name="connectivitySystemLimit" id="connectivitySystemLimit" class="form-control" value="<?php echo $wo['config']['connectivitySystemLimit']?>"><small class="admin-info">¿Cuántos amigos puede tener cada usuario?</small>
                             </div>
                         </div>
                         <hr>
                         
                          <div class="float-left">
-                            <label for="invite_links_system" class="main-label">Sistema de invitación de usuario</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Sistema de invitación de usuario</span>
                             <br><small class="admin-info">Permita que los usuarios inviten a otros usuarios a su sitio.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -199,13 +199,13 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="form-group form-float">
-                            <label class="form-label" class="main-label">¿Cuántos enlaces puede generar un usuario?</label>
+                            <label class="form-label" class="main-label" for="user_links_limit">¿Cuántos enlaces puede generar un usuario?</label>
                             <div class="form-line">
                                 <input type="text" id="user_links_limit" name="user_links_limit" class="form-control" value="<?php echo $wo['config']['user_links_limit']?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
-                            <label class="form-label" class="main-label">¿El usuario puede generar enlaces X dentro?</label>
+                            <label class="form-label" class="main-label" for="expire_user_links">¿El usuario puede generar enlaces X dentro?</label>
                             <div class="form-line">
                                 <select class="form-control show-tick" id="expire_user_links" name="expire_user_links">
                                       <option value="hour" <?php echo ($wo['config']['expire_user_links'] == 'hour')   ? ' selected': '';?>>1 hora</option>
@@ -228,7 +228,7 @@
                     <div class="other-settings-alert"></div>
                     <form class="other-settings" method="POST">
                         <div class="form-group form-float">
-                            <label class="form-label">Palabras censuradas</label>
+                            <label class="form-label" for="censored_words">Palabras censuradas</label>
                             <div class="form-line">
                                 <input type="text" id="censored_words" name="censored_words" class="form-control" value="<?php echo $wo['config']['censored_words']?>">
                                 <small class="admin-info">Palabras para censurar y reemplazar con *** en mensajes, publicaciones, comentarios, etc., separados por una coma.</small>
@@ -266,7 +266,7 @@
                     <h6 class="card-title">Inicio de sesión y registro</h6>
                     <form class="user-settings" method="POST">
                         <div class="float-left">
-                            <label for="user_registration" class="main-label">registro de usuario</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">registro de usuario</span>
                             <br><small class="admin-info">Permita que los usuarios creen cuentas en su sitio.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -277,7 +277,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="auto_username" class="main-label">Nombre de usuario automático al registrarse</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Nombre de usuario automático al registrarse</span>
                             <br><small class="admin-info">Genere un nombre de usuario automático al registrarse. <br> El formulario de registro le pedirá el nombre y apellido del usuario.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -288,7 +288,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="password_complexity_system" class="main-label">Sistema de complejidad de contraseñas</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Sistema de complejidad de contraseñas</span>
                             <br><small class="admin-info">El sistema requerirá una contraseña poderosa al registrarse, <br>incluyendo letras, números y caracteres especiales.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -299,7 +299,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="login_auth" class="main-label">Inicio de sesión inusual</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Inicio de sesión inusual</span>
                             <br><small class="admin-info">Envíe un enlace de confirmación cuando el usuario inicie sesión desde una nueva ubicación.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -310,7 +310,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="remember_device" class="main-label">Recuerda este dispositivo</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Recuerda este dispositivo</span>
                             <br><small class="admin-info">Recuerde este dispositivo en la página de bienvenida.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -321,7 +321,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="login_auth" class="main-label">Autenticación de dos factores</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Autenticación de dos factores</span>
                             <br><small class="admin-info">Envíe el código de confirmación por correo electrónico o SMS cuando el usuario inicie sesión.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -330,7 +330,7 @@
                             <label for="chck-two_factor" class="check-trail"><span class="check-handler"></span></label>
                         </div>
                         <div class="clearfix"></div>
-                        <label for="defualtLang">Método de autenticación de dos factores</label>
+                        <label for="two_factor_type">Método de autenticación de dos factores</label>
                         <br><small class="admin-info">Seleccione el sistema que debe usar el 2FA.</small>
                         <div class="form-group">
                             <select class="form-control show-tick" id="two_factor_type" name="two_factor_type">
@@ -341,7 +341,7 @@
                         </div>
                         <hr>
                         <div class="float-left">
-                            <label for="emailValidation" class="main-label">Validación de cuenta</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Validación de cuenta</span>
                             <br><small class="admin-info">Envíe un enlace de activación después del registro.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -350,7 +350,7 @@
                             <label for="chck-emailValidation" class="check-trail"><span class="check-handler"></span></label>
                         </div>
                         <div class="clearfix"></div>
-                        <label for="defualtLang" >Método de validación de cuenta</label>
+                        <label for="sms_or_email" >Método de validación de cuenta</label>
                         <br><small class="admin-info">Elige el tipo de validación, por SMS o E-mail, si eliges SMS, <br> asegúrese de haber configurado SMS.</small>
                         <div class="form-group">
                             <select class="form-control show-tick" id="sms_or_email" name="sms_or_email">
@@ -360,7 +360,7 @@
                         </div>
                         <hr>
                         <div class="float-left">
-                            <label for="reCaptcha" class="main-label">reCaptcha</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">reCaptcha</span>
                             <br><small class="admin-info">Habilite reCaptcha para evitar el spam.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -371,19 +371,19 @@
                         <div class="clearfix"></div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Clave de recaptcha</label>
+                                <label class="form-label" for="reCaptchaKey">Clave de recaptcha</label>
                                 <input type="text" id="reCaptchaKey" name="reCaptchaKey" class="form-control" value="<?php echo $wo['config']['reCaptchaKey']?>">
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Clave secreta de Recaptcha</label>
+                                <label class="form-label" for="recaptcha_secret_key">Clave secreta de Recaptcha</label>
                                 <input type="text" id="recaptcha_secret_key" name="recaptcha_secret_key" class="form-control" value="<?php echo $wo['config']['recaptcha_secret_key']?>">
                             </div>
                         </div>
                         <hr>
                         <div class="float-left">
-                            <label for="reCaptcha" class="main-label">Evitar intentos de inicio de sesión incorrectos</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Evitar intentos de inicio de sesión incorrectos</span>
                             <br><small class="admin-info">Habilite esta función para rastrear y detener los ataques de fuerza bruta.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -394,14 +394,14 @@
                         <div class="clearfix"></div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Límite de inicio de sesión</label>
+                                <label class="form-label" for="bad_login_limit">Límite de inicio de sesión</label>
                                 <input type="text" id="bad_login_limit" name="bad_login_limit" class="form-control" value="<?php echo $wo['config']['bad_login_limit']?>">
                                 <small class="admin-info">¿Cuántas veces un usuario puede intentar iniciar sesión antes de un bloqueo?</small>
                             </div>
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Tiempo de bloqueo (en minutos)</label>
+                                <label class="form-label" for="lock_time">Tiempo de bloqueo (en minutos)</label>
                                 <input type="text" id="lock_time" name="lock_time" class="form-control" value="<?php echo $wo['config']['lock_time']?>">
                                 <small class="admin-info">¿Cuánto tiempo debe permanecer bloqueado el usuario?</small>
                             </div>
@@ -427,7 +427,7 @@
                     <h6 class="card-title">Configuracion de notificaciones</h6>
                     <form class="notifications-settings" method="POST">
                         <div class="float-left">
-                            <label for="emailNotification" class="main-label">Notificaciónes de Correo Electrónico </label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Notificaciónes de Correo Electrónico </span>
                             <br><small class="admin-info">Envíe notificaciones por correo electrónico a los usuarios después de recibir notificaciones del sitio.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -438,7 +438,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="profileVisit" class="main-label">Notificaciones de visitas al perfil</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Notificaciones de visitas al perfil</span>
                             <br><small class="admin-info">Envía una notificación a un usuario cuando alguien visita su perfil. <br>Tenga en cuenta que esta función requerirá que el usuario se convierta en miembro Pro si habilita Pro System.</small>
                         </div>
                         <div class="form-group float-right switcher">
@@ -449,7 +449,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="float-left">
-                            <label for="notify_new_post" class="main-label">Notificación en nueva publicación</label>
+                            <span class="main-label" style="font-weight:500!important;display:inline-block;margin-bottom:.2rem;">Notificación en nueva publicación</span>
                             <br><small class="admin-info">Envíe una notificación a los seguidores cuando un usuario cree una nueva publicación.</small>
                         </div>
                         <div class="form-group float-right switcher">

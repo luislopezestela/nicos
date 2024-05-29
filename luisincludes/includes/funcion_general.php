@@ -82,7 +82,16 @@ function lui_CustomCode($a = false, $code = array()) {
     }
     return $result;
 }
-function lui_LoadAdminPage($page_url = '') {
+function lui_LoadAdminPage(string $page_url = ''): string {
+    global $wo, $db;
+    $page = './admin/paginas/' . $page_url . '.php';
+    $page_content = '';
+    ob_start();
+    require $page;
+    $page_content = ob_get_clean();
+    return $page_content;
+}
+function lui_LoadAdminPageg($page_url = '') {
     global $wo, $db;
     $page         = './admin/paginas/' . $page_url . '.php';
     $page_content = '';
@@ -92,14 +101,16 @@ function lui_LoadAdminPage($page_url = '') {
     ob_end_clean();
     return $page_content;
 }
-function lui_LoadAdminLinkSettings($link = '') {
+function lui_LoadAdminLinkSettings(string $link = ''): string {
     global $site_url;
     return $site_url . '/admin-cp/' . $link;
 }
-function lui_LoadAdminLink($link = '') {
+
+function lui_LoadAdminLink(string $link = ''): string {
     global $site_url;
     return $site_url . '/admin/' . $link;
 }
+
 function lui_SizeUnits($bytes = 0) {
     if ($bytes >= 1073741824) {
         $bytes = round(($bytes / 1073741824)) . ' GB';
@@ -500,7 +511,7 @@ function lui_SeoLink($query = '') {
             '/^index\.php\?link1=group-setting&group=([A-Za-z0-9_]+)&link3=([A-Za-z0-9_-]+)&name=([A-Za-z0-9_-]+)$/i',
             '/^index\.php\?link1=group-setting&group=([A-Za-z0-9_]+)&link3=([A-Za-z0-9_-]+)$/i',
             '/^index\.php\?link1=group-setting&group=([^\/]+)$/i',
-            '/^index\.php\?link1=admincp&page=([^\/]+)$/i',
+            '/^index\.php\?link1=admincp&page=([A-Za-z0-9_]+)$/i',
             '/^index\.php\?link1=game&id=([^\/]+)$/i',
             '/^index\.php\?link1=albums&user=([A-Za-z0-9_]+)$/i',
             '/^index\.php\?link1=create-album&album=([A-Za-z0-9_]+)$/i',

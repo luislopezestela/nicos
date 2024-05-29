@@ -10505,7 +10505,7 @@ function getStatus($config = array()) {
     $errors = [];
 
     if (!is_writable('./nodejs/models/lui_langs.js')) {
-        $errors[] = ["type" => "error", "message" => "El archivo: <strong>nodejs/models/wo_langs.js</strong> no se puede escribir, el permiso de archivo debe ser <strong>777</strong>."];
+        $errors[] = ["type" => "error", "message" => "El archivo: <strong>nodejs/models/lui_langs.js</strong> no se puede escribir, el permiso de archivo debe ser <strong>777</strong>."];
     }
     if(!ini_get('allow_url_fopen') ) {
         $errors[] = ["type" => "error", "message" => "Funcion PHP <strong>allow_url_fopen</strong> está deshabilitado en su servidor, se requiere que esté habilitado."];
