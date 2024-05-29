@@ -488,7 +488,7 @@ if (!$wo['config']['can_use_chat']) {
 }
 
 $wo['config']['report_reasons'] = json_decode($wo['config']['report_reasons'],true);
-$wo['config']['filesVersion'] = "4.7.25";
+$wo['config']['filesVersion'] = "4.7.26";
 
 if ($wo['config']['filesVersion'] != $wo['config']['version']) {
     ini_set('display_errors', 0);
