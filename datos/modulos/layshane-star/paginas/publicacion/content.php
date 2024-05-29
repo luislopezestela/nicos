@@ -376,7 +376,7 @@
 									}
 								}
 							?>
-							<span  id="cantidad_products"><?=$cantidad_productos;?></span>
+							<span hidden id="cantidad_products"><?=$cantidad_productos;?></span>
 							<?php if ($wo['loggedin']) { ?>
 								<?php $producto_agotado = ''; ?>
 								<?php $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->getOne(T_VENTAS); ?>
