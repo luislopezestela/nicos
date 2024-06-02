@@ -8,9 +8,13 @@
 	<?php endif ?>
 	<div class="messages-wrapper messages-text message-model <?php echo ($wo['message']['onwer'] == 0) ? 'pull-left' : 'pull-right';?>" data-message-id="<?php echo $wo['message']['id'] ?>" onclick="Wo_ShowMessageOptions(<?php echo $wo['message']['id'] ?>);">
 		<div class="clear"></div>
-
-		<div class="message <?php if (!empty($wo['message']['product_id'])) {$wo['product'] = lui_GetProduct($wo['message']['product_id']);if (!empty($wo['product'])) {?>wo_msg_prod_prnt<?php } } ?>" <?php if ($wo['message']['onwer'] == 1) { ?> style="background-color: <?php echo $wo['message']['color']; ?>"<?php } ?> data-toggle="tooltip" title="<?php echo lui_Time_Elapsed_String($wo['message']['time']);?>" data-placement="<?php echo ($wo['message']['onwer'] == 0) ? 'bottom': 'bottom';?>">
-			<p class="message-text" id="message_text_reply_<?php echo $wo['message']['id'] ?>" dir="auto" <?php if ($wo['message']['onwer'] == 1) { ?> style="background-color: <?php echo $wo['message']['color']; ?>"<?php } ?>><?php echo $wo['message']['text'] ?></p>
+		<?php if (!empty($wo['message']['color'])): ?>
+			<?php $colordechat = $wo['message']['color']; ?>
+		<?php else: ?>
+			<?php $colordechat =  $wo['config']['btn_background_color']; ?>
+		<?php endif ?>
+		<div class="message <?php if (!empty($wo['message']['product_id'])) {$wo['product'] = lui_GetProduct($wo['message']['product_id']);if (!empty($wo['product'])) {?>wo_msg_prod_prnt<?php } } ?>" <?php if ($wo['message']['onwer'] == 1) { ?> style="background-color: <?php echo $colordechat; ?>"<?php } ?> data-toggle="tooltip" title="<?php echo lui_Time_Elapsed_String($wo['message']['time']);?>" data-placement="<?php echo ($wo['message']['onwer'] == 0) ? 'bottom': 'bottom';?>">
+			<p class="message-text" id="message_text_reply_<?php echo $wo['message']['id'] ?>" dir="auto" <?php if ($wo['message']['onwer'] == 1) { ?> style="background-color: <?php echo $colordechat; ?>"<?php } ?>><?php echo $wo['message']['text'] ?></p>
 			<div class="message-media" id="message_media_reply_<?php echo $wo['message']['id'] ?>">
 				<div class="clear"></div>
 				<?php
