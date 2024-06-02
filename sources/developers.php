@@ -1,6 +1,6 @@
 <?php
 if ($wo['loggedin'] == false) {
-    header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+    header("Location: " . lui_SeoLink('index.php?link1=home'));
     exit();
 }
 if ($wo['config']['developers_page'] == 0) {

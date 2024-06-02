@@ -4176,7 +4176,7 @@ to {
 .reaction-wow::before {content: 'Wow'}
 .reaction-sad::before {content: 'Sad'}
 .reaction-angry::before {content: 'Angry'}
-
+ 
 .inline_post_emoji {width: 18px;height: 18px;display: inline-block;margin-right: 4px;}
 .inline_post_emoji > .reaction {
 	width: 18px;

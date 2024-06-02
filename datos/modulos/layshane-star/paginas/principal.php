@@ -116,12 +116,12 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
 <?php endif ?>
 <?php if($wo['page'] == 'publicacion'): ?>
   <link id="s_pag_loop" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>" as="style">
-  <link id="style_pag_css" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>">
+  <link class="style_pag_css_item" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>">
 <?php endif ?>
 
 <?php if($wo['page'] == 'tienda'): ?>
   <link id="s_pag_loop" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css?version=<?php echo $wo['config']['version']; ?>" as="style">
-  <link class="style_pag_css" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css?version=<?php echo $wo['config']['version']; ?>">
+  <link class="style_pag_css_tienda" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css?version=<?php echo $wo['config']['version']; ?>">
 <?php endif ?>
 <style><?php echo $wo['config']['styles_cc']; ?></style>
 <style type="text/css">
@@ -772,7 +772,7 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
   </style>
 <?php if($wo['page'] == 'checkout'): ?>
   <link id="s_pag_loop" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/carrito_estilos.css?version=<?php echo $wo['config']['version']; ?>" as="style">
-  <link class="style_pag_css" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/carrito_estilos.css?version=<?php echo $wo['config']['version']; ?>">
+  <link class="style_pag_css_checkout" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/carrito_estilos.css?version=<?php echo $wo['config']['version']; ?>">
 <?php endif ?>
 </head>
 
@@ -971,6 +971,7 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
       <?php } ?>
       <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/audioRecord/record.js?version=<?php echo $wo['config']['version']; ?>" as="script">
       <script src="<?php echo $wo['config']['theme_url'];?>/javascript/audioRecord/record.js?version=<?php echo $wo['config']['version']; ?>"></script>
+      <script src="<?php echo $wo['config']['theme_url'];?>/javascript/audioRecord/recorder.js?version=<?php echo $wo['config']['version']; ?>"></script>
       <?php if ($wo['page'] == 'timeline' && $wo['loggedin'] == true && $wo['config']['css_upload'] == 1) { ?>
       <?php if (!empty($wo['user_profile']['css_file']) && file_exists($wo['user_profile']['css_file'])) {?>
       <link class="styled-profile" rel="stylesheet" href="<?php echo lui_GetMedia($wo['user_profile']['css_file']);?>">
@@ -981,8 +982,6 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
         <script>$(function() {$('div.leftcol').theiaStickySidebar({additionalMarginTop:55});});</script>
         <script type="text/javascript">$(function() {jQuery('.custom-fixed-element').theiaStickySidebar({additionalMarginTop:55});});</script>
       <?php }?>
-  
-
       <!-- End 'JS FILES' -->
       <?php echo lui_LoadPage('timeago/content'); ?>
       <?php if($wo['loggedin'] == true) { echo lui_LoadPage('extra_js/content'); }?>

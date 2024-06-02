@@ -1,15 +1,1340 @@
+<style type="text/css">
+form {
+    display: block;
+    margin-top: 0em;
+}
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+footer{display:none!important;}
+.form-control:focus {
+    border-color: #ccc;
+    outline: 0
+}
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font: inherit;
+    color: inherit;
+}
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+textarea {
+    font-size: 14.5px;
+}
+
+.wo-msg-container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+.ad-placement-header-footer {
+    text-align: center;
+}
+.wo_kb_msg_page{
+    padding-top:0;
+    height: 100%;
+    width: 100%;
+}
+#wo_nw_msg_page .msg_under_hood {
+    overflow: hidden;
+    position: relative;
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane {
+    background: #fff;
+    padding: 20px 0 0;
+    overflow-x: hidden;
+    height: calc(100vh - 55px);
+    overflow-y: auto;
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form {
+    width: 100%;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.inner-addon {
+    position: relative;
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .inner-addon {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .inner-addon .msg_srch_innr {
+    position: relative;
+    width: 100%;
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .inner-addon .msg_srch_innr svg {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    margin: 0;
+    transform: translateY(-50%);
+    color: #949494;
+}
+.left-addon input {
+    padding-left: 30px;
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .inner-addon .msg_srch_innr input {
+    padding: 0 10px 0 52px;
+    height: 50px;
+    background: #f6f6f6;
+    border-radius: 12px;
+    border: none;
+    font-size: 15px;
+    color: #9c9c9c;
+    width: 100%;
+}
+
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .inner-addon .msg_srch_innr input:focus {
+    box-shadow: 0 1px 2px 0px rgba(0, 0, 0, 0.12);
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .inner-addon .btn_contr {
+    background:var(--boton-fondo);
+    color:var(--boton-color);
+    box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 110px;
+    margin-left: 15px;
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .inner-addon button.btn {
+    min-width: 50%;
+    width: 50%;
+    height: 50px;
+    margin: 0;
+    background: transparent;
+    transition: all .3s;
+    box-shadow: none;
+    border: none;
+    color:var(--boton-color);
+    border-radius: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+.nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.nav-tabs {
+    font-size: 14px;
+    border-bottom: 1px solid #ededed;
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .wo_msg_tabs {
+    border: 0;
+    text-align: center;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nav:after,.nav:before{
+	display: table;
+    content: " ";
+}
+.nav:after{
+    clear: both;
+}
+.pointer {
+    cursor: pointer;
+}
+.tab-content>.tab-pane {
+    display: none;
+}
+.center-text {
+    display: block;
+    text-align: center;
+    color: #666;
+    font-size: 14.5px;
+}
+.empty_state {
+    margin: 85px 0;
+    font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    color: #6d6d6d;
+    text-align: center;
+}
+.nav>li, .nav>li>a{
+    position: relative;
+}
+.nav>li {
+    display: inline-block;
+}
+.nav-tabs>li {
+    float: left;
+    margin-bottom: -1px;
+}
+.nav-tabs>li {
+    width: 25%;
+    text-align: center;
+}
+#wo_nw_msg_page .wo_msg_tabs * {
+    font-family: 'Krub', sans-serif !important;
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .wo_msg_tabs li {
+    float: none;
+    margin: 0;
+    width: 100%;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #ffffff;
+    cursor: default;
+    color: var(--boton-fondo);
+    border-bottom: 1px solid var(--boton-fondo);
+    background-color: transparent;
+}
+#wo_nw_msg_page .wo_msg_tabs * {
+    font-family: 'Krub', sans-serif !important;
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .wo_msg_tabs li a {
+    padding: 7px 22px;
+    height: auto;
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 600;
+    border: 0;
+    border-radius: 10px;
+    color: #949494;
+    cursor: pointer;
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .wo_msg_tabs li.active a, .text-sender-container .msg_usr_info_top_list .msg_usr_cht_opts_btns > span:hover, .text-sender-container .msg_usr_info_top_list .msg_usr_cht_usr_data a:hover, .wo_chat_tabs li.active a {
+    color:var(--boton-fondo);
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .wo_msg_tabs li a svg {
+    width: 20px;
+    height: 20px;
+    margin-top: -2px;
+}
+#wo_nw_msg_page .msg_under_hood .mobilerightpane .messages-search-users-form .wo_msg_tabs li.active a:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: currentColor;
+    border-radius: 10px;
+    opacity: 0.15;
+}
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity .15s linear;
+    -o-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+}
+.fade.in {
+    opacity: 1;
+}
+.tab-content>.tab-pane {
+    display: none;
+}
+.tab-content>.active {
+    display: block;
+}
+.messages-recipients-list {
+    position: relative;
+    cursor: pointer;
+    border-bottom: 2px solid #fbfbfb;
+    padding: 12px;
+    transition: all .3s;
+    border-radius: 12px;
+    border: 0;
+    margin: -2px;
+}
+.messages-recipients-list.active {
+    background-color: #F7F7F7;
+}
+.pull-left {
+    float: left!important;
+}
+#wo_nw_msg_page .messages-recipients-list .avatar {
+    position: relative;
+    margin-right: 15px;
+}
+.messages-recipients-list img, .recipient-chat-user img {
+    margin-right: 5px;
+}
+.messages-recipients-list img {
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    margin: 0;
+}
+#wo_nw_msg_page .messages-recipients-list .online_dot {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    bottom: 5px;
+    right: 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+}
+
+#wo_nw_msg_page .messages-recipients-list .online_dot .dot {
+    width: 7px;
+    min-width: 7px;
+    height: 7px;
+    background-color: #63c666;
+    border-radius: 50%;
+}
+#wo_nw_msg_page .messages-recipients-list .online_dot.off_usr .dot {
+    background-color: lightgray;
+}
+.hidden, .visible-lg, .visible-lg-block, .visible-lg-inline, .visible-lg-inline-block, .visible-md, .visible-md-block, .visible-md-inline, .visible-md-inline-block, .visible-sm, .visible-sm-block, .visible-sm-inline, .visible-sm-inline-block, .visible-xs, .visible-xs-block, .visible-xs-inline, .visible-xs-inline-block {
+    display: none!important;
+}
+.hidden {
+    display: none;
+}
+.new-message-alert {
+    background-color: #ce3d3d;
+    padding: 3px 6px;
+    border-radius: 2px;
+    color: #fff;
+}
+.mobilerightpane .new-message-alert {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #e83e8c;
+    border-radius: 50%;
+    left: -6px;
+    top: -5px;
+    padding: 0;
+}
+.messages-recipients-list .msg_rght_prt {
+    margin-left: 60px;
+    margin-top: 7px;
+}
+.time {
+    font-size: 12px;
+    color: #9197a3;
+}
+.messages-recipients-list .messages-last-sent {
+    font-size: 13px;
+    font-weight: 400;
+    color: #b3b3b3;
+}
+.messages-recipients-list .messages-user-name {
+    line-height: 0.5;
+    font-size: 16px;
+    font-weight: bold;
+    color: #414145;
+    margin-bottom: 8px;
+    display: inline-block;
+    max-width: calc(100% - 80px);
+}
+#wo_nw_msg_page .messages-user-name, .messages-recipients-list .msg_rght_prt > p, .messages-recipients-list .messages-last-sent.new_msg_lst_lsent {
+    font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif !important;
+}
+.messages-recipients-list .msg_rght_prt > p {
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 400;
+    color: #636366;
+    max-height: 44px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.clear {
+    clear: both;
+}
+#wo_nw_msg_page .msg_under_hood .mobileleftpane {
+    background: #fff;
+    width: 100%;
+}
+.list-group {
+    padding-left: 0;
+    margin-bottom: 15px;
+    border-radius: 2px 2px 0 0;
+    box-shadow: 0 1px 0 0 #e3e4e8, 0 0 0 1px #f1f1f1;
+    background-color: #fff;
+    overflow: hidden;
+}
+.list-group {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    border-radius: max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;
+}
+.text-sender-container {
+    background: transparent;
+    position: relative;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+}
+.text-muted {
+    color: #777;
+}
+.list-group-item {
+    position: relative;
+    word-break: break-word;
+    display: block;
+    padding: 5px 10px;
+    font-size: 13px;
+    background-color: #fff;
+    color: #555;
+}
+.list-group-item {
+    padding-left: 15px;
+}
+.list-group-item:first-child {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    background-color: #fcfcfc;
+    padding: 6px;
+    color: #444;
+    font-size: 14px;
+}
+.list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    background-color: #f9f9f9;
+    color: #444;
+}
+.text-sender-container .msg_usr_info_top_list {
+    height: 83px;
+    padding: 18px 30px;
+    z-index: 10;
+    background-color: #fff;
+    position: relative;
+    border-bottom: 1px solid #f4f4f4;
+    border-radius: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.text-sender-container .msg_usr_info_top_list .mobilemsgclose {
+    display: none;
+    cursor: pointer;
+    margin: -1px 15px 0 -15px;
+    width: 23px;
+    height: 23px;
+    stroke-width: 2.5px;
+}
+.text-sender-container .msg_usr_info_top_list .msg_usr_cht_usr_data {
+    display: flex;
+    align-items: center;
+}
+.text-sender-container .msg_usr_info_top_list .msg_usr_cht_usr_data img {
+    border-radius: 50%;
+    margin-right: 15px;
+    height: 45px;
+    min-width: 45px;
+    max-width: 45px;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 8px 4px rgba(0,0,0,.04);
+}
+.text-sender-container .msg_usr_info_top_list .msg_usr_cht_usr_data a {
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.3s;
+    font-weight: 600;
+    color: #212529;
+    font-family: "Lato", sans-serif;
+}
+.text-sender-container .msg_usr_info_top_list .msg_usr_cht_usr_data .msg_usr_lst_sen_main {
+    margin: 0;
+    font-size: 13px;
+    color: #919191;
+}
+.delete-icon, .video-icon {
+    cursor: pointer;
+    margin-right: 4px;
+}
+.text-sender-container .msg_usr_info_top_list .msg_usr_cht_opts_btns {
+    margin-left: auto;
+}
+.text-sender-container .msg_usr_info_top_list .msg_usr_cht_opts_btns > span {
+    margin-right: 20px;
+    color: #b3b3b3;
+    transition: all 0.3s;
+}
+.text-sender-container .msg_usr_info_top_list .msg_usr_cht_opts_btns > span:last-child {
+    margin: 0;
+}
+.msg_progress {
+    height: 3px;
+    width: 100%;
+    background-color: #b3deff;
+    border-radius: 2px;
+    background-clip: padding-box;
+    overflow: hidden;
+    bottom: -2px;
+    right: 0px;
+    z-index: 15;
+    position: absolute;
+    display: none;
+}
+.msg_progress .indeterminate {
+    background-color: #2196F3;
+}
+
+.msg_progress .indeterminate:before {
+    content: '';
+    position: absolute;
+    background-color: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, right;
+    -webkit-animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+    animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+.msg_progress .indeterminate:after {
+    content: '';
+    position: absolute;
+    background-color: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, right;
+    -webkit-animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+    animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+    -webkit-animation-delay: 1.15s;
+    animation-delay: 1.15s;
+}
+
+@-webkit-keyframes indeterminate {
+    0% {
+        left: -35%;
+        right: 100%;
+    }
+
+    60% {
+        left: 100%;
+        right: -90%;
+    }
+
+    100% {
+        left: 100%;
+        right: -90%;
+    }
+}
+@keyframes indeterminate {
+    0% {
+        left: -35%;
+        right: 100%;
+    }
+
+    60% {
+        left: 100%;
+        right: -90%;
+    }
+
+    100% {
+        left: 100%;
+        right: -90%;
+    }
+}
+
+@-webkit-keyframes indeterminate-short {
+    0% {
+        left: -200%;
+        right: 100%;
+    }
+
+    60% {
+        left: 107%;
+        right: -8%;
+    }
+
+    100% {
+        left: 107%;
+        right: -8%;
+    }
+}
+
+@keyframes indeterminate-short {
+    0% {
+        left: -200%;
+        right: 100%;
+    }
+
+    60% {
+        left: 107%;
+        right: -8%;
+    }
+
+    100% {
+        left: 107%;
+        right: -8%;
+    }
+}
+
+#wo_nw_msg_page .msg_under_hood {
+    overflow: hidden;
+    position: relative;
+}
+.view-more-wrapper {
+    display: block;
+    margin-top: 2px;
+}
+.messages-load-more-messages {
+    transition: all .2s ease;
+    list-style: none;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: #ffffff;
+    z-index: 9;
+    margin: 0;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    top: 115px;
+}
+.view-more-wrapper {
+    margin-right: 0;
+}
+.messages-load-more-messages a {
+    color: #808080;
+    width: 100%;
+    border-radius: 50%;
+    height: 100%;
+    background: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.text-sender-container .messagejoint {
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    height: calc(100vh - 139px);
+}
+.messages-container {
+    padding: 20px 30px 0;
+    overflow: hidden;
+    overflow-y: auto;
+    position: relative;
+    flex: 1 1 auto;
+}
+.text-sender-container .message-contnaier {
+    margin: 0 0px 5px;
+    position: relative;
+    max-width: 100%;
+    width: 100%;
+}
+.text-sender-container .message-contnaier > .cont_innr {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    max-width: 100%;
+    width: 100%;
+}
+.text-sender-container .message-contnaier.margin-active {
+    margin-bottom: 25px;
+}
+.message-user-image {
+    margin-right: 15px;
+    border-radius: 50%;
+}
+.message-user-image img {
+    width: 30px;
+    height: 30px;
+    border-radius: 30%;
+}
+.text-sender-container .message-model {
+    width: 85%;
+    max-width: 500px;
+    font-size: 15px;
+    padding: 0;
+    position: relative;
+    line-height: 1.4;
+}
+.clear {
+    clear: both;
+}
+.message {
+    margin-top: 1px;
+}
+.text-sender-container .message-model .message {
+    padding: 7px;
+    margin-left: auto;
+    display: table;
+    line-height: 1.2;
+    margin-top: 0;
+    position: relative;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+.text-sender-container .incoming .message-model .message {
+    margin-right: auto;
+    margin-left: 0;
+}
+.text-sender-container .message-model .message.wo_msg_prod_prnt, .text-sender-container .message-model .message.wo_msg_prod_prnt .wo_market .market_bottom .product, .chat-messages-wrapper .message.wo_msg_prod_prnt, .chat-messages-wrapper .message.wo_msg_prod_prnt .wo_market .market_bottom .product {
+    padding: 0;
+}
+.message p {
+    color: #555;
+    margin: 0;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+.message p:empty, #wo_msg_right_prt .message p:empty {
+    padding: 0;
+    margin: 0;
+}
+.message-media {
+    position: relative;
+}
+.messages-container .message-media {
+    transition: width .5s;
+    margin: -10px;
+    padding: 10px;
+}
+.text-sender-container .message-model .message.wo_msg_prod_prnt .wo_market, .text-sender-container .message-model .message.wo_msg_prod_prnt .wo_market .market_bottom .product, .chat-messages-wrapper .message.wo_msg_prod_prnt .wo_market, .chat-messages-wrapper .message.wo_msg_prod_prnt .wo_market .market_bottom .product {
+    margin: 0;
+}
+.products {
+    width: 100%;
+}
+.text-sender-container .message-model .message.wo_msg_prod_prnt .wo_market .market_bottom .product, .chat-messages-wrapper .message.wo_msg_prod_prnt .wo_market .market_bottom .product {
+    max-width: 240px;
+    width: 100%;
+}
+.wo_market .market_bottom .product .product_info {
+    background-color: #fff;
+    padding: 0 3px 5px;
+    border: 1px solid #ddd;
+    border-radius: max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;
+    overflow: hidden;
+    transition: all .2s linear;
+}
+.products .product .product-image {
+    overflow: hidden;
+    margin: 0 0 0 -3px;
+    width: calc(100% + 7px);
+    position: relative;
+}
+.message-media img {
+    max-width: 100%;
+}
+.messages-container .message-media img {
+    max-width: 100%;
+    border: 0;
+    border-radius: 8px;
+    margin-bottom: -7px;
+    margin-right: 0;
+    margin-left: 0;
+    max-height: 330px;
+}
+.products .product .product-image img {
+    width: 100%;
+}
+.text-sender-container .message-model .message.wo_msg_prod_prnt .wo_market .market_bottom .product img, .chat-messages-wrapper .message.wo_msg_prod_prnt .wo_market .market_bottom .product img {
+    max-height: 200px !important;
+    border-radius: 0 !important;
+    object-fit: cover;
+    height: 100%;
+}
+#wo_nw_msg_page .messages-container .message-media img {
+    max-width: none;
+    max-height: 170px;
+    margin: 0;
+    background: #fff;
+    border-radius: 10px;
+    margin:-6px;
+}
+
+.wo_market .market_bottom .product .produc_info {
+    padding: 7px 10px;
+}
+.products .product .product-price, .products .product .product-title {
+    display: block;
+    overflow: hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.products .product .product-title {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+.text-sender-container .message-model .message.wo_msg_prod_prnt .wo_market .market_bottom .product .product-title a, .chat-messages-wrapper .message.wo_msg_prod_prnt .wo_market .market_bottom .product .product-title a {
+    color: #222;
+}
+.products .product .product-by {
+    font-size: 14.5px;
+    color: #888;
+    margin-bottom: 4px;
+}
+.text-sender-container .message-model .message.wo_msg_prod_prnt .wo_market .market_bottom .product .product-by a, .chat-messages-wrapper .message.wo_msg_prod_prnt .wo_market .market_bottom .product .product-by a {
+    color: #444;
+}
+.products .product .product-price, .products .product .product-title {
+    display: block;
+    overflow: hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.products .product .product-price {
+    font-size: 14.5px;
+    color: #4CAF50;
+    font-weight: 700;
+    letter-spacing: .3px;
+    margin: 7px 0 0;
+}
+.message-media {
+    position: relative;
+}
+.products {
+    width: 100%;
+}
+
+.text-sender-container .deleteMessage {
+    position: absolute;
+    top: 50%;
+    left: -75px;
+    cursor: pointer;
+    color: #888;
+    display: none;
+    transform: translate(0,-50%);
+}
+.text-sender-container .deleteMessage.right {
+    left: auto!important;
+    right: -75px;
+}
+.text-sender-container .deleteMessage svg.feather {
+    margin-top: -3px;
+    width: 17px;
+    height: 17px;
+}
+.text-sender-container .deleteMessage {
+    position: absolute;
+    top: 50%;
+    left: -75px;
+    cursor: pointer;
+    color: #888;
+    display: none;
+    transform: translate(0,-50%);
+}
+.text-sender-container .deleteMessage.right {
+    left: auto!important;
+    right: -75px;
+}
+.text-sender-container .deleteMessage {
+    position: absolute;
+    top: 50%;
+    left: -75px;
+    cursor: pointer;
+    color: #888;
+    display: none;
+    transform: translate(0,-50%);
+}
+.text-sender-container .deleteMessage.right {
+    left: auto!important;
+    right: -75px;
+}
+.text-sender-container .deleteMessage svg.feather {
+    margin-top: -3px;
+    width: 17px;
+    height: 17px;
+}
+.like-emo {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+blockquote ol:last-child, blockquote p:last-child, blockquote ul:last-child, ol ol, ol ul, ul ol, ul ul {
+    margin-bottom: 0;
+}
+.reactions-box {
+    background: #ffffff;
+    padding: 2px;
+    position: absolute;
+    top: -51px;
+    z-index: 999;
+    left: -10px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 2em;
+    cursor: default;
+    display: none;
+}
+.text-sender-container .message-contnaier .reactions-box {
+    top: -30px;
+}
+.text-sender-container .message-contnaier:first-child .reactions-box {
+    top: -10px;
+}
+.reaction {
+    list-style-type: none;
+    cursor: pointer;
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    float: left;
+    opacity: 1;
+    border-radius: 50%;
+    transform: scale(1);
+    transition: transform .25s ease;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation: slideUp cubic-bezier(0.49, 0, 0.46, 1);
+    animation: slideUp cubic-bezier(0.49, 0, 0.46, 1);
+}
+.reaction-1 img {
+    animation-fill-mode: both;
+    animation-duration: 1.3s;
+    animation-iteration-count: infinite;
+    animation-name: bounce;
+    transform-origin: center bottom;
+}
+.reaction img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.reactions-box .reaction img {
+    padding: 5px;
+}
+.message-details {
+    color: #444;
+    font-size: 12px;
+    margin-right: 10px;
+    clear: both;
+}
+.message-details:empty {
+    padding-top: 0;
+}
+.pull-right {
+    float: right!important;
+}
+.text-sender-container .message-contnaier .message-typing.message-details:empty {
+    margin-top: 0;
+}
+.text-sender-container .message-contnaier {
+    margin: 0 0px 5px;
+    position: relative;
+    max-width: 100%;
+    width: 100%;
+}
+.text-sender-container .message-contnaier.outgoing, .text-sender-container .message-contnaier.outgoing > .cont_innr {
+    flex-direction: row-reverse;
+}
+.text-sender-container .outgoing .message-model .message p, .text-sender-container .outgoing .message-model .message a {
+    color: #fff !important;
+}
+.text-sender-container .sendMessages {
+    flex-shrink: 0;
+}
+.message_reply_text, .message_reply_story_text, .chat_reply_text {
+    display: flex;
+    align-items: center;
+    margin: 5px 30px -5px;
+    background: #f8f8f8;
+    padding: 8px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 10%);
+}
+.message_reply_text span, .chat_reply_text span {
+    flex: 1;
+}
+.message_reply_text svg, .message_reply_story_text svg, .chat_reply_text svg {
+    margin-left: auto;
+}
+.input-group {
+    display: table;
+    border-collapse: separate;
+}
+#wo_msg_right_prt .text-sender-container .sendMessages .input-group {
+    padding: 0px 30px;
+    border-top: 1px solid #fbfbfb;
+    height: 90px;
+    display: flex;
+    border-collapse: unset;
+    align-items: center;
+}
+#wo_msg_right_prt .msg_write_combo {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid #f1f1f1;
+    background: #f8f8f8;
+    border-radius: 12px;
+}
+.text-sender-container .sendMessages .input-group .messages-rtime {
+    position: absolute;
+    top: -30px;
+    padding: 8px 10px!important;
+    background-color: #fff!important;
+    left: -7px;
+    border-radius: 6px!important;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 1px 10px rgba(0,0,0,.35);
+}
+.message-option-btns {
+    position: absolute;
+    z-index: 9;
+    right: 55px;
+    top: 0;
+    display: table;
+}
+#wo_msg_right_prt .msg_write_combo .message-option-btns {
+    position: relative;
+    display: flex;
+    align-items: center;
+    right: auto;
+    left: auto;
+    margin-right: 5px;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.message-option-btns .btn {
+    padding: 15px 6px;
+    background-color: transparent;
+    color: #b3b3b3;
+    border: none;
+    margin: 0 4px;
+    box-shadow: none;
+}
+#wo_msg_right_prt .message-option-btns .btn {
+    padding: 0 !important;
+    width: 35px;
+    height: 35px;
+    /* margin-left: 10px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all .1s linear;
+    margin: 5px 1px;
+}
+#wo_msg_right_prt .message-option-btns .btn svg {
+    width: 24px;
+    height: 24px;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    text-align: right;
+    opacity: 0;
+    outline: 0;
+    background: #fff;
+    cursor: inherit;
+    display: block;
+}
+input[readonly] {
+    background-color: #fff!important;
+    cursor: text!important;
+}
+textarea.form-control {
+    resize: none!important;
+}
+.form-control, output {
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    display: block;
+}
+.form-control {
+    width: 100%;
+    height: 34px;
+    padding: 2px 12px;
+    background-color: #fff;
+    border: 1px solid #ededed;
+    border-radius: 3px;
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+textarea.form-control {
+    height: auto;
+}
+pre, textarea {
+    overflow: auto;
+}
+.input-group .form-control {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+}
+.input-group .form-control, .input-group-addon, .input-group-btn {
+    display: table-cell;
+}
+.input-group .form-control:not(:first-child):not(:last-child), .input-group-addon:not(:first-child):not(:last-child), .input-group-btn:not(:first-child):not(:last-child) {
+    border-radius: 0;
+}
+#sendMessage, .chat-btns-w {
+    background-color: #fff;
+}
+#wo_msg_right_prt .text-sender-container textarea {
+    margin-bottom: 0px;
+    box-shadow: none;
+    border: 0;
+    padding: 16px 2px;
+    height: 56px;
+    font-weight: bold;
+    background: transparent;
+    font-size: 15px;
+}
+.text-right {
+    text-align: right;
+}
+.charsLeft-message {
+    color: #999;
+    font-size: 14.5px;
+    margin: 4px;
+    display: none;
+}
+.text-sender-container .sendMessages .charsLeft-message {
+    position: absolute;
+    z-index: 9;
+    right: 163px;
+    top: 12px;
+}
+#wo_msg_right_prt .msg_write_combo .charsLeft-message {
+    right: 115px;
+    top: -5px;
+    margin: 0;
+    margin-top: 5px;
+}
+.view-more-wrapper {
+    margin-right: 0;
+}
+.messages-load-more-messages.above_header {
+    top: -25px;
+}
+.collapsing, .dropdown, .dropup {
+    position: relative;
+}
+[role=button] {
+    cursor: pointer;
+}
+.emo-message {
+    position: absolute;
+    display: none;
+    color: #5b5b5b;
+    right: 110px;
+    z-index: 2;
+}
+#wo_msg_right_prt .msg_write_combo .emo-message {
+    position: relative;
+    right: auto;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.chat-textarea .chat-btns-w .chat_optns .emo-container, .emo-message-container, .publisher-box-emooji {
+    max-height: 280px;
+    overflow-y: auto;
+    display: block !important;
+}
+.dropup .dropdown-menu, .navbar-fixed-bottom .dropdown .dropdown-menu {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: 2px;
+}
+.chat-textarea .chat-btns-w .chat_optns .emo-container span, .emo-message-container span, .publisher-box-emooji span {
+    display: inline-flex;
+    margin: 1px;
+    padding: 2px;
+    border-radius: max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;
+    transition: all 0.15s;
+    cursor: pointer;
+    font-size: 21px;
+}
+#wo_msg_right_prt .message-option-btns .btn#messages-record {
+    z-index: 3;
+}
+#wo_msg_right_prt .message-option-btns .btn:hover {
+    background-color: rgba(0, 0, 0, 0.07);
+}
+#wo_msg_right_prt .message-option-btns .btn.messages-rtime {
+    padding: 8px 36px 8px 10px !important;
+    left: 0;
+    width: 100%;
+    right: 0;
+    margin: 0;
+    top: 0;
+    height: 100%;
+    bottom: 0;
+    z-index: 2;
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px, rgb(0 0 0 / 10%) 0px 2px 4px -2px;
+    border-radius: 10px !important;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 27px;
+    color: #a4a4a4;
+}
+.input-group-addon, .input-group-btn {
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.input-group-btn {
+    font-size: 0;
+    white-space: nowrap;
+}
+#wo_msg_right_prt .text-sender-container .sendMessages .input-group .input-group-btn {
+    margin-left: 20px;
+    width: 56px;
+}
+.btn-main.MS-File {
+    padding: 14px;
+    margin-right: -1px;
+    border-radius: 0!important;
+}
+#wo_msg_right_prt .text-sender-container .sendMessages .send-button {
+    margin: 0;
+    padding: 10px;
+    width: 56px;
+    height: 56px;
+    box-shadow: 0 4px 8px 4px rgba(0,0,0,.04);
+    border-radius: 12px !important;
+}
+#wo_msg_right_prt .text-sender-container .sendMessages .send-button svg {
+    width: 21px;
+    height: 21px;
+    margin: -2px 0 0 -2px;
+}
+.btn-main {
+    color: #ffffff;
+}
+.msg_write_combo textarea::placeholder {
+    color: currentColor;
+    opacity: 0.6;
+}
+
+
+
+
+@media (min-width: 992px){
+	#wo_nw_msg_page .msg_under_hood {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: start;
+        align-items: flex-start;
+    }
+    #wo_nw_msg_page .msg_under_hood .mobilerightpane {
+	    position: sticky;
+	    top: 0;
+	    z-index: 1020;
+	    width: 100%;
+	    -ms-overflow-style: none;
+	    min-width: 420px;
+	    max-width: 420px;
+	}
+	#wo_nw_msg_page .msg_under_hood .mobileleftpane {
+	    height: calc(100vh - 55px);
+	}
+	#wo_nw_msg_page .text-sender-container {
+	    border-left: 1px solid #f4f4f4;
+	}
+}
+
+@media (max-width: 992px){
+	.no_visible{display:none;}
+	#wo_nw_msg_page .msg_under_hood .mobilerightpane {
+	    max-width: 100%;
+	}
+	.text-sender-container {
+	    height: 100%;
+	}
+	.text-sender-container .messagejoint{
+		height: calc(100vh - 83px);
+	}
+	.text-sender-container .msg_usr_info_top_list .mobilemsgclose {
+	    display: block;
+	}
+	.mobileleftpane {
+	    position: fixed;
+	    height: 100%;
+	    padding: 0;
+	    top: 0px;
+	    left: 0;
+	    z-index: 20000;
+	}
+
+}
+@media (max-width: 600px){
+	#wo_msg_right_prt .text-sender-container .sendMessages .input-group {
+	    padding: 0px 5px;
+	}
+	#wo_msg_right_prt .msg_write_combo .message-option-btns {
+	    margin: 0;
+	}
+	#wo_msg_right_prt .message-option-btns .btn {
+	    width: 30px;
+	}
+	#wo_msg_right_prt .text-sender-container .sendMessages .input-group .input-group-btn {
+	    margin-left: 5px;
+	}
+	.text-sender-container .msg_usr_info_top_list .msg_usr_cht_opts_btns > span {
+	    margin-right: 4px;
+	}
+
+	.text-sender-container .msg_usr_info_top_list .msg_usr_cht_usr_data a {
+	    white-space: nowrap;
+	    max-width: 100px;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    display: block;
+	}
+}
+@media (max-width: 520px){
+	.text-sender-container .messagejoint{
+		height: calc(100vh - 60px);
+	}
+	.text-sender-container .msg_usr_info_top_list {
+	    padding: 8px 20px;
+	    height: 60px;
+	}
+	.messages-container {
+	    padding: 80px 10px 0;
+	}
+	.messages-load-more-messages{
+		top:100px;
+	}
+}
+:root {
+    --plyr-color-main: var(--boton-fondo);
+}
+</style>
 <?php
 if ($wo['loggedin'] == false) {
-    header("Location: " . lui_SeoLink('index.php?link1=welcome'));
+    header("Location: " . lui_SeoLink('index.php?link1=home'));
     exit();
 }
 if (!empty($_GET['user']) && empty($_GET['page'])) {
-	if (empty($_GET['user'])) {
-		$user_id = lui_Secure($_GET['user']);
-	}else{
-		$user_id = false;
-	}
-    
+    $user_id = lui_Secure($_GET['user']);
     $user    = lui_UserData($user_id);
     if (empty($user['user_id'])) {
         unset($user);
@@ -18,26 +1343,32 @@ if (!empty($_GET['user']) && empty($_GET['page'])) {
 ?>
 <div class="wo_kb_msg_page" id="wo_nw_msg_page">
 	<div class="msg_under_hood">
-		<?php if(!empty($_GET['user'])): ?>
-			<script type="text/javascript">
-				$('.xmcv_conten_menu').addClass('no_user_display_messenger');
-			</script>
-		<?php endif ?>
-		<?php if (!empty($_GET['user'])){
-			$viev_user_mess="no_user_display_messenger";
-			$viev_user_messs="";
-		}else{
-			$viev_user_messs="no_user_display_messenger";
-			$viev_user_mess="";
-		}?>
-		<div class="mobilerightpane <?=$viev_user_mess;?>" id="wo_msg_left_prt">
+		<div class="mobilerightpane" id="wo_msg_left_prt">
 			<form method="post" class="messages-search-users-form">
 				<div class="form-group inner-addon <?php echo lui_RightToLeft('left-addon');?> messages-search-icon">
                     <div class="msg_srch_innr">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         <input type="text" name="query" id="query" onkeyup="Wo_GetMessagesUsers(this.value);" class="form-control" placeholder="<?php echo $wo['lang']['search'];?>" autocomplete="off">
                     </div>
+					<div class="btn_contr">
+					<button type="button" class="btn btn-main" title="<?php echo $wo['lang']['mark_all_as_read'] ?>" onclick="MarkAsReadAll(this);">
+						<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24"><path fill="currentColor" d="M14,10H2V12H14V10M14,6H2V8H14V6M2,16H10V14H2V16M21.5,11.5L23,13L16,20L11.5,15.5L13,14L16,17L21.5,11.5Z"></path></svg>
+					</button>
+					<?php if ($wo['user']['admin']==1): ?>
+						<button type="button" class="btn btn-main" onclick="Wo_CreateGChat(event)">
+							<span class="pointer" style="margin-right: 5px;">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M13,13C11,13 7,14 7,16V18H19V16C19,14 15,13 13,13M19.62,13.16C20.45,13.88 21,14.82 21,16V18H24V16C24,14.46 21.63,13.5 19.62,13.16M13,11A3,3 0 0,0 16,8A3,3 0 0,0 13,5A3,3 0 0,0 10,8A3,3 0 0,0 13,11M18,11A3,3 0 0,0 21,8A3,3 0 0,0 18,5C17.68,5 17.37,5.05 17.08,5.14C17.65,5.95 18,6.94 18,8C18,9.06 17.65,10.04 17.08,10.85C17.37,10.95 17.68,11 18,11M8,10H5V7H3V10H0V12H3V15H5V12H8V10Z" /></svg>
+							</span>
+						</button>
+					<?php endif ?>
+					</div>
                 </div>
+				<ul class="nav nav-tabs wo_msg_tabs">
+					<li class="active pointer"><a data-toggle="tab" data-target="#users-message" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.5,15C8.63,15 9.82,15.26 11.09,15.77C12.35,16.29 13,16.95 13,17.77V20H2V17.77C2,16.95 2.65,16.29 3.91,15.77C5.18,15.26 6.38,15 7.5,15M13,13H22V15H13V13M13,9H22V11H13V9M13,5H22V7H13V5M7.5,8A2.5,2.5 0 0,1 10,10.5A2.5,2.5 0 0,1 7.5,13A2.5,2.5 0 0,1 5,10.5A2.5,2.5 0 0,1 7.5,8Z" /></svg> <?php echo $wo['lang']['users'];?></a></li>
+					<?php if ($wo['user']['admin']==1): ?>
+						<li class="pointer"><a data-toggle="tab" data-target="#groups-message" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,5A3.5,3.5 0 0,0 8.5,8.5A3.5,3.5 0 0,0 12,12A3.5,3.5 0 0,0 15.5,8.5A3.5,3.5 0 0,0 12,5M12,7A1.5,1.5 0 0,1 13.5,8.5A1.5,1.5 0 0,1 12,10A1.5,1.5 0 0,1 10.5,8.5A1.5,1.5 0 0,1 12,7M5.5,8A2.5,2.5 0 0,0 3,10.5C3,11.44 3.53,12.25 4.29,12.68C4.65,12.88 5.06,13 5.5,13C5.94,13 6.35,12.88 6.71,12.68C7.08,12.47 7.39,12.17 7.62,11.81C6.89,10.86 6.5,9.7 6.5,8.5C6.5,8.41 6.5,8.31 6.5,8.22C6.2,8.08 5.86,8 5.5,8M18.5,8C18.14,8 17.8,8.08 17.5,8.22C17.5,8.31 17.5,8.41 17.5,8.5C17.5,9.7 17.11,10.86 16.38,11.81C16.5,12 16.63,12.15 16.78,12.3C16.94,12.45 17.1,12.58 17.29,12.68C17.65,12.88 18.06,13 18.5,13C18.94,13 19.35,12.88 19.71,12.68C20.47,12.25 21,11.44 21,10.5A2.5,2.5 0 0,0 18.5,8M12,14C9.66,14 5,15.17 5,17.5V19H19V17.5C19,15.17 14.34,14 12,14M4.71,14.55C2.78,14.78 0,15.76 0,17.5V19H3V17.07C3,16.06 3.69,15.22 4.71,14.55M19.29,14.55C20.31,15.22 21,16.06 21,17.07V19H24V17.5C24,15.76 21.22,14.78 19.29,14.55M12,16C13.53,16 15.24,16.5 16.23,17H7.77C8.76,16.5 10.47,16 12,16Z" /></svg> <?php echo $wo['lang']['groups'];?></a></li>
+					<?php endif ?>			
+				</ul>
 				<div class="tab-content messages-users-list">
 					<div id="users-message" class="messages-chat-list tab-pane fade in active">
 						<?php
@@ -72,14 +1403,28 @@ if (!empty($_GET['user']) && empty($_GET['page'])) {
 							}
 						?> 
 					</div>
+					<div id="groups-message" class="messages-group-list tab-pane fade" >
+						<?php 
+							$chat_groups = lui_GetChatGroups();
+							if (count($chat_groups) == 0) {
+								echo '<span class="no-online-users center-text empty_state"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>' . $wo['lang']['no_groups_found'] . '</span>';
+							} 
+							else {
+								foreach ($chat_groups as $wo['group']) {
+									echo lui_LoadPage('messages/messages-group-list');
+                    
+								}
+							}
+						?>
+					</div>
 				</div>
 			</form>
 		</div>
    
-		<div class="mobileleftpane <?=$viev_user_messs;?>" id="wo_msg_right_prt">
+		<div class="mobileleftpane <?=(!empty($_GET['user']) ? '' : 'no_visible') ?>" id="wo_msg_right_prt" >
 			<ul class="list-group text-sender-container">
 				<li class="list-group-item msg_usr_info_top_list text-muted" contenteditable="false">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onclick="Wo_CloseChat_message(<?=isset($wo['recipient']['message']['conversation_user_id']);?>);" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left mobilemsgclose"><polyline points="15 18 9 12 15 6"></polyline></svg>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left mobilemsgclose"><polyline points="15 18 9 12 15 6"></polyline></svg>
 					<div class="msg_usr_cht_usr_data">
 						<span id="user-avatar-right">
 							<img src="<?php echo $wo['user']['avatar'];?>" alt="avatar" width="45" height="45" class="hidden" />
@@ -109,11 +1454,11 @@ if (!empty($_GET['user']) && empty($_GET['page'])) {
 						<?php 
 							$story_id = 0;
 							if (!empty($_GET['story_id']) && is_numeric($_GET['story_id']) && $_GET['story_id'] > 0) {
-								$story_id = lui_Secure($_GET['story_id']);
+								$story_id = Wo_Secure($_GET['story_id']);
 								$story = $db->where('id',$story_id)->getOne(T_USER_STORY);
 							} 
 							if (!empty($story)) {
-								$story->thumbnail = lui_GetMedia($story->thumbnail);
+								$story->thumbnail = Wo_GetMedia($story->thumbnail);
 						?>
 							<input type="hidden" id="story_id" name="story_id" value="<?php echo($story->id) ?>" />
 							<div class="message_reply_story_text">
@@ -126,7 +1471,6 @@ if (!empty($_GET['user']) && empty($_GET['page'])) {
 							<svg onclick="Wo_ClearReplyMessage()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="pointer"><path fill="currentColor" d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z" /></svg>
 						</div>
 						<div class="input-group">
-							<div class="envio_messages_filessss"></div>
 							<div class="msg_write_combo">
 								<span class="message-option-btns"  style="margin-right: 10px; margin-left: 10px;">
 									<span class="btn btn-file MS-File">
@@ -150,6 +1494,7 @@ if (!empty($_GET['user']) && empty($_GET['page'])) {
 											</span>
 										</a>
 										<div class="emo-message-container dropdown-menu mobileemojisnd dropdown-menu-right" role="menu" style="width: 100px">
+
 										</div>
 									</div>
 
@@ -163,10 +1508,10 @@ if (!empty($_GET['user']) && empty($_GET['page'])) {
 												<div class="w100" id="chat-box-stickers">
 													<div id="chat-box-stickers-cont">
 														<?php 
-															$stickers_system = lui_GetAllStickers(50000);
+															$stickers_system = Wo_GetAllStickers(50000);
 															if( count( $stickers_system ) > 0 ){
 																foreach ($stickers_system as $wo['stickerlist']) {
-																	echo '<img alt="gif" src="'. lui_GetMedia( $wo['stickerlist']['media_file'] ).'" data-gif="'.lui_GetMedia( $wo['stickerlist']['media_file'] ).'" onclick="Wo_ChatStickerMessage(this);" autoplay loop>';
+																	echo '<img alt="gif" src="'. Wo_GetMedia( $wo['stickerlist']['media_file'] ).'" data-gif="'.Wo_GetMedia( $wo['stickerlist']['media_file'] ).'" onclick="Wo_ChatStickerMessage(this);" autoplay loop>';
 																}
 															} else {
 																echo '<p class="no_chat_gifs_found"><i class="fa fa-frown-o"></i> '. $wo['lang']['no_result'] .'</p>';
@@ -227,48 +1572,6 @@ if (!empty($_GET['user']) && empty($_GET['page'])) {
 </div>
 
 <script type="text/javascript">
-	function Wo_CloseChat_message(id, type) {
-	  var tab_type = {};
-	  if (!type) {
-	    Wo_CleanRecordNodes();
-	    Wo_StopLocalStream();
-	    <?php if ($wo['config']['message_typing'] == 1) { ?>
-	        Wo_DeleteTyping(id);
-	    <?php } ?>
-
-	    $('.chat_main_' + id).fadeOut(200, function () {
-	        $(this).remove();
-	    });
-
-	    $(document.body).removeAttr('data-chat-recipient');
-	    tab_type = {f: 'chat',s: 'close_chat',id:id};
-	  }
-	  else if(type == 'group'){
-	    $('.chat_main_0').fadeOut(200, function () {
-	        $(this).remove();
-	    });
-	    tab_type = {f: 'chat',s: 'close_group',id:id};
-	  }
-	  else if (type == 'page') {
-	  	$('.chat_main_0').fadeOut(200, function () {
-	        $(this).remove();
-	    });
-	    tab_type = {f: 'chat',s: 'close_page',id:id};
-	  }
-	  <?php if ($wo['config']['node_socket_flow'] == "1") { ?>
-	    if(type === "group"){
-	      socket.emit("close_chat", {recipient_id: id, user_id: _getCookie("user_id"), group: true})
-	    }
-	    else{
-	      socket.emit("close_chat", {recipient_id: id, user_id: _getCookie("user_id")})
-	    }
-	  <?php } ?>
-
-	  <?php //if ($wo['config']['node_socket_flow'] == "0") { ?>
-	    $.get(Wo_Ajax_Requests_File(),tab_type);
-	  <?php //} ?>
-
-	}
   function escapeRegExp(str) {
         let arr = str.match(/[.*+?^{}()|[\]\\]/g)
         if (arr && arr.length) {
@@ -412,10 +1715,6 @@ $(document).on('click','.mobileopenlist',function(){
 $('.mobilemsgclose').on('click',function (){
 	$('.mobileleftpane').fadeOut(100);
 	window.history.pushState({state:'new'},'', "<?php echo($wo['config']['site_url']) ?>/messages");
-      $('.wo_msg_user_dtl').css('display', 'block');
-      	$('.mobileleftpane').addClass('no_user_display_messenger');
-      	$('.mobilerightpane').removeClass('no_user_display_messenger');
-      	$('.xmcv_conten_menu').removeClass('no_user_display_messenger');
 });
 
 $('.emo-message-container').click(function(e) {
@@ -430,7 +1729,7 @@ $(function () {
   <?php } ?>
 
   <?php if (!empty($_GET['page']) && !empty($_GET['user'])) {
-  	$page_info = lui_PageData($_GET['page']);
+  	$page_info = Wo_PageData($_GET['page']);
 
   	$user_id = $_GET['page'].'_'.$_GET['user'];
 	if ($page_info['user_id'] == $_GET['user']) {
@@ -451,30 +1750,32 @@ $(function () {
   var file_uploading = false;
 
   <?php if ($wo['config']['node_socket_flow'] == "1") { ?>
-  	Wo_getNewMessages()
-  	$('form.sendMessages').submit(()=>{
-  		chat_number = $('#user-id').val();
-  		first_chat = $('.messages-recipients-list').first();
+  Wo_getNewMessages()
+  $('form.sendMessages').submit(()=>{
+      chat_number = $('#user-id').val();
+    	first_chat = $('.messages-recipients-list').first();
     	first_chat_id = $(first_chat).attr('id');
     	sending_text = $('.mobileleftpane .text-sender-container textarea').val();
     	if (sending_text.length  > 100) {
     		//sending_text = jQuery.trim(sending_text).substring(0, 97)+'...';
     	}
-    	$('#messages-recipient-'+chat_number).insertBefore( $( "#"+first_chat_id ) );
-    	var emosend = Wo_EmoSend(sending_text)
-    	if(emosend.hasHTML) {
-    		$('#messages-recipient-'+chat_number).find('p').html(emosend.str);
-    	} else {
-    		if(sending_text){
-    			$('#messages-recipient-'+chat_number).find('p').text(sending_text);
-    		}
-    	}
+
+      $('#messages-recipient-'+chat_number).insertBefore( $( "#"+first_chat_id ) );
+      var emosend = Wo_EmoSend(sending_text)
+      if(emosend.hasHTML) {
+        $('#messages-recipient-'+chat_number).find('p').html(emosend.str);
+      } else {
+        if(sending_text){
+        $('#messages-recipient-'+chat_number).find('p').text(sending_text);
+        }
+      }
     	$('#messages-recipient-'+chat_number).find('.messages-last-sent').text('<?php echo $wo['lang']['now'];?>');
     	$('#messages-recipient-'+chat_number).find('.messages-last-sent').attr('title', '0 seconds');
     	$('#messages-recipient-'+chat_number).find('.messages-last-sent').removeClass('ajax-time');
-    	$('.mobileleftpane .text-sender-container textarea').val('');
-    	$('.sendMessage').attr('disabled', true);
-    	var user_id_ = $('#user-id').val();
+
+      $('.mobileleftpane .text-sender-container textarea').val('');
+      $('.sendMessage').attr('disabled', true);
+      var user_id_ = $('#user-id').val();
       $('body').attr('sending-' + user_id_, true);
       $('form.sendMessages').find('.send-button').html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-loader"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>');
         console.log(" from message page ")
@@ -502,7 +1803,6 @@ $(function () {
               message_reply_id: message_reply_id,
               story_id: story_id
             },  (data)=>{
-
             	$('#story_id').val('0');
 		    	$('.message_reply_story_text').remove();
 		    	Wo_ClearReplyMessage();
@@ -647,7 +1947,8 @@ $(function () {
         $('form.sendMessages').find('.send-button').html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>');
       })
     }
-  }else{
+  }
+  else{
 
 
 
@@ -660,7 +1961,7 @@ $(function () {
 
   	$('form.sendMessages').ajaxSubmit({
     url: Wo_Ajax_Requests_File() + '?f=messages&s=send_message&hash=' + main_hash_id,
-    beforeSend: function () {console.log("Hello")
+    beforeSend: function () {
     	chat_number = $('#user-id').val();
     	first_chat = $('.messages-recipients-list').first();
     	first_chat_id = $(first_chat).attr('id');
@@ -689,7 +1990,6 @@ $(function () {
       }
     },
     success: function (data) {
-    	console.log(data)
     	$('#story_id').val('0');
     	$('.message_reply_story_text').remove();
     	Wo_ClearReplyMessage();
@@ -764,6 +2064,22 @@ $(function () {
       })
     }
   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
   return false
   })
@@ -1002,7 +2318,6 @@ function Wo_DeleteConversation(user_id) {
     if(data.status == 200) {
       alert(data.message);
       $('.messages-container').empty();
-      window.history.pushState({state:'new'},'', "<?php echo($wo['config']['site_url']) ?>/messages");
 	  location.reload();
     }
     $('.text-sender-container').find('.ball-pulse').fadeOut(100);
@@ -1014,7 +2329,7 @@ function Wo_GetUserMessages(user_id, user_name, userlink) {
 	var old_user = $('#user-id').val();
 	if ($('#user-id').val() > 0 && $('#user-id').val() != user_id) {
 		$('#story_id').val('0');
-    	$('.message_replsy_story_text').remove();
+    	$('.message_reply_story_text').remove();
 	}
 	Wo_ClearReplyMessage();
 	if ($('#user-id').val() > 0) {
@@ -1046,25 +2361,22 @@ function Wo_GetUserMessages(user_id, user_name, userlink) {
     user_id: user_id
   }, function (data) {
     if(data.status == 200) {
-    	window.history.pushState({state:'new'},'', "<?php echo($wo['config']['site_url']) ?>/messages/"+user_id);
-    	$('.wo_msg_user_dtl').css('display', 'none');
-	    $('.mobileleftpane').removeClass('no_user_display_messenger');
-	    $('.mobilerightpane').addClass('no_user_display_messenger');
-      	$('.xmcv_conten_menu').addClass('no_user_display_messenger');
+      window.history.pushState({state:'new'},'', "<?php echo($wo['config']['site_url']) ?>/messages/"+user_id);
+      $('.wo_msg_user_dtl').css('display', 'none');
 
-	    $('.wo_msg_dtl_most_bottom').css('display', 'block');
-      	$('.send-button').css('background-color', data.color);
-     	$('.send-button').css('border-color', data.color);
-	    $('#wo_msg_right_prt .message-option-btns .btn svg').css('color', data.color);
-      	$('#user-chat-link').attr('href', data.url);
-      	$('#block-url').attr('href', data.block_url);
-      	$('#user-avatar-right img').attr('src', data.avatar).removeClass('hidden');
+      $('.wo_msg_dtl_most_bottom').css('display', 'block');
+      $('.send-button').css('background-color', data.color);
+      $('.send-button').css('border-color', data.color);
+	  $('#wo_msg_right_prt .message-option-btns .btn svg').css('color', data.color);
+      $('#user-chat-link').attr('href', data.url);
+      $('#block-url').attr('href', data.block_url);
+      $('#user-avatar-right img').attr('src', data.avatar).removeClass('hidden');
 
-      	$('#user-name').html('<a target="_blank" href="' + data.url + '">' + user_name + '</a>').removeClass('hidden');
-      	$('#user-name-right').html('<a target="_blank" href="'+ data.url + '">' + user_name + '</a>');
-      	$('#user-last-seen').html(data.lastseen);
+      $('#user-name').html('<a target="_blank" href="' + data.url + '">' + user_name + '</a>').removeClass('hidden');
+      $('#user-name-right').html('<a target="_blank" href="'+ data.url + '">' + user_name + '</a>');
+      $('#user-last-seen').html(data.lastseen);
 
-	  	$('.delete-icon').html('<svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24" onclick="Wo_DeleteConversation(' + user_id + ')"><path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg>');
+	  $('.delete-icon').html('<svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24" onclick="Wo_DeleteConversation(' + user_id + ')"><path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg>');
 
 
       if(data.can_replay == true) {
@@ -1079,7 +2391,6 @@ function Wo_GetUserMessages(user_id, user_name, userlink) {
         $('#charsLeft').text("<?php echo $wo['config']['maxCharacters']?>");
       <?php }?>
       if(data.html.length == 0) {
-
         view_more_wrapper.hide();
         $('.messages-container').html('<div class="no-messages empty_state"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.021 512.021" xml:space="preserve"> <path style="fill:#64B5F6;" d="M338.214,344.556l-64-64.107c-4.16-4.171-10.914-4.179-15.085-0.019 c-2.006,2.001-3.133,4.717-3.134,7.55v149.44c0.003,4.589,2.942,8.662,7.296,10.112c1.086,0.367,2.224,0.555,3.371,0.555 c3.357,0,6.519-1.581,8.533-4.267l64-85.333C342.376,354.244,341.958,348.31,338.214,344.556z"/> <path style="fill:#1976D2;" d="M291.366,320.641l-64-21.333c-5.587-1.868-11.631,1.147-13.499,6.734 c-0.732,2.19-0.734,4.558-0.005,6.749l42.667,128c1.453,4.362,5.536,7.302,10.133,7.296h0.661c4.819-0.3,8.836-3.8,9.792-8.533 l21.333-106.667C299.523,327.601,296.483,322.345,291.366,320.641z"/> <path style="fill:#2196F3;" d="M507.43,23.446c-3.399-2.377-7.867-2.568-11.456-0.491L90.641,257.622 c-5.096,2.955-6.832,9.482-3.877,14.578c1.306,2.253,3.391,3.95,5.861,4.771l191.573,63.872l148.907,63.829 c5.417,2.316,11.685-0.197,14.001-5.614c0.321-0.752,0.555-1.538,0.697-2.343l64-362.667 C512.531,29.965,510.825,25.829,507.43,23.446z"/> <g> <path style="fill:#1976D2;" d="M510.011,38.38c3.441-4.781,2.355-11.447-2.426-14.889c-4.259-3.065-10.115-2.578-13.808,1.15 L215.611,318.017l80.277,27.733L510.011,38.38z"/> <path style="fill:#1976D2;" d="M26.065,420.246c-2.679,0.003-5.26-1.003-7.232-2.816c-5.319-4.892-10.553-9.92-15.701-15.083 c-4.171-4.165-4.176-10.922-0.011-15.093c4.165-4.171,10.922-4.176,15.093-0.011c4.949,4.949,9.984,9.792,15.083,14.485 c4.336,3.988,4.618,10.736,0.63,15.072C31.904,418.999,29.052,420.249,26.065,420.246z"/> <path style="fill:#1976D2;" d="M171.387,490.54c-10.278-0.033-20.527-1.098-30.592-3.179c-5.814-0.95-9.757-6.434-8.806-12.248 c0.95-5.814,6.434-9.757,12.248-8.806c0.277,0.045,0.553,0.102,0.825,0.169c8.683,1.792,17.524,2.707,26.389,2.731h0.064h4.8 c5.559-0.531,10.497,3.545,11.028,9.104c0.037,0.385,0.051,0.771,0.044,1.157c0.216,5.884-4.377,10.831-10.261,11.051h-5.568 L171.387,490.54z M94.95,470.124c-1.708,0-3.39-0.409-4.907-1.195c-10.486-5.487-20.611-11.636-30.315-18.411 c-4.727-3.515-5.709-10.197-2.194-14.925c3.355-4.511,9.634-5.644,14.354-2.59c8.937,6.286,18.272,11.987,27.947,17.067 c5.231,2.709,7.276,9.146,4.567,14.377c-1.833,3.54-5.487,5.762-9.474,5.762L94.95,470.124z"/> <path style="fill:#1976D2;" d="M226.235,479.105c-5.891,0.048-10.705-4.688-10.753-10.579c-0.035-4.307,2.524-8.213,6.487-9.901 c6.141-2.627,12.105-5.648,17.856-9.045c5.146-2.867,11.642-1.019,14.509,4.127c2.767,4.967,1.152,11.231-3.672,14.241 c-6.542,3.867-13.325,7.309-20.309,10.304C229.05,478.806,227.651,479.097,226.235,479.105z"/> </g></svg><?php echo $wo["lang"]["no_more_message_to_show"];?> </div>');
       } else {
@@ -1974,6 +3285,8 @@ jQuery(document).ready(function($) {
     }});
 });
 
+!function($){$.fn.extend({limit:function(limit,element){var interval,f,self=$(this);$(this).focus(function(){interval=window.setInterval(substring,100)}),$(this).blur(function(){clearInterval(interval),substring()}),substringFunction="function substring(){ var val = $(self).val();var length = val.length;if(length > limit){$(self).val($(self).val().substring(0,limit));}",void 0!==element&&(substringFunction+="if($(element).html() != limit-length){$(element).html((limit-length<=0)?'0':limit-length);}"),substringFunction+="}",eval(substringFunction),substring()}})}(jQuery);
+
 </script>
 <style>.message-text a.hash{color: #a84849 !important;}</style>
 
@@ -2006,7 +3319,7 @@ jQuery(document).ready(function($) {
 						<div class="group_chat_mbr_list"></div>
 					</div>
 					<div class="wow_form_fields">
-						<h4><?php echo $wo['lang']['image']; ?></h4>
+						<span><?php echo $wo['lang']['image']; ?></span>
 						<div class="wow_fcov_image wow_group_chat_image">
 							<div id="wow_fcov_img_holder">
 								<img src="<?php echo $wo['config']['theme_url'];?>/img/ad_pattern.png">
