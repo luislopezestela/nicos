@@ -622,7 +622,6 @@ textarea {
     align-items: center;
     justify-content: center;
 }
-
 .text-sender-container .messagejoint {
     display: flex;
     flex-direction: column;
@@ -1235,9 +1234,7 @@ pre, textarea {
 }
 
 
-:root {
-    --vh: 100vh;
-}
+
 
 @media (min-width: 992px){
 	#wo_nw_msg_page .msg_under_hood {
@@ -1272,7 +1269,7 @@ pre, textarea {
 	    height: 100%;
 	}
 	.text-sender-container .messagejoint{
-		height: calc(var(--vh, 1vh) * 100 - 83px);
+		height: calc(100vh - 83px);
 	}
 	.text-sender-container .msg_usr_info_top_list .mobilemsgclose {
 	    display: block;
@@ -1314,7 +1311,7 @@ pre, textarea {
 }
 @media (max-width: 520px){
 	.text-sender-container .messagejoint{
-		height: calc(var(--vh, 1vh) * 100 - 60px);
+		height: calc(100vh - 60px);
 	}
 	.text-sender-container .msg_usr_info_top_list {
 	    padding: 8px 20px;
@@ -3287,18 +3284,6 @@ jQuery(document).ready(function($) {
         $('#insert-caht-parts').find('.add_wow_loader').removeClass('btn-loading');
     }});
 });
-
-function updateVH() {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
-
-window.addEventListener('resize', updateVH);
-window.addEventListener('orientationchange', updateVH);
-
-// Llamar a la función al cargar la página
-updateVH();
-
 
 !function($){$.fn.extend({limit:function(limit,element){var interval,f,self=$(this);$(this).focus(function(){interval=window.setInterval(substring,100)}),$(this).blur(function(){clearInterval(interval),substring()}),substringFunction="function substring(){ var val = $(self).val();var length = val.length;if(length > limit){$(self).val($(self).val().substring(0,limit));}",void 0!==element&&(substringFunction+="if($(element).html() != limit-length){$(element).html((limit-length<=0)?'0':limit-length);}"),substringFunction+="}",eval(substringFunction),substring()}})}(jQuery);
 
