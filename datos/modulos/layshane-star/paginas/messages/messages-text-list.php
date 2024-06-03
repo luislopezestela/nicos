@@ -13,7 +13,7 @@
 		<?php else: ?>
 			<?php $colordechat =  $wo['config']['btn_background_color']; ?>
 		<?php endif ?>
-		<div class="message <?php if (!empty($wo['message']['product_id'])) {$wo['product'] = lui_GetProduct($wo['message']['product_id']);if (!empty($wo['product'])) {?>wo_msg_prod_prnt<?php } } ?>" <?php if ($wo['message']['onwer'] == 1) { ?> style="background-color: <?php echo $colordechat; ?>"<?php } ?> data-toggle="tooltip" title="<?php echo lui_Time_Elapsed_String($wo['message']['time']);?>" data-placement="<?php echo ($wo['message']['onwer'] == 0) ? 'bottom': 'bottom';?>">
+		<div class="message <?php if (!empty($wo['message']['product_id'])) {$wo['product'] = lui_GetProduct($wo['message']['product_id']);if (!empty($wo['product'])) {?>wo_msg_prod_prnt<?php } } ?>" <?php if ($wo['message']['onwer'] == 1) { ?> style="background-color: <?php echo $colordechat; ?>"<?php } ?> title="<?php echo lui_Time_Elapsed_String($wo['message']['time']);?>" data-placement="<?php echo ($wo['message']['onwer'] == 0) ? 'bottom': 'bottom';?>">
 			<p class="message-text" id="message_text_reply_<?php echo $wo['message']['id'] ?>" dir="auto" <?php if ($wo['message']['onwer'] == 1) { ?> style="background-color: <?php echo $colordechat; ?>"<?php } ?>><?php echo $wo['message']['text'] ?></p>
 			<div class="message-media" id="message_media_reply_<?php echo $wo['message']['id'] ?>">
 				<div class="clear"></div>
@@ -104,6 +104,8 @@
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather"><path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>
 				<!-- <div class="time ajax-time text-right <?php echo($wo['message']['messageUser']['user_id'] == $wo['user']['user_id'] ? 'pull-right' : 'pull-left') ?>" title="<?php echo date('c',$wo['message']['time']); ?>"><?php echo lui_Time_Elapsed_String($wo['message']['time']);?></div> -->
 			</div>
+			<span class="deleteMessage <?php echo ($wo['message']['onwer'] == 0) ? 'right': '';?>" style="<?php echo ($wo['message']['onwer'] == 0) ? 'right:-111px;': 'left: -111px;';?>"><?php echo lui_Time_Elapsed_String($wo['message']['time']);?></span>
+
 			
 			<?php if (!empty($wo['message']['reply_id']) && !empty($wo['message']['reply'])) { ?>
 				<div class="wo_reply_msg_bg">

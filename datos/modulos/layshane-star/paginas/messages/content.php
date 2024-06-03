@@ -8,7 +8,9 @@ html {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
 }
-footer{display:none!important;}
+.no_visible + footer {
+    display: none!important; /* Ocultar el footer si el elemento no_visible está presente */
+}
 .form-control:focus {
     border-color: #ccc;
     outline: 0
@@ -1233,7 +1235,11 @@ pre, textarea {
     opacity: 0.6;
 }
 
-
+.tiempo_mensagepr{
+    font-size: 13px;
+    font-weight: 400;
+    color: #b3b3b3;
+}
 
 
 @media (min-width: 992px){
@@ -1714,6 +1720,8 @@ $(document).on('click','.mobileopenlist',function(){
 
 $('.mobilemsgclose').on('click',function (){
 	$('.mobileleftpane').fadeOut(100);
+	$('.mobileleftpane').removeClass('no_visible');
+	$('.mobileopenlist').removeClass('active');
 	window.history.pushState({state:'new'},'', "<?php echo($wo['config']['site_url']) ?>/messages");
 });
 
@@ -2327,6 +2335,7 @@ function Wo_DeleteConversation(user_id) {
 
 function Wo_GetUserMessages(user_id, user_name, userlink) {
 	var old_user = $('#user-id').val();
+	$('.mobileleftpane').addClass('no_visible');
 	if ($('#user-id').val() > 0 && $('#user-id').val() != user_id) {
 		$('#story_id').val('0');
     	$('.message_reply_story_text').remove();
