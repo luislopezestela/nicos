@@ -1720,6 +1720,7 @@ $(document).on('click','.mobileopenlist',function(){
 
 $('.mobilemsgclose').on('click',function (){
 	$('.mobileleftpane').fadeOut(100);
+	$('.mobilerightpane').removeClass('no_visible');
 	$('.mobileleftpane').removeClass('no_visible');
 	$('.mobileopenlist').removeClass('active');
 	window.history.pushState({state:'new'},'', "<?php echo($wo['config']['site_url']) ?>/messages");
@@ -2335,7 +2336,8 @@ function Wo_DeleteConversation(user_id) {
 
 function Wo_GetUserMessages(user_id, user_name, userlink) {
 	var old_user = $('#user-id').val();
-	$('.mobileleftpane').addClass('no_visible');
+	$('.mobilerightpane').addClass('no_visible');
+	$('.mobileleftpane').removeClass('no_visible');
 	if ($('#user-id').val() > 0 && $('#user-id').val() != user_id) {
 		$('#story_id').val('0');
     	$('.message_reply_story_text').remove();

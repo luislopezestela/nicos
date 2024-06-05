@@ -94,7 +94,6 @@
 			    </div>
 			    <style type="text/css">
 			    	.carg_over_pr_a{aspect-ratio:1;height:100%;width:100%;overflow:hidden;min-width:100%;min-height:100%;max-width:100%;max-height:100%;}
-					.carg_over_pr_a img{width:100;}
 			    </style>
 					<div class="hpols-bts-pdp grid">
 						<?php if (!empty($wo['itemsdata']['product']['images'])): ?>
@@ -104,20 +103,26 @@
 									$el_colorv = null;
 										foreach($wo['itemsdata']['product']['images'] as $index => $photo){
 											$color_id = lui_buscar_color_en_opciones($photo['id_color']);
+											
+
 											if(isset($color_id['id_color'])!=0) {
 												$color_seleccionado_productos = $color_id['id_color'];
 												$buscar_el_color_por_id = lui_buscar_color_en_colores($color_id['id_color']);
 												$el_colorv = lui_SlugPost($wo['lang'][$buscar_el_color_por_id['lang_key']]);
+												$thumbnailImage = $photo['image_mini'];
+												$realImage = $photo['image'];
 												if ($wo['atributo_items']==$el_colorv) {
 													if ($index === 0) {
-														echo '<img class="imagen" src="'. $photo['image'] .'" data-flickity-lazyload-src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
+														echo '<img class="imagen" src="'. $thumbnailImage .'" width="518" height="518" data-real-src="' . $realImage . '" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
 													}else{
 														echo '<img class="imagen" data-flickity-lazyload-src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
 													}
 												}else{}
 											}else{
+												$thumbnailImage = $photo['image_mini'];
+												$realImage = $photo['image'];
 												if ($index === 0) {
-													echo '<img class="imagen" src="'. $photo['image'] .'" data-flickity-lazyload-src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
+													echo '<img class="imagen" src="'. $thumbnailImage .'" width="518" height="518" data-real-src="' . $realImage . '" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
 												}else{
 													echo '<img class="imagen" data-flickity-lazyload-src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
 												}
@@ -125,8 +130,6 @@
 										}
 									?>
 								</div>
-								
-				
 								<div class="wo_post_prod_full_img_slider loated_disoka_b carg_over_b">
 									<?php
 									$s_photo_color_id = false;
@@ -145,9 +148,9 @@
 													$statuss = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 													curl_close($ch);
 													if($statuss == 200) {
-														echo  "<div><img src='" . ($photo['image_mini']) ."' loading='lazy' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
+														echo  "<div style='display:inline-block;'><img src='" . ($photo['image_mini']) ."' loading='lazy' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
 													}else{
-														echo  "<div><img src='" . ($photo['image_org']) ."' loading='lazy' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
+														echo  "<div style='display:inline-block;'><img src='" . ($photo['image_org']) ."' loading='lazy' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
 													}
 													
 												}
@@ -159,14 +162,34 @@
 												$statuss = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 												curl_close($ch);
 												if($statuss == 200) {
-													echo  "<div><img src='" . ($photo['image_mini']) ."' loading='lazy' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
+													echo  "<div style='display:inline-block;'><img src='" . ($photo['image_mini']) ."' loading='lazy' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
 												}else{
-													echo  "<div><img src='" . ($photo['image_org']) ."' loading='lazy' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
+													echo  "<div style='display:inline-block;'><img src='" . ($photo['image_org']) ."' loading='lazy' alt='".$wo['itemsdata']['product']['name']."' class='active pointer'></div>";
 												}
 											}
 										}
 									?>
 								</div>
+
+								<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var firstImage = document.querySelector('.wo_post_prod_full_img img[data-real-src]');
+    if (firstImage) {
+        var realImageSrc = firstImage.getAttribute('data-real-src');
+        var realImage = new Image();
+        realImage.src = realImageSrc;
+
+        realImage.onload = function() {
+            firstImage.src = realImageSrc;
+            firstImage.removeAttribute('data-real-src'); // Remover el atributo una vez cargada la imagen real
+        };
+
+        realImage.onerror = function() {
+            console.error('Error al cargar la imagen real: ' + realImageSrc);
+        };
+    }
+});
+</script>
 							</div>
 							<span class="copy_url_product_data">
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">
@@ -560,24 +583,24 @@ function Agregar_producto_al_carrito(self,id,type) {
     }
   });
 }
-document.addEventListener('DOMContentLoaded', function() {
-	document.querySelectorAll('.copy_url_product_data').forEach(function(button) {
-	  button.addEventListener('click', function() {
-	  	$('.copy_url_product_data').html('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none"><path d="M21.8606 5.39176C22.2875 6.49635 21.6888 7.2526 20.5301 7.99754C19.5951 8.5986 18.4039 9.24975 17.1417 10.363C15.9044 11.4543 14.6968 12.7687 13.6237 14.0625C12.5549 15.351 11.6465 16.586 11.0046 17.5005C10.5898 18.0914 10.011 18.9729 10.011 18.9729C9.60281 19.6187 8.86895 20.0096 8.08206 19.9998C7.295 19.99 6.57208 19.5812 6.18156 18.9251C5.18328 17.248 4.41296 16.5857 4.05891 16.3478C3.11158 15.7112 2 15.6171 2 14.1335C2 12.9554 2.99489 12.0003 4.22216 12.0003C5.08862 12.0323 5.89398 12.373 6.60756 12.8526C7.06369 13.1591 7.54689 13.5645 8.04948 14.0981C8.63934 13.2936 9.35016 12.3653 10.147 11.4047C11.3042 10.0097 12.6701 8.51309 14.1349 7.22116C15.5748 5.95115 17.2396 4.76235 19.0042 4.13381C20.1549 3.72397 21.4337 4.28718 21.8606 5.39176Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
-	    var link = window.location.href;
-	    var inputElement = document.createElement('input');
-	    inputElement.setAttribute('value', link);
-	    document.body.appendChild(inputElement);
-	    inputElement.select();
-	    inputElement.setSelectionRange(0, 99999);
-	    document.execCommand('copy');
-	    document.body.removeChild(inputElement);
 
-	    setTimeout(function() {
-				$('.copy_url_product_data').html('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none"><path d="M14.5563 13.2183C13.514 14.2606 11.8241 14.2606 10.7817 13.2183C9.73942 12.1759 9.73942 10.486 10.7817 9.44364L13.1409 7.0845C14.1357 6.08961 15.7206 6.04433 16.7692 6.94866M16.4437 3.78175C17.486 2.73942 19.1759 2.73942 20.2183 3.78175C21.2606 4.82408 21.2606 6.51403 20.2183 7.55636L17.8591 9.9155C16.8643 10.9104 15.2794 10.9557 14.2308 10.0513" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path d="M21 13C21 16.7712 21 18.6569 19.8284 19.8284C18.6569 21 16.7712 21 13 21H11C7.22876 21 5.34315 21 4.17157 19.8284C3 18.6569 3 16.7712 3 13V11C3 7.22876 3 5.34315 4.17157 4.17157C5.34315 3 7.22876 3 11 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>');
-		  }, 1500);
-	  });
+document.querySelectorAll('.copy_url_product_data').forEach(function(button) {
+	button.addEventListener('click', function() {
+		$('.copy_url_product_data').html('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none"><path d="M21.8606 5.39176C22.2875 6.49635 21.6888 7.2526 20.5301 7.99754C19.5951 8.5986 18.4039 9.24975 17.1417 10.363C15.9044 11.4543 14.6968 12.7687 13.6237 14.0625C12.5549 15.351 11.6465 16.586 11.0046 17.5005C10.5898 18.0914 10.011 18.9729 10.011 18.9729C9.60281 19.6187 8.86895 20.0096 8.08206 19.9998C7.295 19.99 6.57208 19.5812 6.18156 18.9251C5.18328 17.248 4.41296 16.5857 4.05891 16.3478C3.11158 15.7112 2 15.6171 2 14.1335C2 12.9554 2.99489 12.0003 4.22216 12.0003C5.08862 12.0323 5.89398 12.373 6.60756 12.8526C7.06369 13.1591 7.54689 13.5645 8.04948 14.0981C8.63934 13.2936 9.35016 12.3653 10.147 11.4047C11.3042 10.0097 12.6701 8.51309 14.1349 7.22116C15.5748 5.95115 17.2396 4.76235 19.0042 4.13381C20.1549 3.72397 21.4337 4.28718 21.8606 5.39176Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+		var link = window.location.href;
+		var inputElement = document.createElement('input');
+		inputElement.setAttribute('value', link);
+		document.body.appendChild(inputElement);
+		inputElement.select();
+		inputElement.setSelectionRange(0, 99999);
+		document.execCommand('copy');
+		document.body.removeChild(inputElement);
+
+		setTimeout(function() {
+			$('.copy_url_product_data').html('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none"><path d="M14.5563 13.2183C13.514 14.2606 11.8241 14.2606 10.7817 13.2183C9.73942 12.1759 9.73942 10.486 10.7817 9.44364L13.1409 7.0845C14.1357 6.08961 15.7206 6.04433 16.7692 6.94866M16.4437 3.78175C17.486 2.73942 19.1759 2.73942 20.2183 3.78175C21.2606 4.82408 21.2606 6.51403 20.2183 7.55636L17.8591 9.9155C16.8643 10.9104 15.2794 10.9557 14.2308 10.0513" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path d="M21 13C21 16.7712 21 18.6569 19.8284 19.8284C18.6569 21 16.7712 21 13 21H11C7.22876 21 5.34315 21 4.17157 19.8284C3 18.6569 3 16.7712 3 13V11C3 7.22876 3 5.34315 4.17157 4.17157C5.34315 3 7.22876 3 11 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>');
+		}, 1500);
 	});
+});
 
 function convertirAJPEG(rutaWebP,nombreImagen) {
   var img = new Image();
@@ -692,7 +715,7 @@ imagenes.forEach(function(imagen) {
 document.addEventListener("click", cerrarMenu);
 document.addEventListener("mousedown", cerrarMenuClicDerecho);
 document.addEventListener("touchstart", cerrarMenuEnToque);
-});
+
 
 function Wo_OpenAlbumLightBox(image_id, type) {
 	$('body').append('<div class="lightbox-container"><div class="lightbox-backgrond" onclick="Wo_CloseLightbox();"></div><div class="lb-preloader" style="display:block"><svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg></div></div>');

@@ -16,7 +16,8 @@ if ($f == 'messages') {
                 }
             } elseif (!empty($recipient['user_id']) && $recipient['message_privacy'] == 2) {
                 $can_replay = false;
-            } 
+            }
+
             foreach ($messages as $wo['message']) {
                 $wo['message']['color'] = lui_GetChatColor($wo['user']['user_id'], $recipient['user_id']);
                 $html .= lui_LoadPage('messages/messages-text-list');
