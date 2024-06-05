@@ -170,26 +170,6 @@
 										}
 									?>
 								</div>
-
-								<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var firstImage = document.querySelector('.wo_post_prod_full_img img[data-real-src]');
-    if (firstImage) {
-        var realImageSrc = firstImage.getAttribute('data-real-src');
-        var realImage = new Image();
-        realImage.src = realImageSrc;
-
-        realImage.onload = function() {
-            firstImage.src = realImageSrc;
-            firstImage.removeAttribute('data-real-src'); // Remover el atributo una vez cargada la imagen real
-        };
-
-        realImage.onerror = function() {
-            console.error('Error al cargar la imagen real: ' + realImageSrc);
-        };
-    }
-});
-</script>
 							</div>
 							<span class="copy_url_product_data">
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">

@@ -157,5 +157,21 @@ function view_images_prod() {
   flkty_1.on('dragEnd', () => flkty_1.slider.style.pointerEvents = 'auto');
   flkty_2.on('dragStart', () => flkty_2.slider.style.pointerEvents = 'none');
   flkty_2.on('dragEnd', () => flkty_2.slider.style.pointerEvents = 'auto');
+
+  var firstImage = document.querySelector('.wo_post_prod_full_img img[data-real-src]');
+  if (firstImage) {
+      var realImageSrc = firstImage.getAttribute('data-real-src');
+      var realImage = new Image();
+      realImage.src = realImageSrc;
+
+      realImage.onload = function() {
+          firstImage.src = realImageSrc;
+          firstImage.removeAttribute('data-real-src'); // Remover el atributo una vez cargada la imagen real
+      };
+
+      realImage.onerror = function() {
+          console.error('Error al cargar la imagen real: ' + realImageSrc);
+      };
+  }
 }
 </script>
