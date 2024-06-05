@@ -113,7 +113,7 @@
 												$realImage = $photo['image'];
 												if ($wo['atributo_items']==$el_colorv) {
 													if ($index === 0) {
-														echo '<img class="imagen" src="'. $thumbnailImage .'" width="518" height="518" data-real-src="' . $realImage . '" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
+														echo '<img class="imagen" src="'. $thumbnailImage .'" width="518" height="auto" data-real-src="' . $realImage . '" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
 													}else{
 														echo '<img class="imagen" data-flickity-lazyload-src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'" alt="'.$wo['itemsdata']['product']['name'].'" onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" data-flickity-lazyload="'. ($photo['image']) .'">';
 													}
@@ -122,7 +122,7 @@
 												$thumbnailImage = $photo['image_mini'];
 												$realImage = $photo['image'];
 												if ($index === 0) {
-													echo '<img class="imagen" src="'. $thumbnailImage .'" width="518" height="518" data-real-src="' . $realImage . '" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
+													echo '<img class="imagen" src="'. $thumbnailImage .'" width="518" height="auto" data-real-src="' . $realImage . '" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
 												}else{
 													echo '<img class="imagen" data-flickity-lazyload-src="'. ($photo['image']) .'" loading="lazy" title="'.$wo['itemsdata']['product']['name'].'_'.$photo['id'].'"  alt="'.$wo['itemsdata']['product']['name'].'"  onclick="Wo_OpenAlbumLightBox(' . $photo['id'] . ', \'product\');" >';
 												}
