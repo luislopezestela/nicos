@@ -395,7 +395,7 @@
 .disclaimer a{color:#fff;}
 .load-produts .load-more button{width:auto}
 .text_category span{font-family:sans-serif;padding-top:10px;}
-.carousel__content{overflow:auto!important;-webkit-overflow-scrolling: touch!important;overscroll-behavior: none!important;overscroll-behavior-x: none!important;}
+.carousel__content{overflow:auto!important;}
 .productos_en_cuadros:has(.empty_state){grid-template-columns:1fr!important;}
 @media (min-width:2180px) {
 	.sidebar_layshane_items{grid-column: auto / span 2;}
