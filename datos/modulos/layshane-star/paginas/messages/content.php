@@ -1281,12 +1281,15 @@ pre, textarea {
 	    display: block;
 	}
 	.mobileleftpane {
-	    position: fixed;
-	    height: 100%;
-	    padding: 0;
-	    top: 0px;
-	    left: 0;
-	    z-index: 20000;
+        display:block;
+	    position:fixed;
+        min-height:100vh;
+	    height:100%;
+	    padding:0;
+	    top:0px;
+        bottom:0;
+	    left:0;
+	    z-index:20000;
 	}
 
 }
