@@ -960,6 +960,19 @@ if ($f == "comprar_producto_a") {
         exit();
     }
 
+    if ($s == 'cancelar_cash'){
+        $cash_inicial = $db->where('sucursal',$wo['user']['sucursal'])->where('step','0')->getOne(T_CASH);
+        if ($cash_inicial) {
+            $db->where('id',$cash_inicial['id'])->where('step', '0')->delete(T_CASH);
+            $data['status']  = 200;
+        }else{
+            $data['status']  = 400;
+            $data['message'] = 'Por favor comprueba tus detalles';
+        }
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
     if ($s == 'exit_cash'){
         if (empty($_GET['hash'])) {
             $data['status']  = 400;

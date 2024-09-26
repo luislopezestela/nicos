@@ -52,7 +52,7 @@ echo lui_LoadPage("sidebar/left-sidebar"); ?>
 				<?php if (!empty($comprapendiente_sear)): ?>
 					<?php $comprapendiente = $db->where('step','0')->where('sucursal',$wo['user']['sucursal'])->getOne(T_CASH); ?>
 					<?php if(isset($comprapendiente['step'])): ?>
-						<button class="btn_prin_compra boton_add_nluis first saved_cash">Guardar</button>
+						<button class="btn_prin_compra boton_add_nluis first cancelar_salir">Cancelar</button>
 					<?php else: ?>
             <?php $ver_cash = $db->where('open_cash',1)->where('sucursal',$wo['user']['sucursal'])->getOne(T_CASH); ?>
             <?php if (!$ver_cash): ?>
@@ -77,7 +77,8 @@ echo lui_LoadPage("sidebar/left-sidebar"); ?>
 	    	<?php if(isset($comprapendiente['step'])): ?>
 	    			<div class="agregar_compras_en_imventario">
               <input type="text" class="input_name_cash" name="nombre_cash" placeholder="Nombre de la caja">
-              <br><br>
+              <br>
+              <button class="btn_prin_compra boton_add_nluis first saved_cash">Guardar</button><br>
 			    	</div>
 			    	<br>
             <script type="text/javascript">
@@ -86,6 +87,17 @@ echo lui_LoadPage("sidebar/left-sidebar"); ?>
                 $.ajax({
                   url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=update_cash',
                   data: {nombre:nombresf},
+                  type: 'POST',
+                  success: function (data) {
+                    if (data.status==200){
+                      document.location.reload();
+                    }
+                  }
+                })
+              });
+              $(document).on('click', '.cancelar_salir', function(){
+                $.ajax({
+                  url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=cancelar_cash',
                   type: 'POST',
                   success: function (data) {
                     if (data.status==200){
@@ -271,7 +283,6 @@ echo lui_LoadPage("sidebar/left-sidebar"); ?>
                           $totales[$moneda] += isset($metodos_pago['totalMonto']) ? (float)$metodos_pago['totalMonto'] : 0;
                       }
                       
-                      // Mostrar tarjeta de caja
                       ?>
                       <div class="cash-register-card">
                           <div class="register-header">
@@ -295,7 +306,7 @@ echo lui_LoadPage("sidebar/left-sidebar"); ?>
                               </div>
                               
                               <?php if ($cash['estado'] == 'ABIERTO'): ?>
-                                  <div class="register-details">
+                                  <div class="register-details">CERRADO
                                       <p>Ultimo corte: 30-12-12</p>
                                   </div>
                                   <button class="view-details view_new_cash" data-id="<?=$cash['id']?>">Ver caja</button>
@@ -305,9 +316,16 @@ echo lui_LoadPage("sidebar/left-sidebar"); ?>
                                   <button class="view-details opn_new_cash" style="background:rgba(39, 174, 96,1.0);" data-id="<?=$cash['id']?>">Abrir caja</button>
                               <?php endif; ?>
                           <?php else: ?>
-                              <div><p>Caja nueva, Sin registros</p></div>
-                              <br>
+                            <div><p>Caja nueva, Sin registros</p></div>
+                            <br>
+                            <?php if ($cash['estado'] == 'ABIERTO'): ?>
                               <button class="view-details view_new_cash" data-id="<?=$cash['id']?>">Ver caja</button>
+                            <?php else: ?>
+                              <button class="view-details opn_new_cash" style="background:rgba(39, 174, 96,1.0);" data-id="<?=$cash['id']?>">Abrir caja</button>
+                            <?php endif; ?>
+
+                              
+                            
                           <?php endif; ?>
                       </div>
                   <?php endforeach; ?>
@@ -356,7 +374,7 @@ echo lui_LoadPage("sidebar/left-sidebar"); ?>
   								})
   					    });
   			    		$(document).on('click', '.create_order_in_pages', function(){
-  			    			var comprascontent = document.querySelector('a[data-ajax="?link1=compras"]');
+                  var comprascontent = document.querySelector('a[data-ajax="?link1=caja"]');
   								$.ajax({
   									url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=new_cash&hash=' + $('.main_session').val(),
   									type: 'POST',
