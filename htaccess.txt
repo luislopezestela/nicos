@@ -291,7 +291,7 @@ ExpiresDefault "access plus 1 month"
     Header set Cache-Control "max-age=31536000, public"
 </FilesMatch>
 
-# Añadir encabezado de caché para archivos PHP
+# Añadir encabezado de caché para archivos PHP oooooooooo
 <FilesMatch "\.(php)$">
     Header set Cache-Control "max-age=600, must-revalidate"
 </FilesMatch>
