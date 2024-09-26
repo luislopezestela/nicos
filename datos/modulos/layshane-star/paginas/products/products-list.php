@@ -28,7 +28,7 @@ $condicions = ($wo['product']['type'] == 0) ? '' . "Nuevo" . '' : '' . "Reacondi
 			</a>
 		</div>
 		<div class="produc_info">
-			<div class="product-by product-title">
+			<div class="product-by">
 				<?php
 				    $product_by_ = $wo['product']['category'];
 				    $product_by_ = str_replace('{product_category_name}', $wo['products_categories'][$wo['product']['category']]['id'], $product_by_);
@@ -43,7 +43,7 @@ $condicions = ($wo['product']['type'] == 0) ? '' . "Nuevo" . '' : '' . "Reacondi
 			</div> 
 
 			<div class="product-title">
-				<a href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=item&items=<?=$wo['product']['seo_id'].$el_color_b;?>" title="<?php echo $wo['product']['name']?><?php echo $colores; ?>"><?php echo $wo['product']['name']?><?php echo $colores; ?></a>
+				<a class="titulos_prodf" href="<?php echo $wo['product']['url']?><?=$el_color;?>" data-ajax="?link1=item&items=<?=$wo['product']['seo_id'].$el_color_b;?>" title="<?php echo $wo['product']['name']?><?php echo $colores; ?>"><?php echo $wo['product']['name']?><?php echo $colores; ?></a>
 			</div>
 			<div class="product-price">
 				<?php echo (!empty($wo['currencies'][$wo['product']['currency']]['symbol'])) ? $wo['currencies'][$wo['product']['currency']]['symbol'] : $wo['config']['classified_currency_s'];?>

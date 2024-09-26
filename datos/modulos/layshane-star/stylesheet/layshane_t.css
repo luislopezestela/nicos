@@ -291,7 +291,9 @@
 .wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .wow_main_prod_foot .btn {width: 40px;height: 40px;min-width: auto;padding: 0;border-radius: 50%;margin: -35px 2px 0;}
 .wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .wow_main_prod_foot .btn svg {margin: 0;width: 19px;height: 19px;}
 .wo_market .market_bottom .productos_en_cuadros .post-container .panel .product-title,
-.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .product-title{display:flex;align-items:center;justify-content:space-between;text-align:center;flex-wrap:wrap;gap:1rem;text-align:left;font-weight:initial;font-size: 16px;}
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .product-by{display:flex;align-items:center;justify-content:space-between;text-align:center;flex-wrap:wrap;gap:1rem;text-align:left;font-weight:initial;font-size: 16px;}
+.wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .product-title .titulos_prodf{display: -webkit-box!important;
+  -webkit-box-orient: vertical;word-wrap:break-word!important;-webkit-line-clamp: 2;white-space:initial;word-break:initial!important;}
 .wo_market .market_bottom .productos_en_cuadros .post-container .panel .product-title a,
 .wo_market .market_bottom .productos_en_cuadros .post-container .panel .product-title span,
 .wo_market .market_bottom .productos_en_cuadros .product .product_info.wow_main_mkt_prod .product-title a {text-decoration:none;color:#555;padding:5px;}
