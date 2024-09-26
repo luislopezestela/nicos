@@ -29,13 +29,6 @@
 	</div>
 </div>
 <script>
-
-  var script = document.createElement('script');
-  script.id = "scripts_page2";
-  script.src = "<?php echo $wo['config']['theme_url'];?>/javascript/jquery-ui.min.js?version=<?php echo $wo['config']['version']; ?>";
-  var targetElement = document.getElementById('var_data_script');
-  targetElement.parentNode.insertBefore(script, targetElement.nextSibling);
-
 $(document).keydown(function(e) {
     if (e.keyCode == 27) {
         Wo_CloseLightbox();
