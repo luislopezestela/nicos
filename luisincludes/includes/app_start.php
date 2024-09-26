@@ -1,7 +1,7 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(0);
 @ini_set("max_execution_time", 0);
 @ini_set("memory_limit", "-1");
 @set_time_limit(0);
@@ -534,7 +534,7 @@ if (!$wo['config']['can_use_chat']) {
 }
 
 $wo['config']['report_reasons'] = json_decode($wo['config']['report_reasons'],true);
-$wo['config']['filesVersion'] = "4.7.31";
+$wo['config']['filesVersion'] = "4.8.0";
 
 if ($wo['config']['filesVersion'] != $wo['config']['version']) {
     ini_set('display_errors', 0);
