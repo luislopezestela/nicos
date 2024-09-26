@@ -10,11 +10,11 @@ if ($f == "comprar_producto_a") {
                 'precio' => $_POST['price_dat']
             );
 
-            $db->where('producto',$_POST['docnum'])->where('estado', '0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->update('imventario', $dataarray);
-            $total_productos_grupo = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
-            $total_productos_lista = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
+            $db->where('producto',$_POST['docnum'])->where('estado', '0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente['id'])->update('imventario', $dataarray);
+            $total_productos_grupo = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
+            $total_productos_lista = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
             if($total_productos_lista>0) {
-                $total_productos_price_f = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
+                $total_productos_price_f = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
             }
 
             $total_productos_price = number_format($total_productos_price_f, 2, ',', '.');
@@ -62,7 +62,7 @@ if ($f == "comprar_producto_a") {
             $uniqueIdentifier = $_POST['docnum'];
 
             // Construir la consulta SQL para actualizar el precio del producto específico con los atributos seleccionados
-            $sql = "UPDATE imventario SET precio = ? WHERE producto = ? AND estado = '0' AND id_comprobante = $comprapendiente->id AND id_sucursal = ?";
+            $sql = "UPDATE imventario SET precio = ? WHERE producto = ? AND estado = '0' AND id_comprobante = {$comprapendiente['id']} AND id_sucursal = ?";
 
             // Agregar condiciones para los atributos seleccionados
             $conditions = [];
@@ -91,14 +91,14 @@ if ($f == "comprar_producto_a") {
             $jsonAttributes = array_pop($parts); // Extraer el objeto JSON de atributos
             $decodedAttributes = json_decode($jsonAttributes, true);
             $numericValues = array_map('current', $decodedAttributes);
-            $formattedIdentifier = $comprapendiente->id . '_' . $productIds . '_' . implode('_', $numericValues);
+            $formattedIdentifier = $comprapendiente['id'] . '_' . $productIds . '_' . implode('_', $numericValues);
 
             // Verificar si se actualizaron registros
             if ($affectedRows > 0) {
-                $total_productos_grupo = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
-                $total_productos_lista = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
+                $total_productos_grupo = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
+                $total_productos_lista = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
                 if($total_productos_lista>0) {
-                    $total_productos_price_f = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
+                    $total_productos_price_f = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
                 }
                 $total_productos_price = number_format($total_productos_price_f, 2, ',', '.');
                 $data = array(
@@ -128,15 +128,15 @@ if ($f == "comprar_producto_a") {
         $total_productos_price_f = 0.00;
         $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->where('sucursal',$wo['user']['sucursal'])->getOne("compras");
         if (!empty($_POST['post_id'])) {
-            $pendiente_prod = $db->where('id_comprobante', $comprapendiente->id)->where('atributo',$_POST['post_id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getOne('imventario');
+            $pendiente_prod = $db->where('id_comprobante', $comprapendiente['id'])->where('atributo',$_POST['post_id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getOne('imventario');
 
             if(!empty($pendiente_prod)) {
-                $db->where('id_comprobante', $comprapendiente->id)->where('atributo', $pendiente_prod->atributo)->where('id_sucursal',$wo['user']['sucursal'])->delete('imventario');
+                $db->where('id_comprobante', $comprapendiente['id'])->where('atributo', $pendiente_prod['atributo'])->where('id_sucursal',$wo['user']['sucursal'])->delete('imventario');
             }
-            $total_productos_grupo = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
-            $total_productos_lista = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
+            $total_productos_grupo = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
+            $total_productos_lista = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
             if($total_productos_lista>0) {
-                $total_productos_price_f = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
+                $total_productos_price_f = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
             }
             $total_productos_price = number_format($total_productos_price_f, 2, ',', '.');
             
@@ -161,14 +161,14 @@ if ($f == "comprar_producto_a") {
         $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->where('sucursal',$wo['user']['sucursal'])->getOne("compras");
         if (!empty($_POST['post_id'])) {
             $atributoids=$_POST['post_id']; /// el post_id es 1_23_4
-            $pendiente_prod = $db->where('id_comprobante', $comprapendiente->id)->where('atributo', $atributoids)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getOne('imventario');
+            $pendiente_prod = $db->where('id_comprobante', $comprapendiente['id'])->where('atributo', $atributoids)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getOne('imventario');
             if(!empty($pendiente_prod)) {
-                $db->where('id_comprobante', $comprapendiente->id)->where('atributo', $pendiente_prod->atributo)->where('id_sucursal',$wo['user']['sucursal'])->delete('imventario');
+                $db->where('id_comprobante', $comprapendiente['id'])->where('atributo', $pendiente_prod['atributo'])->where('id_sucursal',$wo['user']['sucursal'])->delete('imventario');
             }
-            $total_productos_grupo = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
-            $total_productos_lista = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
+            $total_productos_grupo = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
+            $total_productos_lista = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
             if($total_productos_lista>0) {
-                $total_productos_price_f = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
+                $total_productos_price_f = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
             }
             $total_productos_price = number_format($total_productos_price_f, 2, ',', '.');
             
@@ -194,22 +194,22 @@ if ($f == "comprar_producto_a") {
         $todalstok = 0;
         $producto_atr = false;
         if (!empty($_POST['post_id'])) {
-            $pendiente_prod = $db->where('id_comprobante', $comprapendiente->id)->where('id',$_POST['post_id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getOne('imventario');
+            $pendiente_prod = $db->where('id_comprobante', $comprapendiente['id'])->where('id',$_POST['post_id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getOne('imventario');
             $atributos_inv = $db->objectbuilder()->where('id_imventario', $_POST['post_id'])->get('imventario_atributos');
             if(!empty($pendiente_prod)) {
-                $db->where('id', $pendiente_prod->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->delete('imventario');
+                $db->where('id', $pendiente_prod['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->delete('imventario');
                 if(!empty($atributos_inv)){
-                    $todalstok = $db->where('id_comprobante', $comprapendiente->id)->where('atributo',$pendiente_prod->atributo)->getValue('imventario','COUNT(*)');
-                    $producto_atr = $pendiente_prod->atributo;
+                    $todalstok = $db->where('id_comprobante', $comprapendiente['id'])->where('atributo',$pendiente_prod['atributo'])->getValue('imventario','COUNT(*)');
+                    $producto_atr = $pendiente_prod['atributo'];
                 }else{
-                    $todalstok = $db->where('id_comprobante', $comprapendiente->id)->where('producto',$pendiente_prod->producto)->getValue('imventario','COUNT(*)');
-                    $producto_atr = $pendiente_prod->producto;
+                    $todalstok = $db->where('id_comprobante', $comprapendiente['id'])->where('producto',$pendiente_prod['producto'])->getValue('imventario','COUNT(*)');
+                    $producto_atr = $pendiente_prod['producto'];
                 }
             }
-            $total_productos_grupo = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
-            $total_productos_lista = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
+            $total_productos_grupo = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
+            $total_productos_lista = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
             if($total_productos_lista>0) {
-                $total_productos_price_f = $db->where('id_comprobante', $comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
+                $total_productos_price_f = $db->where('id_comprobante', $comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
             }
             $total_productos_price = number_format($total_productos_price_f, 2, ',', '.');
             
@@ -259,7 +259,7 @@ if ($f == "comprar_producto_a") {
     if ($s == 'trash_compra'){
         $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->where('sucursal',$wo['user']['sucursal'])->getOne(T_COMPRAS);
         if(!empty($comprapendiente)) {
-            $db->where('id', $comprapendiente->id)->where('sucursal',$wo['user']['sucursal'])->delete(T_COMPRAS);
+            $db->where('id', $comprapendiente['id'])->where('sucursal',$wo['user']['sucursal'])->delete(T_COMPRAS);
             $data = array(
                 'status' => 200
             );
@@ -290,11 +290,11 @@ if ($f == "comprar_producto_a") {
                     'estado' => 1,
                     'anulado' => 1
                 );
-                $db->where('id',$comprapendiente->id)
+                $db->where('id',$comprapendiente['id'])
                     ->where('completado', '2')
                     ->update(T_COMPRAS, $dataarrayd);
                 
-                $db->where('id_comprobante',$comprapendiente->id)
+                $db->where('id_comprobante',$comprapendiente['id'])
                     ->where('estado', '2')
                     ->where('id_sucursal',$wo['user']['sucursal'])
                     ->update('imventario', $inventarios);
@@ -317,7 +317,7 @@ if ($f == "comprar_producto_a") {
                 $comprobante_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('sucursal',$wo['user']['sucursal'])->getOne(T_COMPRAS);
                 //$dataarray = array('proveedor' => $_POST['prov'],'numero_documento' => null,'proveedor_sucursal' => null);
                 $dataarray = array('proveedor' => $_POST['prov'],'proveedor_sucursal' => null);
-                $db->where('user_id',$comprobante_user->user_id)->where('completado', '0')->where('sucursal',$wo['user']['sucursal'])->update(T_COMPRAS, $dataarray);
+                $db->where('user_id',$comprobante_user['user_id'])->where('completado', '0')->where('sucursal',$wo['user']['sucursal'])->update(T_COMPRAS, $dataarray);
                 $data['status'] = 200;
                 $data['message'] = '';
             }else{
@@ -338,7 +338,7 @@ if ($f == "comprar_producto_a") {
         if($comprapendiente) {
             $comprobante_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('sucursal',$wo['user']['sucursal'])->getOne(T_COMPRAS);
             $dataarray = array('proveedor_sucursal' => $_POST['prov']);
-            $db->where('user_id',$comprobante_user->user_id)->where('completado', '0')->where('sucursal',$wo['user']['sucursal'])->update(T_COMPRAS, $dataarray);
+            $db->where('user_id',$comprobante_user['user_id'])->where('completado', '0')->where('sucursal',$wo['user']['sucursal'])->update(T_COMPRAS, $dataarray);
                 
             $data['status'] = 200;
             $data['message'] = '';
@@ -356,7 +356,7 @@ if ($f == "comprar_producto_a") {
         if($comprapendiente) {
             $comprobante_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('sucursal',$wo['user']['sucursal'])->getOne(T_COMPRAS);
             $dataarray = array('numero_documento' => $_POST['docnum']);
-            $db->where('user_id',$comprobante_user->user_id)->where('completado', '0')->where('sucursal',$wo['user']['sucursal'])->update(T_COMPRAS, $dataarray);
+            $db->where('user_id',$comprobante_user['user_id'])->where('completado', '0')->where('sucursal',$wo['user']['sucursal'])->update(T_COMPRAS, $dataarray);
                 
             $data['status'] = 200;
             $data['message'] = '';
@@ -374,7 +374,7 @@ if ($f == "comprar_producto_a") {
         if($comprapendiente) {
             $comprobante_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('sucursal',$wo['user']['sucursal'])->getOne(T_COMPRAS);
             $dataarray = array('guia' => $_POST['guia'],'numero_guia' => null);
-            $db->where('user_id',$comprobante_user->user_id)->where('completado', '0')->where('sucursal',$wo['user']['sucursal'])->update(T_COMPRAS, $dataarray);
+            $db->where('user_id',$comprobante_user['user_id'])->where('completado', '0')->where('sucursal',$wo['user']['sucursal'])->update(T_COMPRAS, $dataarray);
                 
             $data['status'] = 200;
             $data['message'] = '';
@@ -392,7 +392,7 @@ if ($f == "comprar_producto_a") {
         if($comprapendiente) {
             $comprobante_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('sucursal',$wo['user']['sucursal'])->getOne(T_COMPRAS);
             $dataarray = array('numero_guia' => $_POST['docnum']);
-            $db->where('user_id',$comprobante_user->user_id)->where('completado', '0')->where('sucursal',$wo['user']['sucursal'])->update(T_COMPRAS, $dataarray);
+            $db->where('user_id',$comprobante_user['user_id'])->where('completado', '0')->where('sucursal',$wo['user']['sucursal'])->update(T_COMPRAS, $dataarray);
                 
             $data['status'] = 200;
             $data['message'] = '';
@@ -412,7 +412,7 @@ if ($f == "comprar_producto_a") {
 		if (!empty($_POST['comprobante'])){
 			$comprobante_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('sucursal',$wo['user']['sucursal'])->getOne(T_COMPRAS);
 
-			if (!empty($comprobante_user) && ($comprobante_user->user_id == $wo['user']['user_id'] || IsAdmin())) {
+			if (!empty($comprobante_user) && ($comprobante_user['user_id'] == $wo['user']['user_id'] || IsAdmin())) {
 				if ($_POST['comprobante']=='boleta_simple') {
                     $cant_ventas = $db->where('documento', 'BS')->where('completado', '1')->where('sucursal',$wo['user']['sucursal'])->getValue(T_COMPRAS, 'COUNT(*)');
                     if($cant_ventas > 0){
@@ -423,7 +423,7 @@ if ($f == "comprar_producto_a") {
 
                     $lastGroupNumberRow = $db->orderBy('numero_documento', 'desc')->where('documento','BS')->getOne(T_COMPRAS, 'numero_documento');
                     if($lastGroupNumberRow){
-                        $lastGroupNumber = $lastGroupNumberRow->numero_documento;
+                        $lastGroupNumber = $lastGroupNumberRow['numero_documento'];
                     } else{
                         $lastGroupNumber = null;
                     }
@@ -432,7 +432,7 @@ if ($f == "comprar_producto_a") {
                     } else{
                         $sameIdentifierProducts = $db->where('numero_documento','')->where('documento','BS')->get(T_COMPRAS);
                         if($sameIdentifierProducts) {
-                            $nextGroupNumber = $sameIdentifierProducts[0]->numero_documento;
+                            $nextGroupNumber = $sameIdentifierProducts[0]['numero_documento'];
                         }else{
                             $nextGroupNumber = $lastGroupNumber + 1;
                         }
@@ -448,7 +448,7 @@ if ($f == "comprar_producto_a") {
 
                     $lastGroupNumberRow = $db->orderBy('numero_documento', 'desc')->where('documento','B')->getOne(T_COMPRAS, 'numero_documento');
                     if($lastGroupNumberRow){
-                        $lastGroupNumber = $lastGroupNumberRow->numero_documento;
+                        $lastGroupNumber = $lastGroupNumberRow['numero_documento'];
                     } else{
                         $lastGroupNumber = null;
                     }
@@ -457,7 +457,7 @@ if ($f == "comprar_producto_a") {
                     } else{
                         $sameIdentifierProducts = $db->where('numero_documento','')->where('documento','B')->get(T_COMPRAS);
                         if($sameIdentifierProducts) {
-                            $nextGroupNumber = $sameIdentifierProducts[0]->numero_documento;
+                            $nextGroupNumber = $sameIdentifierProducts[0]['numero_documento'];
                         }else{
                             $nextGroupNumber = $lastGroupNumber + 1;
                         }
@@ -474,7 +474,7 @@ if ($f == "comprar_producto_a") {
 
                     $lastGroupNumberRow = $db->orderBy('numero_documento', 'desc')->where('documento','F')->getOne(T_COMPRAS, 'numero_documento');
                     if($lastGroupNumberRow){
-                        $lastGroupNumber = $lastGroupNumberRow->numero_documento;
+                        $lastGroupNumber = $lastGroupNumberRow['numero_documento'];
                     } else{
                         $lastGroupNumber = null;
                     }
@@ -483,7 +483,7 @@ if ($f == "comprar_producto_a") {
                     } else{
                         $sameIdentifierProducts = $db->where('numero_documento','')->where('documento','F')->get(T_COMPRAS);
                         if($sameIdentifierProducts) {
-                            $nextGroupNumber = $sameIdentifierProducts[0]->numero_documento;
+                            $nextGroupNumber = $sameIdentifierProducts[0]['numero_documento'];
                         }else{
                             $nextGroupNumber = $lastGroupNumber + 1;
                         }
@@ -491,7 +491,7 @@ if ($f == "comprar_producto_a") {
                     $dataarray = array('documento' => 'F', 'num_doc' => $numeroventa, 'numero_documento' => $nextGroupNumber);
                 }
 
-				$db->where('user_id',$comprobante_user->user_id)->where('completado', '0')->where('sucursal',$wo['user']['sucursal'])->update('compras', $dataarray);
+				$db->where('user_id',$comprobante_user['user_id'])->where('completado', '0')->where('sucursal',$wo['user']['sucursal'])->update('compras', $dataarray);
 
 
 				$data['status'] = 200;
@@ -534,16 +534,16 @@ if ($f == "comprar_producto_a") {
                 );
 
                 // Construye la consulta usando MysqliDb
-                $db->where('user_id', $comprobante_user->user_id)
+                $db->where('user_id', $comprobante_user['user_id'])
                    ->where('completado', '0')
                    ->where('sucursal', $wo['user']['sucursal'])
                    ->update(T_COMPRAS, $dataArray);
 
                 $orden_pendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('sucursal',$wo['user']['sucursal'])->getOne(T_COMPRAS);
-                if($orden_pendiente->garantia_m == 0) {
+                if($orden_pendiente['garantia_m'] == 0) {
                     $end_date_de_garantia = false;
                 }else{
-                    $end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($orden_pendiente->garantia);
+                    $end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($orden_pendiente['garantia']);
                 }
 
                 $data = array(
@@ -560,7 +560,7 @@ if ($f == "comprar_producto_a") {
                 'garantia' => null,
                 'garantia_m' => 0
             );
-            $db->where('user_id', $comprobante_user->user_id)
+            $db->where('user_id', $comprobante_user['user_id'])
                ->where('completado', '0')
                ->where('sucursal', $wo['user']['sucursal'])
                ->update(T_COMPRAS, $dataArrayv);
@@ -593,18 +593,18 @@ if ($f == "comprar_producto_a") {
                                    ->getOne(T_COMPRAS);
 
             // Verificar si hay una compra pendiente
-            $pendiente_proda = $db->where('id_comprobante',$comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario', 'COUNT(*)');
+            $pendiente_proda = $db->where('id_comprobante',$comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario', 'COUNT(*)');
             if (!empty($comprapendiente)) {
-                if($comprapendiente->numero_documento==''){
+                if($comprapendiente['numero_documento']==''){
                     $data['status'] = 400;
                     $data['message'] = 'Numero de documento no valido';
-                }elseif($comprapendiente->proveedor=='') {
+                }elseif($comprapendiente['proveedor']=='') {
                     $data['status'] = 400;
                     $data['message'] = 'Selecciona un proveedor';
-                }elseif($comprapendiente->proveedor_sucursal=='') {
+                }elseif($comprapendiente['proveedor_sucursal']=='') {
                     $data['status'] = 400;
                     $data['message'] = 'Selecciona el sucursal del proveedor';
-                }elseif($comprapendiente->garantia_m=='') {
+                }elseif($comprapendiente['garantia_m']=='') {
                     $data['status'] = 400;
                     $data['message'] = 'No se establecio el tiempo de garantia para la compra.';
                 }elseif($pendiente_proda == 0) {
@@ -624,10 +624,10 @@ if ($f == "comprar_producto_a") {
                             'estado' => 1,
                             'fecha'  => $nueva_fecha
                         );
-                        $db->where('id',$comprapendiente->id)
+                        $db->where('id',$comprapendiente['id'])
                            ->update(T_COMPRAS, $dataarrayd);
                         
-                        $db->where('id_comprobante',$comprapendiente->id)
+                        $db->where('id_comprobante',$comprapendiente['id'])
                            ->where('estado', '0')
                            ->where('id_sucursal',$wo['user']['sucursal'])
                            ->update('imventario', $inventarios);
@@ -644,10 +644,10 @@ if ($f == "comprar_producto_a") {
                             'estado' => 2,
                             'fecha'  => $nueva_fecha
                         );
-                        $db->where('id',$comprapendiente->id)
+                        $db->where('id',$comprapendiente['id'])
                            ->update(T_COMPRAS, $dataarrayd);
                         
-                        $db->where('id_comprobante',$comprapendiente->id)
+                        $db->where('id_comprobante',$comprapendiente['id'])
                            ->where('estado', '0')
                            ->where('id_sucursal',$wo['user']['sucursal'])
                            ->update('imventario', $inventarios);
@@ -687,10 +687,10 @@ if ($f == "comprar_producto_a") {
                         $data['status'] = 400;
                     }else{
                         $comprapendiente2 = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','2')->where('sucursal',$wo['user']['sucursal'])->getOne(T_COMPRAS);
-                        if (isset($comprapendiente2->completado)) {
+                        if (isset($comprapendiente2['completado'])) {
                             $c_selec_b = $db->where('id', $banco_select)->where('estado',1)->getOne("cuentas_corrientes");
-                            $indexdefault_currency = array_search($comprapendiente2->currency, array_column($wo['currencies'], 'text'));
-                            $indexdefault_currenns = array_search($c_selec_b->moneda, array_column($wo['currencies'], 'text'));
+                            $indexdefault_currency = array_search($comprapendiente2['currency'], array_column($wo['currencies'], 'text'));
+                            $indexdefault_currenns = array_search($c_selec_b['moneda'], array_column($wo['currencies'], 'text'));
                             
 
                             $moneda_seleccionado_de_compra = (!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : '';
@@ -698,9 +698,9 @@ if ($f == "comprar_producto_a") {
                             if ($moneda_seleccionado_de_compra == $moneda_seleccionado_de_banco) {
                                 $total_productos_lista = 0;
                                 $total_productos_price = 0;
-                                $total_productos_lista = $db->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente2->id)->getValue('imventario','COUNT(*)');
+                                $total_productos_lista = $db->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente2['id'])->getValue('imventario','COUNT(*)');
                                 if ($total_productos_lista>0) {
-                                    $total_productos_price = $db->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente2->id)->getValue('imventario','SUM(precio)');
+                                    $total_productos_price = $db->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente2['id'])->getValue('imventario','SUM(precio)');
                                 }
                                 if ($cantida_dinero >= $total_productos_price) {
                                     $fechaHora = date("Y-m-d H:i:s");
@@ -721,7 +721,7 @@ if ($f == "comprar_producto_a") {
                                         'estado'              => 1,
                                         'numero_operacion'    => $numero_de_op,
                                         'linea'               => 2,
-                                        'documento'           => $comprapendiente2->id
+                                        'documento'           => $comprapendiente2['id']
                                     );
 
                                     $db->insert('cuentas_corrientes_transactions', $dataarrayinline);
@@ -741,10 +741,10 @@ if ($f == "comprar_producto_a") {
                                     $inventarios = array(
                                         'estado' => 1,
                                     );
-                                    $db->where('id',$comprapendiente2->id)
+                                    $db->where('id',$comprapendiente2['id'])
                                        ->update(T_COMPRAS, $dataarrayd);
                                     
-                                    $db->where('id_comprobante',$comprapendiente2->id)
+                                    $db->where('id_comprobante',$comprapendiente2['id'])
                                        ->where('estado', '2')
                                        ->update('imventario', $inventarios);
 
@@ -782,11 +782,11 @@ if ($f == "comprar_producto_a") {
             if (!empty($_POST['hash'])) {
                 $documento_ver = $_POST['compralines'];
                 $compraview = $db->where('completado','1')->where('id',$documento_ver)->getOne(T_COMPRAS);
-                if ($compraview->documento=='B') {
+                if ($compraview['documento']=='B') {
                     $data['title'] = 'BOLETA';
-                }elseif ($compraview->documento=='BS') {
+                }elseif ($compraview['documento']=='BS') {
                     $data['title'] = 'NOTA SIMPLE';
-                }elseif ($compraview->documento=='F') {
+                }elseif ($compraview['documento']=='F') {
                     $data['title'] = 'FACTURA';
                 }else{
                     $data['title'] = 'ERROR';
@@ -802,6 +802,212 @@ if ($f == "comprar_producto_a") {
         echo json_encode($data);
         exit();
     }
+
+    if ($s == 'new_cash'){
+        $fecha = time();
+        $usuario_b = $wo['user']['user_id'];
+        $sucursal_actual = $wo['user']['sucursal'];
+        $comprapendiente = $db->where('step','0')->where('sucursal',$wo['user']['sucursal'])->getOne(T_CASH);
+        if(empty($comprapendiente)) {
+            $query  = mysqli_query($sqlConnect, " INSERT INTO " .T_CASH. " (`sucursal`,`fecha`) VALUES ('{$sucursal_actual}' ,'{$fecha}') ");
+                if ($query) {
+                    $data = array(
+                        'status' => 200
+                    );
+                } else {
+                    $data['status']  = 400;
+                    $data['message'] = 'Por favor comprueba tus detalles';
+                }
+
+        }else{
+            $data['status']  = 400;
+            $data['message'] = 'Por favor comprueba tus detalles';
+        }
+
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
+    if ($s == 'new_turno'){
+        $nombre = $_POST['nombre'];
+        if (empty($nombre)) {
+            $data['status']  = 400;
+            $data['message'] = 'Por favor comprueba tus detalles';
+        }else{
+            $sucursal_actual = $wo['user']['sucursal'];
+            $query  = mysqli_query($sqlConnect, " INSERT INTO " .T_TURNOS. " (`nombre`,`sucursal`) VALUES ('{$nombre}','{$sucursal_actual}') ");
+            if ($query) {
+                $data = array(
+                    'status' => 200
+                );
+            } else {
+                $data['status']  = 400;
+                $data['message'] = 'Por favor comprueba tus detalles';
+            }
+        }
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+    if ($s == 'update_cash'){
+        $nombre = $_POST['nombre'];
+        if (empty($nombre)) {
+            $data['status']  = 400;
+            $data['message'] = 'Por favor comprueba tus detalles';
+        }else{
+            $cash_new = $db->where('step','0')->where('sucursal',$wo['user']['sucursal'])->getOne(T_CASH);
+            $dataarray = array(
+                'nombre' => $nombre,
+                'step'   => 1
+            );
+            $db->where('id', $cash_new['id'])->where('sucursal',$wo['user']['sucursal'])->update(T_CASH, $dataarray);
+            $data['status']  = 200;
+        }
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
+    if ($s == 'update_turno'){
+        $id = $_POST['ide'];
+        $nombre = $_POST['nombre'];
+        if (empty($nombre)) {
+            $data['status']  = 400;
+            $data['message'] = 'Por favor comprueba tus detalles';
+        }else{
+            $dataarray = array('nombre' => $nombre);
+            $db->where('id', $id)->where('sucursal',$wo['user']['sucursal'])->update(T_TURNOS, $dataarray);
+            $data['status']  = 200;
+        }
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
+    if ($s == 'delete_turno'){
+        $id = $_POST['ide'];
+        if (empty($id)) {
+            $data['status']  = 400;
+            $data['message'] = 'Por favor comprueba tus detalles';
+        }else{
+            $db->where('id', $id)->where('sucursal',$wo['user']['sucursal'])->delete(T_TURNOS);
+            $data['status']  = 200;
+        }
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
+    if ($s == 'turnos'){
+        $turno = $_POST['turns'];
+        if (empty($turno)) {
+            $data['status']  = 400;
+            $data['message'] = 'Por favor comprueba tus detalles';
+        }else{
+            $data['status']  = 200;
+            $dataarray = array('turno' => $turno);
+            $db->where('step', '0')->where('sucursal',$wo['user']['sucursal'])->update(T_CASH, $dataarray);
+        }
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
+    if ($s == 'open_new_cash'){
+        if (empty($_GET['hash'])) {
+            $data['status']  = 400;
+            $data['message'] = 'Por favor comprueba tus detalles';
+        }else{
+            $cash_inicial = $db->where('id',$_POST['cash'])->where('estado','CERRADO')->getOne(T_CASH);
+            if ($cash_inicial) {
+                $dataarray = array(
+                    'estado' => 'ABIERTO'
+                );
+                $db->where('id',$_POST['cash'])->where('estado', 'CERRADO')->update(T_CASH, $dataarray);
+                $data['status']  = 200;
+            }else{
+                $data['status']  = 400;
+                $data['message'] = 'Por favor comprueba tus detalles';
+            }
+            
+        }
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
+    if ($s == 'view_new_cash'){
+        if (empty($_GET['hash'])) {
+            $data['status']  = 400;
+            $data['message'] = 'Por favor comprueba tus detalles';
+        }else{
+            $cash_inicial = $db->where('id',$_POST['cash'])->where('open_cash','0')->getOne(T_CASH);
+            if ($cash_inicial) {
+                $dataarray = array(
+                    'open_cash' => 1
+                );
+                $db->where('id',$_POST['cash'])->where('open_cash', '0')->update(T_CASH, $dataarray);
+                $data['status']  = 200;
+            }else{
+                $data['status']  = 400;
+                $data['message'] = 'Por favor comprueba tus detalles';
+            }
+            
+        }
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
+    if ($s == 'exit_cash'){
+        if (empty($_GET['hash'])) {
+            $data['status']  = 400;
+            $data['message'] = 'Por favor comprueba tus detalles';
+        }else{
+            $cash_inicial = $db->where('id',$_POST['cash'])->where('open_cash','1')->getOne(T_CASH);
+            if ($cash_inicial) {
+                $dataarray = array(
+                    'open_cash' => 0
+                );
+                $db->where('id',$_POST['cash'])->where('open_cash', '1')->update(T_CASH, $dataarray);
+                $data['status']  = 200;
+            }else{
+                $data['status']  = 400;
+                $data['message'] = 'Por favor comprueba tus detalles';
+            }
+            
+        }
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
+    if ($s == 'selected_cashs_pos'){
+        if (empty($_GET['hash'])) {
+            $data['status']  = 400;
+            $data['message'] = 'Por favor comprueba tus detalles';
+        }else{
+            $comprapendiente = $db->where('estado_venta',5)->where('id_del_vendedor',lui_Secure($wo['user']['user_id']))->where('completado','2')->getOne(T_VENTAS);
+            if ($comprapendiente) {
+                $dataarray = array(
+                    'caja' => $_POST['cash']
+                );
+                $db->where('estado_venta',5)->where('completado', '2')->update(T_VENTAS, $dataarray);
+                $data['status']  = 200;
+            }else{
+                $data['status']  = 400;
+                $data['message'] = 'Por favor comprueba tus detalles';
+            }
+            
+        }
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
+
+
+    
 }
 
  

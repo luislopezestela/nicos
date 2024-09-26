@@ -2,25 +2,29 @@
 $anulados = '';
 $total_productos_price = 0.00;
 $total_productos_price_por_moneda = 0.00;
-if($wo['comprass']->anulado==1) {
+if($wo['comprass']['anulado']==1) {
 	$anulados = "table-row--red";
 }
-if($wo['comprass']->anulado==1) {
+if($wo['comprass']['anulado']==1) {
     $cantidad_de_carantia_text = '<p style="color:#dc2121;font-weight:bold;text-transform:uppercase;letter-spacing:3px;" class="table-row__policy">Anulado</p>';
-    $cantidad_de_carantia = '<p class="table-row__policy">'.date('Y-m-d',strtotime($wo['comprass']->fecha_anulado)).'</p>';
+    $cantidad_de_carantia = '<p class="table-row__policy">'.date('Y-m-d',strtotime($wo['comprass']['fecha_anulado'])).'</p>';
 }else{
     $cantidad_de_carantia_text = false;
     $cantidad_de_carantia = false;
 }
 
-$proveedor = $db->where('id', $wo['comprass']->proveedor)->getOne("lui_proveedores");
-$fecha = false;
-if(!empty($wo['comprass']->fecha)){
-	$fecha = date("Y-m-d", strtotime($wo['comprass']->fecha));
+$proveedor = $db->where('id', $wo['comprass']['proveedor'])->getOne("lui_proveedores");
+$fechaped = false;
+if(!empty($wo['comprass']['time'])){
+	$fechaped = date("Y-m-d", $wo['comprass']['time']);
 }
-$estadodeventa = estadodeventaVendedor($wo['comprass']->estado_venta);
-$data_hash_ids = $wo['comprass']->hash_id;
-if ($wo['comprass']->estado_venta==0) {
+$fecha = false;
+if(!empty($wo['comprass']['fecha'])){
+    $fecha = date("Y-m-d", strtotime($wo['comprass']['fecha']));
+}
+$estadodeventa = estadodeventaVendedor($wo['comprass']['estado_venta']);
+$data_hash_ids = $wo['comprass']['hash_id'];
+if ($wo['comprass']['estado_venta']==0) {
     $ventas_actions = 'onclick="changue_order_page(`'.$data_hash_ids.'`);"';
 }else{
     $ventas_actions = '';
@@ -28,36 +32,33 @@ if ($wo['comprass']->estado_venta==0) {
 
 ?>
 <?php $verificar_pedido = $db->where('estado_venta',1)->where('id_del_vendedor',$wo['user']['user_id'])->getOne(T_VENTAS); ?>
-<?php if ($verificar_pedido): ?>
-    si hay 
-<?php else: ?>
-    no hay
-<?php endif ?>
-<div class="pedido" data-orders-id="<?php echo $wo['comprass']->id; ?>">
-    <a <?=$ventas_actions;?> href="<?php echo lui_SeoLink('index.php?link1=order&id='.$wo['comprass']->hash_id); ?>" data-ajax="<?php echo ('?link1=order&id='.$wo['comprass']->hash_id); ?>">
+
+<div class="pedido" data-orders-id="<?php echo $wo['comprass']['id']; ?>">
+    <a <?=$ventas_actions;?> href="<?php echo lui_SeoLink('index.php?link1=order&id='.$wo['comprass']['hash_id']); ?>" data-ajax="<?php echo ('?link1=order&id='.$wo['comprass']['hash_id']); ?>">
         <div class="pedido-header">
-            <h1 class="id">#<?php echo $wo['comprass']->hash_id; ?></h1>
-            <p><strong>Fecha:</strong> <?=$fecha;?></p>
+            <h1 class="id">#<?php echo $wo['comprass']['hash_id']; ?></h1>
+            <p><strong>Fecha de pedido:</strong> <?=$fechaped;?></p>
+            <p><strong>Fecha entrega:</strong> <?=$fecha;?></p>
             <p><strong>Estado:</strong> <span style="color:<?=$estadodeventa['background'];?>"><?=$estadodeventa['estado_ventas'];?></span></p>
         </div>
         <div class="pedido-items">
-            <?php $wo['eninventario'] = $db->where('id_sucursal', $wo['user']['sucursal'])->where('id_comprobante_v',$wo['order']->id)->orderBy('id', 'DESC')->groupBy('atributo')->get('imventario');?>
+            <?php $wo['eninventario'] = $db->where('id_sucursal', $wo['user']['sucursal'])->where('id_comprobante_v',$wo['order']['id'])->orderBy('id', 'DESC')->groupBy('atributo')->get('imventario');?>
             <?php if (!empty($wo['eninventario'])): ?>
                 <p class="producto-nombre">
                     <?php foreach ($wo['eninventario'] as $key2 => $wo['order_inv']): ?>
-                        <?php $wo['product'] = $db->where('id', $wo['order_inv']->producto)->getOne(T_PRODUCTS, array('name')); ?>
-                        <?=$wo['product']->name;?>,
+                        <?php $wo['product'] = $db->where('id', $wo['order_inv']['producto'])->getOne(T_PRODUCTS, array('name')); ?>
+                        <?=$wo['product']['name'];?>,
                     <?php endforeach ?>
                 </p>
             <?php endif ?>
         </div>
-        <?php $cantidad_prod_por_moneda = $db->where('id_comprobante_v', $wo['comprass']->id)->where('estado', '2')->where('id_sucursal',$wo['user']['sucursal'])->groupBy('currency')->get('imventario') ?>
+        <?php $cantidad_prod_por_moneda = $db->where('id_comprobante_v', $wo['comprass']['id'])->where('estado', '2')->where('id_sucursal',$wo['user']['sucursal'])->groupBy('currency')->get('imventario') ?>
         <?php foreach ($cantidad_prod_por_moneda as $cantidades): ?>
-            <?php $total_productos_por_moneda = $db->where('id_comprobante_v',$wo['comprass']->id)->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->where('currency',$cantidades->currency)->getValue('imventario','COUNT(*)');
+            <?php $total_productos_por_moneda = $db->where('id_comprobante_v',$wo['comprass']['id'])->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->where('currency',$cantidades['currency'])->getValue('imventario','COUNT(*)');
                 if ($total_productos_por_moneda>0) {
-                    $total_productos_price_por_moneda = $db->where('id_comprobante_v',$wo['comprass']->id)->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->where('currency',$cantidades->currency)->getValue('imventario','SUM(precio)');
+                    $total_productos_price_por_moneda = $db->where('id_comprobante_v',$wo['comprass']['id'])->where('estado','2')->where('id_sucursal',$wo['user']['sucursal'])->where('currency',$cantidades['currency'])->getValue('imventario','SUM(precio)');
                 }
-                $indexdefault_currency = array_search($cantidades->currency, array_column($wo['currencies'], 'text'));
+                $indexdefault_currency = array_search($cantidades['currency'], array_column($wo['currencies'], 'text'));
                 $monedaf_s = (!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['text'] : '';
                 $monedaf = (!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : '';
             ?>

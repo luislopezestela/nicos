@@ -27,6 +27,7 @@ $pages_array = array(
 	'cuentas',
 	'ventas',
 	'pos',
+	'caja',
   'my-blogs',
   'my-products',
   'purchased',
@@ -37,6 +38,7 @@ $pages_array = array(
   'imv_ingredientes',
   'new-product',
   'orders',
+  'order',
   'edit-product'
 );
 if (!empty($_GET['link1'])) {
@@ -45,6 +47,7 @@ if (!empty($_GET['link1'])) {
    }
 }
 $wo['sucursales'] = lui_GetSucursalesTypes('');
+$cashregister = false;
 ?>
 <style type="text/css">
 	
@@ -99,7 +102,7 @@ $wo['sucursales'] = lui_GetSucursalesTypes('');
 .wow_sett_sidebar > ul > li > a span:before{content:'';position:absolute;top:0;right:0;bottom:0;left:0;opacity:0.1;border-radius:50%;}
 .wow_sett_sidebar > ul > li > a span svg, .wow_sett_sidebar > ul > li > a span img{position:relative;height:24px;width:24px;padding:0;border-radius:0;margin:auto;background:transparent;vertical-align:middle;}
 .wow_sett_sidebar > ul > li > a:hover, .wow_sett_sidebar .wow_sett_submenu > ul li a:hover{background-color:rgba(158,158,158,0.05);}
-.wow_sett_sidebar > ul > li.active > a{color:currentColor;font-weight:bold;background-color:rgb(0 0 0 / 4%);box-shadow:inset -3px 0px currentColor;}
+.wow_sett_sidebar > ul > li.actives > a,.wow_sett_sidebar > ul > li.active > a{color:currentColor;font-weight:bold;background-color:rgb(0 0 0 / 4%);box-shadow:inset -3px 0px currentColor;}
 .wow_sett_sidebar > ul > .tiendas.active{border:0.5rem solid #99cbff;}
 .wow_sett_sidebar > ul > li.mywallet.active > a{color:#3498db;box-shadow:inset -3px 0px #3498db;}
 .wow_sett_sidebar > ul > li.cuentas.active > a{color:#6c5ce7;box-shadow:inset -3px 0px #6c5ce7;}
@@ -110,8 +113,10 @@ $wo['sucursales'] = lui_GetSucursalesTypes('');
 .wow_sett_sidebar > ul > li.myqr_tienda.active > a {color:#9b59b6;box-shadow: inset -3px 0px #9b59b6;}
 .wow_sett_sidebar > ul > li.imventarios.active > a {color:#2ecc71;box-shadow: inset -3px 0px #2ecc71;}
 .wow_sett_sidebar > ul > li.ventas.active > a {color:#3498db;box-shadow: inset -3px 0px #3498db;}
+.wow_sett_sidebar > ul > li.caja.actives > a {color:#2ecc71;box-shadow: inset -3px 0px #2ecc71;}
 .wow_sett_sidebar > ul > li.orders.active > a {color:#3498db;box-shadow: inset -3px 0px #3498db;}
 .wow_sett_sidebar > ul > li.active > a svg{fill:currentColor;}
+.wow_sett_sidebar > ul > li.actives > a svg{fill:none;}
 .des_set_act_menu{display:none!important;}
 .desl_dider_d_menu{width:100%!important;}
 @media (min-width: 992px){
@@ -146,8 +151,8 @@ $wo['sucursales'] = lui_GetSucursalesTypes('');
 								<span><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="16" width="18" viewBox="0 0 576 512"><path d="M547.6 103.8L490.3 13.1C485.2 5 476.1 0 466.4 0H109.6C99.9 0 90.8 5 85.7 13.1L28.3 103.8c-29.6 46.8-3.4 111.9 51.9 119.4c4 .5 8.1 .8 12.1 .8c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.2 0 49.3-11.4 65.2-29c16 17.6 39.1 29 65.2 29c4.1 0 8.1-.3 12.1-.8c55.5-7.4 81.8-72.5 52.1-119.4zM499.7 254.9l-.1 0c-5.3 .7-10.7 1.1-16.2 1.1c-12.4 0-24.3-1.9-35.4-5.3V384H128V250.6c-11.2 3.5-23.2 5.4-35.6 5.4c-5.5 0-11-.4-16.3-1.1l-.1 0c-4.1-.6-8.1-1.3-12-2.3V384v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V384 252.6c-4 1-8 1.8-12.3 2.3z"/></svg></span>
 								<div class="detalles_tiendas_layshane">
 									<?php if (isset($sucursal)): ?>
-										<h3><?=$sucursal->nombre;?></h3>
-										<p><?=$sucursal->direccion;?></p>
+										<h3><?=$sucursal['nombre'];?></h3>
+										<p><?=$sucursal['direccion'];?></p>
 									<?php else: ?>
 										<p>Selecciona otra tienda.</p>
 									<?php endif ?>
@@ -214,6 +219,46 @@ $wo['sucursales'] = lui_GetSucursalesTypes('');
 						<?php endif ?>
 					<?php endif ?>
 					<?php if (lui_IsAdmin() || lui_IsModerator()): ?>
+					<li class="caja <?php echo ($wo['paginas_sidebar'] == 'caja') ? 'actives': '';?>">
+						<a href="<?=lui_SeoLink('index.php?link1=caja');?>" data-ajax="?link1=caja">
+							<?php if ($cashregister): ?>
+								<span style="color:rgba(231, 76, 60,1.0);">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+										<path d="M2.5 17.5C2.5 19.3856 2.5 20.3284 3.08579 20.9142C3.67157 21.5 4.61438 21.5 6.5 21.5H17.5C19.3856 21.5 20.3284 21.5 20.9142 20.9142C21.5 20.3284 21.5 19.3856 21.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+										    <animate attributeName="stroke-dasharray" from="0,100" to="100,0" dur="2s" fill="freeze" />
+										</path>
+										<path d="M10 19.5H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+										    <animate attributeName="stroke-dasharray" from="0,100" to="100,0" dur="2s" fill="freeze" begin="0.5s" />
+										</path>
+										<path d="M16.5 5.5V8.5M15 5.5H18C18.4659 5.5 18.6989 5.5 18.8827 5.42388C19.1277 5.32239 19.3224 5.12771 19.4239 4.88268C19.5 4.69891 19.5 4.46594 19.5 4C19.5 3.53406 19.5 3.30109 19.4239 3.11732C19.3224 2.87229 19.1277 2.67761 18.8827 2.57612C18.6989 2.5 18.4659 2.5 18 2.5H15C14.5341 2.5 14.3011 2.5 14.1173 2.57612C13.8723 2.67761 13.6776 2.87229 13.5761 3.11732C13.5 3.30109 13.5 3.53406 13.5 4C13.5 4.46594 13.5 4.69891 13.5761 4.88268C13.6776 5.12771 13.8723 5.32239 14.1173 5.42388C14.3011 5.5 14.5341 5.5 15 5.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+										    <animate attributeName="stroke-dasharray" from="0,100" to="100,0" dur="2s" fill="freeze" begin="1s" />
+										</path>
+										<path d="M21.5 17.5H2.5L3.80394 11.6323C4.13763 10.1306 4.30448 9.37983 4.85289 8.93992C5.4013 8.5 6.17043 8.5 7.70869 8.5H16.2913C17.8296 8.5 18.5987 8.5 19.1471 8.93992C19.6955 9.37983 19.8624 10.1306 20.1961 11.6323L21.5 17.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+										    <animate attributeName="stroke-dasharray" from="0,100" to="100,0" dur="2s" fill="freeze" begin="1.5s" />
+										</path>
+										<path d="M7.5 11.5H8M11.75 11.5H12.25M16 11.5H16.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+										    <animate attributeName="stroke-dasharray" from="0,100" to="100,0" dur="2s" fill="freeze" begin="2s" />
+										</path>
+										<path d="M7.5 14.5H8M11.75 14.5H12.25M16 14.5H16.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+										    <animate attributeName="stroke-dasharray" from="0,100" to="100,0" dur="2s" fill="freeze" begin="2.5s" />
+										</path>
+									</svg>
+								</span>
+							<?php else: ?>
+								<span style="color:rgba(46, 204, 113,1.0);">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+									    <path d="M2.5 17.5C2.5 19.3856 2.5 20.3284 3.08579 20.9142C3.67157 21.5 4.61438 21.5 6.5 21.5H17.5C19.3856 21.5 20.3284 21.5 20.9142 20.9142C21.5 20.3284 21.5 19.3856 21.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+									    <path d="M10 19.5H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+									    <path d="M16.5 5.5V8.5M15 5.5H18C18.4659 5.5 18.6989 5.5 18.8827 5.42388C19.1277 5.32239 19.3224 5.12771 19.4239 4.88268C19.5 4.69891 19.5 4.46594 19.5 4C19.5 3.53406 19.5 3.30109 19.4239 3.11732C19.3224 2.87229 19.1277 2.67761 18.8827 2.57612C18.6989 2.5 18.4659 2.5 18 2.5H15C14.5341 2.5 14.3011 2.5 14.1173 2.57612C13.8723 2.67761 13.6776 2.87229 13.5761 3.11732C13.5 3.30109 13.5 3.53406 13.5 4C13.5 4.46594 13.5 4.69891 13.5761 4.88268C13.6776 5.12771 13.8723 5.32239 14.1173 5.42388C14.3011 5.5 14.5341 5.5 15 5.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+									    <path d="M21.5 17.5H2.5L3.80394 11.6323C4.13763 10.1306 4.30448 9.37983 4.85289 8.93992C5.4013 8.5 6.17043 8.5 7.70869 8.5H16.2913C17.8296 8.5 18.5987 8.5 19.1471 8.93992C19.6955 9.37983 19.8624 10.1306 20.1961 11.6323L21.5 17.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+									    <path d="M7.5 11.5H8M11.75 11.5H12.25M16 11.5H16.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+									    <path d="M7.5 14.5H8M11.75 14.5H12.25M16 14.5H16.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+									</svg>
+								</span>
+							<?php endif ?>
+							Caja
+						</a>
+					</li>
 					<li class="pos <?php echo ($wo['paginas_sidebar'] == 'pos') ? 'active': '';?>">
 						<a href="<?=lui_SeoLink('index.php?link1=pos');?>" data-ajax="?link1=pos">
 							<span style="color:#3498db;">
@@ -225,7 +270,13 @@ $wo['sucursales'] = lui_GetSucursalesTypes('');
 					<li class="ventas <?php echo ($wo['paginas_sidebar'] == 'ventas') ? 'active': '';?>">
 						<a href="<?=lui_SeoLink('index.php?link1=ventas');?>" data-ajax="?link1=ventas">
 							<span style="color:#3498db;">
-								<svg xmlns="http://www.w3.org/2000/svg" style="fill:none;" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10z" /><path d="M7 20h10" /><path d="M9 16v4" /><path d="M15 16v4" /></svg>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+								    <path d="M8 16H15.2632C19.7508 16 20.4333 13.1808 21.261 9.06908C21.4998 7.88311 21.6192 7.29013 21.3321 6.89507C21.045 6.5 20.4947 6.5 19.3941 6.5H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+								    <path d="M8 16L5.37873 3.51493C5.15615 2.62459 4.35618 2 3.43845 2H2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+								    <path d="M8.88 16H8.46857C7.10522 16 6 17.1513 6 18.5714C6 18.8081 6.1842 19 6.41143 19H17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+								    <circle cx="10.5" cy="20.5" r="1.5" stroke="currentColor" stroke-width="1.5" />
+								    <circle cx="17.5" cy="20.5" r="1.5" stroke="currentColor" stroke-width="1.5" />
+								</svg>
 							</span>
 							Ventas
 						</a>
@@ -248,11 +299,36 @@ $wo['sucursales'] = lui_GetSucursalesTypes('');
 							<?=$wo['lang']['mis_compras'];?>
 						</a>
 					</li>
+
+					<li class="mypurchased <?php echo ($wo['paginas_sidebar'] == 'purchased') ? 'active': '';?>">
+						<a href="<?=lui_SeoLink('index.php?link1=purchased');?>" data-ajax="?link1=purchased">
+							<span style="color:#0984e3;">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+								    <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+								    <path d="M6 6L7.5 6M22 6H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+								    <path d="M10.5 7C10.5 7 11.5 7 12.5 9C12.5 9 15.6765 4 18.5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+								    <circle cx="6" cy="20" r="2" stroke="currentColor" stroke-width="1.5" />
+								    <circle cx="17" cy="20" r="2" stroke="currentColor" stroke-width="1.5" />
+								    <path d="M8 20L15 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+								    <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+								</svg>
+							</span>
+							<?=$wo['lang']['mis_compras'];?> usuario
+						</a>
+					</li>
 					<?php else: ?>
 					<li class="mypurchased <?php echo ($wo['paginas_sidebar'] == 'purchased') ? 'active': '';?>">
 						<a href="<?=lui_SeoLink('index.php?link1=purchased');?>" data-ajax="?link1=purchased">
 							<span style="color:#0984e3;">
-								<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12,13A5,5 0 0,1 7,8H9A3,3 0 0,0 12,11A3,3 0 0,0 15,8H17A5,5 0 0,1 12,13M12,3A3,3 0 0,1 15,6H9A3,3 0 0,1 12,3M19,6H17A5,5 0 0,0 12,1A5,5 0 0,0 7,6H5C3.89,6 3,6.89 3,8V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V8C21,6.89 20.1,6 19,6Z" /></svg>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+								    <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+								    <path d="M6 6L7.5 6M22 6H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+								    <path d="M10.5 7C10.5 7 11.5 7 12.5 9C12.5 9 15.6765 4 18.5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+								    <circle cx="6" cy="20" r="2" stroke="currentColor" stroke-width="1.5" />
+								    <circle cx="17" cy="20" r="2" stroke="currentColor" stroke-width="1.5" />
+								    <path d="M8 20L15 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+								    <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+								</svg>
 							</span>
 							<?=$wo['lang']['mis_compras'];?>
 						</a>

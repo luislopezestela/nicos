@@ -122,6 +122,52 @@
 </div>
 
 <script type="text/javascript">
+function NewAddress() {
+  $('.modal_add_address_modal_alert').empty();
+  $("#add_address_modal").find('.btn-mat').removeAttr('disabled')
+  $("#add_address_modal").find('.btn-mat').text("<?php echo $wo['lang']['add'] ?>");
+  $('#add_address_modal').modal('show');
+}
+$(document).ready(function() {
+    var options = {
+      url: Wo_Ajax_Requests_File() + '?f=address&s=add&hash=' + $('.main_session').val(),
+        beforeSubmit:  function () {
+          $('.modal_add_address_modal_alert').empty();
+          $("#add_address_modal").find('.btn-mat').attr('disabled', 'true');
+          $("#add_address_modal").find('.btn-mat').text("<?php echo($wo['lang']['please_wait']) ?>");
+        },
+        success: function (data) {
+          $("#add_address_modal").find('.btn-mat').text("<?php echo $wo['lang']['add'] ?>");
+          $("#add_address_modal").find('.btn-mat').removeAttr('disabled')
+          if (data.status == 200) {
+            $('.modal_add_address_modal_alert').html('<div class="alert alert-success bg-success"><i class="fa fa-check"></i> '+
+              data.message
+              +'</div>');
+              if (data.url && data.url != '') {
+                if ($('#setting_address_page').length > 0) {
+                  setTimeout(function () {
+                    location.href = data.url;
+                  },2000);
+                }
+                else{
+                  setTimeout(function () {
+                    $('.modal_add_address_modal_alert').empty();
+              $("#add_address_modal").find('.btn-mat').removeAttr('disabled')
+              $("#add_address_modal").find('.btn-mat').text("<?php echo $wo['lang']['add'] ?>");
+              $('#add_address_modal').modal('hide');
+              $('#load_checkout').click();
+                  },2000);
+                }
+              }
+          } else {
+            $('.modal_add_address_modal_alert').html('<div class="alert alert-danger bg-danger"> '+
+            data.message
+            +'</div>');
+          }
+        }
+    };
+    $('.address_form').ajaxForm(options);
+});
   function EditAddress(id) {
 		$('.modal_edit_address_modal_alert_'+id).empty();
 		$("#edit_address_modal_"+id).find('.btn-mat').removeAttr('disabled')
@@ -140,3 +186,65 @@
 		$.post(Wo_Ajax_Requests_File() + '?f=address&s=delete&hash=' + $('.main_session').val(), {id: id}, function(data, textStatus, xhr) {});
 	}
 </script>
+<?php if ($wo['loggedin']) { ?>
+    <div class="modal fade" id="add_address_modal" role="dialog" data-keyboard="false" style="overflow-y: auto;">
+      <div class="modal-dialog wow_mat_mdl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
+            <h4 class="modal-title"><?php echo $wo['lang']['add_new_address'] ?></h4>
+          </div>
+          <form class="form form-horizontal address_form" method="post" action="#">
+            <div class="modal-body twocheckout_modal">
+              <div class="modal_add_address_modal_alert"></div>
+              <div class="clear"></div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="wow_form_fields">
+                    <label for="name"><?php echo $wo['lang']['name']; ?></label>
+                    <input id="name" name="name" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['name']; ?>" value="<?php echo($wo['user']['name']) ?>">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="wow_form_fields">
+                    <label for="phone"><?php echo $wo['lang']['phone_number']; ?></label>
+                    <input id="phone" name="phone" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['phone_number']; ?>" value="<?php echo($wo['user']['phone_number']) ?>">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="wow_form_fields">
+                    <label for="country"><?php echo $wo['lang']['country']; ?></label>
+                    <input id="country" name="country" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['country']; ?>">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="wow_form_fields">
+                    <label for="city"><?php echo $wo['lang']['city']; ?></label>
+                    <input id="city" name="city" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['city']; ?>">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="wow_form_fields">
+                    <label for="zip"><?php echo $wo['lang']['zip']; ?></label>
+                    <input id="zip" name="zip" type="text" autocomplete="off" placeholder="<?php echo $wo['lang']['zip']; ?>">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="wow_form_fields">
+                    <label for="address"><?php echo $wo['lang']['name']; ?></label>
+                    <textarea id="address" placeholder="<?php echo $wo['lang']['address']; ?>" name="address" rows="3" autocomplete="off"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="modal-footer">
+              <div class="ball-pulse"><div></div><div></div><div></div></div>
+              <button type="submit" class="btn btn-main btn-mat"><?php echo $wo['lang']['add']; ?></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <?php } ?>

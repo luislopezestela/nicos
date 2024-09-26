@@ -1,38 +1,82 @@
+
 <div class="page_home_v">
-	<div class="btn btn-main btn-active posts-count" onclick="Wo_GetNewPosts();"></div>
-	<div class="posts_load">
-		<div id="posts-laoded" class="market_bottom">
-			<?php $section_keys = lui_GetSectionCatKeys('section_product'); ?>
-			<div id="posts" class="productos_layshane">
-				<?php if(!empty($wo['sections_categories'])): ?>
-					<?php foreach ($wo['sections_categories'] as $section_id => $section_name): ?>
-						<?php $categorias = lui_GetCategories_sections(T_PRODUCTS_CATEGORY,$section_id); ?>
-						<div class="paage_welcome">
-							<h4 class="titulo_layshane_peru_h"><?=$wo["lang"][$section_keys[$section_id]]; ?></h4>
-						</div>
-						<nav>
-							<ul class="productos_contenido" style="padding-left:0!important;">
-								<?php foreach ($categorias as $category): ?>
-									<?php $cat_id_produc = $category['id']; ?>
-									<?php if ($cat_id_produc==0): ?>
-									<?php else: ?>
-									<?php $cat_logo_produc = $category['logo']; ?>
-									<?php $cat_nombre_producs = $wo["lang"][$category["lang_key"]];?>
-									<li class="product_layshane">
-										<a href="<?php echo lui_SeoLink('index.php?link1=tienda&c_id='.$cat_id_produc);?>" data-ajax="?link1=tienda&c_id=<?=$cat_id_produc?>" alt="Comprar - <?=$cat_nombre_producs;?>">
-											<figure class="categories-g__bg bg--change" data-bg="<?=$cat_logo_produc; ?>" style="background-image: url(&quot;<?=$cat_logo_produc; ?>&quot;);"></figure>
-										<span class="name_product" alt="Informacion <?=$cat_nombre_producs;?>"><?=$cat_nombre_producs;?></span>
-										</a>
-									</li>
-									<?php endif ?>
-								<?php endforeach ?>
-							</ul>
-						</nav>
-					<?php endforeach ?>
-				<?php endif ?>
-			</div>
-		</div>
+
+<div class="slider">
+    <div class="slides">
+        <div class="slide">
+            <div class="contentimg">
+                <div class="skeleton"></div>
+                <img 
+				    				src="<?=lui_GetMedia('upload/slider/micro-1000.webp')?>" 
+				            srcset="
+				                <?=lui_GetMedia('upload/slider/micro-200.webp')?> 200w, 
+				                <?=lui_GetMedia('upload/slider/small-8.webp')?> 400w, 
+				                <?=lui_GetMedia('upload/slider/micro-1000.webp')?> 500w"
+				            sizes="(max-width: 723px) 200px, (max-width: 915px) 400px, 500px"
+								    width="500" 
+								    height="500" 
+								    alt="Imagen descriptiva" 
+								    onerror="this.style.display='none'"
+								>
+                <div class="description">
+                    <h2>Hp MicrófonoHyperX</h2>
+                    <p>Para editores de vídeo, streamers y jugadores que buscan un micrófono USB con gran calidad de sonido.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="controls">
+        <div class="control-button prev">&#10094;</div>
+        <div class="control-button next">&#10095;</div>
+    </div>
 	</div>
+
+
+	<div class="btn btn-main btn-active posts-count" onclick="Wo_GetNewPosts();"></div>
+
+	<div class="posts_load">
+    <div id="posts-loaded" class="market_bottom">
+        <?php $section_keys = lui_GetSectionCatKeys('section_product'); ?>
+        <div id="posts" class="productos_layshane">
+            <?php if (!empty($wo['sections_categories'])): ?>
+                <?php foreach ($wo['sections_categories'] as $section_id => $section_name): ?>
+                    <?php $categorias = lui_GetCategories_sections(T_PRODUCTS_CATEGORY, $section_id); ?>
+                    <section class="paage_welcomes">
+                        <h2 class="titulo_layshane_peru_h"><?= $wo["lang"][$section_keys[$section_id]]; ?></h2>
+                        <nav aria-label="Categorías de productos">
+                            <ul class="productos_contenido" style="padding-left:0!important;">
+                                <?php foreach ($categorias as $category): ?>
+                                    <?php $cat_id_produc = $category['id']; ?>
+                                    <?php if ($cat_id_produc != 0): ?>
+                                        <?php $cat_logo_produc =  lui_GetCategoriasImages($category['id']); ?>
+                                        <?php $cat_nombre_producs = $wo["lang"][$category["lang_key"]]; ?>
+                                        <li class="product_layshane">
+                                            <a href="<?php echo lui_SeoLink('index.php?link1=tienda&c_id='.$cat_id_produc.'&section='.$section_id); ?>" 
+																						   data-ajax="?link1=tienda&c_id=<?= $cat_id_produc.'&section='.$section_id ?>" 
+																						   title="Comprar - <?= $cat_nombre_producs; ?>">
+																						    <img src="<?= $cat_logo_produc[0]['logo']; ?>" 
+																						         srcset="<?= $cat_logo_produc[0]['image_mini']; ?> 200w, <?= $cat_logo_produc[0]['logo']; ?> 400w, <?= $cat_logo_produc[0]['logo']; ?> 500w"
+																						         sizes="150px"
+																						         width="150" height="150" 
+																						         alt="Comprar <?= $cat_nombre_producs; ?>">
+																						    <span class="name_product"><?= $cat_nombre_producs; ?></span>
+																						</a>
+
+
+                                        </li>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </ul>
+                        </nav>
+                    </section>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+	</div>
+
+
+
 </div>
 
 <?php
@@ -42,6 +86,7 @@ if($wo['loggedin'] == true) {
 	}
 }
 ?>
+
 <script type="text/javascript">
 /* Standard syntax */
 document.addEventListener("fullscreenchange", function() {

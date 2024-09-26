@@ -7,10 +7,16 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'WebPConvert\\' => array($vendorDir . '/rosell-dk/webp-convert/src'),
+    'Svg\\' => array($vendorDir . '/dompdf/php-svg-lib/src/Svg'),
+    'Sabberworm\\CSS\\' => array($vendorDir . '/sabberworm/php-css-parser/src'),
     'Picqer\\Barcode\\' => array($vendorDir . '/picqer/php-barcode-generator/src'),
+    'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
     'LocateBinaries\\' => array($vendorDir . '/rosell-dk/locate-binaries/src'),
     'ImageMimeTypeSniffer\\' => array($vendorDir . '/rosell-dk/image-mime-type-sniffer/src'),
     'ImageMimeTypeGuesser\\' => array($vendorDir . '/rosell-dk/image-mime-type-guesser/src'),
+    'Fpdf\\' => array($vendorDir . '/fpdf/fpdf/src/Fpdf'),
+    'FontLib\\' => array($vendorDir . '/dompdf/php-font-lib/src/FontLib'),
     'FileUtil\\' => array($vendorDir . '/rosell-dk/file-util/src'),
     'ExecWithFallback\\' => array($vendorDir . '/rosell-dk/exec-with-fallback/src'),
+    'Dompdf\\' => array($vendorDir . '/dompdf/dompdf/src'),
 );

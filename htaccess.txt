@@ -61,7 +61,8 @@ RewriteRule ^album/([A-Za-z0-9_-]+)$ index.php?link1=album&id=$1 [QSA]
 RewriteRule ^create-album$ index.php?link1=create-album [QSA]
 RewriteRule ^create-album/([A-Za-z0-9_-]+)$ index.php?link1=create-album&album=$1  [QSA]
 RewriteRule ^$ index.php?link1=home [QSA]
-
+RewriteRule ^ventas(/?|)$ index.php?link1=ventas [NC,QSA]
+RewriteRule ^pos(/?|)$ index.php?link1=pos [NC,QSA]
 RewriteRule ^setting/([A-Za-z0-9_]+)/$  index.php?link1=setting&user=$1 [NC,QSA]
 RewriteRule ^setting/([A-Za-z0-9_]+)/([A-Za-z0-9_-]+)$  index.php?link1=setting&user=$1&page=$2 [NC,QSA]
 RewriteRule ^page-setting/([^\/]+)(\/|)$  index.php?link1=page-setting&page=$1 [QSA]
@@ -73,6 +74,14 @@ RewriteRule ^edit-product/([A-Za-z0-9_]+)$ index.php?link1=edit-product&id=$1 [N
 RewriteRule ^products(/?|)$ index.php?link1=products [NC,QSA]
 RewriteRule ^products/([A-Za-z0-9_-]+)$ index.php?link1=products&c_id=$1 [QSA]
 RewriteRule ^products/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$ index.php?link1=products&c_id=$1&sub_id=$2 [QSA]
+# Caso con solo sección
+RewriteCond %{QUERY_STRING} ^section=([A-Za-z0-9_-]+)$
+RewriteRule ^tienda$ index.php?link1=tienda&section=%1 [NC,QSA]
+RewriteRule ^tienda(/?|)$ index.php?link1=tienda [NC,QSA]
+RewriteRule ^tienda/([A-Za-z0-9_-]+)$ index.php?link1=tienda&c_id=$1 [QSA]
+RewriteRule ^tienda/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$ index.php?link1=tienda&c_id=$1&sub_id=$2 [QSA]
+
+
 RewriteRule ^my-products(/?|)$ index.php?link1=my-products [QSA]
 RewriteRule ^my-products/([A-Za-z0-9_-]+)$ index.php?link1=my-products&c_id=$1 [QSA]
 RewriteRule ^my-products/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$ index.php?link1=my-products&c_id=$1&sub_id=$2 [QSA]
@@ -109,13 +118,21 @@ RewriteRule ^carta(/?|)$ index.php?link1=carta [NC,QSA]
 RewriteRule ^carta/([A-Za-z0-9_-]+)$ index.php?link1=carta&c_id=$1 [QSA]
 RewriteRule ^carta/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$ index.php?link1=carta&c_id=$1&sub_id=$2 [QSA]
 RewriteRule ^qrtienda(/?|)$ index.php?link1=qrtienda [NC,QSA]
+
+
+RewriteRule ^menu(/?|)$ index.php?link1=menu [NC,QSA]
+
 RewriteRule ^imventario(/?|)$ index.php?link1=imventario [NC,QSA]
+RewriteRule ^imventario([^\/]+)(\/|)$ index.php?link1=imventario&page-id=$1 [NC,QSA]
 
 RewriteRule ^imv_productos(/?|)$ index.php?link1=imv_productos [NC,QSA]
 RewriteRule ^imv_ingredientes(/?|)$ index.php?link1=imv_ingredientes [NC,QSA]
 
 RewriteRule ^purchased(/?|)$ index.php?link1=purchased [NC,QSA]
 RewriteRule ^orders(/?|)$ index.php?link1=orders [NC,QSA]
+RewriteRule ^caja(/?|)$ index.php?link1=caja [NC,QSA]
+RewriteRule ^compras(/?|)$ index.php?link1=compras [NC,QSA]
+RewriteRule ^compras([^\/]+)(\/|)$ index.php?link1=compras&page-id=$1 [NC,QSA]
 RewriteRule ^customer_order/(.*)$ index.php?link1=customer_order&id=$1 [NC,QSA]
 RewriteRule ^order/(.*)$ index.php?link1=order&id=$1 [NC,QSA]
 RewriteRule ^reviews/(.*)$ index.php?link1=reviews&id=$1 [NC,QSA]
@@ -172,6 +189,9 @@ RewriteRule ^ads/edit/(\d+)(/?|)$ index.php?link1=edit-ads&id=$1 [NC,QSA]
 RewriteRule ^ads/chart/(\d+)(/?|)$ index.php?link1=chart-ads&id=$1 [NC,QSA]
 RewriteRule ^admin/ads/edit/(\d+)(/?|)$ index.php?link1=manage-ads&id=$1 [NC,QSA]
 
+
+RewriteRule ^cuentas(/?|)$ index.php?link1=cuentas [NC,QSA]
+
 # *** STATUS ***
 RewriteRule ^status/create(/?|)$ index.php?link1=create-status [NC,QSA]
 RewriteRule ^more-status(/?|)$ index.php?link1=more-status [NC,QSA]
@@ -195,7 +215,6 @@ RewriteRule ^oauth$ index.php?link1=oauth [NC,QSA]
 RewriteRule ^boosted-pages(/?|)$ index.php?link1=boosted-pages [NC,QSA]
 RewriteRule ^boosted-posts(/?|)$ index.php?link1=boosted-posts [NC,QSA]
 
-
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^setting/([A-Za-z0-9_-]+)$  index.php?link1=setting&page=$1 [NC,QSA]
@@ -211,10 +230,6 @@ RewriteRule ^([A-Za-z0-9_]+)/([^\/]+)(\/|)$  index.php?link1=timeline&u=$1&type=
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([^\/]+)(\/|)$  index.php?link1=timeline&u=$1 [QSA]
-
-
-
-
 
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html
@@ -238,6 +253,9 @@ RewriteRule ^([^\/]+)(\/|)$  index.php?link1=timeline&u=$1 [QSA]
   AddOutputFilterByType DEFLATE font/ttf
   AddOutputFilterByType DEFLATE font/otf
   AddOutputFilterByType DEFLATE font/opentype
+  AddOutputFilterByType DEFLATE image/webp
+  AddOutputFilterByType DEFLATE application/x-httpd-php
+  AddOutputFilterByType DEFLATE application/javascript .js .min.js
   BrowserMatch ^Mozilla/4 gzip-only-text/html
   BrowserMatch ^Mozilla/4\.0[678] no-gzip
   BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
@@ -252,6 +270,7 @@ ExpiresByType image/jpg "access plus 1 year"
 ExpiresByType image/jpeg "access plus 1 year"
 ExpiresByType image/gif "access plus 1 year"
 ExpiresByType image/png "access plus 1 year"
+ExpiresByType image/webp "access plus 1 year"
 ExpiresByType text/css "access plus 1 month"
 ExpiresByType application/pdf "access plus 1 month"
 ExpiresByType text/x-javascript "access plus 1 month"
@@ -260,8 +279,6 @@ ExpiresByType image/x-icon "access plus 1 year"
 ExpiresDefault "access plus 1 month"
 </IfModule>
 ## EXPIRES CACHING ##
-AddType application/x-httpd-php .json
-
 <ifModule mod_headers.c>
   Header unset Connection
   Header set Connection keep-alive
@@ -270,7 +287,17 @@ AddType application/x-httpd-php .json
   Header set Keep-Alive timeout=100,max=500
 </ifModule>
 
-<FilesMatch "\.(js|css|svg|woff2|webp|png)$">
+<FilesMatch "\.(js|css|svg|woff2|webp|png|mp3)$">
     Header set Cache-Control "max-age=31536000, public"
 </FilesMatch>
-AddType application/x-httpd-php .json
+
+# Añadir encabezado de caché para archivos PHP
+<FilesMatch "\.(php)$">
+    Header set Cache-Control "max-age=600, must-revalidate"
+</FilesMatch>
+
+<FilesMatch "\.(?i:pdf)$">
+    ForceType application/octet-stream
+    Header set Content-Disposition attachment
+</FilesMatch>
+

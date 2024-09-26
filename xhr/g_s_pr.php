@@ -20,7 +20,7 @@ if ($f == 'g_s_pr') {
                     $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = $atributoId AND id_atributo_opciones = $opcionId)";
                 }
 
-                $cantidad_prod = $db->rawQueryOne($sql)->cantidad;
+                $cantidad_prod = $db->rawQueryOne($sql)['cantidad'];
                 $cantidad_productos = ($cantidad_prod !== null) ? $cantidad_prod : 0;
             }
 

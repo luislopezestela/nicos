@@ -3,7 +3,7 @@ if ($f == "order_opcion") {
 	if ($s == 'document') {
 		if (!empty($_POST['comprobante'])){
 			$comprobante_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado', '0')->where('web', '1')->getOne(T_VENTAS);
-			if (!empty($comprobante_user) && ($comprobante_user->user_id == $wo['user']['user_id'])) {
+			if (!empty($comprobante_user) && ($comprobante_user['user_id'] == $wo['user']['user_id'])) {
 				if ($_POST['comprobante']=='boleta_simple') {
 					$dataarray = array('documento' => 'BS');
 					$dataarray_b = array('doc_order' => lui_Secure($_POST['comprobante']), 'comprobante_dni' => null);
@@ -14,8 +14,8 @@ if ($f == "order_opcion") {
                     $dataarray = array('documento' => 'F', 'user_document' => 'RUC','user_document_num' => null);
 					$dataarray_b = array('doc_order' => lui_Secure($_POST['comprobante']), 'comprobante_ruc' => null);
                 }
-				$db->where('user_id',$comprobante_user->user_id)->where('completado', '0')->update(T_VENTAS, $dataarray);
-				$db->where('user_id',$comprobante_user->user_id)->update(T_USERS, $dataarray_b);
+				$db->where('user_id',$comprobante_user['user_id'])->where('completado', '0')->update(T_VENTAS, $dataarray);
+				$db->where('user_id',$comprobante_user['user_id'])->update(T_USERS, $dataarray_b);
 				$data['status'] = 200;
 				$data['message'] = '';
 			}else{
@@ -153,15 +153,15 @@ if ($f == "order_opcion") {
 			$comprobante_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->getOne(T_USERS);
 			$comprobante_user_venta = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado', '0')->where('web', '1')->getOne(T_VENTAS);
 
-			if (!empty($comprobante_user) && ($comprobante_user->user_id == $wo['user']['user_id'])) {
-				$db->where('user_id',$comprobante_user->user_id)->update(T_USERS,array('comprobante_dni' => lui_Secure($_POST['number'])));
-				$db->where('user_id',$comprobante_user_venta->user_id)->update(T_VENTAS,array('user_document_num' => lui_Secure($_POST['number'])));
+			if (!empty($comprobante_user) && ($comprobante_user['user_id'] == $wo['user']['user_id'])) {
+				$db->where('user_id',$comprobante_user['user_id'])->update(T_USERS,array('comprobante_dni' => lui_Secure($_POST['number'])));
+				$db->where('user_id',$comprobante_user_venta['user_id'])->update(T_VENTAS,array('user_document_num' => lui_Secure($_POST['number'])));
 				$dni=$_POST['number'] ;
 				if (strlen($_POST['number']) == 8) {
 					$lista_personas = $db->where('dni',$dni)->getOne('personas_lista');
-					if (isset($lista_personas->dni) == $_POST['number']) {
-						$datos_de_persona = json_decode($lista_personas->datos);
-						$estado_documento = $lista_personas->estado;
+					if (isset($lista_personas['dni']) == $_POST['number']) {
+						$datos_de_persona = json_decode($lista_personas['datos']);
+						$estado_documento = $lista_personas['estado'];
 					}else{
 						$token = 'apis-token-8240.fCDeH4D6LNu9YmNBnFuqBQj1zE-E9S7-';
 						// Iniciar llamada a API
@@ -224,13 +224,13 @@ if ($f == "order_opcion") {
 			$comprobante_user_venta = $db->where('id_del_vendedor',lui_Secure($wo['user']['user_id']))->where('completado', '2')->where('estado_venta','3')->getOne(T_VENTAS);
 
 			if (!empty($comprobante_user_venta)) {
-				$db->where('user_id',$comprobante_user_venta->user_id)->update(T_VENTAS,array('user_document_num' => lui_Secure($_POST['number'])));
+				$db->where('user_id',$comprobante_user_venta['user_id'])->update(T_VENTAS,array('user_document_num' => lui_Secure($_POST['number'])));
 				$dni=$_POST['number'] ;
 				if (strlen($_POST['number']) == 8) {
 					$lista_personas = $db->where('dni',$dni)->getOne('personas_lista');
-					if (isset($lista_personas->dni) == $_POST['number']) {
-						$datos_de_persona = json_decode($lista_personas->datos);
-						$estado_documento = $lista_personas->estado;
+					if (isset($lista_personas['dni']) == $_POST['number']) {
+						$datos_de_persona = json_decode($lista_personas['datos']);
+						$estado_documento = $lista_personas['estado'];
 					}else{
 						$token = 'apis-token-8240.fCDeH4D6LNu9YmNBnFuqBQj1zE-E9S7-';
 						// Iniciar llamada a API
@@ -291,15 +291,15 @@ if ($f == "order_opcion") {
 		if (!empty($_POST['number'])) {
 			$comprobante_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->getOne(T_USERS);
 			$comprobante_user_venta = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado', '0')->where('web', '1')->getOne(T_VENTAS);
-			if (!empty($comprobante_user) && ($comprobante_user->user_id == $wo['user']['user_id'])) {
-				$db->where('user_id',$comprobante_user->user_id)->update(T_USERS,array('comprobante_ruc' => lui_Secure($_POST['number'])));
-				$db->where('user_id',$comprobante_user_venta->user_id)->update(T_VENTAS,array('user_document_num' => lui_Secure($_POST['number'])));
+			if (!empty($comprobante_user) && ($comprobante_user['user_id'] == $wo['user']['user_id'])) {
+				$db->where('user_id',$comprobante_user['user_id'])->update(T_USERS,array('comprobante_ruc' => lui_Secure($_POST['number'])));
+				$db->where('user_id',$comprobante_user_venta['user_id'])->update(T_VENTAS,array('user_document_num' => lui_Secure($_POST['number'])));
 				$ruc=$_POST['number'] ;
 				if (strlen($_POST['number']) == 11) {
 					$lista_personas = $db->where('ruc',$ruc)->getOne('personas_juridicas_lista');
-					if (isset($lista_personas->ruc) == $_POST['number']) {
-						$datos_de_persona = json_decode($lista_personas->datos);
-						$estado_documento = $lista_personas->estado;
+					if (isset($lista_personas['ruc']) == $_POST['number']) {
+						$datos_de_persona = json_decode($lista_personas['datos']);
+						$estado_documento = $lista_personas['estado'];
 					}else{
 						$token = 'apis-token-8240.fCDeH4D6LNu9YmNBnFuqBQj1zE-E9S7-';
 						// Iniciar llamada a API
@@ -359,13 +359,13 @@ if ($f == "order_opcion") {
 		if (!empty($_POST['number'])) {
 			$comprobante_user_venta = $db->where('id_del_vendedor',lui_Secure($wo['user']['user_id']))->where('completado', '2')->where('estado_venta','3')->getOne(T_VENTAS);
 			if (!empty($comprobante_user_venta)) {
-				$db->where('user_id',$comprobante_user_venta->user_id)->update(T_VENTAS,array('user_document_num' => lui_Secure($_POST['number'])));
+				$db->where('user_id',$comprobante_user_venta['user_id'])->update(T_VENTAS,array('user_document_num' => lui_Secure($_POST['number'])));
 				$ruc=$_POST['number'] ;
 				if (strlen($_POST['number']) == 11) {
 					$lista_personas = $db->where('ruc',$ruc)->getOne('personas_juridicas_lista');
-					if (isset($lista_personas->ruc) == $_POST['number']) {
-						$datos_de_persona = json_decode($lista_personas->datos);
-						$estado_documento = $lista_personas->estado;
+					if (isset($lista_personas['ruc']) == $_POST['number']) {
+						$datos_de_persona = json_decode($lista_personas['datos']);
+						$estado_documento = $lista_personas['estado'];
 					}else{
 						$token = 'apis-token-8240.fCDeH4D6LNu9YmNBnFuqBQj1zE-E9S7-';
 						// Iniciar llamada a API
@@ -429,28 +429,28 @@ if ($f == "order_opcion") {
                                ->where('web',1)
                                ->getOne(T_VENTAS);
 
-			if (!empty($comprobante_user) && ($comprobante_user->user_id == $wo['user']['user_id'] || IsAdmin())) {
+			if (!empty($comprobante_user) && ($comprobante_user['user_id'] == $wo['user']['user_id'] || IsAdmin())) {
 				
 				if ($_POST['modo_compra']=='tienda') {
 					$dataarray = array('opcion_de_compra' => lui_Secure($_POST['modo_compra']), 'direccion_envio' => null,'direccion_delivery' => null,'add_direccion' => 0,'add_direccion_envio' => 0);
-					$db->where('user_id',$comprobante_user->user_id)->update(T_USERS,$dataarray);
+					$db->where('user_id',$comprobante_user['user_id'])->update(T_USERS,$dataarray);
 					$dataarraydPLc = array('datos_envios_id' => 0,'dirección_id' => 0);
 					if (!empty($comprapendiente)) {
-						$db->where('id',$comprapendiente->id)->update(T_VENTAS, $dataarraydPLc);
+						$db->where('id',$comprapendiente['id'])->update(T_VENTAS, $dataarraydPLc);
 					}
 				}elseif($_POST['modo_compra']=='delivery'){
 					$dataarray = array('opcion_de_compra' => lui_Secure($_POST['modo_compra']), 'sucursal_entrega' => null,'direccion_envio' => null,'add_direccion_envio' => 0);
-					$db->where('user_id',$comprobante_user->user_id)->update(T_USERS,$dataarray);
+					$db->where('user_id',$comprobante_user['user_id'])->update(T_USERS,$dataarray);
 					$dataarraydPLc = array('sucursal_entrega' => 0,'datos_envios_id' => 0);
 					if (!empty($comprapendiente)) {
-						$db->where('id',$comprapendiente->id)->update(T_VENTAS, $dataarraydPLc);
+						$db->where('id',$comprapendiente['id'])->update(T_VENTAS, $dataarraydPLc);
 					}
 				}elseif($_POST['modo_compra']=='envios'){
 					$dataarray = array('opcion_de_compra' => lui_Secure($_POST['modo_compra']), 'sucursal_entrega' => null,'direccion_delivery' => null,'add_direccion' => 0);
-					$db->where('user_id',$comprobante_user->user_id)->update(T_USERS,$dataarray);
+					$db->where('user_id',$comprobante_user['user_id'])->update(T_USERS,$dataarray);
 					$dataarraydPLc = array('sucursal_entrega' => 0,'dirección_id' => 0);
 					if (!empty($comprapendiente)) {
-						$db->where('id',$comprapendiente->id)->update(T_VENTAS, $dataarraydPLc);
+						$db->where('id',$comprapendiente['id'])->update(T_VENTAS, $dataarraydPLc);
 					}
 				}
 		        
@@ -479,12 +479,12 @@ if ($f == "order_opcion") {
                                ->where('web',1)
                                ->getOne(T_VENTAS);
 
-			if (!empty($comprobante_user) && ($comprobante_user->user_id == $wo['user']['user_id'])) {
-				$db->where('user_id',$comprobante_user->user_id)->update(T_USERS,array('sucursal_entrega' => lui_Secure($_POST['sucursal'])));
+			if (!empty($comprobante_user) && ($comprobante_user['user_id'] == $wo['user']['user_id'])) {
+				$db->where('user_id',$comprobante_user['user_id'])->update(T_USERS,array('sucursal_entrega' => lui_Secure($_POST['sucursal'])));
 				$dataarraydPLc = array('sucursal_entrega' => lui_Secure($_POST['sucursal']));
 		        // Verificar si hay una compra pendiente
 		        if (!empty($comprapendiente)) {
-					$db->where('id',$comprapendiente->id)->update(T_VENTAS, $dataarraydPLc);
+					$db->where('id',$comprapendiente['id'])->update(T_VENTAS, $dataarraydPLc);
 				}
 
 				$data['status'] = 200;
@@ -504,8 +504,8 @@ if ($f == "order_opcion") {
 		if (!empty($_POST['direccion'])) {
 			$comprobante_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->getOne(T_USERS);
 
-			if (!empty($comprobante_user) && ($comprobante_user->user_id == $wo['user']['user_id'] || IsAdmin())) {
-				$db->where('user_id',$comprobante_user->user_id)->update(T_USERS,array('direccion_delivery' => lui_Secure($_POST['direccion'])));
+			if (!empty($comprobante_user) && ($comprobante_user['user_id'] == $wo['user']['user_id'] || IsAdmin())) {
+				$db->where('user_id',$comprobante_user['user_id'])->update(T_USERS,array('direccion_delivery' => lui_Secure($_POST['direccion'])));
 
 
 				$data['status'] = 200;
@@ -525,8 +525,8 @@ if ($f == "order_opcion") {
 		if (!empty($_POST['direccion'])) {
 			$comprobante_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->getOne(T_USERS);
 
-			if (!empty($comprobante_user) && ($comprobante_user->user_id == $wo['user']['user_id'] || IsAdmin())) {
-				$db->where('user_id',$comprobante_user->user_id)->update(T_USERS,array('direccion_envio' => lui_Secure($_POST['direccion'])));
+			if (!empty($comprobante_user) && ($comprobante_user['user_id'] == $wo['user']['user_id'] || IsAdmin())) {
+				$db->where('user_id',$comprobante_user['user_id'])->update(T_USERS,array('direccion_envio' => lui_Secure($_POST['direccion'])));
 
 
 				$data['status'] = 200;
@@ -545,7 +545,7 @@ if ($f == "order_opcion") {
 	if($s == 'mode_pay'){
 		if(!empty($_POST['pay_mod'])){
 			$coe_user = $db->where('user_id',lui_Secure($wo['user']['user_id']))->getOne(T_USERS);
-			$db->where('user_id',$coe_user->user_id)->update(T_USERS,array('mode_pay' => lui_Secure($_POST['pay_mod'])));
+			$db->where('user_id',$coe_user['user_id'])->update(T_USERS,array('mode_pay' => lui_Secure($_POST['pay_mod'])));
 		}else{
 			$data['message'] = $error_icon . $wo['lang']['please_check_details'];
 		}
@@ -554,16 +554,16 @@ if ($f == "order_opcion") {
 		$html = '';
 		$couser = $db->where('user_id',lui_Secure($wo['user']['user_id']))->getOne(T_USERS);
 		$wo['total_bux'] = $_GET['tols'];
-		if($couser->mode_pay==0) {
-		}elseif($couser->mode_pay==1) {
+		if($couser['mode_pay']==0) {
+		}elseif($couser['mode_pay']==1) {
 			$html = lui_LoadPage('checkout/pay_one');
-		}elseif($couser->mode_pay==2) {
+		}elseif($couser['mode_pay']==2) {
 			$html = lui_LoadPage('checkout/pay_two');
-		}elseif($couser->mode_pay==3) {
+		}elseif($couser['mode_pay']==3) {
 			$html = lui_LoadPage('checkout/pay_three');
-		}elseif($couser->mode_pay==4) {
+		}elseif($couser['mode_pay']==4) {
 			$html = lui_LoadPage('checkout/pay_four');
-		}elseif($couser->mode_pay==5) {
+		}elseif($couser['mode_pay']==5) {
 			$html = lui_LoadPage('checkout/pay_five');
 		}
 	    echo $html;
@@ -604,7 +604,7 @@ if ($f == "order_opcion") {
 				if ($buscar_barcode_disponible > 0) {
 					$elproductoencontrado = $db->where('barcode',$codigo_de_barras)->getOne('imventario'); // aqui busco el atributo por el codigo de barras 
 					if ($elproductoencontrado) {
-						$atributos = $elproductoencontrado->atributo;
+						$atributos = $elproductoencontrado['atributo'];
 						$partes = explode('_', $atributos);
 						array_shift($partes);
 						$resultado_atributos = implode('_', $partes);
@@ -630,71 +630,75 @@ if ($f == "order_opcion") {
 	}
 
 	if ($s == 'barcode_inc') {
-	    if (!empty($_POST) && !empty($_POST['hash']) && !empty($_POST['barcode'])) {
-	    	$venta_iniciada = $db->where('estado_venta',3)->where('id_del_vendedor',$wo['user']['user_id'])->getOne(T_VENTAS);
-	        // Obtener el código de barras escaneado
-	        $codigo_de_barras = $_POST['barcode'];
+		if (!empty($_POST) && !empty($_POST['hash']) && !empty($_POST['barcode'])) {
+			$venta_iniciada = $db->where('estado_venta',3)->where('id_del_vendedor',$wo['user']['user_id'])->getOne(T_VENTAS);
+			// Obtener el código de barras escaneado
+			$codigo_de_barras = $_POST['barcode'];
+			// 0000000009102
+			// 0000000008129
+			// 0000000008372 0000000008280 - 0000000008297 0000000008303 0000000008310
+			// Verificar si el código de barras está disponible en el imventario
+			$buscar_barcode_disponible = $db->where('estado', 1)->where('barcode', $codigo_de_barras)
+				->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
+				$data['statussss'] = $buscar_barcode_disponible;
+			if ($buscar_barcode_disponible > 0) {
+				// Buscar el producto en el imventario por su código de barras
+				$elproductoencontrado = $db->where('barcode', $codigo_de_barras)->getOne('imventario');
 
-	        // Verificar si el código de barras está disponible en el imventario
-	        $buscar_barcode_disponible = $db->where('estado', 1)
-	            ->where('barcode', $codigo_de_barras)
-	            ->getValue('imventario', 'SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = "ingreso" THEN cantidad WHEN modo = "salida" THEN -cantidad ELSE 0 END ELSE 0 END)');
-
-	        if ($buscar_barcode_disponible > 0) {
-	            // Buscar el producto en el imventario por su código de barras
-	            $elproductoencontrado = $db->where('barcode', $codigo_de_barras)->getOne('imventario');
-
-	            if ($elproductoencontrado) {
-	                // Obtener el atributo del producto encontrado
-	                $atributos = $elproductoencontrado->atributo;
-	                $partes = explode('_', $atributos);
+				if ($elproductoencontrado) {
+					// Obtener el atributo del producto encontrado
+					$atributos = $elproductoencontrado['atributo'];
+					$partes = explode('_', $atributos);
 					array_shift($partes);
 					$resultado_atributos = implode('_', $partes);
-	                // Buscar un producto en el pedido que tenga los mismos atributos pero sin código de barras asignado
-	                // asicnamos el atributo al pedido
-	                $pedido_atributo = $venta_iniciada->id.'_'.$resultado_atributos;
-	                $producto_carrito = $db->where('atributo', $pedido_atributo)->where('barcode', 0)->getOne('imventario');
-	                
-	               
-	                if ($producto_carrito) {
-	                    // Asignar el código de barras al producto en el pedido
-	                    $buscar_barcode_en_pedido = $db->where('atributo', $pedido_atributo)->where('barcode', $codigo_de_barras)->getOne('imventario');
-	                    if (empty($buscar_barcode_en_pedido)) {
-	                    	$db->where('id', $producto_carrito->id)->update('imventario', ['barcode' => $codigo_de_barras]);
-	                    	$sql = "SELECT COUNT(*) AS cantidad 
-					        FROM imventario 
-					        WHERE id_comprobante_v = ? 
-					        AND atributo = ? 
-					        AND barcode != '0'";
-							$params = array($venta_iniciada->id, $pedido_atributo);
+					// Buscar un producto en el pedido que tenga los mismos atributos pero sin código de barras asignado
+					// asicnamos el atributo al pedido
+					$pedido_atributo = $venta_iniciada['id'].'_'.$resultado_atributos;
+					$producto_carrito = $db->where('atributo', $pedido_atributo)->where('barcode', 0)->getOne('imventario');
+					if ($producto_carrito) {
+						// Asignar el código de barras al producto en el pedido
+						$buscar_barcode_en_pedido = $db->where('atributo', $pedido_atributo)->where('barcode', $codigo_de_barras)->getOne('imventario');
+						if (empty($buscar_barcode_en_pedido)) {
+
+							$db->where('id', $producto_carrito['id'])->update('imventario', ['barcode' => $codigo_de_barras]);
+
+
+							$sql = "SELECT COUNT(*) AS cantidad 
+								FROM imventario 
+								WHERE id_comprobante_v = ? 
+								AND atributo = ? 
+								AND barcode != 0";
+							$params = array($venta_iniciada['id'], $pedido_atributo);
 							$result = $db->rawQueryOne($sql, $params);
 
-							$cantidad_productos_pos_listos = $result->cantidad;
-			                $data['cantidad_listo'] = $cantidad_productos_pos_listos;
-	                    	$data['message'] = 'Agregado con exito';
-	                    	$data['atributo'] = $pedido_atributo;
-	                    	$data['status'] = 200;
-	                    }else{
-	                    	$data['message'] = 'Ya esta agregado el producto';
-	                    	$data['status'] = 400;
-	                    }
-	                } else {
-	                    // No se encontró ningún producto en el pedido con los mismos atributos y sin código de barras asignado
-	                    $data['status'] = 410;
-	                }
+							$cantidad_productos_pos_listos = $result['cantidad'];
+		               $data['cantidad_listo'] = $cantidad_productos_pos_listos;
+                    	$data['message'] = 'Agregado con exito';
+                    	$data['atributo'] = $pedido_atributo;
+                    	$data['status'] = 200;
+	               }else{
+	               	$data['message'] = 'Ya esta agregado el producto';
+	               	$data['status'] = 400;
+	               }
 	            } else {
-	                // No se encontró ningún producto en el imventario con el código de barras escaneado
-	                $data['status'] = 400;
+	            	$data['pruebas'] = $pedido_atributo;
+	            	$data['message'] = 'No se encontró ningún producto en el pedido con los mismos atributos y sin código de barras asignado';
+	            	// No se encontró ningún producto en el pedido con los mismos atributos y sin código de barras asignado
+	            	$data['status'] = 400;
 	            }
-	        } else {
-	            // El código de barras escaneado no está disponible en el imventario
-	            $data['status'] = 400;
-	        }
-	    } else {
-	        // Los datos enviados no están completos
-	        $data['status'] = 400;
-	    }
-	    // Enviar la respuesta como JSON
+	         } else {
+	         	// No se encontró ningún producto en el imventario con el código de barras escaneado
+	         	$data['status'] = 400;
+	         }
+	      } else {
+	      	// El código de barras escaneado no está disponible en el imventario
+	      	$data['status'] = 400;
+	      }
+	   } else {
+	   	// Los datos enviados no están completos
+	   	$data['status'] = 400;
+	   }
+	   // Enviar la respuesta como JSON
 		header("Content-type: application/json");
 		echo json_encode($data);
 		exit();

@@ -10,7 +10,6 @@ if ($wo['config']['can_use_market']){
 }
 ?>
 <style type="text/css">
-body{background-color:#F0F2FD;}
 .contenido_tiendas_layshane {
     display: grid;
   width: min(75rem, 100%);

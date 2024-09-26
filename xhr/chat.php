@@ -142,8 +142,8 @@ if ($f == 'chat') {
                     $reacted_messages = $db->where("message_id IN (SELECT m.id FROM " . T_MESSAGES . " m WHERE (m.from_id = '" . $user_id . "' AND m.to_id = '" . $wo['user']['user_id'] . "') OR (m.from_id = '" . $wo['user']['user_id'] . "' AND m.to_id = '" . $user_id . "'))")->orderBy("id", "Desc")->get(T_REACTIONS, 20);
                     foreach ($reacted_messages as $key => $value) {
                         $reactions[] = array(
-                            'id' => $value->message_id,
-                            'reactions' => lui_GetPostReactions($value->message_id, 'message')
+                            'id' => $value['message_id'],
+                            'reactions' => lui_GetPostReactions($value['message_id'], 'message')
                         );
                     }
                     if (!empty($reactions)) {

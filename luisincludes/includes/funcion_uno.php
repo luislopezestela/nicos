@@ -5291,7 +5291,157 @@ function lui_addImages_load($data = array(), $type = 0, $crop = true) {
     );
     return $last_data;
 }
+function lui_ShareFile_categorias($data = array(), $type = 0, $crop = true) {
+    global $wo, $sqlConnect, $s3;
+    $allowed = '';
+    if (!file_exists('upload/files/' . date('Y'))) {
+        @mkdir('upload/files/' . date('Y'), 0777, true);
+    }
+    if (!file_exists('upload/files/' . date('Y') . '/' . date('m'))) {
+        @mkdir('upload/files/' . date('Y') . '/' . date('m'), 0777, true);
+    }
+    if (!file_exists('upload/photos/' . date('Y'))) {
+        @mkdir('upload/photos/' . date('Y'), 0777, true);
+    }
+    if (!file_exists('upload/photos/' . date('Y') . '/' . date('m'))) {
+        @mkdir('upload/photos/' . date('Y') . '/' . date('m'), 0777, true);
+    }
+    if (!file_exists('upload/videos/' . date('Y'))) {
+        @mkdir('upload/videos/' . date('Y'), 0777, true);
+    }
+    if (!file_exists('upload/videos/' . date('Y') . '/' . date('m'))) {
+        @mkdir('upload/videos/' . date('Y') . '/' . date('m'), 0777, true);
+    }
+    if (!file_exists('upload/sounds/' . date('Y'))) {
+        @mkdir('upload/sounds/' . date('Y'), 0777, true);
+    }
+    if (!file_exists('upload/sounds/' . date('Y') . '/' . date('m'))) {
+        @mkdir('upload/sounds/' . date('Y') . '/' . date('m'), 0777, true);
+    }
+    if (isset($data['file']) && !empty($data['file'])) {
+        $data['file'] = $data['file'];
+    }
+    if (isset($data['name']) && !empty($data['name'])) {
+        $data['name'] = lui_Secure($data['name']);
+    }
+    if (empty($data)) {
+        return false;
+    }
+    if (empty($data['is_video'])) {
+        $data['is_video'] = 0;
+    }
+    $new_string     = pathinfo($data['name'], PATHINFO_FILENAME) . '.' . strtolower(pathinfo($data['name'], PATHINFO_EXTENSION));
+    $file_extension = pathinfo($new_string, PATHINFO_EXTENSION);
+    if ($data['is_video'] == 0) {
+        if ($wo['config']['fileSharing'] == 1) {
+            if (isset($data['types'])) {
+                $allowed = $data['types'];
+            } else {
+                $allowed = $wo['config']['allowedExtenstion'];
+            }
+        } else {
+            $allowed = 'jpg,png,jpeg,gif,webp,mp4,m4v,webm,flv,mov,mpeg,mp3,wav,mkv';
+        }
+        $extension_allowed = explode(',', $allowed);
+        if (!in_array($file_extension, $extension_allowed)) {
+            return false;
+        }
+    }
+    if ($data['size'] > $wo['config']['maxUpload']) {
+        return false;
+    }
+    if ($file_extension == 'jpg' || $file_extension == 'jpeg' || $file_extension == 'png' || $file_extension == 'gif' || $file_extension == 'webp') {
+        $folder   = 'photos';
+        $fileType = 'image';
+    } else if ($file_extension == 'mp4' || $file_extension == 'mov' || $file_extension == 'webm' || $file_extension == 'flv' || $file_extension == 'mkv') {
+        $folder   = 'videos';
+        $fileType = 'video';
+    } elseif (!empty($data['is_video']) && $data['is_video'] == 1) {
+        $folder   = 'videos';
+        $fileType = 'video';
+    } else if ($file_extension == 'mp3' || $file_extension == 'wav') {
+        $folder   = 'sounds';
+        $fileType = 'soundFile';
+    } else {
+        $folder   = 'files';
+        $fileType = 'file';
+    }
+    if (empty($folder) || empty($fileType)) {
+        return false;
+    }
+    if ($data['is_video'] == 0) {
+        $mime_types = explode(',', str_replace(' ', '', $wo['config']['mime_types'] . ',application/json,application/octet-stream'));
+        if (lui_IsAdmin()) {
+            $mime_types = explode(',', str_replace(' ', '', $wo['config']['mime_types'] . ',application/json,application/octet-stream,image/svg+xml'));
+        }
+        if (!in_array($data['type'], $mime_types)) {
+            return false;
+        }
+    }
+    $dir         = "upload/{$folder}/" . date('Y') . '/' . date('m');
+    $filename    = $dir . '/' . lui_GenerateKey() . '_' . date('d') . '_' . md5(time()) . "_{$fileType}.{$file_extension}";
+    $second_file = pathinfo($filename, PATHINFO_EXTENSION);
+    if (move_uploaded_file($data['file'], $filename)) {
+        if ($second_file == 'jpg' || $second_file == 'jpeg' || $second_file == 'png' || $second_file == 'gif' || $second_file == 'webp') {
+            $check_file = getimagesize($filename);
+            if (!$check_file) {
+                unlink($filename);
+                return false;
+            }
+            if ($crop == true) {
+                if ($type == 1) {
+                    if ($second_file != 'gif') {
+                        @lui_CompressImage($filename, $filename, 50);
+                    }
+                    $explode2  = @end(explode('.', $filename));
+                    $explode3  = @explode('.', $filename);
+                    $last_file = $explode3[0] . '_small.' . $explode2;
+                    if (lui_Resize_Crop_Image_cats(400, 400, $filename, $last_file, 120)) {
+                        if ($second_file != 'gif' && $wo['config']['watermark'] == 1 && !empty($wo['add_watermark']) && $wo['add_watermark'] == true) {
+                            watermark_image($last_file);
+                        }
+                        if (empty($data['local_upload'])) {
+                            if (($wo['config']['amazone_s3'] == 1 || $wo['config']['wasabi_storage'] == 1 || $wo['config']['ftp_upload'] == 1 || $wo['config']['spaces'] == 1 || $wo['config']['cloud_upload'] == 1 || $wo['config']['backblaze_storage'] == 1) && !empty($last_file)) {
+                                $upload_s3 = lui_UploadToS3($last_file);
+                            }
+                        }
+                    }
 
+                    $last_file_mini = $explode3[0] . '_thumbnail.' . $explode2;
+                    if (lui_Resize_Crop_Image_cats(200, 200, $filename, $last_file_mini, 120)) {
+                        if ($second_file != 'gif' && $wo['config']['watermark'] == 1 && !empty($wo['add_watermark']) && $wo['add_watermark'] == true) {
+                            watermark_image($last_file_mini);
+                        }
+                        if (empty($data['local_upload'])) {
+                            if (($wo['config']['amazone_s3'] == 1 || $wo['config']['wasabi_storage'] == 1 || $wo['config']['ftp_upload'] == 1 || $wo['config']['spaces'] == 1 || $wo['config']['cloud_upload'] == 1 || $wo['config']['backblaze_storage'] == 1) && !empty($last_file_mini)) {
+                                $upload_s3 = lui_UploadToS3($last_file_mini);
+                            }
+                        }
+                    }
+                } else {
+                    if (!isset($data['compress']) && $second_file != 'gif') {
+                        @lui_CompressImage($filename, $filename, 10);
+                    }
+                }
+            }
+            if ($second_file != 'gif' && $wo['config']['watermark'] == 1 && !empty($wo['add_watermark']) && $wo['add_watermark'] == true) {
+                watermark_image($filename);
+            }
+        }
+        if (!empty($data['crop'])) {
+            $crop_image = lui_Resize_Crop_Image_cats($data['crop']['width'], $data['crop']['height'], $filename, $filename, 120);
+        }
+        if (empty($data['local_upload'])) {
+            if (($wo['config']['amazone_s3'] == 1 || $wo['config']['wasabi_storage'] == 1 || $wo['config']['ftp_upload'] == 1 || $wo['config']['spaces'] == 1 || $wo['config']['cloud_upload'] == 1 || $wo['config']['backblaze_storage'] == 1) && !empty($filename)) {
+                $upload_s3 = lui_UploadToS3($filename);
+            }
+        }
+        $last_data             = array();
+        $last_data['filename'] = $filename;
+        $last_data['name']     = $data['name'];
+        return $last_data;
+    }
+}
 function lui_ShareFile($data = array(), $type = 0, $crop = true) {
     global $wo, $sqlConnect, $s3;
     $allowed = '';

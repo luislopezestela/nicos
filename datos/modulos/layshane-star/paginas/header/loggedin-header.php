@@ -32,7 +32,7 @@ $totalcomprasencarrito = 0;
 if($wo['loggedin'] == true){
 	$comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->getOne(T_VENTAS);
 	if (!empty($comprapendiente)) {
-		$totalcarrito = $db->where('estado','0')->where('id_comprobante_v',$comprapendiente->id)->getValue('imventario','COUNT(*)');
+		$totalcarrito = $db->where('estado','0')->where('id_comprobante_v',$comprapendiente['id'])->getValue('imventario','COUNT(*)');
 	}
 	
 	//$items = $db->where('user_id',$wo['user']['user_id'])->get(T_USERCARD);

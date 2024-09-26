@@ -23,7 +23,7 @@ if($f == 'product_compra_list_bddc') {
             $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->getOne(T_VENTAS);
 		}else{
 			$comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->getOne(T_VENTAS);
-			$comprapendiente_ids = $comprapendiente->id;
+			$comprapendiente_ids = $comprapendiente['id'];
 		}
 		// Procesar los atributosaddcc y opciones seleccionadas
 		$atributosaddcc = $db->objectbuilder()->where('id_producto',$_POST['producto'])->get('atributos');
@@ -42,7 +42,7 @@ if($f == 'product_compra_list_bddc') {
 		$uniqueIdentifier = $comprapendiente_ids . '_' . $_POST['producto'] . '_' . $attributeString;
 		$lastGroupNumberRow = $db->orderBy('orden', 'desc')->where('id_comprobante_v',$comprapendiente_ids)->getOne('imventario', 'orden');
 		if($lastGroupNumberRow){
-		    $lastGroupNumber = $lastGroupNumberRow->orden;
+		    $lastGroupNumber = $lastGroupNumberRow['orden'];
 		} else{
 		    $lastGroupNumber = null;
 		}
@@ -51,7 +51,7 @@ if($f == 'product_compra_list_bddc') {
 		} else{
 			$sameIdentifierProducts = $db->where('atributo', $uniqueIdentifier)->where('id_comprobante_v',$comprapendiente_ids)->get('imventario');
 		    if($sameIdentifierProducts) {
-		        $nextGroupNumber = $sameIdentifierProducts[0]->orden;
+		        $nextGroupNumber = $sameIdentifierProducts[0]['orden'];
 		    }else{
 		        $nextGroupNumber = $lastGroupNumber + 1;
 		    }
@@ -59,7 +59,7 @@ if($f == 'product_compra_list_bddc') {
 
 		$item_producrto = $db->where('atributo',$uniqueIdentifier)->where('estado','0')->where('id_comprobante_v',$comprapendiente_ids)->getOne('imventario');
 		if(!empty($item_producrto)){
-			$actualizar_precio = $item_producrto->precio;
+			$actualizar_precio = $item_producrto['precio'];
 		}else{
 
 			if ($_POST['color']!="") {
@@ -133,7 +133,7 @@ if($f == 'product_compra_list_bddc') {
 				        }
 				    }
 				}
-			    $cantidad_prod = $db->rawQueryOne($sql)->cantidad;
+			    $cantidad_prod = $db->rawQueryOne($sql)['cantidad'];
 			    $cantidad_productos = ($cantidad_prod !== null) ? $cantidad_prod : 0;
 			} else{
 				if ($_POST['color']!="") {

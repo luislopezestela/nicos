@@ -35,7 +35,6 @@ if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
 
 ?>
 <style type="text/css">
-body{background-color:#F0F2FD;}
 .content_imventario_layshane{display:grid;flex-wrap:wrap;gap:2rem;width:100%;grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));}
 .card{overflow:hidden;position:relative;text-align:left;border-radius:0.5rem;user-select:none;box-shadow:0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);background-color:#fff;}
 .div_image_v{background:#3498db;border-bottom:none;position:relative;text-align:center;margin:-20px -20px 0;border-radius:5px 5px 0 0;padding:35px;}
@@ -374,20 +373,20 @@ body{background-color:#F0F2FD;}
                               <p class="table-row__name"><?=$producto['name'];?></p>
                               <?php if ($inv->anulado==0): ?>
                                 <?php if ($inv->tipo == 'compra'): ?>
-                                  <?php if($compra->garantia_m == 0) {
+                                  <?php if($compra['garantia_m'] == 0) {
                                     $cantidad_de_garantia = 0;
                                     $end_date_de_garantia = false;
                                   }else{
-                                    $cantidad_de_garantia = $compra->garantia_m;
-                                    $end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($compra->garantia);
+                                    $cantidad_de_garantia = $compra['garantia_m'];
+                                    $end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($compra['garantia']);
                                   } ?>
                                 <?php elseif($inv->tipo == 'venta'): ?>
-                                  <?php if($venta->garantia_m == 0) {
+                                  <?php if($venta['garantia_m'] == 0) {
                                     $cantidad_de_garantia = 0;
                                     $end_date_de_garantia = false;
                                   }else{
-                                    $cantidad_de_garantia = $venta->garantia_m;
-                                    $end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($venta->garantia);
+                                    $cantidad_de_garantia = $venta['garantia_m'];
+                                    $end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($venta['garantia']);
                                   } ?>
                                 <?php endif ?>
                                 <span class="table-row__small"><?=$end_date_de_garantia ?></span>
@@ -426,9 +425,9 @@ body{background-color:#F0F2FD;}
                             <?php if ($inv->tipo == 'compra'): ?>
                               <?=date('Y-m-d', strtotime($inv->fecha)); ?>
                             <?php elseif($inv->tipo == 'venta'): ?>
-                              <?php if ($venta->completado==2): ?>
+                              <?php if ($venta['completado']==2): ?>
                                 <span>Pendiente</span><br>
-                                <span><?=date('Y-m-d', strtotime($venta->fecha)); ?></span>
+                                <span><?=date('Y-m-d', strtotime($venta['fecha'])); ?></span>
                                 
                               <?php else: ?>
                                 <?=date('Y-m-d', strtotime($inv->fecha)); ?>
@@ -441,25 +440,25 @@ body{background-color:#F0F2FD;}
                         </td>
                         <td data-column="Documento" class="table-row__td">
                           <?php if ($inv->tipo == 'compra'): ?>
-                            <?php if ($compra->documento=='B'): ?>
-                              <p class="table-row__policy"><?=$compra->documento.'0'.$compra->numero_documento;?></p>
+                            <?php if ($compra['documento']=='B'): ?>
+                              <p class="table-row__policy"><?=$compra['documento'].'0'.$compra['numero_documento'];?></p>
                               <span class="table-row__small">Boleta</span>
-                            <?php elseif($compra->documento=='BS'): ?>
-                              <p class="table-row__policy"><?=$compra->documento.'0'.$compra->numero_documento;?></p>
+                            <?php elseif($compra['documento']=='BS'): ?>
+                              <p class="table-row__policy"><?=$compra['documento'].'0'.$compra['numero_documento'];?></p>
                               <span class="table-row__small">Nota simple</span>
-                            <?php elseif($compra->documento=='F'): ?>
-                              <p class="table-row__policy"><?=$compra->documento.'0'.$compra->numero_documento;?></p>
+                            <?php elseif($compra['documento']=='F'): ?>
+                              <p class="table-row__policy"><?=$compra['documento'].'0'.$compra['numero_documento'];?></p>
                               <span class="table-row__small">Factura</span>
                             <?php endif ?>
                           <?php elseif($inv->tipo == 'venta'): ?>
-                            <?php if ($venta->documento=='B'): ?>
-                              <p class="table-row__policy"><?=$venta->documento.'0'.$venta->numero_documento;?></p>
+                            <?php if ($venta['documento']=='B'): ?>
+                              <p class="table-row__policy"><?=$venta['documento'].'0'.$venta['numero_documento'];?></p>
                               <span class="table-row__small">Boleta</span>
-                            <?php elseif($venta->documento=='BS'): ?>
-                              <p class="table-row__policy"><?=$venta->documento.'0'.$venta->numero_documento;?></p>
+                            <?php elseif($venta['documento']=='BS'): ?>
+                              <p class="table-row__policy"><?=$venta['documento'].'0'.$venta['numero_documento'];?></p>
                               <span class="table-row__small">Nota simple</span>
-                            <?php elseif($venta->documento=='F'): ?>
-                              <p class="table-row__policy"><?=$venta->documento.'0'.$venta->numero_documento;?></p>
+                            <?php elseif($venta['documento']=='F'): ?>
+                              <p class="table-row__policy"><?=$venta['documento'].'0'.$venta['numero_documento'];?></p>
                               <span class="table-row__small">Factura</span>
                             <?php endif ?>
                           <?php endif ?>

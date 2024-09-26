@@ -5,7 +5,7 @@
 		<input type="checkbox" id="check-data-<?php echo($wo['category_lang_key']) ?>" class="delete-checkbox filled-in">
 		<label for="check-data-<?php echo($wo['category_lang_key']) ?>">
 			<?php if (!empty($section)): ?>
-				<?php echo($wo["lang"][$section->lang_key]) ?>
+				<?php echo($wo["lang"][$section['lang_key']]) ?>
 			<?php endif ?>
 		</label>
 	</td>

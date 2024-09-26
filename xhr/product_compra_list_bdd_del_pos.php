@@ -8,16 +8,16 @@ if($f == 'product_compra_list_bdd_del_pos') {
 	if (isset($_POST['value'])) {
 		$producto = lui_GetProduct($_POST['value']);
 		$comprapendiente = $db->where('id_del_vendedor',lui_Secure($wo['user']['user_id']))->where('completado','2')->where('estado_venta', 3)->getOne(T_VENTAS);
-		$uniqueIdentifier = $comprapendiente->id . '_' . $_POST['value'];
-		$item_producrto = $db->where('atributo', $uniqueIdentifier)->where('estado','2')->where('id_comprobante_v',$comprapendiente->id)->getOne('imventario');
+		$uniqueIdentifier = $comprapendiente['id'] . '_' . $_POST['value'];
+		$item_producrto = $db->where('atributo', $uniqueIdentifier)->where('estado','2')->where('id_comprobante_v',$comprapendiente['id'])->getOne('imventario');
 		//$db->where('id', $item_producrto->id)->delete('imventario');
 
 		$item_producto = $db->where('atributo', $uniqueIdentifier)
                     ->where('estado', '2')
-                    ->where('id_comprobante_v', $comprapendiente->id)
+                    ->where('id_comprobante_v', $comprapendiente['id'])
                     ->getOne('imventario');
 		if ($item_producto) {
-		    if ($db->where('id', $item_producto->id)->delete('imventario')) {
+		    if ($db->where('id', $item_producto['id'])->delete('imventario')) {
 		        $data['message'] = "El elemento se eliminó correctamente.";
 		    } else {
 		        $data['message'] = "Error al eliminar el elemento.";
@@ -28,20 +28,20 @@ if($f == 'product_compra_list_bdd_del_pos') {
 		if(!empty($item_producrto)){
 			if ($comprapendiente) {
 				$sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND (estado = 1 OR estado = 2)";
-				$productos_stock_disponibles = $db->rawQueryOne($sql)->cantidad;
+				$productos_stock_disponibles = $db->rawQueryOne($sql)['cantidad'];
 
             $sql2 = "SELECT COUNT(*) AS cantidad 
 		      FROM imventario 
 		      WHERE id_comprobante_v = ? 
 		      AND producto = ?
 		      AND barcode != '0'";
-				$params = array($comprapendiente->id, $producto['id']);
+				$params = array($comprapendiente['id'], $producto['id']);
 				$result = $db->rawQueryOne($sql2, $params);
-				$cantidad_productos_pos_listos = $result->cantidad;
+				$cantidad_productos_pos_listos = $result['cantidad'];
 				
 
 				$productos_stock_disponible = ($productos_stock_disponibles !== null) ? $productos_stock_disponibles : 0;
-				$productID = $item_producrto->id;
+				$productID = $item_producrto['id'];
 				$productos_vistos = [];
 				$producto_id = $producto['id'];
 				//Obtener todas las variantes de atributos para este producto
@@ -51,15 +51,15 @@ if($f == 'product_compra_list_bdd_del_pos') {
 			        $variantes_atributos[$atributo_atr->id_atributo][] = $atributo_atr->id_atributo_opciones;
 			    }
 			    // Construir un identificador único para este producto basado en sus variaciones
-			    $identificador_unico = $comprapendiente->id . '_' . $producto_id;
+			    $identificador_unico = $comprapendiente['id'] . '_' . $producto_id;
 			    foreach ($variantes_atributos as $atributo_atr => $opciones) {
 			        $identificador_unico .= '_' . implode('_', $opciones);
 			    }
 				
 				$productos_vistos[] = $identificador_unico;
-				$total_productos_grupo = $db->where('estado','2')->where('id_comprobante_v',$comprapendiente->id)->getValue('imventario','COUNT(DISTINCT orden)');
-            $total_productos_lista = $db->where('estado','2')->where('id_comprobante_v',$comprapendiente->id)->getValue('imventario','COUNT(*)');
-            $total_productos_listas_stoks = $db->where('estado','2')->where('atributo', $uniqueIdentifier)->where('id_comprobante_v',$comprapendiente->id)->getValue('imventario','COUNT(*)');
+				$total_productos_grupo = $db->where('estado','2')->where('id_comprobante_v',$comprapendiente['id'])->getValue('imventario','COUNT(DISTINCT orden)');
+            $total_productos_lista = $db->where('estado','2')->where('id_comprobante_v',$comprapendiente['id'])->getValue('imventario','COUNT(*)');
+            $total_productos_listas_stoks = $db->where('estado','2')->where('atributo', $uniqueIdentifier)->where('id_comprobante_v',$comprapendiente['id'])->getValue('imventario','COUNT(*)');
             if ($productos_stock_disponible > 0) {
             	$limite_de_stock = 0;
             }else{
@@ -70,9 +70,9 @@ if($f == 'product_compra_list_bdd_del_pos') {
             $wo['igv_dos'] = 0;
             $wo['total_dos'] = 0;
             $indexdefault_currency = array_search($wo['currencies'][$producto['currency']]['text'], array_column($wo['currencies'], 'text'));
-				$total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente->id)->where('currency',$wo['currencies'][$producto['currency']]['text'])->where('estado','2')->getValue('imventario','COUNT(*)');
+				$total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$wo['currencies'][$producto['currency']]['text'])->where('estado','2')->getValue('imventario','COUNT(*)');
 				if ($total_productos_lista_uno>0) {
-					$total_productos_price_f = $db->where('id_comprobante_v',$comprapendiente->id)->where('currency',$wo['currencies'][$producto['currency']]['text'])->where('estado','2')->getValue('imventario','SUM(precio)');
+					$total_productos_price_f = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$wo['currencies'][$producto['currency']]['text'])->where('estado','2')->getValue('imventario','SUM(precio)');
 					
 					$wo['subtotal_dos'] = number_format($total_productos_price_f / (1.18), '2','.','');
 					$wo['igv_dos']          = number_format($wo['subtotal_dos'] * 0.18, '2','.','');

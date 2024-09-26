@@ -1,3 +1,6 @@
+.input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 50px rgb(13 13 13 / 78%) inset;
+}
 .wow_sett_sidebar > ul > li > a{color: #dfdfdf!important;}
 .carrito_null_layshane,.ch_total_price{background-color:rgb(255 255 255 / 7%);}
 .modal.fade .lang_select_modal{background-color:#0F1111;}
@@ -271,6 +274,7 @@ iframe, .post-map img {border-color: #4b4b4b;}
 .messages-load-more-messages {
     background-color: #3f3f3f;
 }
+.carousel h3{color:#FAFAFA;}
 #wo_msg_right_prt .msg_write_combo, #wo_msg_right_prt .text-sender-container textarea {
     background: #363636 !important;
     border: none !important;

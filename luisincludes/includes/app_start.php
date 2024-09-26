@@ -1,7 +1,7 @@
 <?php
-ini_set('display_errors', 0);
-ini_set('display_startup_errors', 0);
-error_reporting(0);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 @ini_set("max_execution_time", 0);
 @ini_set("memory_limit", "-1");
 @set_time_limit(0);
@@ -229,6 +229,7 @@ if (isset($_GET["lang"]) and !empty($_GET["lang"])) {
         }
     }
 }
+// Limpiar la caché de la barra lateral si es necesario
 if ($wo["loggedin"] == true && $wo["config"]["cache_sidebar"] == 1) {
     if (!empty($_COOKIE["last_sidebar_update"])) {
         if ($_COOKIE["last_sidebar_update"] < time() - 120) {
@@ -238,47 +239,90 @@ if ($wo["loggedin"] == true && $wo["config"]["cache_sidebar"] == 1) {
         lui_CleanCache();
     }
 }
+
+// Configurar el idioma predeterminado si no está configurado
 if (empty($_SESSION["lang"])) {
     $_SESSION["lang"] = $wo["config"]["defualtLang"];
 }
 $wo["language"]      = $_SESSION["lang"];
 $wo["language_type"] = "ltr";
-// Add rtl languages here.
-$rtl_langs           = array(
+
+// Idiomas RTL (de derecha a izquierda)
+$rtl_langs = array(
     "arabic",
     "urdu",
     "hebrew",
     "persian"
 );
+
+// Manejo de la cookie "ad-con"
 if (!isset($_COOKIE["ad-con"])) {
     setcookie("ad-con", htmlentities(json_encode(array(
         "date" => date("Y-m-d"),
         "ads" => array()
-    ))), time() + 10 * 365 * 24 * 60 * 60);
+    ))), [
+        'expires' => time() + 10 * 365 * 24 * 60 * 60,
+        'path' => '/',
+        'secure' => true,
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
 }
+
+// Inicializar "ad-con" en $wo
 $wo["ad-con"] = array();
 if (!empty($_COOKIE["ad-con"])) {
-    $wo["ad-con"] = json_decode(html_entity_decode($_COOKIE["ad-con"]));
-    $wo["ad-con"] = ToArray($wo["ad-con"]);
+    $wo["ad-con"] = json_decode(html_entity_decode($_COOKIE["ad-con"]), true);
+    if (!is_array($wo["ad-con"])) {
+        $wo["ad-con"] = array();
+    }
 }
-if (!is_array($wo["ad-con"]) || !isset($wo["ad-con"]["date"]) || !isset($wo["ad-con"]["ads"])) {
-    setcookie("ad-con", htmlentities(json_encode(array(
+
+// Verificar y actualizar la estructura de la cookie "ad-con" si es necesario
+if (!isset($wo["ad-con"]["date"]) || !isset($wo["ad-con"]["ads"])) {
+    setcookie("ad-con", json_encode(array(
         "date" => date("Y-m-d"),
         "ads" => array()
-    ))), time() + 10 * 365 * 24 * 60 * 60);
-}
-if (is_array($wo["ad-con"]) && isset($wo["ad-con"]["date"]) && strtotime($wo["ad-con"]["date"]) < strtotime(date("Y-m-d"))) {
-    setcookie("ad-con", htmlentities(json_encode(array(
+    )), [
+        'expires' => time() + 10 * 365 * 24 * 60 * 60,
+        'path' => '/',
+        'secure' => false,
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
+} elseif (strtotime($wo["ad-con"]["date"]) < strtotime(date("Y-m-d"))) {
+    setcookie("ad-con", json_encode(array(
         "date" => date("Y-m-d"),
         "ads" => array()
-    ))), time() + 10 * 365 * 24 * 60 * 60);
+    )), [
+        'expires' => time() + 10 * 365 * 24 * 60 * 60,
+        'path' => '/',
+        'secure' => true,
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
 }
+
+// Manejo de la cookie "_us"
 if (!isset($_COOKIE["_us"])) {
-    setcookie("_us", time() + 60 * 60 * 24, time() + 10 * 365 * 24 * 60 * 60);
+    setcookie("_us", time(), [
+        'expires' => time() + 10 * 365 * 24 * 60 * 60,
+        'path' => '/',
+        'secure' => false,
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
+} elseif ($_COOKIE["_us"] < time()) {
+    setcookie("_us", time(), [
+        'expires' => time() + 10 * 365 * 24 * 60 * 60,
+        'path' => '/',
+        'secure' => true,
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
 }
-if ((isset($_COOKIE["_us"]) && $_COOKIE["_us"] < time()) || 1) {
-    setcookie("_us", time() + 60 * 60 * 24, time() + 10 * 365 * 24 * 60 * 60);
-}
+
+
 // checking if corrent language is rtl.
 foreach ($rtl_langs as $lang) {
     if ($wo["language"] == strtolower($lang)) {
@@ -312,49 +356,51 @@ if ($wo["config"]["seoLink"] == 0) {
     $wo["marker"] = "&";
 }
 require_once "./luisincludes/includes/data.php";
+
+
 $wo["emo"]                           = $emo;
 $wo["profile_picture_width_crop"]    = 150;
 $wo["profile_picture_height_crop"]   = 150;
 $wo["profile_picture_image_quality"] = 70;
 $wo["redirect"]                      = 0;
 
-$wo["update_cache"]                  = "";
+$wo["update_cache"] = "";
 if (!empty($wo["config"]["last_update"])) {
-    $update_cache = time() - 21600;
-    if ($update_cache < $wo["config"]["last_update"]) {
-        $wo["update_cache"] = "?" . sha1(time());
+    $lastUpdate = (int)$wo["config"]["last_update"];
+    $currentTime = time();
+    $updateInterval = 21600; // 6 horas en segundos
+
+    if (($currentTime - $updateInterval) < $lastUpdate) {
+        $wo["update_cache"] = "?" . sha1($currentTime);
     }
 }
 
-// night mode
+// Manejo del modo nocturno/diurno
+$cookieLifetime = time() + 10 * 365 * 24 * 60 * 60; // 10 años en segundos
+
+// Verificar si se solicita un cambio de modo mediante GET
+if (!empty($_GET["mode"])) {
+    if ($_GET["mode"] == "day" || $_GET["mode"] == "night") {
+        setcookie("mode", $_GET["mode"], $cookieLifetime, "/");
+        $_COOKIE["mode"] = $_GET["mode"];
+    }
+}
+
+// Si no hay cookie establecida, configurarla como "day"
 if (empty($_COOKIE["mode"])) {
-    setcookie("mode", "day", time() + 10 * 365 * 24 * 60 * 60, "/");
+    setcookie("mode", "day", $cookieLifetime, "/");
     $_COOKIE["mode"] = "day";
+}
+
+// Establecer el modo y los textos correspondientes
+if ($_COOKIE["mode"] == "day") {
     $wo["mode_link"] = "night";
     $wo["mode_text"] = $wo["lang"]["night_mode"];
-} else {
-    if ($_COOKIE["mode"] == "day") {
-        $wo["mode_link"] = "night";
-        $wo["mode_text"] = $wo["lang"]["night_mode"];
-    }
-    if ($_COOKIE["mode"] == "night") {
-        $wo["mode_link"] = "day";
-        $wo["mode_text"] = $wo["lang"]["day_mode"];
-    }
+} elseif ($_COOKIE["mode"] == "night") {
+    $wo["mode_link"] = "day";
+    $wo["mode_text"] = $wo["lang"]["day_mode"];
 }
-if (!empty($_GET["mode"])) {
-    if ($_GET["mode"] == "day") {
-        setcookie("mode", "day", time() + 10 * 365 * 24 * 60 * 60, "/");
-        $_COOKIE["mode"] = "day";
-        $wo["mode_link"] = "night";
-        $wo["mode_text"] = $wo["lang"]["night_mode"];
-    } elseif ($_GET["mode"] == "night") {
-        setcookie("mode", "night", time() + 10 * 365 * 24 * 60 * 60, "/");
-        $_COOKIE["mode"] = "night";
-        $wo["mode_link"] = "day";
-        $wo["mode_text"] = $wo["lang"]["day_mode"];
-    }
-}
+
 include_once "luisincludes/includes/onesignal_config.php";
 
 // manage packages

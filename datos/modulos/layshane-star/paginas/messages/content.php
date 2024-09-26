@@ -28,7 +28,7 @@ button, input, select, textarea {
 textarea {
     font-size: 14.5px;
 }
-
+footer{padding:0!important;}
 .wo-msg-container {
     width: 100%;
     height: 100%;

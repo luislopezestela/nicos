@@ -1,8 +1,5 @@
 <?php echo lui_LoadPage("sidebar/left-sidebar"); ?>
 <style type="text/css">
-body{background-color:#F0F2FD;}
-</style>
-<style type="text/css">
 /* Estilos previamente definidos */
 .wo_settings_page{background:transparent;box-shadow:initial;}
 .containers {

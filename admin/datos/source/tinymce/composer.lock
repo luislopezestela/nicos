@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c9e73d2025e00caae5bde2e2fb837490",
+    "content-hash": "279791eacd73c9acc8af4e75973a18ff",
     "packages": [
         {
             "name": "tinymce/tinymce",
-            "version": "6.7.3",
+            "version": "7.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "2a1344eb95eb8ed512f4ad56986bfc230c8c74c7"
+                "reference": "ca4b8ce34f4d4f4c1485da90a4247886c4e45335"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/2a1344eb95eb8ed512f4ad56986bfc230c8c74c7",
-                "reference": "2a1344eb95eb8ed512f4ad56986bfc230c8c74c7",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/ca4b8ce34f4d4f4c1485da90a4247886c4e45335",
+                "reference": "ca4b8ce34f4d4f4c1485da90a4247886c4e45335",
                 "shasum": ""
             },
             "type": "component",
@@ -42,7 +42,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT-only"
+                "GPL-2.0-or-later"
             ],
             "description": "Web based JavaScript HTML WYSIWYG editor control.",
             "homepage": "https://www.tiny.cloud/",
@@ -61,9 +61,9 @@
                 "wysiwyg"
             ],
             "support": {
-                "source": "https://github.com/tinymce/tinymce-dist/tree/6.7.3"
+                "source": "https://github.com/tinymce/tinymce-dist/tree/7.2.0"
             },
-            "time": "2023-11-15T00:41:51+00:00"
+            "time": "2024-06-19T06:08:58+00:00"
         }
     ],
     "packages-dev": [],

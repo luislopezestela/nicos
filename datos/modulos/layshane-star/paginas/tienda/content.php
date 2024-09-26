@@ -22,6 +22,8 @@ if(!empty($category_name)){
 	$placeholder = str_replace('{category_name}', $category_name, $wo['lang']['search_for_products']);
 }
 $section_keys = lui_GetSectionCatKeys('section_product');
+$seleccionsection = false;
+$seleccionsection_name = 'Seleccionar Categoría';
 ?>
 <div class="header_layshane_tienda" style="text-align:center;">
 	<h1><?php echo $wo['lang']['tienda'] ?> <?=$wo['config']['siteName'];?></h1>
@@ -41,12 +43,19 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 		<?php endif ?>
 	<?php else: ?>
 		<div class="text_category">
-			<span><?=$wo['lang']['products'];?></span>
+			<?php if (isset($_GET['section'])): ?>
+				<?= $wo["lang"][$section_keys[$_GET['section']]]; ?>
+				<?php $seleccionsection = $_GET['section']; ?>
+				<?php $seleccionsection_name = $wo["lang"][$section_keys[$_GET['section']]]; ?>
+			<?php else: ?>
+				<span><?=$wo['lang']['products'];?></span>
+			<?php endif ?>
 		</div>
 	<?php endif ?>
+
 </div>
 <div class="contenido_layshane_items products wo_market">
-		<div class="sidebar_layshane_items leftcol">
+		<!--<div class="sidebar_layshane_items leftcol">
 			<div class="head_productos_fitrar wo_job_head_filter wo_market_head_filter">
 				<div class="buscar_productos_layshane">
 					<form action="" class="form_search_layshane">
@@ -109,16 +118,43 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 						<?php endforeach ?>
 					<?php endif ?>
 				</div>
-				<!---->
+				
 			</div>
-		</div>
+		</div>-->
 		
 		<div class="caja_de_productos_en_lista">
+
+			
+
+
 			<section>
 					<div class="carousel">
 						<div class="carousel__wrapper">
 							<div class="carousel__header">
-						        <h2 class="carousel__headline">Categorias</h2>
+						        <!--<h2 class="carousel__headline">Categorias</h2>-->
+						        <div id="categoryContainer">
+								    <button id="openMenuButton"><?=$seleccionsection_name ?> </button>
+
+								    <?php if (!empty($wo['sections_categories'])): ?>
+									    <div id="categoryMenu">
+									    	<?php if (empty($_GET['section'])): ?>
+								        		<?php $activesection = 'active'; ?>
+								        	<?php else: ?>
+								        		<?php $activesection = ''; ?>
+								        	<?php endif ?>
+									        <a href="<?php echo lui_SeoLink('index.php?link1=tienda');?>" data-ajax="?link1=tienda" class="categoryButton <?=$activesection; ?>" data-category="all">Mostrar todo</a>
+									        <?php foreach ($wo['sections_categories'] as $section_idcat => $section_name): ?>
+									        	<?php if ($seleccionsection==$section_idcat): ?>
+									        		<?php $activesection = 'active'; ?>
+									        	<?php else: ?>
+									        		<?php $activesection = ''; ?>
+									        	<?php endif ?>
+										        <a href="<?php echo lui_SeoLink('index.php?link1=tienda&section='.$section_idcat);?>" data-ajax="?link1=tienda&section=<?=$section_idcat;?>" class="categoryButton <?=$activesection; ?>" data-category="category<?=$section_idcat?>"><?= $wo["lang"][$section_keys[$section_idcat]]; ?></a>
+									        <?php endforeach ?>
+									    </div>
+									    <div id="menuOverlay"></div>
+									<?php endif ?>
+								</div>
 						        <div class="carousel__controls">
 						          <button class="carousel__arrow disabled arrow-prev" aria-label="Atras"></button>
 						          <button class="carousel__arrow arrow-next" aria-label="Adelante"></button>
@@ -135,15 +171,30 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 										$active = ($category_id == $cat_id_produc) ? 'active not_seen_story' : '';?>
 						    			<?php if($cat_id_produc==0): ?>
 						    			<?php else: ?>
-						    				<li class="carousel__item <?php echo $active?>">
-						    					<a href="<?php echo lui_SeoLink('index.php?link1=tienda&c_id='.$cat_id_produc);?>" data-ajax="?link1=tienda&c_id=<?=$cat_id_produc?>" alt="<?php echo $cat_nombre_produc;?>">
-						    						<figure class="carousel__item__image categories-g__bg bg--change" data-bg="<?php echo($cat_logo_produc) ?>" style="background-image: url(&quot;<?php echo($cat_logo_produc) ?>&quot;);"></figure>
+						    				<?php if (isset($_GET['section'])): ?>
+							    				<?php if ($_GET['section'] == $category['id_section']): ?>
+								    				<li class="carousel__item <?php echo $active?>">
+								    					<a href="<?php echo lui_SeoLink('index.php?link1=tienda&c_id='.$cat_id_produc.'&section='.$category['id_section']);?>" data-ajax="?link1=tienda&c_id=<?=$cat_id_produc.'&section='.$category['id_section']?>" alt="<?php echo $cat_nombre_produc;?>">
+								    						<figure class="carousel__item__image categories-g__bg bg--change" data-bg="<?php echo($cat_logo_produc) ?>" style="background-image: url(&quot;<?php echo($cat_logo_produc) ?>&quot;);"></figure>
 
-							    					<div class="carousel__description">
-							    						<h3 class="carousel__title"><?php echo $cat_nombre_produc;?></h3>
-							    					</div>
-							    				</a>
-							    			</li>
+									    					<div class="carousel__description">
+									    						<h3 class="carousel__title"><?php echo $cat_nombre_produc;?></h3>
+									    					</div>
+									    				</a>
+									    			</li>
+								    			<?php else: ?>
+							    				<?php endif ?>
+						    				<?php else: ?>
+						    					<li class="carousel__item <?php echo $active?>">
+							    					<a href="<?php echo lui_SeoLink('index.php?link1=tienda&c_id='.$cat_id_produc.'&section='.$category['id_section']);?>" data-ajax="?link1=tienda&c_id=<?=$cat_id_produc.'&section='.$category['id_section']?>" alt="<?php echo $cat_nombre_produc;?>">
+							    						<figure class="carousel__item__image categories-g__bg bg--change" data-bg="<?php echo($cat_logo_produc) ?>" style="background-image: url(&quot;<?php echo($cat_logo_produc) ?>&quot;);"></figure>
+
+								    					<div class="carousel__description">
+								    						<h3 class="carousel__title"><?php echo $cat_nombre_produc;?></h3>
+								    					</div>
+								    				</a>
+								    			</li>
+						    				<?php endif ?>
 						    			<?php endif ?>
 						    		<?php } ?>
 						    	<?php else: $subcat_name = false;?>
@@ -154,21 +205,36 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 						    			<?php $cat_logo_produc = $category['logo'];
 						    			$cat_nombre_producs = $wo["lang"][$category["lang_key"]];?>
 						    			<?php if(!empty($wo['products_sub_categories'][$_GET['c_id']])): if($all_categorie){ ?>
-						    				<li class="carousel__item <?php echo $active?>">
-						    					<a href="<?php echo lui_SeoLink('index.php?link1=tienda');?>" data-ajax="?link1=tienda"><svg xmlns="http://www.w3.org/2000/svg" height="44" width="44" viewBox="0 0 512 512" fill="#2097ef"><path d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z"/></svg>
+						    				<li class="carousel__item ">
+						    					<a href="<?php echo lui_SeoLink('index.php?link1=tienda&section='.$category['id_section']);?>" data-ajax="?link1=tienda&section=<?=$category['id_section'];?>"><svg xmlns="http://www.w3.org/2000/svg" height="44" width="44" viewBox="0 0 512 512" fill="#2097ef"><path d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z"/></svg>
 						    					</a>
 						    				</li>
 						    			<?php } ?>
 						    			<?php else: if(!$cat_id_produc==0){?>
-						    				<li class="carousel__item <?php echo $active?>">
-						    					<a href="<?php echo lui_SeoLink('index.php?link1=tienda&c_id='.$cat_id_produc);?>" data-ajax="?link1=tienda&c_id=<?=$cat_id_produc?>" alt="<?php echo $cat_nombre_producs;?>">
-						    						<figure class="carousel__item__image categories-g__bg bg--change" data-bg="<?php echo($cat_logo_produc) ?>" style="background-image: url(&quot;<?php echo($cat_logo_produc) ?>&quot;);"></figure>
+						    				<?php if (isset($_GET['section'])): ?>
+							    				<?php if ($_GET['section'] == $category['id_section']): ?>
+								    				<li class="carousel__item <?php echo $active?>">
+								    					<a href="<?php echo lui_SeoLink('index.php?link1=tienda&c_id='.$cat_id_produc.'&section='.$category['id_section']);?>" data-ajax="?link1=tienda&c_id=<?=$cat_id_produc.'&section='.$category['id_section']?>" alt="<?php echo $cat_nombre_producs;?>">
+								    						<figure class="carousel__item__image categories-g__bg bg--change" data-bg="<?php echo($cat_logo_produc) ?>" style="background-image: url(&quot;<?php echo($cat_logo_produc) ?>&quot;);"></figure>
 
-						    						<div class="carousel__description">
-						    							<h3 class="carousel__title"><?=$cat_nombre_producs;?></h3>
-						    						</div>
-						    					</a>
-						    				</li>
+								    						<div class="carousel__description">
+								    							<h3 class="carousel__title"><?=$cat_nombre_producs;?></h3>
+								    						</div>
+								    					</a>
+								    				</li>
+								    			<?php else: ?>
+							    				<?php endif ?>
+							    			<?php else: ?>
+							    				<li class="carousel__item <?php echo $active?>">
+							    					<a href="<?php echo lui_SeoLink('index.php?link1=tienda&c_id='.$cat_id_produc.'&section='.$category['id_section']);?>" data-ajax="?link1=tienda&c_id=<?=$cat_id_produc.'&section='.$category['id_section']?>" alt="<?php echo $cat_nombre_producs;?>">
+							    						<figure class="carousel__item__image categories-g__bg bg--change" data-bg="<?php echo($cat_logo_produc) ?>" style="background-image: url(&quot;<?php echo($cat_logo_produc) ?>&quot;);"></figure>
+
+							    						<div class="carousel__description">
+							    							<h3 class="carousel__title"><?=$cat_nombre_producs;?></h3>
+							    						</div>
+							    					</a>
+							    				</li>
+							    			<?php endif ?>
 						    			<?php } endif ?>
 						    		<?php } ?>
 						    		<?php if(!empty($_GET['c_id']) && !empty($wo['products_sub_categories'][$_GET['c_id']])){
@@ -214,6 +280,48 @@ $section_keys = lui_GetSectionCatKeys('section_product');
 						</div>
 					</div>
 				</section>
+				<div>
+					<div class="search-filter-container">
+    <div class="buscar_productos_layshane">
+        <form action="" class="form_search_layshane">
+            <label for="product-text">
+                <input class="input" type="text" onkeyup="Wo_SearchProducts(this.value)" placeholder="<?php echo $placeholder; ?>" id="product-text" required="">
+                <div class="fancy-bg"></div>
+                <div class="search">
+                    <svg viewBox="0 0 24 24" width="17px" aria-hidden="true">
+                        <g>
+                            <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+                        </g>
+                    </svg>
+                </div>
+                <button class="close-btn" type="reset">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </label>
+        </form>
+    </div>
+
+    <div class="espacio_para_filtrar_y_ordenar">
+        <div class="dropdown market_widget dropdown_market_stylin_widget">
+            <div class="m_widget_head dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+                <?php echo $wo['lang']['sort_by'];?>
+            </div>
+            <div class="dropdown-menu menu_drop_up_page dropdown_en_lista_view_productos">
+                <div class="market_categories">
+                    <ul class="product-sort-slider">
+                        <li class="active" onclick="changePriceSortValue('latest');$(this).addClass('active');"><span></span><?php echo $wo['lang']['latest'] ?></li>
+                        <li onclick="changePriceSortValue('price_low');$(this).addClass('active');"><span></span><?php echo $wo['lang']['price_low'] ?></li>
+                        <li onclick="changePriceSortValue('price_high');$(this).addClass('active');"><span></span><?php echo $wo['lang']['price_high'] ?></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+				</div>
 
 			<div class="latest-products">
 				<?php

@@ -1,5 +1,4 @@
 <style type="text/css">
-body{background-color:#F0F2FD;}
 .content_imventario_layshane{display:grid;flex-wrap:wrap;gap:2rem;width:100%;grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));}
 .card{overflow:hidden;position:relative;text-align:left;border-radius:0.5rem;user-select:none;box-shadow:0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);background-color:#fff;}
 .div_image_v{background:#47c9a2;border-bottom:none;position:relative;text-align:center;margin:-20px -20px 0;border-radius:5px 5px 0 0;padding:35px;}
@@ -12,6 +11,27 @@ body{background-color:#F0F2FD;}
 @keyframes animate{from{transform:scale(1);}to{transform:scale(1.09);}}
 </style>
 <?php echo lui_LoadPage("sidebar/left-sidebar"); ?>
+<?php
+$ventas_s_total = $db->where('completado', '1')
+	->where('sucursal', $wo['user']['sucursal'])
+	->getValue(T_VENTAS, 'COUNT(*)');
+$ventas_s_imventario = $db->where('estado', '1')
+	->where('id_sucursal', $wo['user']['sucursal'])
+	->getValue('imventario', 'SUM(CASE WHEN tipo = "venta" THEN cantidad WHEN tipo = "venta" THEN -cantidad ELSE 0 END)');
+
+$ventas_s_pedidos = $db->where('completado', '2')
+	->where('web', '1')
+	->where('sucursal', $wo['user']['sucursal'])
+	->getValue(T_VENTAS, 'COUNT(*)');
+$ventas_s_pendientes = $db->where('completado', '2')
+	->where('web', '0')
+	->where('sucursal', $wo['user']['sucursal'])
+	->getValue(T_VENTAS, 'COUNT(*)');
+$ventas_s_anulados = $db->where('estado', '1')
+	->where('anulado', 1)
+	->where('id_sucursal', $wo['user']['sucursal'])
+	->getValue('imventario', 'SUM(CASE WHEN tipo = "venta" THEN cantidad WHEN tipo = "venta" THEN -cantidad ELSE 0 END)');
+?>
 <div class="columna-8 sett_page wo_new_sett_pagee main_layshane_configuration_menu">
 	<div class="wow_sett_sidebar button_controle_layshane_back_settign">
 		<ul class="list-unstyled" style="padding-bottom:0;">
@@ -43,10 +63,63 @@ body{background-color:#F0F2FD;}
 			            	</div>
 			            	<div class="content">
 			            		<span class="title">VENTAS</span> 
-			            		<p class="message">0</p>
+			            		<p class="message"><?=$ventas_s_total;?></p>
 			            	</div>
 			            </div>
 			        </div>
+		    		<div class="card">
+		    			<div class="header"> 
+			            	<div class="div_image_v">
+			            		<div class="image">
+			            			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
+			            		</div>
+			            	</div>
+			            	<div class="content">
+			            		<span class="title">PRODUCTOS VENDIDOS</span> 
+			            		<p class="message"><?=$ventas_s_imventario;?></p>
+			            	</div>
+			            </div>
+			        </div>
+			        <div class="card">
+		    			<div class="header"> 
+			            	<div class="div_image_v">
+			            		<div class="image">
+			            			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
+			            		</div>
+			            	</div>
+			            	<div class="content">
+			            		<span class="title">PENDIENTES</span> 
+			            		<p class="message"><?=$ventas_s_pendientes;?></p>
+			            	</div>
+			            </div>
+			        </div>
+			        <div class="card">
+		    			<div class="header"> 
+			            	<div class="div_image_v">
+			            		<div class="image">
+			            			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
+			            		</div>
+			            	</div>
+			            	<div class="content">
+			            		<span class="title">PEDIDOS</span> 
+			            		<p class="message"><?=$ventas_s_pedidos;?></p>
+			            	</div>
+			            </div>
+			        </div>
+			        <div class="card">
+		    			<div class="header"> 
+			            	<div class="div_image_v">
+			            		<div class="image">
+			            			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
+			            		</div>
+			            	</div>
+			            	<div class="content">
+			            		<span class="title">ANULADOS</span> 
+			            		<p class="message"><?=$ventas_s_anulados;?></p>
+			            	</div>
+			            </div>
+			        </div>
+
 			    </section>
 		    </div>
 		</div>

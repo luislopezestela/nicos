@@ -1,7 +1,7 @@
 <style type="text/css">
 header{display:none;}
 footer{display:none;}
-
+.effect-load{max-width:100%!important;}
 .content-container{margin:0;}
 .contenido_pos {
     display: grid;
@@ -11,7 +11,7 @@ footer{display:none;}
         "footer";
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 1fr;
-    height: 100vh;
+    height: 100vh!important;
 }
 
 .header_pos {
@@ -666,7 +666,6 @@ footer{display:none;}
     cursor:pointer;
 }
 .producto_pos_list:hover {
-    transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 .producto_pos_list img {
@@ -720,15 +719,16 @@ footer{display:none;}
 	z-index: 1;
 }
 .menu_atributos_productos {
-    background: #FAFAFA;
     position: fixed;
+    background: #FAFAFA;
     top: 0;
+    bottom:0;
     left: -100%;
-    width: 0%;
+    width: 100%;
     max-width: 450px;
     height: 100%;
     z-index: 10000;
-    transition: left 0.3s ease;
+    transition: left 0.5s ease;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -737,9 +737,7 @@ footer{display:none;}
 }
 
 .menu_atributos_productos.active_atr_pos {
-    left: 0;
-    width: 100%;
-    max-width: 450px;
+    left:0%;
 }
 
 .menu_header {
@@ -859,34 +857,34 @@ footer{display:none;}
 }
 
 .footer_pos_item_atribute {
-    position:fixed;
+    position:absolute;
     bottom:0;
     width:100%;
     max-width:450px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-top: 1px solid #ccc;
+    padding:10px;
+    background-color:#f9f9f9;
+    border-top:1px solid #ccc;
 }
 
 .footer_pos_item_atribute .agregar_button {
-    display: block;
-    width: 100%;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    display:block;
+    width:100%;
+    padding:10px 20px;
+    background-color:#007bff;
+    color:#fff;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+    transition:background-color 0.3s ease;
 }
 .footer_pos_item_atribute .agregar_button:hover {
-    background-color: #0056b3;
+    background-color:#0056b3;
 }
 
 .footer_pos_item_atribute .agregar_button:active {
-    transform: translateY(1px);
-    transition: background-color 0.1s ease;
+    transform:translateY(1px);
+    transition:background-color 0.1s ease;
 }
 
 </style>
@@ -1055,6 +1053,175 @@ footer{display:none;}
 .cantidad_opt_at_pos_lista span{color:#007eff!important;}
 </style>
 <style type="text/css">
+.contenido_modo_pago,.monten_selec_cash{
+    display:flex;
+    width:100%;
+    flex-wrap:nowrap;
+    gap:0.6rem;
+    margin-bottom:10px;
+}
+.cash_selects{
+    width:100%;
+    background:#fff;
+    position:relative;
+    border-radius:8px;
+    cursor:pointer;
+    user-select:none;
+}
+.cash_selects span{
+    padding:8px;
+    border-bottom:1px solid #ccc;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+}
+.boody_cashs{padding:10px;display:flex;justify-content:space-between;}
+.boody_cashs svg{width:50px;height:50px;}
+.cash_selects .status{
+    display:inline-flex;
+    padding:10px;
+    justify-content:center;
+    align-items:center;
+    border-radius:10px;
+}
+.cash_selects .status.cerrado{
+    color:#fff;
+    background:rgba(231, 76, 60,1.0);
+}
+.cash_selects .status.abierto{
+    color:#fff;
+    background:rgba(39, 174, 96,1.0);
+}
+.cash_v{
+    width:100%;
+    max-width:200px;
+    position:relative;
+    border-radius:8px;
+    padding:15px;
+    display:flex;justify-content:space-between;
+    cursor:pointer;
+    border:3px solid #ccc;
+    transition: all .5s ease;
+}
+.cash_v:hover{border:3px solid rgba(46, 204, 113,1.0);color:rgba(46, 204, 113,1.0);}
+.cash_v{color:rgba(39, 174, 96,1.0);font-weight:bold;}
+.cash_vi{display:none;}
+.cash_vi:checked + label{border:3px solid rgba(46, 204, 113,1.0);color:rgba(46, 204, 113,1.0);background:rgba(39, 174, 96,0.13)}
+
+.contenido_pago_seleccionados{
+    display:block;
+    width:100%;
+    position:relative;
+}
+.pagos_en_tienda_contenido {
+    display: grid;
+    gap: 1rem;
+    position:relative;
+    overflow:hidden;
+    height:100%;
+    grid-template-columns: 1fr 300px;
+}  
+.seleccion_resultado {
+margin-bottom:20px;
+}
+.seleccion_resultado input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.5em;
+    text-align: right;
+    border:none;
+    border-radius:6px;
+    background-color: #f9f9f9;
+    color: #333;
+    outline:none;
+}
+.contiene_accesos_rapidos{
+    display:grid;
+    width:100%;
+    grid-template-areas:
+        "main_data"
+        "teclado";
+    max-width:300px;
+    position:sticky;
+    grid-template-rows:1fr 1fr;
+    top:40px;
+    height: 100%;
+}
+.montos_pay_contens{
+    display: block;
+    grid-area: main_data;
+}
+.teclado_numerico {
+    position:relative;
+    width:100%;
+    bottom:0;
+    display: grid;
+    grid-area: teclado;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.teclado_numerico div {
+    padding: 15px;
+    font-size: 1.5em;
+    background-color: #074b6e;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.teclado_numerico div:hover {
+    background-color: #055a85;
+}
+
+.teclado_numerico div[data-action="clear"],
+.teclado_numerico div[data-action="delete"] {
+    background-color: #dc3545;
+}
+
+.teclado_numerico div[data-action="clear"]:hover,
+.teclado_numerico div[data-action="delete"]:hover {
+    background-color: #bd2130;
+}
+.inputs_pagos_storeds{display:block;overflow:scroll;padding:10px}
+.contiene_los_modos_de_pago{top:0;position:sticky;background:#e9ecef;overflow:auto;}
+
+
+.selccion_icons_cs{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius: 5px;
+    border: 2px solid #ddd;
+}
+.selccion_icons_cs.activin{border:2px solid rgba(39, 174, 96,1.0);
+    border-radius: 5px;}
+.icon_selections{padding:10px;background:#f9f9f9;}
+.icon_selections .yape{background:rgba(155, 89, 182,1.0);color:#FAFAFA;border-radius:4px;padding:8px;font-weight:bold;}
+.monto_total_a_pagar{padding:10px;width:100%;border-radius:10px;border:2px solid #ddd;background:#FAFAFA;display:flex;margin-bottom:10px;justify-content:center;align-items:center;gap:1rem;user-select:none;}
+.mount_total{font-size:22px;}
+.alerta_mensaje_pay p{font-size:14px;padding:10px;background:rgba(231, 76, 60,0.10);display:block;color:rgba(192, 57, 43,1.0);font-weight:bold;border-radius:10px;transition:all .5s;}
+@media screen and (max-width: 1000px){
+    .body_pos{grid-template-columns:1fr 300px;}
+    .pagos_en_tienda_contenido{grid-template-columns: 1fr 200px;}
+}
+@media screen and (max-width: 550px){
+    .pagos_en_tienda_contenido{grid-template-columns: 1fr 200px;}
+}
+@media screen and (max-width: 480px){
+    .footer_pos{flex-direction:column;gap:0.5rem}
+    .checkout-button{max-width:100%;}
+    .pagos_en_tienda_contenido{grid-template-columns:auto;}
+    .contiene_accesos_rapidos{max-width:100%;grid-template-rows:auto;}
+    .teclado_numerico{display:none;}
+}
+                    </style>
+<style type="text/css">
 .contenido_de_pagos{
 	display:grid;
 	grid-template-columns:repeat(auto-fit, minmax(min(200px, 100%), 1fr));
@@ -1068,14 +1235,19 @@ footer{display:none;}
 	padding:8px;
 	background:#99999926;
 }
+.contenedor_caja{display:flex;width:100%;justify-content:center;align-items:center;flex-wrap:wrap;}
 </style>
-<?php $venta_iniciada = $db->where('estado_venta',3)->where('id_del_vendedor',$wo['user']['user_id'])->getOne(T_VENTAS); ?>
-<?php $numeroventa = generarNumeroDocumento($venta_iniciada->documento); ?>
+<?php //$venta_iniciada = $db->where('estado_venta',3)->where('id_del_vendedor',$wo['user']['user_id'])->getOne(T_VENTAS); ?>
+<?php $venta_iniciada = $db->where('completado','2')->where('id_del_vendedor',$wo['user']['user_id'])->getOne(T_VENTAS); ?>
+
 <?php 
 $secciones_id = (!empty($wo['user']['pos_secciones'])) ? (int) $wo['user']['pos_secciones'] : 0;
 $category_id = (!empty($wo['user']['pos_categorias'])) ? (int) $wo['user']['pos_categorias'] : 0;
 $category_sub_id = (!empty($wo['user']['pos_sub_categorias'])) ? (int) $wo['user']['pos_sub_categorias'] : 0;
 ?>
+
+<div id="alert-container" style="position: fixed; top: 0; width: 100%; z-index: 1000;"></div>
+
 <div class="contenido_pos" id="contenido_pos">
 	<div class="header_pos">
 		<div class="logo_pos_pagina"><span>P</span><span>O</span><span>S</span><span>-</span><span>L</span><span>a</span><span>y</span><span>s</span><span>h</span><span>a</span><span>n</span><span>e</span></div>
@@ -1086,457 +1258,959 @@ $category_sub_id = (!empty($wo['user']['pos_sub_categorias'])) ? (int) $wo['user
 		</div>
 	</div>
 	<div class="body_pos">
-		<?php if ($venta_iniciada->completado==2): ?>
-			<div class="main_wrapper_pos">
-				<div class="header_body_pos">
-				    <div class="contain_input_head_post">
-				        <div class="input_container">
-				            <input class="input_search" type="text" <?=($wo['user']['pos_barcode'] == 1 ? 'id="barcode"' : 'onkeyup="Wo_SearchProducts(this.value)"') ?> placeholder="<?=($wo['user']['pos_barcode'] == 1 ? 'Codigo de barras' : 'Buscar por codigo, sku o nombre') ?>" name="buscar_itm" autofocus>
-				            <button class="search_button">
-				                <!-- Aquí va tu SVG para el botón de búsqueda -->
-				                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000" fill="none">
-								    <path d="M14 14L16.5 16.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-								    <path d="M16.4333 18.5252C15.8556 17.9475 15.8556 17.0109 16.4333 16.4333C17.0109 15.8556 17.9475 15.8556 18.5252 16.4333L21.5667 19.4748C22.1444 20.0525 22.1444 20.9891 21.5667 21.5667C20.9891 22.1444 20.0525 22.1444 19.4748 21.5667L16.4333 18.5252Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-								    <path d="M16 9C16 5.13401 12.866 2 9 2C5.13401 2 2 5.13401 2 9C2 12.866 5.13401 16 9 16C12.866 16 16 12.866 16 9Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-								</svg>
-				            </button>
-				        </div>
-				    </div>
-				    <div class="contain_input_head_post">
-				        <div class="input_container">
-				        	<label class="contain_selec_barcode">
-							  <input type="checkbox" name="selcct_barcode" <?=($wo['user']['pos_barcode'] == 1 ? 'checked' : '') ?>/>
-							  <div class="checkmark">
-							    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon No" fill="none">
-								    <path d="M2 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-								    <path d="M5 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-								    <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-								    <path d="M8 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-								    <path d="M16 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-								    <path d="M20 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-								    <path d="M22 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-								</svg>
+        <?php if($venta_iniciada): ?>
+            <?php if ($venta_iniciada['estado_venta']==3): ?>
+        		<?php if ($venta_iniciada['completado']==2): ?>
+        			<div class="main_wrapper_pos">
+        				<div class="header_body_pos">
+        				    <div class="contain_input_head_post">
+        				        <div class="input_container">
+        				            <input class="input_search" type="text" <?=($wo['user']['pos_barcode'] == 1 ? 'id="barcode"' : 'onkeyup="Wo_SearchProducts(this.value)"') ?> placeholder="<?=($wo['user']['pos_barcode'] == 1 ? 'Codigo de barras' : 'Buscar por codigo, sku o nombre') ?>" name="buscar_itm" autofocus>
+        				            <button class="search_button">
+        				                <!-- Aquí va tu SVG para el botón de búsqueda -->
+        				                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000" fill="none">
+        								    <path d="M14 14L16.5 16.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+        								    <path d="M16.4333 18.5252C15.8556 17.9475 15.8556 17.0109 16.4333 16.4333C17.0109 15.8556 17.9475 15.8556 18.5252 16.4333L21.5667 19.4748C22.1444 20.0525 22.1444 20.9891 21.5667 21.5667C20.9891 22.1444 20.0525 22.1444 19.4748 21.5667L16.4333 18.5252Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        								    <path d="M16 9C16 5.13401 12.866 2 9 2C5.13401 2 2 5.13401 2 9C2 12.866 5.13401 16 9 16C12.866 16 16 12.866 16 9Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+        								</svg>
+        				            </button>
+        				        </div>
+        				    </div>
+        				    <div class="contain_input_head_post">
+        				        <div class="input_container">
+        				        	<label class="contain_selec_barcode">
+        							  <input type="checkbox" name="selcct_barcode" <?=($wo['user']['pos_barcode'] == 1 ? 'checked' : '') ?>/>
+        							  <div class="checkmark">
+        							    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon No" fill="none">
+        								    <path d="M2 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        								    <path d="M5 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        								    <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        								    <path d="M8 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        								    <path d="M16 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        								    <path d="M20 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        								    <path d="M22 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        								</svg>
 
 
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon Yes" fill="currentColor">
-								    <rect x="2" y="4" width="1.5" height="16" />
-								    <rect x="5" y="4" width="1.5" height="16" />
-								    <rect x="8" y="4" width="2" height="16" rx="1" />
-								    <rect x="12" y="4" width="3" height="16" />
-								    <rect x="16" y="4" width="2" height="16" rx="1" />
-								    <rect x="20" y="4" width="1.5" height="16" />
-								</svg>
-							  </div>
-							</label>
-				        </div>
-				    </div>
-				    <?php if ($venta_iniciada->web==1): ?>
-					    <div>
-					    	<span class="web_order_type"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
-							    <path d="M20.9992 10C20.9907 6.41543 20.8861 4.52814 19.6088 3.31802C18.2175 2 15.9783 2 11.5 2C7.02166 2 4.78249 2 3.39124 3.31802C2 4.63604 2 6.75736 2 11C2 15.2426 2 17.364 3.39124 18.682C4.61763 19.8438 6.50289 19.9815 10 19.9978" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-							    <path d="M15 17.5C15 17.5 15.5 17.5 16 18.5C16 18.5 17.5882 16 19 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-							    <path d="M22 17C22 19.7614 19.7614 22 17 22C14.2386 22 12 19.7614 12 17C12 14.2386 14.2386 12 17 12C19.7614 12 22 14.2386 22 17Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-							    <path d="M2 8.5H21" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-							    <path d="M6.49981 5.5H6.50879" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-							    <path d="M10.4998 5.5H10.5088" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-							</svg> Web</span>
-					    </div>
-				    <?php endif ?>
-				</div>
+        								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon Yes" fill="currentColor">
+        								    <rect x="2" y="4" width="1.5" height="16" />
+        								    <rect x="5" y="4" width="1.5" height="16" />
+        								    <rect x="8" y="4" width="2" height="16" rx="1" />
+        								    <rect x="12" y="4" width="3" height="16" />
+        								    <rect x="16" y="4" width="2" height="16" rx="1" />
+        								    <rect x="20" y="4" width="1.5" height="16" />
+        								</svg>
+        							  </div>
+        							</label>
+        				        </div>
+        				    </div>
+        				    <?php if ($venta_iniciada['web']==1): ?>
+        					    <div>
+        					    	<span class="web_order_type"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+        							    <path d="M20.9992 10C20.9907 6.41543 20.8861 4.52814 19.6088 3.31802C18.2175 2 15.9783 2 11.5 2C7.02166 2 4.78249 2 3.39124 3.31802C2 4.63604 2 6.75736 2 11C2 15.2426 2 17.364 3.39124 18.682C4.61763 19.8438 6.50289 19.9815 10 19.9978" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        							    <path d="M15 17.5C15 17.5 15.5 17.5 16 18.5C16 18.5 17.5882 16 19 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        							    <path d="M22 17C22 19.7614 19.7614 22 17 22C14.2386 22 12 19.7614 12 17C12 14.2386 14.2386 12 17 12C19.7614 12 22 14.2386 22 17Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        							    <path d="M2 8.5H21" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+        							    <path d="M6.49981 5.5H6.50879" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        							    <path d="M10.4998 5.5H10.5088" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        							</svg> Web</span>
+        					    </div>
+        				    <?php endif ?>
+        				</div>
 
-				<div class="main_pos">
-					<section>
-						<div class="carousel">
-							<div class="carousel__wrapper">
-								<div class="carousel__header">
-							        <h2 class="carousel__headline">Categorias</h2>
-							        <div class="carousel__controls">
-							          <button class="carousel__arrow disabled arrow-prev" aria-label="Atras"></button>
-							          <button class="carousel__arrow arrow-next" aria-label="Adelante"></button>
-							        </div>
-							    </div>
-							    
-							    <ul class="carousel__content more_its" id="carousel__content">
-						    		<?php foreach ($wo['products_categories'] as $category){
-						    			$wo['cat_id_produc'] = $category['id'];
-						    			$all_categorie = $category_id == $wo['cat_id_produc'];
-						    			$wo['active_cat'] = ($category_id == $wo['cat_id_produc']) ? 'active not_seen_story' : '';
-						    			$wo['cat_logo_produc'] = $category['logo'];
-						    			$wo['cat_nombre_producs'] = $wo["lang"][$category["lang_key"]];
-						    			if(!empty($wo['products_sub_categories'][$wo['user']['pos_categorias']])){
-						    				if($all_categorie){
-							    				echo lui_LoadPage('pos/lista_cats_all');
-							    			}
-							    		}else{ 
-						    				if(!$wo['cat_id_produc']==0){
-						    					echo lui_LoadPage('pos/lista_categorias');
-						    				} 
-						    		    }
-						    		} ?>
-						    		<?php if(!empty($wo['user']['pos_categorias']) && !empty($wo['products_sub_categories'][$wo['user']['pos_categorias']])){
-						    			$category_id = (!empty($wo['user']['pos_sub_categorias'])) ? (int) $wo['user']['pos_sub_categorias'] : 0;
-						    			foreach ($wo['products_sub_categories'][$wo['user']['pos_categorias']] as $key => $wo['category_sub']) {
-						    				$wo['cat_logo_producs'] = $wo['category_sub']['logo'];
-						    				$wo['active_sub_cat'] = ($category_id == $wo['category_sub']['id']) ? 'active products_seleccionado_cat' : '';
-						    				$wo['categoria_selecc'] = $wo['user']['pos_categorias'];
-						    				echo lui_LoadPage('pos/lista_sub_categorias');
-						    			}
-						    		} ?>
-							    </ul>
-							    <script type="text/javascript">
-									function guardarPosicionHorizontal() {
-								      var miDiv = document.getElementById('carousel__content');
-								      if (miDiv) {
-								      	sessionStorage.setItem('scrollLeft', miDiv.scrollLeft);
-								      }
-								    }
-								    function restaurarPosicionHorizontal() {
-								      var miDiv = document.getElementById('carousel__content');
-								      if (miDiv) {
-								      	var scrollLeft = sessionStorage.getItem('scrollLeft') || 0;
-								      	miDiv.scrollLeft = scrollLeft;
-								      }
-								      
-								    }
-								    window.onbeforeunload = guardarPosicionHorizontal;
-								    window.onload = restaurarPosicionHorizontal;
-								</script>
-							  
-							</div>
-						</div>
-					</section>
+        				<div class="main_pos">
+        					<section>
+        						<div class="carousel">
+        							<div class="carousel__wrapper">
+        								<div class="carousel__header">
+        							        <h2 class="carousel__headline">Categorias</h2>
+        							        <div class="carousel__controls">
+        							          <button class="carousel__arrow disabled arrow-prev" aria-label="Atras"></button>
+        							          <button class="carousel__arrow arrow-next" aria-label="Adelante"></button>
+        							        </div>
+        							    </div>
+        							    
+        							    <ul class="carousel__content more_its" id="carousel__content">
+        						    		<?php foreach ($wo['products_categories'] as $category){
+        						    			$wo['cat_id_produc'] = $category['id'];
+        						    			$all_categorie = $category_id == $wo['cat_id_produc'];
+        						    			$wo['active_cat'] = ($category_id == $wo['cat_id_produc']) ? 'active not_seen_story' : '';
+        						    			$wo['cat_logo_produc'] = $category['logo'];
+        						    			$wo['cat_nombre_producs'] = $wo["lang"][$category["lang_key"]];
+        						    			if(!empty($wo['products_sub_categories'][$wo['user']['pos_categorias']])){
+        						    				if($all_categorie){
+        							    				echo lui_LoadPage('pos/lista_cats_all');
+        							    			}
+        							    		}else{
+        						    				if(!$wo['cat_id_produc']==0){
+        						    					echo lui_LoadPage('pos/lista_categorias');
+        						    				} 
+        						    		    }
+        						    		} ?>
+        						    		<?php if(!empty($wo['user']['pos_categorias']) && !empty($wo['products_sub_categories'][$wo['user']['pos_categorias']])){
+        						    			$category_id = (!empty($wo['user']['pos_sub_categorias'])) ? (int) $wo['user']['pos_sub_categorias'] : 0;
+        						    			foreach ($wo['products_sub_categories'][$wo['user']['pos_categorias']] as $key => $wo['category_sub']) {
+        						    				$wo['cat_logo_producs'] = $wo['category_sub']['logo'];
+        						    				$wo['active_sub_cat'] = ($category_id == $wo['category_sub']['id']) ? 'active products_seleccionado_cat' : '';
+        						    				$wo['categoria_selecc'] = $wo['user']['pos_categorias'];
+        						    				echo lui_LoadPage('pos/lista_sub_categorias');
+        						    			}
+        						    		} ?>
+        							    </ul>
+        							    <script type="text/javascript">
+        									function guardarPosicionHorizontal() {
+        								      var miDiv = document.getElementById('carousel__content');
+        								      if (miDiv) {
+        								      	sessionStorage.setItem('scrollLeft', miDiv.scrollLeft);
+        								      }
+        								    }
+        								    function restaurarPosicionHorizontal() {
+        								      var miDiv = document.getElementById('carousel__content');
+        								      if (miDiv) {
+        								      	var scrollLeft = sessionStorage.getItem('scrollLeft') || 0;
+        								      	miDiv.scrollLeft = scrollLeft;
+        								      }
+        								      
+        								    }
+        								    window.onbeforeunload = guardarPosicionHorizontal;
+        								    window.onload = restaurarPosicionHorizontal;
+        								</script>
+        							  
+        							</div>
+        						</div>
+        					</section>
 
-					<?php
-					$category_id_pos = (!empty($wo['user']['pos_categorias'])) ? (int) $wo['user']['pos_categorias'] : 0;
-					$category_sub_id_pos = (!empty($wo['user']['pos_sub_categorias'])) ? (int) $wo['user']['pos_sub_categorias'] : 0;
-						$category_name = '';
-						$data = array();
-						if (!empty($category_id_pos)) {
-							if (is_numeric($category_id_pos)) {
-								if (array_key_exists($category_id_pos, $wo['products_categories'])) {
-									?>
-									<input type="hidden" value="<?php echo lui_Secure($category_id_pos); ?>" id="c_id" />
-									<?php
-									$category_name = $wo['products_categories'][$category_id_pos];
-									$data['c_id'] = lui_Secure($category_id_pos);
-								}
-							}
-							if (!empty($wo['products_sub_categories'][$category_id_pos]) && !empty($category_sub_id_pos)) {
-								foreach ($wo['products_sub_categories'][$category_id_pos] as $key => $value) {
-									if ($category_sub_id_pos == $value['id']) { ?>
-										<input type="hidden" value="<?php echo lui_Secure($category_sub_id_pos); ?>" id="sub_id" />
-										<?php
-										$data['sub_id'] = lui_Secure($value['id']);
-										break;
-									}
-								}
-							}
-						} else {
-							echo '<input type="hidden" value="0" id="c_id" />';
-							echo '<input type="hidden" value="" id="sub_id" />';
-						}
-						$data['limit'] = 10;
-						$products = lui_GetProducts($data);
-					?>
+        					<?php
+        					$category_id_pos = (!empty($wo['user']['pos_categorias'])) ? (int) $wo['user']['pos_categorias'] : 0;
+        					$category_sub_id_pos = (!empty($wo['user']['pos_sub_categorias'])) ? (int) $wo['user']['pos_sub_categorias'] : 0;
+        						$category_name = '';
+        						$data = array();
+        						if (!empty($category_id_pos)) {
+        							if (is_numeric($category_id_pos)) {
+        								if (array_key_exists($category_id_pos, $wo['products_categories'])) {
+        									?>
+        									<input type="hidden" value="<?php echo lui_Secure($category_id_pos); ?>" id="c_id" />
+        									<?php
+        									$category_name = $wo['products_categories'][$category_id_pos];
+        									$data['c_id'] = lui_Secure($category_id_pos);
+        								}
+        							}
+        							if (!empty($wo['products_sub_categories'][$category_id_pos]) && !empty($category_sub_id_pos)) {
+        								foreach ($wo['products_sub_categories'][$category_id_pos] as $key => $value) {
+        									if ($category_sub_id_pos == $value['id']) { ?>
+        										<input type="hidden" value="<?php echo lui_Secure($category_sub_id_pos); ?>" id="sub_id" />
+        										<?php
+        										$data['sub_id'] = lui_Secure($value['id']);
+        										break;
+        									}
+        								}
+        							}
+        						} else {
+        							echo '<input type="hidden" value="0" id="c_id" />';
+        							echo '<input type="hidden" value="" id="sub_id" />';
+        						}
+        						$data['limit'] = 10;
+        						$products = lui_GetProducts($data);
+        					?>
 
-					<section class="contenido_prod_pos_list" id="products">
-						<?php
-							if (count($products) > 0) {
-								foreach ($products as $key => $wo['product']) {
-									echo lui_LoadPage('pos/products_lista');
-								}
-							} else {
-								echo '<div class="empty_state" style="position:absolute;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,13A5,5 0 0,1 7,8H9A3,3 0 0,0 12,11A3,3 0 0,0 15,8H17A5,5 0 0,1 12,13M12,3A3,3 0 0,1 15,6H9A3,3 0 0,1 12,3M19,6H17A5,5 0 0,0 12,1A5,5 0 0,0 7,6H5C3.89,6 3,6.89 3,8V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V8C21,6.89 20.1,6 19,6Z"></path></svg>' . $wo['lang']['no_available_products'] . '</div>';
-							}
-						?>
-					</section>
-					<br>
-					<section class="load-produts">
-						<?php if (count($products) > 0): ?>
-							<div class="load-more">
-					            <button class="btn btn-default text-center pointer" onclick="Wo_LoadProducts_pos();"><?php echo $wo['lang']['load_more_products'] ?></button>
-					        </div>
-		       	 		<?php endif ?>
-					</section>
-					<br>
-				</div>
-			</div>
+        					<section class="contenido_prod_pos_list" id="products">
+        						<?php
+        							if (count($products) > 0) {
+        								foreach ($products as $key => $wo['product']) {
+        									echo lui_LoadPage('pos/products_lista');
+        								}
+        							} else {
+        								echo '<div class="empty_state" style="position:absolute;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,13A5,5 0 0,1 7,8H9A3,3 0 0,0 12,11A3,3 0 0,0 15,8H17A5,5 0 0,1 12,13M12,3A3,3 0 0,1 15,6H9A3,3 0 0,1 12,3M19,6H17A5,5 0 0,0 12,1A5,5 0 0,0 7,6H5C3.89,6 3,6.89 3,8V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V8C21,6.89 20.1,6 19,6Z"></path></svg>' . $wo['lang']['no_available_products'] . '</div>';
+        							}
+        						?>
+        					</section>
+        					<br>
+        					<section class="load-produts">
+        						<?php if (count($products) > 0): ?>
+        							<div class="load-more">
+        					            <button class="btn btn-default text-center pointer" onclick="Wo_LoadProducts_pos();"><?php echo $wo['lang']['load_more_products'] ?></button>
+        					        </div>
+        		       	 		<?php endif ?>
+        					</section>
+        					<br>
+        				</div>
+        			</div>
+                    <?php $numeroventa = generarNumeroDocumento($venta_iniciada['documento']); ?>
+        			<div class="sidebar_pos">
+        				<div class="sidebar_pos_content">
+        					<div class="sidebar_pos_header">
+        						<a hidden href="<?=lui_SeoLink('index.php?link1=pos');?>" data-ajax="<?=('?link1=pos'); ?>" id="order_pos_lp" style="display:none;"></a>
+        						<span><strong>Nueva venta</strong> </span>
+        						<span><strong><?=$numeroventa?></strong></span>
+        					</div>
+        					
+        					<div class="comprobantes_contain">
+        						<span class="comprobant_list">
+        							<input type="radio" id="boleta_view" name="orden_options_comprobante" onchange="orden_options_comprobante(this)" value="boleta" data="<?=$venta_iniciada['hash_id'];?>" <?=($venta_iniciada['documento'] == 'B') ? 'checked' : '';?>>
+        							<label class="comprobant_list_label" for="boleta_view"><?php echo $wo['lang']['boleta']; ?></label>
+        						</span>
 
-			<div class="sidebar_pos">
-				<div class="sidebar_pos_content">
-					<div class="sidebar_pos_header">
-						<a hidden href="<?=lui_SeoLink('index.php?link1=pos');?>" data-ajax="<?=('?link1=pos'); ?>" id="order_pos_lp" style="display:none;"></a>
-						<span><strong>Nueva venta</strong> </span>
-						<span><strong><?=$numeroventa?></strong></span>
-					</div>
-					
-					<div class="comprobantes_contain">
-						<span class="comprobant_list">
-							<input type="radio" id="boleta_view" name="orden_options_comprobante" onchange="orden_options_comprobante(this)" value="boleta" data="<?=$venta_iniciada->hash_id;?>" <?=($venta_iniciada->documento == 'B') ? 'checked' : '';?>>
-							<label class="comprobant_list_label" for="boleta_view"><?php echo $wo['lang']['boleta']; ?></label>
-						</span>
+        						<span class="comprobant_list">
+        							<input type="radio" id="factura_view" name="orden_options_comprobante" onchange="orden_options_comprobante(this)" value="factura" data="<?=$venta_iniciada['hash_id'];?>" <?=($venta_iniciada['documento'] == 'F') ? 'checked' : '';?>>
+        							<label class="comprobant_list_label" for="factura_view"><?php echo $wo['lang']['invoice']; ?></label>
+        						</span>
 
-						<span class="comprobant_list">
-							<input type="radio" id="factura_view" name="orden_options_comprobante" onchange="orden_options_comprobante(this)" value="factura" data="<?=$venta_iniciada->hash_id;?>" <?=($venta_iniciada->documento == 'F') ? 'checked' : '';?>>
-							<label class="comprobant_list_label" for="factura_view"><?php echo $wo['lang']['invoice']; ?></label>
-						</span>
-
-						<span class="comprobant_list">
-							<input type="radio" id="nota_view" name="orden_options_comprobante" onchange="orden_options_comprobante(this)" value="boleta_simple" data="<?=$venta_iniciada->hash_id;?>" <?=($venta_iniciada->documento == 'BS') ? 'checked' : '';?>>
-							<label class="comprobant_list_label" for="nota_view">Nota</label>
-						</span>
-						<span class="comprobant_list <?=($venta_iniciada->documento == 'BS') ? 'activado' : '';?>" id="nota_view">Nota</span>
-					</div>
-					<div class="documents_number_contain">
-						<?php if ($venta_iniciada->documento=='B'): ?>
-							<select class="input_docss" disabled name="tipo_de_documento">
-								<option><?=$venta_iniciada->user_document ?></option>
-							</select>
-							<input class="input_docs" type="text" name="document_dni_pos" value="<?= ($venta_iniciada->user_document == 'DNI' && strlen($venta_iniciada->user_document_num) == 8) ? $venta_iniciada->user_document_num : ''; ?>" placeholder="Numero de documento">
-						<?php elseif ($venta_iniciada->documento=='F'): ?>
-							<select class="input_docss" disabled name="tipo_de_documento">
-								<option><?=$venta_iniciada->user_document ?></option>
-							</select>
-							<input class="input_docs" type="text" name="document_ruc_pos" value="<?= ($venta_iniciada->user_document == 'RUC' && strlen($venta_iniciada->user_document_num) == 11) ? $venta_iniciada->user_document_num : ''; ?>" placeholder="Numero de documento">
-						<?php elseif ($venta_iniciada->documento=='BS'): ?>
-							<select class="input_docss" onchange="orden_type_docs(this)" name="tipo_de_documento" data="<?=$venta_iniciada->hash_id;?>">
-								<option value="ND" <?=($venta_iniciada->user_document == null) ? 'selected' : '';?>>SIN DOCUMENTO</option>
-								<option value="DNI" <?=($venta_iniciada->user_document == 'DNI') ? 'selected' : '';?>>DNI</option>
-								<option value="RUC" <?=($venta_iniciada->user_document == 'RUC') ? 'selected' : '';?>>RUC</option>
-							</select>
-							<?php if ($venta_iniciada->user_document_num==null): ?>
-							<?php else: ?>
-								<?php if ($venta_iniciada->user_document == 'RUC'): ?>
-									<input class="input_docs" type="text" name="document_ruc_pos" value="<?= ($venta_iniciada->user_document == 'RUC' && strlen($venta_iniciada->user_document_num) == 11) ? $venta_iniciada->user_document_num : ''; ?>" placeholder="Numero de documento">
-								<?php elseif ($venta_iniciada->user_document == 'DNI'): ?>
-									<input class="input_docs" type="text" name="document_dni_pos" value="<?= ($venta_iniciada->user_document == 'DNI' && strlen($venta_iniciada->user_document_num) == 8) ? $venta_iniciada->user_document_num : ''; ?>" placeholder="Numero de documento">
-								<?php endif ?>
-								
-							<?php endif ?>
-						<?php endif ?>
-					</div>
+        						<span class="comprobant_list">
+        							<input type="radio" id="nota_view" name="orden_options_comprobante" onchange="orden_options_comprobante(this)" value="boleta_simple" data="<?=$venta_iniciada['hash_id'];?>" <?=($venta_iniciada['documento'] == 'BS') ? 'checked' : '';?>>
+        							<label class="comprobant_list_label" for="nota_view">Nota</label>
+        						</span>
+        						<span class="comprobant_list <?=($venta_iniciada['documento'] == 'BS') ? 'activado' : '';?>" id="nota_view">Nota</span>
+        					</div>
+        					<div class="documents_number_contain">
+        						<?php if ($venta_iniciada['documento']=='B'): ?>
+        							<select class="input_docss" disabled name="tipo_de_documento">
+        								<option><?=$venta_iniciada['user_document'] ?></option>
+        							</select>
+        							<input class="input_docs" type="text" name="document_dni_pos" value="<?= ($venta_iniciada['user_document'] == 'DNI' && strlen($venta_iniciada['user_document_num']) == 8) ? $venta_iniciada['user_document_num'] : ''; ?>" placeholder="Numero de documento">
+        						<?php elseif ($venta_iniciada['documento']=='F'): ?>
+        							<select class="input_docss" disabled name="tipo_de_documento">
+        								<option><?=$venta_iniciada['user_document'] ?></option>
+        							</select>
+        							<input class="input_docs" type="text" name="document_ruc_pos" value="<?= ($venta_iniciada['user_document'] == 'RUC' && strlen($venta_iniciada['user_document_num']) == 11) ? $venta_iniciada['user_document_num'] : ''; ?>" placeholder="Numero de documento">
+        						<?php elseif ($venta_iniciada['documento']=='BS'): ?>
+        							<select class="input_docss" onchange="orden_type_docs(this)" name="tipo_de_documento" data="<?=$venta_iniciada['hash_id'];?>">
+        								<option value="ND" <?=($venta_iniciada['user_document'] == null) ? 'selected' : '';?>>SIN DOCUMENTO</option>
+        								<option value="DNI" <?=($venta_iniciada['user_document'] == 'DNI') ? 'selected' : '';?>>DNI</option>
+        								<option value="RUC" <?=($venta_iniciada['user_document'] == 'RUC') ? 'selected' : '';?>>RUC</option>
+        							</select>
+        							<?php if ($venta_iniciada['user_document_num']==null): ?>
+        							<?php else: ?>
+        								<?php if ($venta_iniciada['user_document'] == 'RUC'): ?>
+        									<input class="input_docs" type="text" name="document_ruc_pos" value="<?= ($venta_iniciada['user_document'] == 'RUC' && strlen($venta_iniciada['user_document_num']) == 11) ? $venta_iniciada['user_document_num'] : ''; ?>" placeholder="Numero de documento">
+        								<?php elseif ($venta_iniciada['user_document'] == 'DNI'): ?>
+        									<input class="input_docs" type="text" name="document_dni_pos" value="<?= ($venta_iniciada['user_document'] == 'DNI' && strlen($venta_iniciada['user_document_num']) == 8) ? $venta_iniciada['user_document_num'] : ''; ?>" placeholder="Numero de documento">
+        								<?php endif ?>
+        								
+        							<?php endif ?>
+        						<?php endif ?>
+        					</div>
 
 
-					<div class="productos_agregados_en_venta">
-						<?php 
-						$total_productos_grupo = 0;
-						$total_productos_lista = 0;
-						$total_productos_price = 0.00;
-						$comprapendiente = $db->where('estado_venta',3)->where('id_del_vendedor',lui_Secure($wo['user']['user_id']))->where('completado','2')->getOne(T_VENTAS);
-						if (!empty($comprapendiente)) {
-							$total_productos_grupo = $db->where('id_comprobante_v',$comprapendiente->id)->where('estado','2')->getValue('imventario','COUNT(DISTINCT orden)');
-							$total_productos_lista = $db->where('id_comprobante_v',$comprapendiente->id)->where('estado','2')->getValue('imventario','COUNT(*)');
-							if ($total_productos_lista>0) {
-								$total_productos_price = $db->where('id_comprobante_v',$comprapendiente->id)->where('estado','2')->getValue('imventario','SUM(precio)');
-							}
-						} ?>
-						<?php $items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante_v',$comprapendiente->id)->where('estado','2')->where('tipo','venta')->get('imventario'); ?>
-						<?php $html = "";
-						$productos_vistos = [];
-						foreach ($items_compra as $value) {
-						    $producto = lui_GetProduct($value->producto);
-						    $producto_id = $producto['id'];
-						    if (in_array($producto_id, $productos_vistos)) {
-						        continue;
-						    }
-						    $variantes_color = [];
-						    foreach ($items_compra as $item) {
-						        if ($item->producto == $producto_id) {
-						            $variantes_color[] = $item;
-						        }
-						    }
+        					<div class="productos_agregados_en_venta">
+        						<?php 
+        						$total_productos_grupo = 0;
+        						$total_productos_lista = 0;
+        						$total_productos_price = 0.00;
+        						$comprapendiente = $db->where('estado_venta',3)->where('id_del_vendedor',lui_Secure($wo['user']['user_id']))->where('completado','2')->getOne(T_VENTAS);
+        						if (!empty($comprapendiente)) {
+        							$total_productos_grupo = $db->where('id_comprobante_v',$comprapendiente['id'])->where('estado','2')->getValue('imventario','COUNT(DISTINCT orden)');
+        							$total_productos_lista = $db->where('id_comprobante_v',$comprapendiente['id'])->where('estado','2')->getValue('imventario','COUNT(*)');
+        							if ($total_productos_lista>0) {
+        								$total_productos_price = $db->where('id_comprobante_v',$comprapendiente['id'])->where('estado','2')->getValue('imventario','SUM(precio)');
+        							}
+        						} ?>
+        						<?php $items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante_v',$comprapendiente['id'])->where('estado','2')->where('tipo','venta')->get('imventario'); ?>
+        						<?php $html = "";
+        						$productos_vistos = [];
+        						foreach ($items_compra as $value) {
+        						    $producto = lui_GetProduct($value->producto);
+        						    $producto_id = $producto['id'];
+        						    if (in_array($producto_id, $productos_vistos)) {
+        						        continue;
+        						    }
+        						    $variantes_color = [];
+        						    foreach ($items_compra as $item) {
+        						        if ($item->producto == $producto_id) {
+        						            $variantes_color[] = $item;
+        						        }
+        						    }
 
-						    $variantes_atributos = [];
-						    $atributos = $db->objectbuilder()->where('id_imventario', $value->id)->get('imventario_atributos');
-						    foreach ($atributos as $atributo) {
-						        $variantes_atributos[$atributo->id_atributo][] = $atributo->id_atributo_opciones;
-						    }
-						    $identificador_unico = $comprapendiente->id . '_' . $producto_id;
-						    foreach ($variantes_atributos as $atributo => $opciones) {
-						        $identificador_unico .= '_' . implode('_', $opciones);
-						    }
-						    if (in_array($identificador_unico, $productos_vistos)) {
-						        continue;
-						    }
+        						    $variantes_atributos = [];
+        						    $atributos = $db->objectbuilder()->where('id_imventario', $value->id)->get('imventario_atributos');
+        						    foreach ($atributos as $atributo) {
+        						        $variantes_atributos[$atributo->id_atributo][] = $atributo->id_atributo_opciones;
+        						    }
+        						    $identificador_unico = $comprapendiente['id'] . '_' . $producto_id;
+        						    foreach ($variantes_atributos as $atributo => $opciones) {
+        						        $identificador_unico .= '_' . implode('_', $opciones);
+        						    }
+        						    if (in_array($identificador_unico, $productos_vistos)) {
+        						        continue;
+        						    }
 
-						    $wo['product']['id'] = $producto['id'];
-						    $wo['product']['id_productos'] =  $identificador_unico;
-						    $wo['product']['id_imventarios'] =  $value->id;
-						    $wo['product']['units'] = $producto['units'];
-						    $wo['product']['images'] = $producto['images'];
-						    $wo['product']['name'] = $producto['name'];
-						    $wo['product']['modelo'] = $producto['modelo'];
-						    $wo['product']['sku'] = $producto['sku'];
-						    $wo['product']['comprap'] = $comprapendiente->id;
-						    $wo['product']['inventario'] = $value->id;
-						    $wo['product']['color'] = $value->color;
-						    $wo['product']['precio'] = $value->precio;
-						    $wo['product']['garantia'] = $value->garantia;
+        						    $wo['product']['id'] = $producto['id'];
+        						    $wo['product']['id_productos'] =  $identificador_unico;
+        						    $wo['product']['id_imventarios'] =  $value->id;
+        						    $wo['product']['units'] = $producto['units'];
+        						    $wo['product']['images'] = $producto['images'];
+        						    $wo['product']['name'] = $producto['name'];
+        						    $wo['product']['modelo'] = $producto['modelo'];
+        						    $wo['product']['sku'] = $producto['sku'];
+        						    $wo['product']['comprap'] = $comprapendiente['id'];
+        						    $wo['product']['inventario'] = $value->id;
+        						    $wo['product']['color'] = $value->color;
+        						    $wo['product']['precio'] = $value->precio;
+        						    $wo['product']['garantia'] = $value->garantia;
 
-							$cantidad_productos = 0;
-							$cantidad_productos_pos_listos = 0;
-							$completado_productos_pos_listos = 0;
-							if (!empty($variantes_atributos)) {
-							    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante_v = {$comprapendiente->id}";
-							    foreach ($variantes_atributos as $atributo => $opciones) {
-							        foreach ($opciones as $opcion) {
-							            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
-							        }
-							    }
-							    $cantidad_productos = $db->rawQueryOne($sql)->cantidad;
-							} else{
-							    $cantidad_productos = $db->where('id_comprobante_v', $comprapendiente->id)->where('producto', $wo['product']['id'])->where('color', $wo['product']['color'])->getValue('imventario', 'COUNT(*)');
-							}
+        							$cantidad_productos = 0;
+        							$cantidad_productos_pos_listos = 0;
+        							$completado_productos_pos_listos = 0;
+        							if (!empty($variantes_atributos)) {
+        							    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante_v = {$comprapendiente['id']}";
+        							    foreach ($variantes_atributos as $atributo => $opciones) {
+        							        foreach ($opciones as $opcion) {
+        							            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
+        							        }
+        							    }
+        							    $cantidad_productos = $db->rawQueryOne($sql)['cantidad'];
+        							} else{
+        							    $cantidad_productos = $db->where('id_comprobante_v', $comprapendiente['id'])->where('producto', $wo['product']['id'])->where('color', $wo['product']['color'])->getValue('imventario', 'COUNT(*)');
+        							}
 
-							if (!empty($variantes_atributos)) {
-							    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND barcode !=0 AND id_comprobante_v = {$comprapendiente->id}";
-							    foreach ($variantes_atributos as $atributo => $opciones) {
-							        foreach ($opciones as $opcion) {
-							            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
-							        }
-							    }
-							    $cantidad_productos_pos_listos = $db->rawQueryOne($sql)->cantidad;
-							} else{
-							    $cantidad_productos_pos_listos = $db->where('id_comprobante_v', $comprapendiente->id)
-	                                       ->where('producto', $producto['id'])
-	                                       ->where('barcode',  ['!=', '0'], 'IN')
-	                                       ->getValue('imventario', 'COUNT(*)');
-	                            $sql = "SELECT COUNT(*) AS cantidad 
-						        FROM imventario 
-						        WHERE id_comprobante_v = ? 
-						        AND producto = ?
-						        AND barcode != '0'";
-								$params = array($comprapendiente->id, $producto['id']);
-								$result = $db->rawQueryOne($sql, $params);
+        							if (!empty($variantes_atributos)) {
+        							    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND barcode !=0 AND id_comprobante_v = {$comprapendiente['id']}";
+        							    foreach ($variantes_atributos as $atributo => $opciones) {
+        							        foreach ($opciones as $opcion) {
+        							            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
+        							        }
+        							    }
+        							    $cantidad_productos_pos_listos = $db->rawQueryOne($sql)['cantidad'];
+        							} else{
+        							    $cantidad_productos_pos_listos = $db->where('id_comprobante_v', $comprapendiente['id'])
+        	                                       ->where('producto', $producto['id'])
+        	                                       ->where('barcode',  ['!=', '0'], 'IN')
+        	                                       ->getValue('imventario', 'COUNT(*)');
+        	                            $sql = "SELECT COUNT(*) AS cantidad 
+        						        FROM imventario 
+        						        WHERE id_comprobante_v = ? 
+        						        AND producto = ?
+        						        AND barcode != '0'";
+        								$params = array($comprapendiente['id'], $producto['id']);
+        								$result = $db->rawQueryOne($sql, $params);
 
-								$cantidad_productos_pos_listos = $result->cantidad;
-							}
+        								$cantidad_productos_pos_listos = $result['cantidad'];
+        							}
 
-							if (!empty($variantes_atributos)) {
-							    $sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND (estado = 1 OR estado = 2)";
-							    $subqueries = [];
-							    foreach ($variantes_atributos as $atributo => $opciones) {
-							        foreach ($opciones as $opcion) {
-							            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
-							        }
-							    }
-							    $cantidad_prod = $db->rawQueryOne($sql)->cantidad;
-							    $productos_stock_disponible =	($cantidad_prod !== null) ? $cantidad_prod : 0;
-							} else{
-								if ($wo['product']['color']) {
-									$sql2 = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE color = '{$wo['product']['color']}' AND producto = {$producto['id']} AND (estado = 1 OR estado = 2)";
-									$productos_stock_disponible = $db->rawQueryOne($sql2)->cantidad;
-								}else{
-									$sql2 = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND (estado = 1 OR estado = 2)";
-									$productos_stock_disponible = $db->rawQueryOne($sql2)->cantidad;
-								}
-							}
-							if (!empty($wo['currencies']) && !empty($wo['currencies'][$producto['currency']]) && $wo['currencies'][$producto['currency']]['text'] != $wo['config']['currency'] && !empty($wo['config']['exchange']) && !empty($wo['config']['exchange'][$wo['currencies'][$producto['currency']]['text']])) {
-							    $wo['product']['symbol'] = (!empty($wo['currencies'][$producto['currency']]['symbol'])) ? $wo['currencies'][$producto['currency']]['symbol'] : $producto['currency'];
-			             		// $wo['total'] += (($wo['product']['price'] / $wo['config']['exchange'][$wo['currencies'][$wo['product']['currency']]['text']]) * $wo['item']->units);
-				            } else {
-				            	$wo['product']['symbol'] = (!empty($wo['currencies'][$producto['currency']]['symbol'])) ? $wo['currencies'][$producto['currency']]['symbol'] : $producto['currency'];
-				            	//$wo['total'] += ($wo['product']['price'] * $wo['item']->units);
-				            }
-			            	$wo['product']['subtotal_p'] = number_format($value->precio*$cantidad_productos, 2, ',', '.');
-						    $wo['product']['cantidad'] = $cantidad_productos;
-						    $wo['product']['cantidad_listos_pos'] = $cantidad_productos_pos_listos;
-						    $wo['product']['stock_disponible'] = $productos_stock_disponible;
-						    $productos_vistos[] = $identificador_unico;
-						    $html .= lui_LoadPage('pos/items_pos');
-						}
-						echo $html;
-						?>
-					</div>
+        							if (!empty($variantes_atributos)) {
+        							    $sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND (estado = 1 OR estado = 2)";
+        							    $subqueries = [];
+        							    foreach ($variantes_atributos as $atributo => $opciones) {
+        							        foreach ($opciones as $opcion) {
+        							            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
+        							        }
+        							    }
+        							    $cantidad_prod = $db->rawQueryOne($sql)['cantidad'];
+        							    $productos_stock_disponible =	($cantidad_prod !== null) ? $cantidad_prod : 0;
+        							} else{
+        								if ($wo['product']['color']) {
+        									$sql2 = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE color = '{$wo['product']['color']}' AND producto = {$producto['id']} AND (estado = 1 OR estado = 2)";
+        									$productos_stock_disponible = $db->rawQueryOne($sql2)['cantidad'];
+        								}else{
+        									$sql2 = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND (estado = 1 OR estado = 2)";
+        									$productos_stock_disponible = $db->rawQueryOne($sql2)['cantidad'];
+        								}
+        							}
+        							if (!empty($wo['currencies']) && !empty($wo['currencies'][$producto['currency']]) && $wo['currencies'][$producto['currency']]['text'] != $wo['config']['currency'] && !empty($wo['config']['exchange']) && !empty($wo['config']['exchange'][$wo['currencies'][$producto['currency']]['text']])) {
+        							    $wo['product']['symbol'] = (!empty($wo['currencies'][$producto['currency']]['symbol'])) ? $wo['currencies'][$producto['currency']]['symbol'] : $producto['currency'];
+        			             		// $wo['total'] += (($wo['product']['price'] / $wo['config']['exchange'][$wo['currencies'][$wo['product']['currency']]['text']]) * $wo['item']->units);
+        				            } else {
+        				            	$wo['product']['symbol'] = (!empty($wo['currencies'][$producto['currency']]['symbol'])) ? $wo['currencies'][$producto['currency']]['symbol'] : $producto['currency'];
+        				            	//$wo['total'] += ($wo['product']['price'] * $wo['item']->units);
+        				            }
+        			            	$wo['product']['subtotal_p'] = number_format($value->precio*$cantidad_productos, 2, ',', '.');
+        						    $wo['product']['cantidad'] = $cantidad_productos;
+        						    $wo['product']['cantidad_listos_pos'] = $cantidad_productos_pos_listos;
+        						    $wo['product']['stock_disponible'] = $productos_stock_disponible;
+        						    $productos_vistos[] = $identificador_unico;
+        						    $html .= lui_LoadPage('pos/items_pos');
+        						}
+        						echo $html;
+        						?>
+        					</div>
 
-					<?php 
-						$productos_vistos_moneda = [];
-						foreach ($items_compra as $moneda) {
-						    $la_monedas_de_products = $moneda->currency;
-						    if (!in_array($la_monedas_de_products, $productos_vistos_moneda)) {
-						       $productos_vistos_moneda[] = $la_monedas_de_products; 
-						    }
-						}
-						$wo['subtotal_dos'] = 0;
-						$wo['total_dos'] = 0;
-						$wo['igv_dos'] = 0;
-					?>
-					
-					<div class="contenido_de_pagos">
-						<?php foreach ($productos_vistos_moneda as $moneds):
-							$indexdefault_currency = array_search($moneds, array_column($wo['currencies'], 'text')); ?>
-							<?php $total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente->id)->where('currency',$moneds)->where('estado','2')->getValue('imventario','COUNT(*)');
-							if ($total_productos_lista_uno>0) {
-								$total_productos_price_dos = $db->where('id_comprobante_v',$comprapendiente->id)->where('currency',$moneds)->where('estado','2')->getValue('imventario','SUM(precio)');
-								
-								$wo['subtotal_dos'] = number_format($total_productos_price_dos / (1.18), '2','.','');
-								$wo['igv_dos']          = number_format($wo['subtotal_dos'] * 0.18, '2','.','');
-								$wo['total_dos']    = number_format($total_productos_price_dos, '2','.',''); 
-							} ?>
-							<div class="cuentas_a_pagar" id="<?='currency_pos_pedido_'.strtolower($moneds);?>">
-								<div class="div_subs_contn">
-									<span><?php echo $wo['lang']['subtotal'] ?></span>
-									<span><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $moneds;?> <span class="<?='sub_total_pos_pedido_'.strtolower($moneds);?>"><?php echo $wo['subtotal_dos']; ?></span></span>
-								</div>
-								<div class="div_subs_contn">
-									<span><?php echo $wo['lang']['igv'] ?></span>
-									<span><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $moneds;?> <span class="<?='impuesto_pos_pedido_'.strtolower($moneds);?>"><?=$wo['igv_dos']; ?></span></span>
-								</div>
-								<div class="div_subs_contn">
-									<span><?php echo $wo['lang']['total'] ?></span>
-									<span><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $moneds;?> <span class="<?='total_pos_pedido_'.strtolower($moneds);?>"><?=$wo['total_dos'];?></span></span>
-								</div>
-							</div>
-						<?php endforeach ?>
-					</div>
-				</div>
-			</div>
-		<?php elseif($venta_iniciada->completado == 3): ?>
-			hola
-		<?php endif ?>
+        					<?php 
+        						$productos_vistos_moneda = [];
+        						foreach ($items_compra as $moneda) {
+        						    $la_monedas_de_products = $moneda->currency;
+        						    if (!in_array($la_monedas_de_products, $productos_vistos_moneda)) {
+        						       $productos_vistos_moneda[] = $la_monedas_de_products; 
+        						    }
+        						}
+        						$wo['subtotal_dos'] = 0;
+        						$wo['total_dos'] = 0;
+        						$wo['igv_dos'] = 0;
+        					?>
+        					
+        					<div class="contenido_de_pagos">
+        						<?php foreach ($productos_vistos_moneda as $moneds):
+        							$indexdefault_currency = array_search($moneds, array_column($wo['currencies'], 'text')); ?>
+        							<?php $total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$moneds)->where('estado','2')->getValue('imventario','COUNT(*)');
+        							if ($total_productos_lista_uno>0) {
+        								$total_productos_price_dos = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$moneds)->where('estado','2')->getValue('imventario','SUM(precio)');
+        								
+        								$wo['subtotal_dos'] = number_format($total_productos_price_dos / (1.18), '2','.','');
+        								$wo['igv_dos']          = number_format($wo['subtotal_dos'] * 0.18, '2','.','');
+        								$wo['total_dos']    = number_format($total_productos_price_dos, '2','.',''); 
+        							} ?>
+        							<div class="cuentas_a_pagar" id="<?='currency_pos_pedido_'.strtolower($moneds);?>">
+        								<div class="div_subs_contn">
+        									<span><?php echo $wo['lang']['subtotal'] ?></span>
+        									<span><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $moneds;?> <span class="<?='sub_total_pos_pedido_'.strtolower($moneds);?>"><?php echo $wo['subtotal_dos']; ?></span></span>
+        								</div>
+        								<div class="div_subs_contn">
+        									<span><?php echo $wo['lang']['igv'] ?></span>
+        									<span><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $moneds;?> <span class="<?='impuesto_pos_pedido_'.strtolower($moneds);?>"><?=$wo['igv_dos']; ?></span></span>
+        								</div>
+        								<div class="div_subs_contn">
+        									<span><?php echo $wo['lang']['total'] ?></span>
+        									<span><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $moneds;?> <span class="<?='total_pos_pedido_'.strtolower($moneds);?>"><?=$wo['total_dos'];?></span></span>
+        								</div>
+        							</div>
+        						<?php endforeach ?>
+        					</div>
+        				</div>
+        			</div>
+        		<?php endif ?>
+            <?php elseif($venta_iniciada['estado_venta'] == 5): ?>
+                <?php $venta_iniciada = $db->where('estado_venta',5)->where('id_del_vendedor',$wo['user']['user_id'])->getOne(T_VENTAS); 
+                $comprapendiente = $db->where('estado_venta',5)->where('id_del_vendedor',lui_Secure($wo['user']['user_id']))->where('completado','2')->getOne(T_VENTAS);?>
+                <div class="main_wrapper_pos">
+                    <?php $cashs = $db->where('estado','ABIERTO')->where('sucursal',$wo['user']['sucursal'])->get(T_CASH); ?>
+                    <div class="header_body_pos">
+                        <?php if ($comprapendiente['caja']==0): ?>
+                            <span><strong>Selecciona una caja.</strong> </span>
+                        <?php else: ?>
+                            <?php $cashsselecs = $db->where('id',$comprapendiente['caja'])->where('sucursal',$wo['user']['sucursal'])->getOne(T_CASH); ?>
+                            <span><strong>Caja: <?=$cashsselecs['nombre'];?></strong> </span>
+                            <!--<span><strong>Turno: General</strong></span>-->
+                        <?php endif ?>
+                    </div>
+                        
+                        
+                    <?php if ($comprapendiente['caja']==0): ?>
+                        <div class="main_pos">
+                            <?php if (count($cashs)>0): ?>
+                                <div class="monten_selec_cash">
+                                    <?php foreach ($cashs as $cash): ?>
+                                        <div class="cash_selects seleccted_cashs" data-id="<?=$cash['id'] ?>">
+                                            <span><?=$cash['nombre'] ?></span>
+                                            <div class="boody_cashs">
+                                                <div>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"  fill="none">
+                                                        <path d="M16.6667 14L7.33333 14C5.14718 14 4.0541 14 3.27927 14.5425C2.99261 14.7433 2.74327 14.9926 2.54254 15.2793C2 16.0541 2 17.1472 2 19.3333C2 20.4264 2 20.9729 2.27127 21.3604C2.37164 21.5037 2.4963 21.6284 2.63963 21.7287C3.02705 22 3.57359 22 4.66667 22L19.3333 22C20.4264 22 20.9729 22 21.3604 21.7287C21.5037 21.6284 21.6284 21.5037 21.7287 21.3604C22 20.9729 22 20.4264 22 19.3333C22 17.1472 22 16.0541 21.4575 15.2793C21.2567 14.9926 21.0074 14.7433 20.7207 14.5425C19.9459 14 18.8528 14 16.6667 14Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                        <path d="M20 14L19.593 10.3374C19.311 7.79863 19.1699 6.52923 18.3156 5.76462C17.4614 5 16.1842 5 13.6297 5L10.3703 5C7.81585 5 6.53864 5 5.68436 5.76462C4.83009 6.52923 4.68904 7.79862 4.40695 10.3374L4 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                        <path d="M11.5 2H14M16.5 2H14M14 2V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                        <path d="M9 17.5L9.99615 18.1641C10.3247 18.3831 10.7107 18.5 11.1056 18.5H12.8944C13.2893 18.5 13.6753 18.3831 14.0038 18.1641L15 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                        <path d="M8 8H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                    </svg>
+                                                </div>
+                                                <p class="status <?= strtolower($cash['estado']) ?>"><?=$cash['estado'] ?></p>
+                                            </div>
+                                        </div>
+                                    <?php endforeach ?>
+                                </div>
+                            <?php endif ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="main_pos pagos_en_tienda_contenido">
+                            <?php 
+                                $items_compra_moneds = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante_v',$comprapendiente['id'])->where('estado','2')->where('tipo','venta')->get('imventario');
+                                $productos_vistos_moneda_pagos = [];
+                                foreach ($items_compra_moneds as $moneda) {
+                                    $la_monedas_de_products = $moneda->currency;
+                                    if (!in_array($la_monedas_de_products, $productos_vistos_moneda_pagos)) {
+                                       $productos_vistos_moneda_pagos[] = $la_monedas_de_products; 
+                                    }
+                                }
+                                
+                            ?>
+                            <div class="inputs_pagos_storeds">
+                                <div class="contiene_los_modos_de_pago">
+                                    <?php foreach ($productos_vistos_moneda_pagos as $monedas_listars): ?>
+                                        <?php $indexdefault_currency = array_search($monedas_listars, array_column($wo['currencies'], 'text')); ?>
+                                        <div class="contenido_modo_pago">
+                                            <?php if ($comprapendiente['donde_paga']==1): ?>
+                                                <input type="checkbox" class="cash_vi" id="metodo_pago_<?='efectivo_'.strtolower($monedas_listars) ?>" name="metodo_pago" value="<?='efectivo_'.strtolower($monedas_listars) ?>" data-moneda="<?=$monedas_listars;?>">
+                                                <label for="metodo_pago_<?='efectivo_'.strtolower($monedas_listars) ?>" class="cash_v"><span>Efectivo</span> <b><?=$monedas_listars;?></b></label>
+
+                                                <input type="checkbox" class="cash_vi" id="metodo_pago_<?='tarjeta_'.strtolower($monedas_listars) ?>" name="metodo_pago" value="<?='tarjeta_'.strtolower($monedas_listars) ?>" data-moneda="<?=$monedas_listars;?>">
+                                                <label for="metodo_pago_<?='tarjeta_'.strtolower($monedas_listars) ?>" class="cash_v"><span>Tarjeta</span> <b><?=$monedas_listars;?></b></label>
+
+                                                <input type="checkbox" class="cash_vi" id="metodo_pago_<?='transferencia_'.strtolower($monedas_listars) ?>" name="metodo_pago" value="<?='transferencia_'.strtolower($monedas_listars) ?>" data-moneda="<?=$monedas_listars;?>">
+                                                <label for="metodo_pago_<?='transferencia_'.strtolower($monedas_listars) ?>" class="cash_v"><span>Transferencia</span> <b><?=$monedas_listars;?></b></label>
+                                                
+                                                <input type="checkbox" class="cash_vi" id="metodo_pago_<?='yape_'.strtolower($monedas_listars) ?>" name="metodo_pago" value="<?='yape_'.strtolower($monedas_listars) ?>" data-moneda="<?=$monedas_listars;?>">
+                                                <label for="metodo_pago_<?='yape_'.strtolower($monedas_listars) ?>" class="cash_v"><span>Yape</span> <b><?=$monedas_listars;?></b></label>
+                                            <?php endif ?>
+                                        </div>
+                                    <?php endforeach ?>
+                                </div>
+                                <?php foreach ($productos_vistos_moneda_pagos as $monedas_lista_a): ?>
+                                    <div class="seleccion_resultado" id="monto_<?='efectivo_'.strtolower($monedas_lista_a) ?>_container" style="display:none;">
+                                        <span>Efectivo <?=$monedas_lista_a;?></span>
+                                        <div class="selccion_icons_cs">
+                                            <span class="icon_selections">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none">
+                                                    <path d="M16 14C16 14.8284 16.6716 15.5 17.5 15.5C18.3284 15.5 19 14.8284 19 14C19 13.1716 18.3284 12.5 17.5 12.5C16.6716 12.5 16 13.1716 16 14Z" stroke="currentColor" stroke-width="1.5" />
+                                                    <path d="M18.9 8C18.9656 7.67689 19 7.34247 19 7C19 4.23858 16.7614 2 14 2C11.2386 2 9 4.23858 9 7C9 7.34247 9.03443 7.67689 9.10002 8" stroke="currentColor" stroke-width="1.5" />
+                                                    <path d="M7 7.99324H16C18.8284 7.99324 20.2426 7.99324 21.1213 8.87234C22 9.75145 22 11.1663 22 13.9961V15.9971C22 18.8269 22 20.2418 21.1213 21.1209C20.2426 22 18.8284 22 16 22H10C6.22876 22 4.34315 22 3.17157 20.8279C2 19.6557 2 17.7692 2 13.9961V11.9952C2 8.22211 2 6.33558 3.17157 5.16344C4.11466 4.2199 5.52043 4.03589 8 4H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                </svg>
+                                            </span>
+                                            <input type="text" class="monto-input" id="monto_<?='efectivo_'.strtolower($monedas_lista_a) ?>" value="0" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="seleccion_resultado" id="monto_<?='tarjeta_'.strtolower($monedas_lista_a) ?>_container" style="display:none;">
+                                        <span>Tarjeta Devito/Credito <?=$monedas_lista_a;?></span>
+                                        <div class="selccion_icons_cs">
+                                            <span class="icon_selections">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none">
+                                                    <path d="M3.3457 16.1976L16.1747 3.36866M18.6316 11.0556L16.4321 13.2551M14.5549 15.1099L13.5762 16.0886" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                    <path d="M3.17467 16.1411C1.60844 14.5749 1.60844 12.0355 3.17467 10.4693L10.4693 3.17467C12.0355 1.60844 14.5749 1.60844 16.1411 3.17467L20.8253 7.85891C22.3916 9.42514 22.3916 11.9645 20.8253 13.5307L13.5307 20.8253C11.9645 22.3916 9.42514 22.3916 7.85891 20.8253L3.17467 16.1411Z" stroke="currentColor" stroke-width="1.5" />
+                                                    <path d="M4 22H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                </svg>
+                                            </span>
+                                            <input type="text" class="monto-input" id="monto_<?='tarjeta_'.strtolower($monedas_lista_a) ?>" value="0" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="seleccion_resultado" id="monto_<?='transferencia_'.strtolower($monedas_lista_a) ?>_container" style="display:none;">
+                                        <span>Transferencia <?=$monedas_lista_a;?></span>
+                                        <div class="selccion_icons_cs">
+                                            <span class="icon_selections">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none">
+                                                    <path d="M2 10C2 6.68286 4.68286 4 8 4L7.14286 5.71429" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M22 14C22 17.3171 19.3171 20 16 20L16.8571 18.2857" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M17.25 2.5156C19.0803 1.76088 20.6915 2.01217 21.5651 2.17234C21.8138 2.21794 22 2.46181 22 2.74528V9.20426C22 9.54282 21.738 9.79534 21.4407 9.74278C20.5437 9.58416 18.9966 9.38826 17.25 10.1085C15.3721 10.8828 13.482 11.0285 12.4505 10.9958C12.1939 10.9877 12 10.7457 12 10.4568V3.99467C12 3.66171 12.2552 3.39978 12.5512 3.40549C13.6018 3.42576 15.4316 3.2654 17.25 2.5156Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M7.25 13.5156C9.08032 12.7609 10.6915 13.0122 11.5651 13.1723C11.8138 13.2179 12 13.4618 12 13.7453V20.2043C12 20.5428 11.738 20.7953 11.4407 20.7428C10.5437 20.5842 8.99663 20.3883 7.25 21.1085C5.37206 21.8828 3.48197 22.0285 2.45052 21.9958C2.19389 21.9877 2 21.7457 2 21.4568V14.9947C2 14.6617 2.25525 14.3998 2.55116 14.4055C3.60178 14.4258 5.43158 14.2654 7.25 13.5156Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M16.9998 6.5H17.0088" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6.99981 17.5H7.00879" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </span>
+                                            <input type="text" class="monto-input" id="monto_<?='transferencia_'.strtolower($monedas_lista_a) ?>" value="0" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="seleccion_resultado" id="monto_<?='yape_'.strtolower($monedas_lista_a) ?>_container" style="display:none;">
+                                        <span>Yape <?=$monedas_lista_a;?></span>
+                                        <div class="selccion_icons_cs">
+                                            <span class="icon_selections yape"><span class="yape">Y</span></span>
+                                            <input type="text" class="monto-input" id="monto_<?='yape_'.strtolower($monedas_lista_a) ?>" value="0" readonly>
+                                        </div>
+                                    </div>
+                                <?php endforeach ?>
+                                <hr>
+                            </div>
+
+                            <div class="contiene_accesos_rapidos">
+                                <div class="montos_pay_contens">
+                                <?php foreach ($productos_vistos_moneda_pagos as $monedas_listarsc): ?>
+                                    <?php $wo['total_mon'] = 0; ?>
+                                    <?php $indexdefault_currencyc = array_search($monedas_listarsc, array_column($wo['currencies'], 'text')); ?>
+                                    <?php $total_productos_prive_monedas = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$monedas_listarsc)->where('estado','2')->getValue('imventario','SUM(precio)'); ?>
+                                    <?php $wo['total_mon'] = number_format($total_productos_prive_monedas, '2','.',''); ?>
+                                    <span class="monto_total_a_pagar">Total: <b class="mount_total"><?=(!empty($wo['currencies'][$indexdefault_currencyc]['symbol'])) ? $wo['currencies'][$indexdefault_currencyc]['symbol'] : $monedas_listarsc;?> <?=$wo['total_mon']; ?></b></span>
+                                    <span class="alerta_mensaje_pay alerta_mensaje_pay_<?=strtolower($monedas_listarsc) ?>"></span>
+                                    <hr>
+                                    <br>
+                                <?php endforeach ?>
+                                </div>
+                                <div class="teclado_numerico">
+                                    <div data-value="1">1</div>
+                                    <div data-value="2">2</div>
+                                    <div data-value="3">3</div>
+                                    <div data-value="4">4</div>
+                                    <div data-value="5">5</div>
+                                    <div data-value="6">6</div>
+                                    <div data-value="7">7</div>
+                                    <div data-value="8">8</div>
+                                    <div data-value="9">9</div>
+                                    <div data-value="0">0</div>
+                                    <div data-value=".">.</div>
+                                    <div data-action="clear">C</div>
+                                    <div data-action="delete">←</div>
+                                </div>
+                            </div>
+
+
+
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    var activeInput = null;
+
+                                    // Ocultar todos los inputs al inicio
+                                    $('.seleccion_resultado').hide();
+
+                                    // Manejar la selección de checkbox
+                                    $('input[name="metodo_pago"]').change(function () {
+                                        var metodo = $(this).val();
+                                        var container = $('#monto_' + metodo + '_container');
+
+                                        if ($(this).is(':checked')) {
+                                            container.show(); // Mostrar el contenedor correspondiente
+                                            activeInput = container.find('.monto-input');
+                                            activeInput.prop('readonly', false); // Hacerlo editable
+                                            activeInput.focus(); // Enfocar el input seleccionado
+                                        } else {
+                                            container.hide(); // Ocultar el contenedor si el checkbox no está seleccionado
+                                            container.find('.monto-input').prop('readonly', true); // Desactivar input
+                                            container.find('.monto-input').val('0'); // Restablecer el valor
+                                            if (activeInput && activeInput.is(container.find('.monto-input'))) {
+                                                activeInput = null; // Si el input activo es deseleccionado, reiniciar
+                                            }
+                                        }
+                                    });
+
+                                    // Permitir la edición al hacer foco en un campo de texto
+                                    $('.monto-input').focus(function () {
+                                        if (!$(this).prop('readonly')) {
+                                            activeInput = $(this); // Actualizar el input activo
+                                        }
+                                    });
+
+                                    $('.selccion_icons_cs input').on('focus', function() {
+                                        $(this).closest('.selccion_icons_cs').addClass('activin');
+                                    });
+
+                                    $('.selccion_icons_cs input').on('blur', function() {
+                                        $(this).closest('.selccion_icons_cs').removeClass('activin');
+                                    });
+
+
+                                    // Manejar la entrada del teclado numérico
+                                    $('.teclado_numerico div').click(function () {
+                                        if (!activeInput) return; // No hacer nada si no hay un input activo
+
+                                        var value = $(this).data('value');
+                                        var action = $(this).data('action');
+
+                                        if (action === 'clear') {
+                                            activeInput.val('0');
+                                        } else if (action === 'delete') {
+                                            var currentVal = activeInput.val();
+                                            activeInput.val(currentVal.slice(0, -1) || '0');
+                                        } else {
+                                            var currentVal = activeInput.val();
+                                            if (currentVal === '0') {
+                                                activeInput.val(value);
+                                            } else {
+                                                activeInput.val(currentVal + value);
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+                        </div>
+                    <?php endif ?>
+                    <script type="text/javascript">
+                        $(document).on('click', '.seleccted_cashs', function(){
+                            var cashsselec = $(this).attr('data-id');
+                            $.ajax({
+                              url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=selected_cashs_pos&hash=' + $('.main_session').val(),
+                              data: {cash:cashsselec},
+                              type: 'POST',
+                              success: function (data) {
+                                if (data.status==200){
+                                  document.location.reload();
+                                }
+                              }
+                            })
+                        });
+                    </script>
+                </div>
+                <div class="sidebar_pos">
+                    <?php $numeroventa = generarNumeroDocumento($venta_iniciada['documento']); ?>
+                    <div class="sidebar_pos_content">
+                        <div class="sidebar_pos_header">
+                            <a hidden href="<?=lui_SeoLink('index.php?link1=pos');?>" data-ajax="<?=('?link1=pos'); ?>" id="order_pos_lp" style="display:none;"></a>
+                            <span><strong>Nueva venta</strong> </span>
+                            <span><strong><?=$numeroventa?></strong></span>
+                        </div>
+                        
+                        <div class="comprobantes_contain">
+                            <?php if ($venta_iniciada['documento'] == 'B'): ?>
+                                <span class="comprobant_list">
+                                    <input type="radio" id="boleta_view" data="<?=$venta_iniciada['hash_id'];?>" <?=($venta_iniciada['documento'] == 'B') ? 'checked' : '';?>>
+                                    <label class="comprobant_list_label" for="boleta_view"><?php echo $wo['lang']['boleta']; ?></label>
+                                </span>
+                            <?php endif ?>
+
+                            <?php if ($venta_iniciada['documento'] == 'F'): ?>
+                                <span class="comprobant_list">
+                                    <input type="radio" id="factura_view" data="<?=$venta_iniciada['hash_id'];?>" <?=($venta_iniciada['documento'] == 'F') ? 'checked' : '';?>>
+                                    <label class="comprobant_list_label" for="factura_view"><?php echo $wo['lang']['invoice']; ?></label>
+                                </span>
+                            <?php endif ?>
+
+                            <?php if ($venta_iniciada['documento'] == 'BS'): ?>
+                                <span class="comprobant_list">
+                                    <input type="radio" id="nota_view" data="<?=$venta_iniciada['hash_id'];?>" <?=($venta_iniciada['documento'] == 'BS') ? 'checked' : '';?>>
+                                    <label class="comprobant_list_label" for="nota_view">Nota</label>
+                                </span>
+                                <span class="comprobant_list <?=($venta_iniciada['documento'] == 'BS') ? 'activado' : '';?>" id="nota_view">Nota</span>
+                            <?php endif ?>
+
+                        </div>
+                        <div class="documents_number_contain">
+                            <?php if ($venta_iniciada['documento']=='B'): ?>
+                                <span class="input_docss"><?=$venta_iniciada['user_document'] ?></span>
+                                <span class="input_docs"><?= ($venta_iniciada['user_document'] == 'DNI' && strlen($venta_iniciada['user_document_num']) == 8) ? $venta_iniciada['user_document_num'] : ''; ?></span>
+                            <?php elseif ($venta_iniciada['documento']=='F'): ?>
+                                <span class="input_docss"><?=$venta_iniciada['user_document'] ?></span>
+                                <span class="input_docs"><?= ($venta_iniciada['user_document'] == 'RUC' && strlen($venta_iniciada['user_document_num']) == 11) ? $venta_iniciada['user_document_num'] : ''; ?></span>
+                            <?php elseif ($venta_iniciada['documento']=='BS'): ?>
+                                <select class="input_docss" data="<?=$venta_iniciada['hash_id'];?>">
+                                    <option value="ND" <?=($venta_iniciada['user_document'] == null) ? 'selected' : '';?>>SIN DOCUMENTO</option>
+                                    <option value="DNI" <?=($venta_iniciada['user_document'] == 'DNI') ? 'selected' : '';?>>DNI</option>
+                                    <option value="RUC" <?=($venta_iniciada['user_document'] == 'RUC') ? 'selected' : '';?>>RUC</option>
+                                </select>
+                                <?php if ($venta_iniciada['user_document_num']==null): ?>
+                                <?php else: ?>
+                                    <?php if ($venta_iniciada['user_document'] == 'RUC'): ?>
+                                        <span class="input_docs"><?= ($venta_iniciada['user_document'] == 'RUC' && strlen($venta_iniciada['user_document_num']) == 11) ? $venta_iniciada['user_document_num'] : ''; ?></span>
+                                    <?php elseif ($venta_iniciada['user_document'] == 'DNI'): ?>
+                                        <span class="input_docs"><?= ($venta_iniciada['user_document'] == 'DNI' && strlen($venta_iniciada['user_document_num']) == 8) ? $venta_iniciada['user_document_num'] : ''; ?></span>
+                                    <?php endif ?>
+                                <?php endif ?>
+                            <?php endif ?>
+                        </div>
+                        <div class="productos_agregados_en_venta">
+                            <?php 
+                            $total_productos_grupo = 0;
+                            $total_productos_lista = 0;
+                            $total_productos_price = 0.00;
+                            $comprapendiente = $db->where('estado_venta',5)->where('id_del_vendedor',lui_Secure($wo['user']['user_id']))->where('completado','2')->getOne(T_VENTAS);
+                            if (!empty($comprapendiente)) {
+                                $total_productos_grupo = $db->where('id_comprobante_v',$comprapendiente['id'])->where('estado','2')->getValue('imventario','COUNT(DISTINCT orden)');
+                                $total_productos_lista = $db->where('id_comprobante_v',$comprapendiente['id'])->where('estado','2')->getValue('imventario','COUNT(*)');
+                                if ($total_productos_lista>0) {
+                                    $total_productos_price = $db->where('id_comprobante_v',$comprapendiente['id'])->where('estado','2')->getValue('imventario','SUM(precio)');
+                                }
+                            } ?>
+                            <?php $items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante_v',$comprapendiente['id'])->where('estado','2')->where('tipo','venta')->get('imventario'); ?>
+                            <?php $html = "";
+                            $productos_vistos = [];
+                            foreach ($items_compra as $value) {
+                                $producto = lui_GetProduct($value->producto);
+                                $producto_id = $producto['id'];
+                                if (in_array($producto_id, $productos_vistos)) {
+                                    continue;
+                                }
+                                $variantes_color = [];
+                                foreach ($items_compra as $item) {
+                                    if ($item->producto == $producto_id) {
+                                        $variantes_color[] = $item;
+                                    }
+                                }
+
+                                $variantes_atributos = [];
+                                $atributos = $db->objectbuilder()->where('id_imventario', $value->id)->get('imventario_atributos');
+                                foreach ($atributos as $atributo) {
+                                    $variantes_atributos[$atributo->id_atributo][] = $atributo->id_atributo_opciones;
+                                }
+                                $identificador_unico = $comprapendiente['id'] . '_' . $producto_id;
+                                foreach ($variantes_atributos as $atributo => $opciones) {
+                                    $identificador_unico .= '_' . implode('_', $opciones);
+                                }
+                                if (in_array($identificador_unico, $productos_vistos)) {
+                                    continue;
+                                }
+
+                                $wo['product']['id'] = $producto['id'];
+                                $wo['product']['id_productos'] =  $identificador_unico;
+                                $wo['product']['id_imventarios'] =  $value->id;
+                                $wo['product']['units'] = $producto['units'];
+                                $wo['product']['images'] = $producto['images'];
+                                $wo['product']['name'] = $producto['name'];
+                                $wo['product']['modelo'] = $producto['modelo'];
+                                $wo['product']['sku'] = $producto['sku'];
+                                $wo['product']['comprap'] = $comprapendiente['id'];
+                                $wo['product']['inventario'] = $value->id;
+                                $wo['product']['color'] = $value->color;
+                                $wo['product']['precio'] = $value->precio;
+                                $wo['product']['garantia'] = $value->garantia;
+
+                                $cantidad_productos = 0;
+                                $cantidad_productos_pos_listos = 0;
+                                $completado_productos_pos_listos = 0;
+                                if (!empty($variantes_atributos)) {
+                                    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante_v = {$comprapendiente['id']}";
+                                    foreach ($variantes_atributos as $atributo => $opciones) {
+                                        foreach ($opciones as $opcion) {
+                                            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
+                                        }
+                                    }
+                                    $cantidad_productos = $db->rawQueryOne($sql)['cantidad'];
+                                } else{
+                                    $cantidad_productos = $db->where('id_comprobante_v', $comprapendiente['id'])->where('producto', $wo['product']['id'])->where('color', $wo['product']['color'])->getValue('imventario', 'COUNT(*)');
+                                }
+
+                                if (!empty($variantes_atributos)) {
+                                    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND barcode !=0 AND id_comprobante_v = {$comprapendiente['id']}";
+                                    foreach ($variantes_atributos as $atributo => $opciones) {
+                                        foreach ($opciones as $opcion) {
+                                            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
+                                        }
+                                    }
+                                    $cantidad_productos_pos_listos = $db->rawQueryOne($sql)['cantidad'];
+                                } else{
+                                    $cantidad_productos_pos_listos = $db->where('id_comprobante_v', $comprapendiente['id'])
+                                               ->where('producto', $producto['id'])
+                                               ->where('barcode',  ['!=', '0'], 'IN')
+                                               ->getValue('imventario', 'COUNT(*)');
+                                    $sql = "SELECT COUNT(*) AS cantidad 
+                                    FROM imventario 
+                                    WHERE id_comprobante_v = ? 
+                                    AND producto = ?
+                                    AND barcode != '0'";
+                                    $params = array($comprapendiente['id'], $producto['id']);
+                                    $result = $db->rawQueryOne($sql, $params);
+
+                                    $cantidad_productos_pos_listos = $result['cantidad'];
+                                }
+
+                                if (!empty($variantes_atributos)) {
+                                    $sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND (estado = 1 OR estado = 2)";
+                                    $subqueries = [];
+                                    foreach ($variantes_atributos as $atributo => $opciones) {
+                                        foreach ($opciones as $opcion) {
+                                            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
+                                        }
+                                    }
+                                    $cantidad_prod = $db->rawQueryOne($sql)['cantidad'];
+                                    $productos_stock_disponible =   ($cantidad_prod !== null) ? $cantidad_prod : 0;
+                                } else{
+                                    if ($wo['product']['color']) {
+                                        $sql2 = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE color = '{$wo['product']['color']}' AND producto = {$producto['id']} AND (estado = 1 OR estado = 2)";
+                                        $productos_stock_disponible = $db->rawQueryOne($sql2)['cantidad'];
+                                    }else{
+                                        $sql2 = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND (estado = 1 OR estado = 2)";
+                                        $productos_stock_disponible = $db->rawQueryOne($sql2)['cantidad'];
+                                    }
+                                }
+                                if (!empty($wo['currencies']) && !empty($wo['currencies'][$producto['currency']]) && $wo['currencies'][$producto['currency']]['text'] != $wo['config']['currency'] && !empty($wo['config']['exchange']) && !empty($wo['config']['exchange'][$wo['currencies'][$producto['currency']]['text']])) {
+                                    $wo['product']['symbol'] = (!empty($wo['currencies'][$producto['currency']]['symbol'])) ? $wo['currencies'][$producto['currency']]['symbol'] : $producto['currency'];
+                                    // $wo['total'] += (($wo['product']['price'] / $wo['config']['exchange'][$wo['currencies'][$wo['product']['currency']]['text']]) * $wo['item']->units);
+                                } else {
+                                    $wo['product']['symbol'] = (!empty($wo['currencies'][$producto['currency']]['symbol'])) ? $wo['currencies'][$producto['currency']]['symbol'] : $producto['currency'];
+                                    //$wo['total'] += ($wo['product']['price'] * $wo['item']->units);
+                                }
+                                $wo['product']['subtotal_p'] = number_format($value->precio*$cantidad_productos, 2, ',', '.');
+                                $wo['product']['cantidad'] = $cantidad_productos;
+                                $wo['product']['cantidad_listos_pos'] = $cantidad_productos_pos_listos;
+                                $wo['product']['stock_disponible'] = $productos_stock_disponible;
+                                $productos_vistos[] = $identificador_unico;
+                                $html .= lui_LoadPage('pos/items_pos');
+                            }
+                            echo $html;
+                            ?>
+                        </div>
+
+                        <?php 
+                            $productos_vistos_moneda = [];
+                            foreach ($items_compra as $moneda) {
+                                $la_monedas_de_products = $moneda->currency;
+                                if (!in_array($la_monedas_de_products, $productos_vistos_moneda)) {
+                                   $productos_vistos_moneda[] = $la_monedas_de_products; 
+                                }
+                            }
+                            $wo['subtotal_dos'] = 0;
+                            $wo['total_dos'] = 0;
+                            $wo['igv_dos'] = 0;
+                        ?>
+                        
+                        <div class="contenido_de_pagos">
+                            <?php foreach ($productos_vistos_moneda as $moneds):
+                                $indexdefault_currency = array_search($moneds, array_column($wo['currencies'], 'text')); ?>
+                                <?php $total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$moneds)->where('estado','2')->getValue('imventario','COUNT(*)');
+                                if ($total_productos_lista_uno>0) {
+                                    $total_productos_price_dos = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$moneds)->where('estado','2')->getValue('imventario','SUM(precio)');
+                                    
+                                    $wo['subtotal_dos'] = number_format($total_productos_price_dos / (1.18), '2','.','');
+                                    $wo['igv_dos']          = number_format($wo['subtotal_dos'] * 0.18, '2','.','');
+                                    $wo['total_dos']    = number_format($total_productos_price_dos, '2','.',''); 
+                                } ?>
+                                <div class="cuentas_a_pagar" id="<?='currency_pos_pedido_'.strtolower($moneds);?>">
+                                    <div class="div_subs_contn">
+                                        <span><?php echo $wo['lang']['subtotal'] ?></span>
+                                        <span><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $moneds;?> <span class="<?='sub_total_pos_pedido_'.strtolower($moneds);?>"><?php echo $wo['subtotal_dos']; ?></span></span>
+                                    </div>
+                                    <div class="div_subs_contn">
+                                        <span><?php echo $wo['lang']['igv'] ?></span>
+                                        <span><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $moneds;?> <span class="<?='impuesto_pos_pedido_'.strtolower($moneds);?>"><?=$wo['igv_dos']; ?></span></span>
+                                    </div>
+                                    <div class="div_subs_contn">
+                                        <span><?php echo $wo['lang']['total'] ?></span>
+                                        <span><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $moneds;?> <span class="<?='total_pos_pedido_'.strtolower($moneds);?>"><?=$wo['total_dos'];?></span></span>
+                                    </div>
+                                </div>
+                            <?php endforeach ?>
+                        </div>
+                    </div>
+                </div>
+            <?php else: ?>
+            <?php endif ?>
 	</div>
 	
+    
+        <?php $estadodeventa = estadodeventaVendedor($venta_iniciada['estado_venta']); ?>
+    	<div class="footer_pos">
+    		<?php if ($wo['user']['first_name']==''): ?>
+    			<span class="vendedor_pos">Vendedor: <?=$wo['user']['username']; ?></span>
+    		<?php else: ?>
+    			<span class="vendedor_pos">Vendedor: <?=$wo['user']['first_name']; ?></span>
+    		<?php endif ?>
+                <?php if ($venta_iniciada['completado']==2): ?>
+                    <?php $total_productos_lista = $db->where('id_comprobante_v',$comprapendiente['id'])->where('estado','2')->getValue('imventario','COUNT(*)'); ?>
+                	<?php if ($venta_iniciada['donde_paga']==1): ?>
+                        <?php if ($venta_iniciada['estado_venta']==5): ?>
+                            <button class="checkout-button" onClick="changue_order_pages_pos_entr('<?=$venta_iniciada['hash_id'];?>','<?=$estadodeventa['boton_action']; ?>')">
+                                <span class="text check_pass"><?=$estadodeventa['boton_texto'] ?> (<span class="total_items_order_perdido_pos"><?=$total_productos_lista ?></span>)</span>
+                                <span class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">
+                                      <path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <animate attributeName="d" 
+                                            values="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18; 
+                                                    M12.00005 6C12.00005 6 18 10.4189 18 12C18 13.5812 12 18 12 18; 
+                                                    M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18" 
+                                            dur="2s" repeatCount="indefinite"/>
+                                        </path>
+                                    </svg>
+                                </span>
+                            </button>
+                        <?php else: ?>
+                            <button class="checkout-button" onClick="changue_order_pages_pos('<?=$venta_iniciada['hash_id'];?>','<?=$estadodeventa['boton_action']; ?>')">
+                                <span class="text check_pass"><?=$estadodeventa['boton_texto'] ?> (<span class="total_items_order_perdido_pos"><?=$total_productos_lista ?></span>)</span>
 
-	<div class="footer_pos">
-		<?php if ($wo['user']['first_name']==''): ?>
-			<span class="vendedor_pos">Vendedor: <?=$wo['user']['username']; ?></span>
-		<?php else: ?>
-			<span class="vendedor_pos">Vendedor: <?=$wo['user']['first_name']; ?></span>
-		<?php endif ?>
-		<button class="checkout-button">
-        <?php $total_productos_lista = $db->where('id_comprobante_v',$comprapendiente->id)->where('estado','2')->getValue('imventario','COUNT(*)'); ?>
+                                <span class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">
+                                      <path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <animate attributeName="d" 
+                                            values="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18; 
+                                                    M12.00005 6C12.00005 6 18 10.4189 18 12C18 13.5812 12 18 12 18; 
+                                                    M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18" 
+                                            dur="2s" repeatCount="indefinite"/>
+                                        </path>
+                                    </svg>
+                                </span>
+                            </button>
+                        <?php endif ?>
 
-        <?php if ($venta_iniciada->completado==2): ?>
-        	<?php if ($venta_iniciada->donde_paga==1): ?>
-        		<span class="text check_pass">Pedido Listo (<span class="total_items_order_perdido_pos"><?=$total_productos_lista ?></span>)</span>
-        		<span class="icon">
-		            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">
-					  <path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-					    <animate attributeName="d" 
-				            values="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18; 
-				                    M12.00005 6C12.00005 6 18 10.4189 18 12C18 13.5812 12 18 12 18; 
-				                    M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18" 
-				            dur="2s" repeatCount="indefinite"/>
-					  	</path>
-					</svg>
-		        </span>
-        	<?php endif ?>
-        <?php elseif ($venta_iniciada->completado==3): ?>
-        	<span class="icon">
-	            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"  fill="none">
-				    <path d="M16.6667 14L7.33333 14C5.14718 14 4.0541 14 3.27927 14.5425C2.99261 14.7433 2.74327 14.9926 2.54254 15.2793C2 16.0541 2 17.1472 2 19.3333C2 20.4264 2 20.9729 2.27127 21.3604C2.37164 21.5037 2.4963 21.6284 2.63963 21.7287C3.02705 22 3.57359 22 4.66667 22L19.3333 22C20.4264 22 20.9729 22 21.3604 21.7287C21.5037 21.6284 21.6284 21.5037 21.7287 21.3604C22 20.9729 22 20.4264 22 19.3333C22 17.1472 22 16.0541 21.4575 15.2793C21.2567 14.9926 21.0074 14.7433 20.7207 14.5425C19.9459 14 18.8528 14 16.6667 14Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-				    <path d="M20 14L19.593 10.3374C19.311 7.79863 19.1699 6.52923 18.3156 5.76462C17.4614 5 16.1842 5 13.6297 5L10.3703 5C7.81585 5 6.53864 5 5.68436 5.76462C4.83009 6.52923 4.68904 7.79862 4.40695 10.3374L4 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-				    <path d="M11.5 2H14M16.5 2H14M14 2V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-				    <path d="M9 17.5L9.99615 18.1641C10.3247 18.3831 10.7107 18.5 11.1056 18.5H12.8944C13.2893 18.5 13.6753 18.3831 14.0038 18.1641L15 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-				    <path d="M8 8H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-				</svg>
-	        </span>
-        	<span class="text check_pass">Pasar a Caja (<span class="total_items_order_perdido_pos"><?=$total_productos_lista ?></span>)</span>
-        <?php elseif ($venta_iniciada->delivery==''): ?>
-        <?php endif ?>
-        
-    </button>
-	</div>
+                		
+                	<?php endif ?>
+                <?php elseif ($venta_iniciada['completado']==3): ?>
+                    <?php $total_productos_lista = $db->where('id_comprobante_v',$comprapendiente['id'])->where('estado','2')->getValue('imventario','COUNT(*)'); ?>
+                    <button class="checkout-button">
+                    	<span class="icon">
+            	            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"  fill="none">
+            				    <path d="M16.6667 14L7.33333 14C5.14718 14 4.0541 14 3.27927 14.5425C2.99261 14.7433 2.74327 14.9926 2.54254 15.2793C2 16.0541 2 17.1472 2 19.3333C2 20.4264 2 20.9729 2.27127 21.3604C2.37164 21.5037 2.4963 21.6284 2.63963 21.7287C3.02705 22 3.57359 22 4.66667 22L19.3333 22C20.4264 22 20.9729 22 21.3604 21.7287C21.5037 21.6284 21.6284 21.5037 21.7287 21.3604C22 20.9729 22 20.4264 22 19.3333C22 17.1472 22 16.0541 21.4575 15.2793C21.2567 14.9926 21.0074 14.7433 20.7207 14.5425C19.9459 14 18.8528 14 16.6667 14Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            				    <path d="M20 14L19.593 10.3374C19.311 7.79863 19.1699 6.52923 18.3156 5.76462C17.4614 5 16.1842 5 13.6297 5L10.3703 5C7.81585 5 6.53864 5 5.68436 5.76462C4.83009 6.52923 4.68904 7.79862 4.40695 10.3374L4 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            				    <path d="M11.5 2H14M16.5 2H14M14 2V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            				    <path d="M9 17.5L9.99615 18.1641C10.3247 18.3831 10.7107 18.5 11.1056 18.5H12.8944C13.2893 18.5 13.6753 18.3831 14.0038 18.1641L15 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            				    <path d="M8 8H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            				</svg>
+            	        </span>
+                    	<span class="text check_pass">Pasar a Caja (<span class="total_items_order_perdido_pos"><?=$total_productos_lista ?></span>)</span>
+                    </button>
+                <?php elseif ($venta_iniciada['delivery']==''): ?>
+                <?php endif ?>
+            
+    	</div>
+    <?php else: ?>
+        <h2>Bienvenid@</h2>
+    <?php endif ?>
 </div>
 <script type="text/javascript">
 // Función para mostrar u ocultar el menú basado en el ID del producto 
@@ -1561,10 +2235,10 @@ function mostrarMenu(idProducto) {
 
 // Función para cerrar el menú si se hace clic fuera de él o en el botón de cerrar
 function cerrarMenu(event, idProducto) {
-    const menu = document.querySelector('.menu_atributos_produ_' + idProducto);
-    const menuprinc = document.querySelector('.producto_pos_list_' + idProducto);
-    const closeButton = document.querySelector('.close_button_' + idProducto);
-    const closeHoverL = document.querySelector('.close_hover_' + idProducto);
+    const menu = document.querySelector(`.menu_atributos_produ_${idProducto}`);
+    const menuprinc = document.querySelector(`.producto_pos_list_${idProducto}`);
+    const closeButton = document.querySelector(`.close_button_${idProducto}`);
+    const closeHoverL = document.querySelector(`.close_hover_${idProducto}`);
     
     if (!menu.contains(event.target) && !menuprinc.contains(event.target)) {
         if (menuprinc && menuprinc.classList.contains('active_atr_pos_item')) {
@@ -1587,6 +2261,7 @@ document.addEventListener('click', function(event) {
         cerrarMenu(event, idProducto); // Pasar ambos argumentos a cerrarMenu
     });
 });
+
 	document.addEventListener('DOMContentLoaded', function() {
 	    const barcodeInput = document.getElementById('barcode');
 	    if (barcodeInput) {
@@ -1610,7 +2285,13 @@ document.addEventListener('click', function(event) {
 						item_pos_public.innerHTML = data.cantidad_listo;
 					}
 				}
+                MostrarAlertaLuislopez(data.message, 10000,'success');
 			}
+            if (data.status==400) {
+                if (data.message) {
+                    MostrarAlertaLuislopez(data.message, 10000,'warning');
+                }
+            }
 		});
 	}
 
@@ -1696,7 +2377,6 @@ document.addEventListener('click', function(event) {
 			data: {number:nums},
 			type: 'POST',
 			success: function (data) {
-				console.log(data)
 			}
 		})
 	});
@@ -1725,8 +2405,7 @@ document.addEventListener('click', function(event) {
 				}else{
 					$('input[name="buscar_itm"]').attr('onkeyup', data.funcions);
 					$('input[name="buscar_itm"]').removeAttr('id');
-				} console.log(data.funcions)
-				
+				}
 			}
 		})
 	});
@@ -1745,9 +2424,7 @@ document.addEventListener('click', function(event) {
 	setInterval(actualizarReloj, 1000);
 	actualizarReloj();
 
-	function goBack() {
-        history.back();
-    }
+	
     function toggleFullscreen() {
 	    if (!document.fullscreenElement) {
 	        activarPantallaCompleta();
@@ -1777,6 +2454,7 @@ document.addEventListener('click', function(event) {
 	document.addEventListener('fullscreenchange', actualizarBoton);
 	document.addEventListener('webkitfullscreenchange', actualizarBoton);
 	document.addEventListener('msfullscreenchange', actualizarBoton);
+
 	function actualizarBoton() {
 	    var boton = document.getElementById('toggleFullscreenButton');
 	    if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {

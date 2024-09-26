@@ -6608,10 +6608,15 @@ function lui_GetGenders($lang = "english", $langs = array()) {
     ));
     $data    = array();
     foreach ($genders as $key => $value) {
-        $data[$value->lang_key] = $value->{$lang};
+        if (is_array($value)) {
+            $data[$value['lang_key']] = $value[$lang];
+        } elseif (is_object($value)) {
+            $data[$value->lang_key] = $value->{$lang};
+        }
     }
     return $data;
 }
+
 function lui_GetGendersImages() {
     global $wo, $db;
     $genders = $db->get(T_GENDER);

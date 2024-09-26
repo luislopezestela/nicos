@@ -30,14 +30,14 @@ foreach ($items_comprass as $item){
 if (!empty($variantes_atributos)){
 	$atributos_producto_principal = [];
 	foreach ($variantes_atributos as $atributo => $opciones){
-        $nombre_atributo = $db->where('id', $atributo)->getOne('atributos')->nombre;
+        $nombre_atributo = $db->where('id', $atributo)->getOne('atributos')['nombre'];
         $valores_opciones_atributo = [];
         foreach ($opciones as $opcion){
         	if($nombre_atributo=='Color'){
-        		$buscar_nombre_de_color = $db->where('id', $opcion)->getOne('lui_products_colores')->lang_key;
+        		$buscar_nombre_de_color = $db->where('id', $opcion)->getOne('lui_products_colores')['lang_key'];
         		$nombre_opcion_atributo = $wo['lang'][$buscar_nombre_de_color];
         	}else{
-        		$nombre_opcion_atributo = $db->where('id', $opcion)->getOne('atributos_opciones')->nombre;
+        		$nombre_opcion_atributo = $db->where('id', $opcion)->getOne('atributos_opciones')['nombre'];
         	}
         	$valores_opciones_atributo[] = $nombre_opcion_atributo;
         }
@@ -164,7 +164,7 @@ $opciones_del_producto = lui_poner_en_lista_las_opciones($wo['product']['id']);
 							<?php if(!empty($variantes_atributos)): ?>
 								<span class="layshane-btn_cr btn_layshane-1" onclick="RemoveProduct_compra_imv_all_atr('<?php echo $wo['product']['id_productos'];?>','hide')">Eliminar</span>
 							<?php else: ?>
-								<span class="layshane-btn_cr btn_layshane-1" onclick="RemoveProduct_compra_imv_all(<?=$wo['product']['id_productos'];?>,'hide')">Eliminar</span>
+								<span class="layshane-btn_cr btn_layshane-1" onclick="RemoveProduct_compra_imv_all('<?=$wo['product']['id_productos'];?>','hide')">Eliminar</span>
 							<?php endif ?>
 						<?php endif ?>
 						

@@ -10,19 +10,19 @@ if($f == 'product_compra_list_bdd_pos') {
 	if (isset($_POST['value'])) {
 		$producto = lui_GetProduct($_POST['value']);
 		$comprapendiente = $db->where('id_del_vendedor',lui_Secure($wo['user']['user_id']))->where('completado','2')->where('estado_venta', 3)->getOne(T_VENTAS);
-		$comprapendiente_ids = $comprapendiente->id;
+		$comprapendiente_ids = $comprapendiente['id'];
 
 		$uniqueIdentifier = $comprapendiente_ids . '_' . $_POST['value'];
 		$item_producrto = $db->where('atributo', $uniqueIdentifier)->where('estado','2')->where('id_comprobante_v',$comprapendiente_ids)->getOne('imventario');
 		if(!empty($item_producrto)){
-			$actualizar_precio = $item_producrto->precio;
+			$actualizar_precio = $item_producrto['precio'];
 		}else{
 			$actualizar_precio = $producto['price'];
 		}
 		
 		$lastGroupNumberRow = $db->orderBy('orden', 'desc')->where('id_comprobante_v',$comprapendiente_ids)->getOne('imventario', 'orden');
 		if($lastGroupNumberRow){
-		    $lastGroupNumber = $lastGroupNumberRow->orden;
+		    $lastGroupNumber = $lastGroupNumberRow['orden'];
 		} else{
 		    $lastGroupNumber = null;
 		}
@@ -31,7 +31,7 @@ if($f == 'product_compra_list_bdd_pos') {
 		} else{
 		    $sameIdentifierProducts = $db->where('atributo', $uniqueIdentifier)->where('id_comprobante_v',$comprapendiente_ids)->get('imventario');
 		    if($sameIdentifierProducts) {
-		        $nextGroupNumber = $sameIdentifierProducts[0]->orden;
+		        $nextGroupNumber = $sameIdentifierProducts[0]['orden'];
 		    }else{
 		        $nextGroupNumber = $lastGroupNumber + 1;
 		    }
@@ -40,7 +40,7 @@ if($f == 'product_compra_list_bdd_pos') {
 		if ($comprapendiente) {
 
 			$sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND (estado = 1 OR estado = 2)";			   
-			$productos_stock_disponibles = $db->rawQueryOne($sql)->cantidad;
+			$productos_stock_disponibles = $db->rawQueryOne($sql)['cantidad'];
 
 			$productos_stock_disponible = ($productos_stock_disponibles !== null) ? $productos_stock_disponibles : 0;
 				
@@ -57,7 +57,7 @@ if($f == 'product_compra_list_bdd_pos') {
 						'precio'   => $actualizar_precio,
 						'atributo'    => $uniqueIdentifier,
 						'orden'       => $nextGroupNumber,
-						'id_sucursal' => $comprapendiente->sucursal_entrega
+						'id_sucursal' => $comprapendiente['sucursal_entrega']
 					);
 					$db->insert('imventario', $dataarray);
 				}else{
@@ -73,7 +73,7 @@ if($f == 'product_compra_list_bdd_pos') {
 						'precio'   => $actualizar_precio,
 						'atributo'    => $uniqueIdentifier,
 						'orden'       => $nextGroupNumber,
-						'id_sucursal' => $comprapendiente->sucursal_entrega
+						'id_sucursal' => $comprapendiente['sucursal_entrega']
 					);
 					$db->insert('imventario', $dataarray);
 				}
@@ -108,12 +108,12 @@ if($f == 'product_compra_list_bdd_pos') {
 		        WHERE id_comprobante_v = ? 
 		        AND producto = ?
 		        AND barcode != '0'";
-				$params = array($comprapendiente->id, $producto['id']);
+				$params = array($comprapendiente['id'], $producto['id']);
 				$result = $db->rawQueryOne($sql3, $params);
-				$cantidad_productos_pos_listos = $result->cantidad;
+				$cantidad_productos_pos_listos = $result['cantidad'];
 				
 						   
-				$prod_stock_disponibles = $db->rawQueryOne($sql2)->cantidad;
+				$prod_stock_disponibles = $db->rawQueryOne($sql2)['cantidad'];
 
 				$prod_stock_disponible = ($prod_stock_disponibles !== null) ? $prod_stock_disponibles : 0;
 	            if ($prod_stock_disponible > 0) {
@@ -121,19 +121,19 @@ if($f == 'product_compra_list_bdd_pos') {
 	            }else{
 	            	$limite_de_stock = 1;
 	            }
-	            $buscarmoneda = $db->where('atributo', $uniqueIdentifier)->where('estado', '2')->where('id_comprobante_v', $comprapendiente->id)->getOne('imventario');
+	            $buscarmoneda = $db->where('atributo', $uniqueIdentifier)->where('estado', '2')->where('id_comprobante_v', $comprapendiente['id'])->getOne('imventario');
 	            if ($buscarmoneda) {
-	            	$moneda_limit = strtolower($buscarmoneda->currency);
+	            	$moneda_limit = strtolower($buscarmoneda['currency']);
 	            }else{
 	            	$moneda_limit = 0;
 	            }
 	            $wo['subtotal_dos'] = 0;
 	            $wo['igv_dos'] = 0;
 	            $wo['total_dos'] = 0;
-	            $indexdefault_currency = array_search($buscarmoneda->currency, array_column($wo['currencies'], 'text'));
-				$total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente->id)->where('currency',$buscarmoneda->currency)->where('estado','2')->getValue('imventario','COUNT(*)');
+	            $indexdefault_currency = array_search($buscarmoneda['currency'], array_column($wo['currencies'], 'text'));
+				$total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$buscarmoneda['currency'])->where('estado','2')->getValue('imventario','COUNT(*)');
 				if ($total_productos_lista_uno>0) {
-					$total_productos_price_f = $db->where('id_comprobante_v',$comprapendiente->id)->where('currency',$buscarmoneda->currency)->where('estado','2')->getValue('imventario','SUM(precio)');
+					$total_productos_price_f = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$buscarmoneda['currency'])->where('estado','2')->getValue('imventario','SUM(precio)');
 					
 					$wo['subtotal_dos'] = number_format($total_productos_price_f / (1.18), '2','.','');
 					$wo['igv_dos']          = number_format($wo['subtotal_dos'] * 0.18, '2','.','');
@@ -143,7 +143,7 @@ if($f == 'product_compra_list_bdd_pos') {
 				$total_productos_price_sub = $wo['subtotal_dos'];
 				$total_productos_price_igv = $wo['igv_dos'];
 				$total_productos_price = $wo['total_dos'];
-				$items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante_v',$comprapendiente->id)->where('estado','2')->where('tipo','venta')->getOne('imventario');
+				$items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante_v',$comprapendiente['id'])->where('estado','2')->where('tipo','venta')->getOne('imventario');
 				$wo['product']['id'] = $producto['id'];
 			    $wo['product']['id_productos'] =  $identificador_unico;
 			    $wo['product']['id_imventarios'] =  $productID;
@@ -152,7 +152,7 @@ if($f == 'product_compra_list_bdd_pos') {
 			    $wo['product']['name'] = $producto['name'];
 			    $wo['product']['modelo'] = $producto['modelo'];
 			    $wo['product']['sku'] = $producto['sku'];
-			    $wo['product']['comprap'] = $comprapendiente->id;
+			    $wo['product']['comprap'] = $comprapendiente['id'];
 			    $wo['product']['inventario'] = $productID;
 			    $wo['product']['color'] = $items_compra->color;
 			    $wo['product']['precio'] = $items_compra->precio;

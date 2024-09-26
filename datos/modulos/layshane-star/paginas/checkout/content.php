@@ -4,10 +4,10 @@ $total_productos_lista = 0;
 $total_productos_price = 0.00;
 $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->getOne("ventas");
 if (!empty($comprapendiente)) {
-	$total_productos_grupo = $db->where('id_comprobante_v',$comprapendiente->id)->where('estado','0')->getValue('imventario','COUNT(DISTINCT orden)');
-	$total_productos_lista = $db->where('id_comprobante_v',$comprapendiente->id)->where('estado','0')->getValue('imventario','COUNT(*)');
+	$total_productos_grupo = $db->where('id_comprobante_v',$comprapendiente['id'])->where('estado','0')->getValue('imventario','COUNT(DISTINCT orden)');
+	$total_productos_lista = $db->where('id_comprobante_v',$comprapendiente['id'])->where('estado','0')->getValue('imventario','COUNT(*)');
 	if ($total_productos_lista>0) {
-		$total_productos_price = $db->where('id_comprobante_v',$comprapendiente->id)->where('estado','0')->getValue('imventario','SUM(precio)');
+		$total_productos_price = $db->where('id_comprobante_v',$comprapendiente['id'])->where('estado','0')->getValue('imventario','SUM(precio)');
 	}
 }
 $pagos_digitales = false;
@@ -19,19 +19,19 @@ $pagos_digitales = false;
 			<div class="panel panel-white ch_card ch_cart">
 				<div class="ch_title">
 					<?php if (!empty($comprapendiente)): ?>
-						<?php if (!empty($comprapendiente->estado==0)): ?>
+						<?php if (!empty($comprapendiente['estado']==0)): ?>
 							<a href="<?php echo $wo['config']['site_url'].'/tienda';?>" data-ajax="?link1=tienda" class="back-to-shop">
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M21,11H6.83L10.41,7.41L9,6L3,12L9,18L10.41,16.58L6.83,13H21V11Z" /></svg> <?php echo $wo['lang']['back_to_shop'] ?>
 							</a>
-						<?php elseif(!empty($comprapendiente->estado==2)): ?>
+						<?php elseif(!empty($comprapendiente['estado']==2)): ?>
 							<a href="<?php echo $wo['config']['site_url'].'/checkout';?>" data-ajax="?link1=checkout" onclick="order_pl('prev_venta_we',0)"  style="cursor:pointer;">
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M21,11H6.83L10.41,7.41L9,6L3,12L9,18L10.41,16.58L6.83,13H21V11Z" /></svg> Atras
 							</a>
-						<?php elseif(!empty($comprapendiente->estado==3)): ?>
+						<?php elseif(!empty($comprapendiente['estado']==3)): ?>
 							<a href="<?php echo $wo['config']['site_url'].'/checkout';?>" data-ajax="?link1=checkout" onclick="order_pl('next_venta_we',0)" style="cursor:pointer;">
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M21,11H6.83L10.41,7.41L9,6L3,12L9,18L10.41,16.58L6.83,13H21V11Z" /></svg> Atras
 							</a>
-						<?php elseif(!empty($comprapendiente->estado==4)): ?>
+						<?php elseif(!empty($comprapendiente['estado']==4)): ?>
 							<a href="<?php echo $wo['config']['site_url'].'/checkout';?>" data-ajax="?link1=checkout" onclick="order_pl('next_venta_web',0)" class="next_order_plcc" style="cursor:pointer;">
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M21,11H6.83L10.41,7.41L9,6L3,12L9,18L10.41,16.58L6.83,13H21V11Z" /></svg> Atras
 							</a>
@@ -50,7 +50,7 @@ $pagos_digitales = false;
 					<?php if (!empty($comprapendiente)): ?>
 						<?php ?>
 						<?php $comprapendiente2 = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','2')->getOne("ventas"); ?>
-						<?php $items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante_v',$comprapendiente->id)->where('estado','0')->where('tipo','venta')->get('imventario'); ?>
+						<?php $items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante_v',$comprapendiente['id'])->where('estado','0')->where('tipo','venta')->get('imventario'); ?>
 						
 						<?php if ($total_productos_lista>0): ?>
 							<div class="listar_productos_a_comprar">
@@ -58,7 +58,7 @@ $pagos_digitales = false;
 			    					<div class="container">
 			    						<div class="row row--top-20">
 			    							<div class="columna-12">
-			    								<?php if (!empty($comprapendiente->estado==0)): ?>
+			    								<?php if (!empty($comprapendiente['estado']==0)): ?>
 				    								<div class="table-container">
 				    									<table class="table" style="background-color:#F8F8F8;">
 				    										<thead class="table__thead">
@@ -92,7 +92,7 @@ $pagos_digitales = false;
 																    foreach ($atributos as $atributo) {
 																        $variantes_atributos[$atributo->id_atributo][] = $atributo->id_atributo_opciones;
 																    }
-																    $identificador_unico = $comprapendiente->id . '_' . $producto_id;
+																    $identificador_unico = $comprapendiente['id'] . '_' . $producto_id;
 																    foreach ($variantes_atributos as $atributo => $opciones) {
 																        $identificador_unico .= '_' . implode('_', $opciones);
 																    }
@@ -108,7 +108,7 @@ $pagos_digitales = false;
 																    $wo['product']['name'] = $producto['name'];
 																    $wo['product']['modelo'] = $producto['modelo'];
 																    $wo['product']['sku'] = $producto['sku'];
-																    $wo['product']['comprap'] = $comprapendiente->id;
+																    $wo['product']['comprap'] = $comprapendiente['id'];
 																    $wo['product']['inventario'] = $value->id;
 																    $wo['product']['color'] = $value->color;
 																    $wo['product']['precio'] = $value->precio;
@@ -116,15 +116,15 @@ $pagos_digitales = false;
 
 																	$cantidad_productos = 0;
 																	if (!empty($variantes_atributos)) {
-																	    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante_v = {$comprapendiente->id}";
+																	    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante_v = {$comprapendiente['id']}";
 																	    foreach ($variantes_atributos as $atributo => $opciones) {
 																	        foreach ($opciones as $opcion) {
 																	            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
 																	        }
 																	    }
-																	    $cantidad_productos = $db->rawQueryOne($sql)->cantidad;
+																	    $cantidad_productos = $db->rawQueryOne($sql)['cantidad'];
 																	} else{
-																	    $cantidad_productos = $db->where('id_comprobante_v', $comprapendiente->id)->where('producto', $wo['product']['id'])->where('color', $wo['product']['color'])->getValue('imventario', 'COUNT(*)');
+																	    $cantidad_productos = $db->where('id_comprobante_v', $comprapendiente['id'])->where('producto', $wo['product']['id'])->where('color', $wo['product']['color'])->getValue('imventario', 'COUNT(*)');
 																	}
 
 																	if (!empty($variantes_atributos)) {
@@ -135,7 +135,7 @@ $pagos_digitales = false;
 																	            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
 																	        }
 																	    }
-																	    $cantidad_prod = $db->rawQueryOne($sql)->cantidad;
+																	    $cantidad_prod = $db->rawQueryOne($sql)['cantidad'];
 																	    $productos_stock_disponible =	($cantidad_prod !== null) ? $cantidad_prod : 0;
 																	} else{
 																		if ($wo['product']['color']) {
@@ -170,7 +170,7 @@ $pagos_digitales = false;
 					                						</tbody>
 				    									</table>
 				    								</div>
-			    								<?php elseif (!empty($comprapendiente->estado==2)): ?>
+			    								<?php elseif (!empty($comprapendiente['estado']==2)): ?>
 			    									<div class="contendata_deliveredstore ">
 														<div class="option_order_users_data">
 															<div class="option_order_data">
@@ -200,7 +200,7 @@ $pagos_digitales = false;
 															</div>
 														</div>
 													</div>
-												<?php elseif (!empty($comprapendiente->estado==3)): ?>
+												<?php elseif (!empty($comprapendiente['estado']==3)): ?>
 													<div class="contendata_deliveredstore ">
 														<div class="option_order_users_data">
 															<div class="option_order_data">
@@ -228,12 +228,12 @@ $pagos_digitales = false;
 																<div class="list-unstyled mb-0 cart_chos_addrs">
 																	<?php if (!empty($wo['sucursales'])) {
 																		foreach ($wo['sucursales'] as $key => $sucursal) {  ?>
-																			<label for="choose_adrs_<?php echo($sucursal->id) ?>">
-																				<input type="radio" name="choose-sucursal" id="choose_adrs_<?php echo($sucursal->id) ?>" value="<?php echo($sucursal->id) ?>" class="payment_sucursal" <?php if($wo['user']['sucursal_entrega']==$sucursal->id){echo('checked');}?>>
+																			<label for="choose_adrs_<?php echo($sucursal['id']) ?>">
+																				<input type="radio" name="choose-sucursal" id="choose_adrs_<?php echo($sucursal['id']) ?>" value="<?php echo($sucursal['id']) ?>" class="payment_sucursal" <?php if($wo['user']['sucursal_entrega']==$sucursal['id']){echo('checked');}?>>
 																				<span class="radio-tile">
-																					<p><b><?php echo($sucursal->nombre) ?></b>&nbsp;<?php echo($sucursal->phone) ?></p>
-																					<p><?php echo($sucursal->pais) ?>, <?php echo($sucursal->ciudad) ?> - <?php echo($sucursal->direccion) ?></p>
-																					<p><?php echo($sucursal->referencia) ?></p>
+																					<p><b><?php echo($sucursal['nombre']) ?></b>&nbsp;<?php echo($sucursal['phone']) ?></p>
+																					<p><?php echo($sucursal['pais']) ?>, <?php echo($sucursal['ciudad']) ?> - <?php echo($sucursal['direccion']) ?></p>
+																					<p><?php echo($sucursal['referencia']) ?></p>
 																				</span>
 																			</label>
 																			<?php  
@@ -249,11 +249,11 @@ $pagos_digitales = false;
 																	<div class="checkout_alert"></div>
 																	<div class="list-unstyled mb-0 cart_chos_addrs">
 																		<?php foreach ($wo['addresses'] as $key => $address){ ?>
-																			<label for="choose_adrs_<?php echo($address->id) ?>">
-																				<input type="radio" name="choose-address" id="choose_adrs_<?php echo($address->id) ?>" value="<?php echo($address->id) ?>" class="payment_address" <?php if($wo['user']['direccion_delivery']==$address->id){echo('checked');}?>>
+																			<label for="choose_adrs_<?php echo($address['id']) ?>">
+																				<input type="radio" name="choose-address" id="choose_adrs_<?php echo($address['id']) ?>" value="<?php echo($address['id']) ?>" class="payment_address" <?php if($wo['user']['direccion_delivery']==$address['id']){echo('checked');}?>>
 																				<span class="radio-tile">
-																					<p><b><?php echo($address->name) ?></b>&nbsp;<?php echo($address->phone) ?></p>
-																					<p><?php echo($address->country) ?>, <?php echo($address->city) ?> - <?php echo($address->referencia) ?></p>
+																					<p><b><?php echo($address['name']) ?></b>&nbsp;<?php echo($address['phone']) ?></p>
+																					<p><?php echo($address['country']) ?>, <?php echo($address['city']) ?> - <?php echo($address['referencia']) ?></p>
 																				</span>
 																			</label>
 																		<?php } ?>
@@ -328,15 +328,15 @@ $pagos_digitales = false;
 																		<div class="checkout_alert"></div>
 																		<div class="list-unstyled mb-0 cart_chos_addrs">
 																			<?php foreach ($wo['addresses_envios'] as $key => $address){ ?>
-																				<label for="envios_choose_adrs_<?php echo($address->id) ?>">
-																					<input type="radio" name="choose-address_envios" id="envios_choose_adrs_<?php echo($address->id) ?>" value="<?php echo($address->id) ?>" class="payment_address" <?php if($wo['user']['direccion_envio']==$address->id){echo('checked');}?>>
+																				<label for="envios_choose_adrs_<?php echo($address['id']) ?>">
+																					<input type="radio" name="choose-address_envios" id="envios_choose_adrs_<?php echo($address['id']) ?>" value="<?php echo($address['id']) ?>" class="payment_address" <?php if($wo['user']['direccion_envio']==$address['id']){echo('checked');}?>>
 																					<span class="radio-tile">
-																						<p><b><?php echo($address->nombre_completo) ?></b>&nbsp;<?php echo($address->dni) ?></p>
-																						<p>Contacto:<?php echo($address->contacto) ?></p>
-																						<p><?php echo($address->departamento) ?>, <?php echo($address->provincia) ?> - <?php echo($address->distrito) ?></p>
+																						<p><b><?php echo($address['nombre_completo']) ?></b>&nbsp;<?php echo($address['dni']) ?></p>
+																						<p>Contacto:<?php echo($address['contacto']) ?></p>
+																						<p><?php echo($address['departamento']) ?>, <?php echo($address['provincia']) ?> - <?php echo($address['distrito']) ?></p>
 
-																						<p>TRANSPORTE: <?php echo($address->transporte) ?>, <?php echo($address->agencia) ?></p>
-																						<p>Comentarios: <?php echo($address->comentarios) ?></p>
+																						<p>TRANSPORTE: <?php echo($address['transporte']) ?>, <?php echo($address['agencia']) ?></p>
+																						<p>Comentarios: <?php echo($address['comentarios']) ?></p>
 																					</span>
 																				</label>
 																			<?php } ?>
@@ -369,7 +369,7 @@ $pagos_digitales = false;
 																			<div class="" style="display:block;">
 																				<label for="dni" style="display:block;width:100%;">DNI</label>
 																				<?php if (isset($direccion_envios)): ?>
-																					<input style="display:block;width: auto;" id="dni" name="dni" type="text" class="form-control input-md" autocomplete="off" placeholder="DNI" value="<?=$direccion_envios->dni;?>">
+																					<input style="display:block;width: auto;" id="dni" name="dni" type="text" class="form-control input-md" autocomplete="off" placeholder="DNI" value="<?=$direccion_envios['dni'];?>">
 																				<?php else: ?>
 																					<input style="display:block;width: auto;" id="dni" name="dni" type="text" class="form-control input-md" autocomplete="off" placeholder="DNI" value="">
 																				<?php endif ?>
@@ -381,7 +381,7 @@ $pagos_digitales = false;
 																			<div class="col-md-12">
 																				<div class="sun_input">
 																					<label for="name">Nombres y apellidos completos</label>
-																					<input id="name" name="nombres" type="text" class="form-control input-md" autocomplete="off" placeholder="Nombres y apellidos completos" value="<?=$direccion_envios->nombre_completo;?>">
+																					<input id="name" name="nombres" type="text" class="form-control input-md" autocomplete="off" placeholder="Nombres y apellidos completos" value="<?=$direccion_envios['nombre_completo'];?>">
 																				</div>
 																			</div>
 
@@ -389,44 +389,44 @@ $pagos_digitales = false;
 																				<div class="columna-4">
 																					<div class="sun_input">
 																						<label for="departamento">Departamento</label>
-																						<input id="departamento" name="departamento" type="text" class="form-control input-md" autocomplete="off" placeholder="Departamento" value="<?=$direccion_envios->departamento;?>">
+																						<input id="departamento" name="departamento" type="text" class="form-control input-md" autocomplete="off" placeholder="Departamento" value="<?=$direccion_envios['departamento'];?>">
 																					</div>
 																				</div>
 																				<div class="columna-4">
 																					<div class="sun_input">
 																						<label for="provincia">Provincia</label>
-																						<input id="provincia" name="provincia" type="text" class="form-control input-md" autocomplete="off" placeholder="Provincia" value="<?=$direccion_envios->provincia;?>">
+																						<input id="provincia" name="provincia" type="text" class="form-control input-md" autocomplete="off" placeholder="Provincia" value="<?=$direccion_envios['provincia'];?>">
 																					</div>
 																				</div>
 																				<div class="columna-4">
 																					<div class="sun_input">
 																						<label for="distrito">Distrito</label>
-																						<input id="distrito" name="distrito" type="text" class="form-control input-md" autocomplete="off" placeholder="Distrito" value="<?=$direccion_envios->distrito;?>">
+																						<input id="distrito" name="distrito" type="text" class="form-control input-md" autocomplete="off" placeholder="Distrito" value="<?=$direccion_envios['distrito'];?>">
 																					</div>
 																				</div>
 																			</div>
 																			<div class="columna-4">
 																				<div class="sun_input">
 																					<label for="contacto">Contacto</label>
-																					<input id="contacto" name="contacto" type="text" class="form-control input-md" autocomplete="off" placeholder="Numero de contacto" value="<?=$direccion_envios->contacto;?>">
+																					<input id="contacto" name="contacto" type="text" class="form-control input-md" autocomplete="off" placeholder="Numero de contacto" value="<?=$direccion_envios['contacto'];?>">
 																				</div>
 																			</div>
 																			<div class="col-md-12">
 																				<div class="sun_input">
 																					<label for="transporte">Nombre de la empresa de transporte</label>
-																					<textarea id="transporte" class="form-control input-md" placeholder="Empresa de transporte" name="transporte" autocomplete="off"><?=$direccion_envios->transporte;?></textarea>
+																					<textarea id="transporte" class="form-control input-md" placeholder="Empresa de transporte" name="transporte" autocomplete="off"><?=$direccion_envios['transporte'];?></textarea>
 																				</div>
 																			</div>
 																			<div class="col-md-12">
 																				<div class="sun_input">
 																					<label for="agencia">Agencia de la empresa de transporte (Direccion agencia)</label>
-																					<textarea id="agencia" class="form-control input-md" placeholder="Empresa de transporte" name="agencia" autocomplete="off"><?=$direccion_envios->agencia;?></textarea>
+																					<textarea id="agencia" class="form-control input-md" placeholder="Empresa de transporte" name="agencia" autocomplete="off"><?=$direccion_envios['agencia'];?></textarea>
 																				</div>
 																			</div>
 																			<div class="col-md-12">
 																				<div class="sun_input">
 																					<label for="comentarios">Comentarios</label>
-																					<textarea id="comentarios" class="form-control input-md" placeholder="Comentarios" name="comentarios"><?=$direccion_envios->comentarios;?></textarea>
+																					<textarea id="comentarios" class="form-control input-md" placeholder="Comentarios" name="comentarios"><?=$direccion_envios['comentarios'];?></textarea>
 																				</div>
 																			</div>
 																			<?php endif ?>
@@ -444,7 +444,7 @@ $pagos_digitales = false;
 															<?php endif ?>
 														</div>
 													</div>
-												<?php elseif(!empty($comprapendiente->estado==4)): ?>
+												<?php elseif(!empty($comprapendiente['estado']==4)): ?>
 													<span>Realizar pago:</span>
 													<div class="modos_de_pago_container_buttons">
 														<?php if ($wo['user']['opcion_de_compra']=='tienda'): ?>
@@ -569,13 +569,13 @@ $pagos_digitales = false;
 			    										background:#ffffffde;
 			    									}
 			    								</style>
-		    									<?php if(!empty($comprapendiente->estado==4)): ?>
+		    									<?php if(!empty($comprapendiente['estado']==4)): ?>
 													<div class="contenido_de_pagos">
 														<?php foreach ($productos_vistos_moneda as $moneds):
 															$indexdefault_currency = array_search($moneds, array_column($wo['currencies'], 'text')); ?>
-															<?php $total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente->id)->where('currency',$moneds)->where('estado','0')->getValue('imventario','COUNT(*)');
+															<?php $total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$moneds)->where('estado','0')->getValue('imventario','COUNT(*)');
 															if ($total_productos_lista_uno>0) {
-																$total_productos_price_dos = $db->where('id_comprobante_v',$comprapendiente->id)->where('currency',$moneds)->where('estado','0')->getValue('imventario','SUM(precio)');
+																$total_productos_price_dos = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$moneds)->where('estado','0')->getValue('imventario','SUM(precio)');
 																
 																$wo['subtotal_dos'] = number_format($total_productos_price_dos / (1.18), '2','.','');
 																$wo['igv_dos']          = number_format($wo['subtotal_dos'] * 0.18, '2','.','');
@@ -615,9 +615,9 @@ $pagos_digitales = false;
 
 			    									<div class="footer_document_orderb">
 			    										<?php foreach ($productos_vistos_moneda as $moneds): ?>
-			    											<?php $total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente->id)->where('currency',$moneds)->where('estado','0')->getValue('imventario','COUNT(*)');
+			    											<?php $total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$moneds)->where('estado','0')->getValue('imventario','COUNT(*)');
 																if ($total_productos_lista_uno>0) {
-																	$total_productos_price_uno = $db->where('id_comprobante_v',$comprapendiente->id)->where('currency',$moneds)->where('estado','0')->getValue('imventario','SUM(precio)');
+																	$total_productos_price_uno = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$moneds)->where('estado','0')->getValue('imventario','SUM(precio)');
 																	$wo['total_uno']       = number_format($total_productos_price_uno, '2','.',''); 
 																} ?>
 																<?php echo numeroATexto($wo['total_uno'],$moneds); ?>
@@ -627,12 +627,12 @@ $pagos_digitales = false;
 			    								</div>
 
 			    								<div class="ch_total_price" style="margin:0 -15px;width:auto;">
-	    											<?php if(empty($comprapendiente->estado==4)): ?>
+	    											<?php if(empty($comprapendiente['estado']==4)): ?>
 		    											<?php foreach ($productos_vistos_moneda as $moneds):
 															$indexdefault_currency = array_search($moneds, array_column($wo['currencies'], 'text')); ?>
-															<?php $total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente->id)->where('currency',$moneds)->where('estado','0')->getValue('imventario','COUNT(*)');
+															<?php $total_productos_lista_uno = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$moneds)->where('estado','0')->getValue('imventario','COUNT(*)');
 															if ($total_productos_lista_uno>0) {
-																$total_productos_price_dos = $db->where('id_comprobante_v',$comprapendiente->id)->where('currency',$moneds)->where('estado','0')->getValue('imventario','SUM(precio)');
+																$total_productos_price_dos = $db->where('id_comprobante_v',$comprapendiente['id'])->where('currency',$moneds)->where('estado','0')->getValue('imventario','SUM(precio)');
 																
 																$wo['subtotal_dos'] = number_format($total_productos_price_dos / (1.18), '2','.','');
 																$wo['igv_dos']          = number_format($wo['subtotal_dos'] * 0.18, '2','.','');
@@ -662,22 +662,22 @@ $pagos_digitales = false;
 
 													<div class="div_subs_contn" style="width:100%;">
 														<div class="bt_conain_sty">
-															<?php if (!empty($comprapendiente->estado==0)): ?>
+															<?php if (!empty($comprapendiente['estado']==0)): ?>
 																<a href="<?php echo $wo['config']['site_url'].'/checkout';?>" data-ajax="?link1=checkout" class="btncompletecompra next_order_pl" onclick="order_pl('next_venta_we',1)">
 																	<span class="default">Continuar</span>
 																</a>
-															<?php elseif(!empty($comprapendiente->estado==2)): ?>
+															<?php elseif(!empty($comprapendiente['estado']==2)): ?>
 																<a href="<?php echo $wo['config']['site_url'].'/checkout';?>" data-ajax="?link1=checkout" class="btncompletecompra next_order_plc" onclick="order_pl('next_venta_web',1)">
 																	<span class="default">Continuar</span>
 																</a>
-															<?php elseif (!empty($comprapendiente->estado==3)): ?>
+															<?php elseif (!empty($comprapendiente['estado']==3)): ?>
 																<a href="<?php echo $wo['config']['site_url'].'/checkout';?>" data-ajax="?link1=checkout" class="btncompletecompra next_order_plcc" onclick="order_pl('next_venta_web_c',1)">
 																	<span class="default">Continuar</span>
 																</a>
-															<?php elseif (!empty($comprapendiente->estado==4)): ?>
+															<?php elseif (!empty($comprapendiente['estado']==4)): ?>
 																<?php if ($wo['user']['mode_pay']==0): ?>
 																<?php else: ?>
-					    											<button class="btncompletecompra endcompra_pcl" data="<?=$comprapendiente->id;?>" onclick="order_pl_end(this)">
+					    											<button class="btncompletecompra endcompra_pcl" data="<?=$comprapendiente['id'];?>" onclick="order_pl_end(this)">
 					    												<span class="default">Completar compra</span>
 						    											<span class="success">Finalizado
 						    												<svg viewbox="0 0 12 10">

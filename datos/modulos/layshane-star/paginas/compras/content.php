@@ -33,9 +33,6 @@ $buscar_letras = str_split($palabra_lang_search);
 
 <?php echo lui_LoadPage("sidebar/left-sidebar"); ?>
 <style type="text/css">
-body{background-color:#F0F2FD;}
-</style>
-<style type="text/css">
 .chechedcaja22{appearance:none;width:20px;height:20px;border:2px solid var(--boton-fondo);border-radius:5px;background-color:transparent;display:inline-block;position:relative;margin-right:10px;cursor:pointer;}
 .chechedcaja22:before {content:"";background-color:var(--boton-fondo);display:block;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%) scale(0);width:10px;height:10px;border-radius:3px;transition:all 0.3s ease-in-out;}
 .chechedcaja22:checked:before{transform: translate(-50%, -50%) scale(1);}
@@ -418,10 +415,10 @@ table{
 				<?php if (!empty($comprapendiente_sear)): ?>
 					<?php $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->where('sucursal',$wo['user']['sucursal'])->getOne("compras"); ?>
 					<?php $comprapendiente2 = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','2')->where('sucursal',$wo['user']['sucursal'])->getOne("compras"); ?>
-					<?php if(isset($comprapendiente->completado)): ?>
+					<?php if(isset($comprapendiente['completado'])): ?>
 						<button class="btn_prin_compra boton_add_nluis first cancelar_order_in_pages"><?php echo $wo['lang']['eliminar_compra'] ?></button>
 					<?php else: ?>
-						<?php if(isset($comprapendiente2->completado)): ?>
+						<?php if(isset($comprapendiente2['completado'])): ?>
 							<button class="btn_prin_compra boton_add_nluis first" onclick="Anular_compra_note('hide')"><?php echo $wo['lang']['anular_compra'] ?></button>
 							<div class="modal fade" id="Anular_compra_inlined" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-hidden="true">
 							    <div class="modal-dialog" role="document">
@@ -499,22 +496,22 @@ table{
 	    <?php if (!empty($comprapendiente_sear)): ?>
 	    	<?php $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->where('sucursal',$wo['user']['sucursal'])->getOne("compras"); ?>
 				<?php $comprapendiente2 = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','2')->where('sucursal',$wo['user']['sucursal'])->getOne("compras"); ?>
-	    	<?php if(isset($comprapendiente->completado)): ?>
-		    	<?php if ($comprapendiente->num_doc == 0): ?>
+	    	<?php if(isset($comprapendiente['completado'])): ?>
+		    	<?php if ($comprapendiente['num_doc'] == 0): ?>
 	    			<div class="agregar_compras_en_imventario">
 	    				<span style="padding:8px;color:#666;font-size:15px;">Nueva compra con:</span>
 	    				<br><br>
 			    		<div class="opciones_para_agregar_compra">
 			    			<div class="agregar_compra_comprobante">
-			    				<input type="radio" name="tipo_compra_doc" id="compra_con_nota" value="boleta_simple" <?php if($comprapendiente->documento=='BS'){echo("checked");}?>>
+			    				<input type="radio" name="tipo_compra_doc" id="compra_con_nota" value="boleta_simple" <?php if($comprapendiente['documento']=='BS'){echo("checked");}?>>
 			    				<label for="compra_con_nota">Boleta simple</label>
 			    			</div>
 			    			<div class="agregar_compra_comprobante">
-			    				<input type="radio" name="tipo_compra_doc" id="compra_con_boleta" value="boleta" <?php if($comprapendiente->documento=='B'){echo("checked");}?>>
+			    				<input type="radio" name="tipo_compra_doc" id="compra_con_boleta" value="boleta" <?php if($comprapendiente['documento']=='B'){echo("checked");}?>>
 			    				<label for="compra_con_boleta">Boleta</label>
 			    			</div>
 			    			<div class="agregar_compra_comprobante">
-			    				<input type="radio" name="tipo_compra_doc" id="compra_con_factura" value="factura" <?php if($comprapendiente->documento=='F'){echo("checked");}?>>
+			    				<input type="radio" name="tipo_compra_doc" id="compra_con_factura" value="factura" <?php if($comprapendiente['documento']=='F'){echo("checked");}?>>
 			    				<label for="compra_con_factura">Factura</label>
 			    			</div>
 			    		</div>
@@ -523,58 +520,58 @@ table{
 			    	<hr>
 			    	<br>
 				  <?php else: ?>
-			    	<div class="contenido_datos_new_compra" id="<?='compra_pendiente'.$comprapendiente->id;?>">
-			    		<?php if($comprapendiente->documento=='BS'): ?>
-			    			<?php $numero_documento_a = $comprapendiente->num_doc;?>
+			    	<div class="contenido_datos_new_compra" id="<?='compra_pendiente'.$comprapendiente['id'];?>">
+			    		<?php if($comprapendiente['documento']=='BS'): ?>
+			    			<?php $numero_documento_a = $comprapendiente['num_doc'];?>
 				    		<div class="document_title"><span>Boleta simple</span></div>
-				    	<?php elseif($comprapendiente->documento=='B'): ?>
-				    		<?php $numero_documento_a = $comprapendiente->numero_documento;?>
+				    	<?php elseif($comprapendiente['documento']=='B'): ?>
+				    		<?php $numero_documento_a = $comprapendiente['numero_documento'];?>
 				    		<div class="document_title"><span>Boleta</span></div>
-				    	<?php elseif($comprapendiente->documento=='F'): ?>
-				    		<?php $numero_documento_a = $comprapendiente->numero_documento;?>
+				    	<?php elseif($comprapendiente['documento']=='F'): ?>
+				    		<?php $numero_documento_a = $comprapendiente['numero_documento'];?>
 				    		<div class="document_title"><span>Factura</span></div>
 				    	<?php endif ?>
 			    		<div class="comprobante">
 			    			<div class="comprobante_number">
-			    				<h2 class="numdoc_line"><?=$comprapendiente->documento.'-'.$comprapendiente->num_doc;?></h2>
+			    				<h2 class="numdoc_line"><?=$comprapendiente['documento'].'-'.$comprapendiente['num_doc'];?></h2>
 			    				<input class="typenumber_nop" type="number" name="numero_documento" placeholder="Numero documento" value="<?=$numero_documento_a;?>" autocomplete="off">
 			    			</div>
 			    			<div class="datos_proveedor_box datos_proveedor_box_ad">
-			    				<?php $proveedor_ver = $db->where('id',$comprapendiente->proveedor)->getOne("lui_proveedores"); ?>
+			    				<?php $proveedor_ver = $db->where('id',$comprapendiente['proveedor'])->getOne("lui_proveedores"); ?>
 			    				<?php if($proveedor_ver): ?>
-			    					<h5><?=$proveedor_ver->razon_social; ?></h5>
-			    					<p>R.U.C. <?=$proveedor_ver->ruc; ?></p>
+			    					<h5><?=$proveedor_ver['razon_social']; ?></h5>
+			    					<p>R.U.C. <?=$proveedor_ver['ruc']; ?></p>
 			    				<?php else: ?>
 			    					Seleccione un proveedor
 			    				<?php endif ?>
 				    		</div>
 			    			<div class="proveedores_lista_caja disabled_provedores_list">
 			    				<div class="lista_proveedor">
-	                                <?php foreach ($wo['proveedores'] as $proveedor): ?>
-	                                	<div id="<?=$proveedor['id'];?>">
-		                                	<input id="proveedor_selecteds_<?=$proveedor['id'];?>" type="radio" name="proveedor_compra" value="<?=$proveedor['id'];?>" <?php if($proveedor['id']==$comprapendiente->proveedor){echo "checked";} ?>>
+	                  <?php foreach ($wo['proveedores'] as $proveedor): ?>
+	                    <div id="<?=$proveedor['id'];?>">
+		                    <input id="proveedor_selecteds_<?=$proveedor['id'];?>" type="radio" name="proveedor_compra" value="<?=$proveedor['id'];?>" <?php if($proveedor['id']==$comprapendiente['proveedor']){echo "checked";} ?>>
 					    					<label for="proveedor_selecteds_<?=$proveedor['id'];?>">
 					    						<h5><?=$proveedor['razon_social']; ?></h5>
 						    					<p>R.U.C. <?=$proveedor['ruc']; ?></p>
 					    					</label>
 				    					</div>
-	                                <?php endforeach ?>
+	                  <?php endforeach ?>
 			    				</div>
 			    			</div>
 			    			<div class="address_data_proveedor datos_proveedor_box_direccion">
-			    				<?php $proveedor_sucursal_view = $db->where('id',$comprapendiente->proveedor_sucursal)->getOne("sucursal_proveedor"); ?>
+			    				<?php $proveedor_sucursal_view = $db->where('id',$comprapendiente['proveedor_sucursal'])->getOne("sucursal_proveedor"); ?>
 			    				<?php if($proveedor_sucursal_view): ?>
-			    					<span><?=$proveedor_sucursal_view->direccion;?>,<?=$proveedor_sucursal_view->distrito;?>,<?=$proveedor_sucursal_view->departamento;?></span>
+			    					<span><?=$proveedor_sucursal_view['direccion'];?>,<?=$proveedor_sucursal_view['distrito'];?>,<?=$proveedor_sucursal_view['departamento'];?></span>
 			    				<?php else: ?>
 			    					<span>Seleccione direccion del proveedor</span>
 			    				<?php endif ?>
 			    			</div>
 			    			<div class="listar_direcciones_del_proveedor disabled_provedores_list">
-			    				<?php $wo['proveedores_address'] = lui_GetProveedoresSucursal($comprapendiente->proveedor); ?>
+			    				<?php $wo['proveedores_address'] = lui_GetProveedoresSucursal($comprapendiente['proveedor']); ?>
 			    				<div class="lista_proveedor">
 				    				<?php foreach ($wo['proveedores_address'] as $proveedor_address): ?>
 		                                <div id="<?=$proveedor_address['id'];?>">
-			                                <input id="proveedor_selecteds_address_<?=$proveedor_address['id'];?>" type="radio" name="proveedor_compra_address" value="<?=$proveedor_address['id'];?>" <?php if($proveedor_address['id'] == $comprapendiente->proveedor_sucursal){echo "checked";} ?>>
+			                                <input id="proveedor_selecteds_address_<?=$proveedor_address['id'];?>" type="radio" name="proveedor_compra_address" value="<?=$proveedor_address['id'];?>" <?php if($proveedor_address['id'] == $comprapendiente['proveedor_sucursal']){echo "checked";} ?>>
 						    				<label for="proveedor_selecteds_address_<?=$proveedor_address['id'];?>"><?=$proveedor_address['direccion']; ?></label>
 					    				</div>
 		                            <?php endforeach ?>
@@ -586,12 +583,12 @@ table{
 			    				<input id="date_order" type="date" name="fecha" value="<?=date('Y-m-d') ?>">
 			    			</div>
 			    			<div class="incluir_guia_remicion_data">
-			    				<input id="incluir_guia_remicion" type="checkbox" name="guia_remicion" <?php if($comprapendiente->guia==1){echo "checked";} ?>>
+			    				<input id="incluir_guia_remicion" type="checkbox" name="guia_remicion" <?php if($comprapendiente['guia']==1){echo "checked";} ?>>
 			    				<label for="incluir_guia_remicion">Incluir guia de remicion - remitente</label>
 			    			</div>
 			    			<div class="contenido_guia_remicion_con ">
-			    				<div class="contenido_guia_remicion <?php if($comprapendiente->guia!=1){echo "disabled_provedores_list";} ?>">
-				    				<input type="number" name="numero_de_guia" placeholder="Numero guia" value="<?=$comprapendiente->numero_guia;?>">
+			    				<div class="contenido_guia_remicion <?php if($comprapendiente['guia']!=1){echo "disabled_provedores_list";} ?>">
+				    				<input type="number" name="numero_de_guia" placeholder="Numero guia" value="<?=$comprapendiente['numero_guia'];?>">
 				    			</div>
 				    		</div>
 				    		<style type="text/css">
@@ -604,7 +601,7 @@ table{
 								<select name="currency" id="currency_order" class="selected_curremcy_order">
 									<?php $chec_currecny_default='';?>
 									<?php foreach ($wo['currencies'] as $key => $currency) { ?>
-										<?php if($comprapendiente->currency==$currency['text']): ?>
+										<?php if($comprapendiente['currency']==$currency['text']): ?>
 											<?php $chec_currecny_default='selected';?>
 											<option value="<?php echo $currency['text'];?>" <?=$chec_currecny_default;?>><?php echo  $currency['text'] ?> (<?php echo  $currency['symbol'] ?>)</option>
 										<?php else: ?>
@@ -730,9 +727,9 @@ table{
 			    											</tr>
 			    										</thead>
 			    										<tbody class="table__tbody contet_items_de_doc_compr">
-				                							<?php 
-															$items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante',$comprapendiente->id)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->get('imventario');
-															$indexdefault_currency = array_search($comprapendiente->currency, array_column($wo['currencies'], 'text'));
+				                			<?php 
+															$items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante',$comprapendiente['id'])->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->get('imventario');
+															$indexdefault_currency = array_search($comprapendiente['currency'], array_column($wo['currencies'], 'text'));
 															$html = "";
 															$productos_vistos = [];
 															foreach ($items_compra as $value) {
@@ -752,7 +749,7 @@ table{
 															    foreach ($atributos as $atributo) {
 															        $variantes_atributos[$atributo->id_atributo][] = $atributo->id_atributo_opciones;
 															    }
-															    $identificador_unico = $comprapendiente->id . '_' . $producto_id;
+															    $identificador_unico = $comprapendiente['id'] . '_' . $producto_id;
 															    foreach ($variantes_atributos as $atributo => $opciones) {
 															        $identificador_unico .= '_' . implode('_', $opciones);
 															    }
@@ -768,7 +765,7 @@ table{
 															    $wo['product']['name'] = $producto['name'];
 															    $wo['product']['modelo'] = $producto['modelo'];
 															    $wo['product']['sku'] = $producto['sku'];
-															    $wo['product']['comprap'] = $comprapendiente->id;
+															    $wo['product']['comprap'] = $comprapendiente['id'];
 															    $wo['product']['symbol'] = (!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $producto['currency'];
 
 															    $wo['product']['inventario'] = $variantes_color[0]->id;
@@ -776,15 +773,15 @@ table{
 															    $wo['product']['precio'] = $variantes_color[0]->precio;
 																$cantidad_productos = 0;
 																if (!empty($variantes_atributos)) {
-																    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante = {$comprapendiente->id}";
+																    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante = {$comprapendiente['id']}";
 																    foreach ($variantes_atributos as $atributo => $opciones) {
 																        foreach ($opciones as $opcion) {
 																            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
 																        }
 																    }
-																    $cantidad_productos = $db->rawQueryOne($sql)->cantidad;
+																    $cantidad_productos = $db->rawQueryOne($sql)['cantidad'];
 																} else{
-																    $cantidad_productos = $db->where('id_comprobante', $comprapendiente->id)->where('producto', $wo['product']['id'])->where('color', $wo['product']['color'])->getValue('imventario', 'COUNT(*)');
+																    $cantidad_productos = $db->where('id_comprobante', $comprapendiente['id'])->where('producto', $wo['product']['id'])->where('color', $wo['product']['color'])->getValue('imventario', 'COUNT(*)');
 																}
 
 
@@ -814,21 +811,21 @@ table{
 			    								</style>
 			    								<?php
 			    								$total_productos_grupo = 0;
-												$total_productos_lista = 0;
-												$total_productos_price = 0.00;
+												  $total_productos_lista = 0;
+												  $total_productos_price = 0.00;
 
-			    								$total_productos_grupo = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->getValue('imventario','COUNT(DISTINCT orden)');
-			    								$total_productos_lista = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->getValue('imventario','COUNT(*)');
+			    								$total_productos_grupo = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente['id'])->getValue('imventario','COUNT(DISTINCT orden)');
+			    								$total_productos_lista = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente['id'])->getValue('imventario','COUNT(*)');
 			    								if ($total_productos_lista>0) {
-			    									$total_productos_price = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->getValue('imventario','SUM(precio)');
+			    									$total_productos_price = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente['id'])->getValue('imventario','SUM(precio)');
 			    								}
 			    								
-			    								if($comprapendiente->garantia_m == 0) {
+			    								if($comprapendiente['garantia_m'] == 0) {
 			    									$cantidad_de_garantia = 0;
 			    									$end_date_de_garantia = false;
 			    								}else{
-			    									$cantidad_de_garantia = $comprapendiente->garantia_m;
-			    									$end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($comprapendiente->garantia);
+			    									$cantidad_de_garantia = $comprapendiente['garantia_m'];
+			    									$end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($comprapendiente['garantia']);
 			    								}
 			    								
 			    								?>
@@ -866,7 +863,7 @@ table{
 			    											No se pudo mostrar el producto.
 			    										</div>
 			    										<div class="bt_conain_sty">
-				    										<button class="btncompletecompra endcompra" data="<?=$comprapendiente->id;?>">
+				    										<button class="btncompletecompra endcompra" data="<?=$comprapendiente['id'];?>">
 				    											<span class="default">Completar compra</span>
 				    											<span class="success">Finalizado
 				    												<svg viewbox="0 0 12 10">
@@ -1370,7 +1367,7 @@ table{
 						});
 					</script>
 		    	<?php else: ?>
-		    		<?php if(isset($comprapendiente2->completado)): ?>
+		    		<?php if(isset($comprapendiente2['completado'])): ?>
 		    			<style type="text/css">
 		    				.title_complet_order{
 		    					display:block;
@@ -1386,21 +1383,21 @@ table{
 		    				<hr style="width:100%;">
 		    				<div class="conten_end_order">
 		    					<?php
-								$indexdefault_currency = array_search($comprapendiente2->currency, array_column($wo['currencies'], 'text'));
+								$indexdefault_currency = array_search($comprapendiente2['currency'], array_column($wo['currencies'], 'text'));
 								$total_productos_grupo = 0;
 								$total_productos_lista = 0;
 								$total_productos_price = 0.00;
 
-								$total_productos_grupo = $db->where('estado','2')->where('id_comprobante',$comprapendiente2->id)->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
-								$total_productos_lista = $db->where('estado','2')->where('id_comprobante',$comprapendiente2->id)->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
+								$total_productos_grupo = $db->where('estado','2')->where('id_comprobante',$comprapendiente2['id'])->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(DISTINCT orden)');
+								$total_productos_lista = $db->where('estado','2')->where('id_comprobante',$comprapendiente2['id'])->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','COUNT(*)');
 								if ($total_productos_lista>0) {
-									$total_productos_price = $db->where('estado','2')->where('id_comprobante',$comprapendiente2->id)->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
+									$total_productos_price = $db->where('estado','2')->where('id_comprobante',$comprapendiente2['id'])->where('id_sucursal',$wo['user']['sucursal'])->getValue('imventario','SUM(precio)');
 								}
 								
-								if($comprapendiente2->garantia_m == 0) {
+								if($comprapendiente2['garantia_m'] == 0) {
 									$end_date_de_garantia = false;
 								}else{
-									$end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($comprapendiente2->garantia);
+									$end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($comprapendiente2['garantia']);
 								}
 								$moneda_seleccionado_de_compra = (!empty($wo['currencies'][$indexdefault_currency]['text'])) ? $wo['currencies'][$indexdefault_currency]['text'] : '';
 								?>
@@ -1519,20 +1516,20 @@ table{
 		    						<div class="cuentas_bancarias_contenido">
 		    							<div class="radio-inputs">
 		    								<?php foreach($transacciones_bancarias as $banck): ?>
-		    									<?php $indexdefault_currency_bank = array_search($banck->moneda, array_column($wo['currencies'], 'text')); ?>
+		    									<?php $indexdefault_currency_bank = array_search($banck['moneda'], array_column($wo['currencies'], 'text')); ?>
 		    									<?php $cantida_dinero = $db->where('estado', '1')
-										                             ->where('id_cuenta_corriente', $banck->id)
+										                             ->where('id_cuenta_corriente', $banck['id'])
 										                             ->getValue('cuentas_corrientes_transactions', 'SUM(CASE WHEN tipo = 1 THEN monto WHEN tipo = 0 THEN -monto ELSE 0 END)');
 										        ?>
 			    								<label>
-													<input class="radio-input selected_banks_line" type="radio" name="banck_line_list_box" value="<?=$banck->id;?>">
+													<input class="radio-input selected_banks_line" type="radio" name="banck_line_list_box" value="<?=$banck['id'];?>">
 													<span class="radio-tile">
 														<span class="radio-icon">
-															<img src="<?=$banck->banco_logo;?>">
+															<img src="<?=$banck['banco_logo'];?>">
 														</span>
-														<span class="radio-label"><?=$banck->banco_nombre_corto;?></span>
+														<span class="radio-label"><?=$banck['banco_nombre_corto'];?></span>
 														<span><b><?=(!empty($wo['currencies'][$indexdefault_currency_bank]['symbol'])) ? $wo['currencies'][$indexdefault_currency_bank]['symbol'] : '';?> <?= sprintf('%.2f',!empty($cantida_dinero) ? $cantida_dinero : 0); ?></b></span>
-														<span class="radio-label"><?=$banck->tipo_de_cuenta;?> <?=$banck->nombre_cuenta;?></span>
+														<span class="radio-label"><?=$banck['tipo_de_cuenta'];?> <?=$banck['nombre_cuenta'];?></span>
 													</span>
 												</label>
 											<?php endforeach ?>
@@ -1603,7 +1600,7 @@ table{
 											No se pudo mostrar el producto.
 										</div>
 										<div class="bt_conain_sty">
-    										<button class="btncompletecompra endcomprafin" data="<?=$comprapendiente2->id;?>">
+    										<button class="btncompletecompra endcomprafin" data="<?=$comprapendiente2['id'];?>">
     											<span class="default">Completar compra</span>
     											<span class="success">Finalizado
     												<svg viewbox="0 0 12 10">
@@ -1651,7 +1648,7 @@ table{
 			    				$('.endcomprafin').click(function(e) {
 			    					$('.loader_page_content').addClass('loader_page');
 			    					if (isProcessing) return;
-									isProcessing = true;
+									  isProcessing = true;
 			    					var unt = $('#price_st_total').html();
 			    					var untformat = unt.replace(/\s/g, '');
 								    let button = $(this);
@@ -1848,27 +1845,26 @@ table{
 						    </div>
 						  </div>
 						</div>
-				        <script type="text/javascript">
-				        	$(document).on('click', '.visualizar_compra_orp', function(){
-				        		$('#documentModalLabel').html('');
-								$('.datos_documento_views').html('');
-				        		let compraline = $(this).attr('data-id');
+				    <script type="text/javascript">
+		        	$(document).on('click', '.visualizar_compra_orp', function(){
+		        		$('#documentModalLabel').html('');
+						    $('.datos_documento_views').html('');
+		        		let compraline = $(this).attr('data-id');
 								$.ajax({
 									url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=view_orders_stored&hash=' + $('.main_session').val(),
 									data: {compralines:compraline},
 									type: 'POST',
 									success: function (data) {
-										console.log(data)
 										if (data.status==200){
 											$('#documentModalLabel').html(data.title);
 											$('.datos_documento_views').html(data.html);
-        									$('#modal_documento_views').modal();
+        							$('#modal_documento_views').modal('show');
 										}
 									}
 								})
-							});
-			    			$(document).on('click', '.create_order_in_pages', function(){
-			    				var comprascontent = document.querySelector('a[data-ajax="?link1=compras"]');
+					    });
+			    		$(document).on('click', '.create_order_in_pages', function(){
+			    			var comprascontent = document.querySelector('a[data-ajax="?link1=compras"]');
 								$.ajax({
 									url: Wo_Ajax_Requests_File() + '?f=comprar_producto_a&s=new_compras&hash=' + $('.main_session').val(),
 									type: 'POST',

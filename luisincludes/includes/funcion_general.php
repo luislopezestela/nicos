@@ -519,7 +519,9 @@ function lui_SeoLink($query = '') {
             '/^index\.php\?link1=products&c_id=([A-Za-z0-9_]+)$/i',
             '/^index\.php\?link1=products&c_id=([A-Za-z0-9_]+)&sub_id=([A-Za-z0-9_]+)$/i',
             '/^index\.php\?link1=tienda&c_id=([A-Za-z0-9_]+)$/i',
+            '/^index\.php\?link1=tienda&c_id=([A-Za-z0-9_]+)&section=([A-Za-z0-9_-]+)$/i',
             '/^index\.php\?link1=tienda&c_id=([A-Za-z0-9_]+)&sub_id=([A-Za-z0-9_]+)$/i',
+            '/^index\.php\?link1=tienda&section=([A-Za-z0-9_-]+)$/i',
             '/^index\.php\?link1=my-products&c_id=([A-Za-z0-9_]+)$/i',
             '/^index\.php\?link1=my-products&c_id=([A-Za-z0-9_]+)&sub_id=([A-Za-z0-9_]+)$/i',
             '/^index\.php\?link1=carta&c_id=([A-Za-z0-9_]+)$/i',
@@ -617,7 +619,9 @@ function lui_SeoLink($query = '') {
             $config['site_url'] . '/products/$1',
             $config['site_url'] . '/products/$1/$2',
             $config['site_url'] . '/tienda/$1',
+            $config['site_url'] . '/tienda/$1?section=$2',
             $config['site_url'] . '/tienda/$1/$2',
+            $config['site_url'] . '/tienda?section=$1',
             $config['site_url'] . '/my-products/$1',
             $config['site_url'] . '/my-products/$1/$2',
             $config['site_url'] . '/carta/$1',
@@ -848,6 +852,82 @@ function lui_CropAvatarImage($file = '', $data = array()) {
     return true;
 }
 function lui_Resize_Crop_Image($max_width, $max_height, $source_file, $dst_dir, $quality = 80) {
+    $imgsize = @getimagesize($source_file);
+    $width   = $imgsize[0];
+    $height  = $imgsize[1];
+    $mime    = $imgsize['mime'];
+    $image   = "imagejpeg";
+    switch ($mime) {
+        case 'image/gif':
+            $image_create = "imagecreatefromgif";
+            break;
+        case 'image/png':
+            $image_create = "imagecreatefrompng";
+            break;
+        case 'image/jpeg':
+            $image_create = "imagecreatefromjpeg";
+            break;
+        case 'image/webp':
+            $image_create = "imagecreatefromwebp";
+            break;
+        default:
+            return false;
+            break;
+    }
+    $dst_img = @imagecreatetruecolor($max_width, $max_height);
+    // Establecer el canal alfa para imágenes PNG y WebP
+    if ($mime == 'image/png' || $mime == 'image/webp') {
+        imagealphablending($dst_img, false);
+        imagesavealpha($dst_img, true);
+    }
+    $src_img = @$image_create($source_file);
+    if (function_exists('exif_read_data')) {
+        $exif          = @exif_read_data($source_file);
+        $another_image = false;
+        if (!empty($exif['Orientation'])) {
+            switch ($exif['Orientation']) {
+                case 3:
+                    $src_img = @imagerotate($src_img, 180, 0);
+                    @imagewebp($src_img, $dst_dir, $quality);
+                    $another_image = true;
+                    break;
+                case 6:
+                    $src_img = @imagerotate($src_img, -90, 0);
+                    @imagewebp($src_img, $dst_dir, $quality);
+                    $another_image = true;
+                    break;
+                case 8:
+                    $src_img = @imagerotate($src_img, 90, 0);
+                    @imagewebp($src_img, $dst_dir, $quality);
+                    $another_image = true;
+                    break;
+            }
+        }
+        if ($another_image == true) {
+            $imgsize = @getimagesize($dst_dir);
+            if ($width > 0 && $height > 0) {
+                $width  = $imgsize[0];
+                $height = $imgsize[1];
+            }
+        }
+    }
+    @$width_new = $height * $max_width / $max_height;
+    @$height_new = $width * $max_height / $max_width;
+    if ($width_new > $width) {
+        $h_point = (($height - $height_new) / 2);
+        @imagecopyresampled($dst_img, $src_img, 0, 0, 0, $h_point, $max_width, $max_height, $width, $height_new);
+    } else {
+        $w_point = (($width - $width_new) / 2);
+        @imagecopyresampled($dst_img, $src_img, 0, 0, $w_point, 0, $max_width, $max_height, $width_new, $height);
+    }
+    @imagewebp($dst_img, $dst_dir, $quality);
+    if ($dst_img)
+        @imagedestroy($dst_img);
+    if ($src_img)
+        @imagedestroy($src_img);
+    return true;
+}
+function lui_Resize_Crop_Image_cats($max_width, $max_height, $source_file, $dst_dir, $quality = 100) {
     $imgsize = @getimagesize($source_file);
     $width   = $imgsize[0];
     $height  = $imgsize[1];

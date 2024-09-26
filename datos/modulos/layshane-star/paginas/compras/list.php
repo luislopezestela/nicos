@@ -10,6 +10,8 @@ if ($total_productos_lista>0) {
 }
 if($wo['comprass']['documento']=='B'){
 	$comproban = 'BOLETA';
+}elseif($wo['comprass']['documento']=='F'){
+    $comproban = 'FACTURA';
 }elseif($wo['comprass']['documento']=='BS'){
     $comproban = 'NOTA SIMPLE';
 }
@@ -76,9 +78,9 @@ $monedaf = $wo['product']['symbol'] = (!empty($wo['currencies'][$indexdefault_cu
     </td>
     <td data-column="Proveedor" class="table-row__td">
         <div class="">
-          <p class="table-row__policy"><?=$proveedor->razon_social;?></p>
-          <?php if($proveedor->ruc): ?>
-          	<span class="table-row__small"><?=$proveedor->ruc;?></span>
+          <p class="table-row__policy"><?=$proveedor['razon_social'];?></p>
+          <?php if($proveedor['ruc']): ?>
+          	<span class="table-row__small"><?=$proveedor['ruc'];?></span>
           <?php endif ?>
         </div>                
     </td>

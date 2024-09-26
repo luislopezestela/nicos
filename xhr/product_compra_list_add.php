@@ -10,26 +10,26 @@ if($f == 'product_compra_list_add') {
 
 		$comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->where('sucursal',$wo['user']['sucursal'])->getOne(T_COMPRAS);
 
-		$uniqueIdentifier = $comprapendiente->id . '_' . $_POST['value'];
-		$item_producrto = $db->where('atributo', $uniqueIdentifier)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->getOne('imventario');
+		$uniqueIdentifier = $comprapendiente['id'] . '_' . $_POST['value'];
+		$item_producrto = $db->where('atributo', $uniqueIdentifier)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente['id'])->getOne('imventario');
 		if(!empty($item_producrto)){
-			$actualizar_precio = $item_producrto->precio;
+			$actualizar_precio = $item_producrto['precio'];
 		}else{
 			$actualizar_precio = '0.00';
 		}
 		
-		$lastGroupNumberRow = $db->orderBy('orden', 'desc')->where('id_comprobante',$comprapendiente->id)->getOne('imventario', 'orden');
+		$lastGroupNumberRow = $db->orderBy('orden', 'desc')->where('id_comprobante',$comprapendiente['id'])->getOne('imventario', 'orden');
 		if($lastGroupNumberRow){
-		    $lastGroupNumber = $lastGroupNumberRow->orden;
+		    $lastGroupNumber = $lastGroupNumberRow['orden'];
 		} else{
 		    $lastGroupNumber = null;
 		}
 		if(!$lastGroupNumber) {
 		    $nextGroupNumber = 1;
 		} else{
-		    $sameIdentifierProducts = $db->where('atributo', $uniqueIdentifier)->where('id_comprobante',$comprapendiente->id)->get('imventario');
+		    $sameIdentifierProducts = $db->where('atributo', $uniqueIdentifier)->where('id_comprobante',$comprapendiente['id'])->get('imventario');
 		    if($sameIdentifierProducts) {
-		        $nextGroupNumber = $sameIdentifierProducts[0]->orden;
+		        $nextGroupNumber = $sameIdentifierProducts[0]['orden'];
 		    }else{
 		        $nextGroupNumber = $lastGroupNumber + 1;
 		    }
@@ -40,7 +40,7 @@ if($f == 'product_compra_list_add') {
 			if($_POST['color']==""){
 				$dataarray = array(
 					'producto' => $_POST['value'],
-					'id_comprobante' => $comprapendiente->id,
+					'id_comprobante' => $comprapendiente['id'],
 					'cantidad' => 1,
 					'tipo'     => 'compra',
 					'modo'     => "ingreso",
@@ -54,7 +54,7 @@ if($f == 'product_compra_list_add') {
 				$dataarray = array(
 					'producto' => $_POST['value'],
 					'color'   => $_POST['color'],
-					'id_comprobante' => $comprapendiente->id,
+					'id_comprobante' => $comprapendiente['id'],
 					'cantidad' => 1,
 					'tipo'     => 'compra',
 					'modo'     => "ingreso",
@@ -86,7 +86,7 @@ if($f == 'product_compra_list_add') {
 		    }
 		    
 		    // Construir un identificador único para este producto basado en sus variaciones
-		    $identificador_unico = $comprapendiente->id . '_' . $producto_id;
+		    $identificador_unico = $comprapendiente['id'] . '_' . $producto_id;
 		    foreach ($variantes_atributos as $atributo_atr => $opciones) {
 		        $identificador_unico .= '_' . implode('_', $opciones);
 		    }
@@ -101,21 +101,21 @@ if($f == 'product_compra_list_add') {
 			$wo['product']['inventario'] = $productID;
     		$wo['product']['id_imventarios'] = $productID;
     		$wo['product']['id_productos'] =  $identificador_unico;
-    		$wo['product']['comprap'] = $comprapendiente->id;
+    		$wo['product']['comprap'] = $comprapendiente['id'];
 			$wo['product']['symbol'] = (!empty($wo['currencies'][$producto['currency']]['symbol'])) ? $wo['currencies'][$producto['currency']]['symbol'] : $wo['config']['classified_currency_s'];
 
 			$cantidad_productos = 0;
 			if (!empty($variantes_atributos)) {
-			    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante = {$comprapendiente->id}";
+			    $sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante = {$comprapendiente['id']}";
 			    foreach ($variantes_atributos as $atributo_atr => $opciones) {
 			        foreach ($opciones as $opcion) {
 			            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo_atr} AND id_atributo_opciones = {$opcion})";
 			        }
 			    }
-			    $cantidad_productos = $db->rawQueryOne($sql)->cantidad;
+			    $cantidad_productos = $db->rawQueryOne($sql)['cantidad'];
 			} else {
 			    // Si no hay variantes de atributos, solo contar por color
-			    $cantidad_productos = $db->where('id_comprobante', $comprapendiente->id)->where('producto', $wo['product']['id'])->getValue('imventario', 'COUNT(*)');
+			    $cantidad_productos = $db->where('id_comprobante', $comprapendiente['id'])->where('producto', $wo['product']['id'])->getValue('imventario', 'COUNT(*)');
 			}
 
 			$wo['product']['cantidad'] = $cantidad_productos;
@@ -123,19 +123,19 @@ if($f == 'product_compra_list_add') {
 			
 
 
-			$el_producto_inventario = $db->where('id',$productID)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->getOne('imventario');
+			$el_producto_inventario = $db->where('id',$productID)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente['id'])->getOne('imventario');
 			if (isset($el_producto_inventario)) {
-				$wo['product']['precio'] = $el_producto_inventario->precio;
+				$wo['product']['precio'] = $el_producto_inventario['precio'];
 			}else{
 				$wo['product']['precio'] = '0.00';
 			}
 			
 			$html = lui_LoadPage('compras/lista_compra');
 			$productos_vistos[] = $identificador_unico;
-			$total_productos_grupo = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->getValue('imventario','COUNT(DISTINCT orden)');
-            $total_productos_lista = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->getValue('imventario','COUNT(*)');
+			$total_productos_grupo = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente['id'])->getValue('imventario','COUNT(DISTINCT orden)');
+            $total_productos_lista = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente['id'])->getValue('imventario','COUNT(*)');
             if($total_productos_lista>0) {
-                $total_productos_price_f = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente->id)->getValue('imventario','SUM(precio)');
+                $total_productos_price_f = $db->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante',$comprapendiente['id'])->getValue('imventario','SUM(precio)');
             }
             $total_productos_price = number_format($total_productos_price_f, 2, ',', '.');
 

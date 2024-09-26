@@ -259,7 +259,7 @@ if ($f == 'products') {
         $atributo = $db->where('id_producto',$_POST['product_id'])->where('nombre','Color')->getOne('atributos');
         if (isset($_POST['color_producto'])==true) {
             if($atributo) {
-                $id_atributo = $atributo->id;
+                $id_atributo = $atributo['id'];
             }else if($atributo==null) {
                 $id_atributo = lui_agregar_el_atributo_para_el_producto("Color",$_POST['product_id']);
             }
@@ -278,7 +278,7 @@ if ($f == 'products') {
             
         }else{
             if(!$atributo==null) {
-                $db->where('id',$atributo->id)->delete('atributos');
+                $db->where('id',$atributo['id'])->delete('atributos');
             }
             
             if($ubicacion_de_colores_de_producto){
@@ -294,7 +294,7 @@ if ($f == 'products') {
             $stock = lui_Secure($_POST['stock']);
         }else{
             $stok_active = $db->where('id',$_POST['product_id'])->getOne('lui_products');
-            $stock = $stok_active->stock;
+            $stock = $stok_active['stock'];
         }
         if(!empty($_POST['disponible']) && $_POST['disponible'] == true) {
             $disponible = 1;
@@ -512,8 +512,8 @@ if ($f == 'products') {
             $nombre = $_POST['nombre'];
             $atributo_id = add_atributo_producto($producto,$nombre);
             $atributo = $db->where('id',$atributo_id)->getOne('atributos');
-            $wo['atributos']['id'] = $atributo->id;
-            $wo['atributos']['nombre'] = $atributo->nombre;
+            $wo['atributos']['id'] = $atributo['id'];
+            $wo['atributos']['nombre'] = $atributo['nombre'];
             $html .= lui_LoadPage('products/lista_atributos');
             $data = array(
                 'status' => 200,
@@ -602,13 +602,13 @@ if ($f == 'products') {
             $atributo_opt_id = add_options_atributo_producto($atributo,$nombre,$precio_adicional,$active_uno);
             $opt_atributo = $db->where('id',$atributo_opt_id)->getOne('atributos_opciones');
             $atributos_one = $db->where('id',$atributo)->getOne('atributos');
-            $productos = $db->where('id',$atributos_one->id_producto)->getOne('lui_products');
-            $symbol_moneda =  (!empty($wo['currencies'][$productos->currency]['symbol'])) ? $wo['currencies'][$productos->currency]['symbol'] : $wo['config']['classified_currency_s'];
+            $productos = $db->where('id',$atributos_one['id_producto'])->getOne('lui_products');
+            $symbol_moneda =  (!empty($wo['currencies'][$productos['currency']]['symbol'])) ? $wo['currencies'][$productos['currency']]['symbol'] : $wo['config']['classified_currency_s'];
 
             $wo['opt_atributos']['moneda'] = $symbol_moneda;
-            $wo['opt_atributos']['id'] = $opt_atributo->id;
-            $wo['opt_atributos']['nombre'] = $opt_atributo->nombre;
-            $wo['opt_atributos']['precio_adicional'] = $opt_atributo->precio_adicional;
+            $wo['opt_atributos']['id'] = $opt_atributo['id'];
+            $wo['opt_atributos']['nombre'] = $opt_atributo['nombre'];
+            $wo['opt_atributos']['precio_adicional'] = $opt_atributo['precio_adicional'];
             $html .= lui_LoadPage('products/list_atribute_opciones');
             $data = array(
                 'status' => 200,
@@ -639,9 +639,9 @@ if ($f == 'products') {
             $precio = $_POST['precio_opt'];
             $db->where('id',$id)->update('atributos_opciones',array('nombre' => $nombre,'precio_adicional' => $precio));
             $atributos_optionals = $db->where('id',$id)->getOne('atributos_opciones');
-            $atributos_one = $db->where('id',$atributos_optionals->id_atributos)->getOne('atributos');
-            $productos = $db->where('id',$atributos_one->id_producto)->getOne('lui_products');
-            $symbol_moneda =  (!empty($wo['currencies'][$productos->currency]['symbol'])) ? $wo['currencies'][$productos->currency]['symbol'] : $wo['config']['classified_currency_s'];
+            $atributos_one = $db->where('id',$atributos_optionals['id_atributos'])->getOne('atributos');
+            $productos = $db->where('id',$atributos_one['id_producto'])->getOne('lui_products');
+            $symbol_moneda =  (!empty($wo['currencies'][$productos['currency']]['symbol'])) ? $wo['currencies'][$productos['currency']]['symbol'] : $wo['config']['classified_currency_s'];
 
             $data = array(
                 'status' => 200,
@@ -690,9 +690,9 @@ if ($f == 'products') {
 
             if (!empty($is_added)) {
                 $product_data = lui_GetProduct(lui_Secure($_POST['product_id']));
-                if (!empty($product_data) && !empty($product_data['units']) && $product_data['units'] > $is_added->units) {
+                if (!empty($product_data) && !empty($product_data['units']) && $product_data['units'] > $is_added['units']) {
 
-                    $db->where('id',$is_added->id)->update(T_USERCARD,array('units' => $db->inc(1)));
+                    $db->where('id',$is_added['id'])->update(T_USERCARD,array('units' => $db->inc(1)));
 
                     
                 }
@@ -1122,6 +1122,7 @@ if ($f == 'products') {
         echo json_encode($data);
         exit();
     }
+
     if ($s == 'tracking') {
         if (!empty($_POST['tracking_url']) && !empty($_POST['tracking_id']) && !empty($_POST['order_hash']) && filter_var($_POST['tracking_url'], FILTER_VALIDATE_URL)) {
             $hash_id = lui_Secure($_POST['order_hash']);
@@ -1482,26 +1483,27 @@ if ($f == 'products') {
         if (!empty($_POST['id']) && is_numeric($_POST['id']) && $_POST['id'] > 0) {
             $wo['story'] = $db->where('product_id',lui_Secure($_POST['id']))->getOne(T_POSTS);
             if (!empty($wo['story'])) {
-                if (lui_DeletePost($wo['story']->id) === true) {
+                if (lui_DeletePost($wo['story']['id']) === true) {
                     if (!empty($wo['story'])) {
-                        $text          = $wo['story']->postText;
+                        $text          = $wo['story']['postText'];
                         $hashtag_regex = '/(#\[([0-9]+)\])/i';
                         if ($text !== null) {
                             preg_match_all($hashtag_regex, $text, $matches);
-                        }
-                        $match_i = 0;
-                        foreach ($matches[1] as $match) {
-                            $hashkey = $matches[2][$match_i];
-                            if (!empty($hashkey)) {
-                                $db->where('id', $hashkey)->update(T_HASHTAGS, array(
-                                    'trend_use_num' => $db->dec(1)
-                                ));
+                        
+                            $match_i = 0;
+                            foreach ($matches[1] as $match) {
+                                $hashkey = $matches[2][$match_i];
+                                if (!empty($hashkey)) {
+                                    $db->where('id', $hashkey)->update(T_HASHTAGS, array(
+                                        'trend_use_num' => $db->dec(1)
+                                    ));
+                                }
+                                $match_i++;
                             }
-                            $match_i++;
                         }
                     }
-                    $wo['user_profile'] = lui_UserData($wo['story']->user_id);
-                    $user_data          = lui_UpdateUserDetails($wo['story']->user_id, true, false, true, true);
+                    $wo['user_profile'] = lui_UserData($wo['story']['user_id']);
+                    $user_data          = lui_UpdateUserDetails($wo['story']['user_id'], true, false, true, true);
                     lui_CleanCache();
                     $data = array(
                         'status' => 200,

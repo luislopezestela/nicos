@@ -25,7 +25,7 @@
 			<?php endif ?>
 		<?php endforeach ?>
 		<?php $color_nombre_atributo = $db->where('id_producto', $wo['product']['id'])->getOne('atributos')?>
-		<tr class="table-row table-row--chris item_dats-<?php echo $wo['product']['id']?> <?php echo ($existencia_atributes==true ? 'menu-link_us_add': 'menu-link_us_add_b'); ?>" id="item_dats-<?php echo $wo['product']['id']?>" data-colc="<?=$color_nombre_atributo->id;?>" data-col="<?=$valorcolor['id_color'];?>" data-id="<?php echo $wo['product']['id']?>" style="cursor:pointer;user-select:none;">
+		<tr class="table-row table-row--chris item_dats-<?php echo $wo['product']['id']?> <?php echo ($existencia_atributes==true ? 'menu-link_us_add': 'menu-link_us_add_b'); ?>" id="item_dats-<?php echo $wo['product']['id']?>" data-colc="<?=$color_nombre_atributo['id'];?>" data-col="<?=$valorcolor['id_color'];?>" data-id="<?php echo $wo['product']['id']?>" style="cursor:pointer;user-select:none;">
 			<td class="table-row__td">
 				<div class="table-row--overdue_gris"></div>
 				<div class="table-row__img" style="background-image: url('<?php echo $wo['product']['images'][0]['image_org'];?>');"></div>
@@ -33,7 +33,7 @@
 					<p></p>
 					<p class="table-row__name"><?php echo $wo['product']['name']?></p>
 					<?php if(isset($buscar_el_color_por_id)): ?>
-						<span><?=$color_nombre_atributo->nombre;?>: <?=$wo['lang'][$buscar_el_color_por_id['lang_key']];?></span>
+						<span><?=$color_nombre_atributo['nombre'];?>: <?=$wo['lang'][$buscar_el_color_por_id['lang_key']];?></span>
 					<?php endif ?>
 				</div>
 				<?php if($existencia_atributes==true): ?>

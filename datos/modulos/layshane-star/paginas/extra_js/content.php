@@ -1,4 +1,13 @@
 <script>
+function CheckIfCanUse() {
+  <?php if(!$wo['config']['can_use_chat']){ ?>
+  $("#error_post").modal('show');
+  $('#error_post_text').text("<?php echo $wo['lang']['can_not_use_feature'] ?>");
+  Wo_Delay(function(){
+      $("#error_post").modal('hide');
+  },3000);
+  <?php } ?>
+}
 function Wo_RegisterReactionLike(element,reaction_icon,is_html){
     var reaction = parseInt($(element).attr('data-reaction-id'));
     var post_id = $(element).attr('data-post-id');
@@ -534,12 +543,16 @@ $(window).on('load', function() {
           $('.reactions-box-story-container-'+id).fadeOut(50);
     }, 1000);
   });
-  $('body').delegate('.messages-reactions','click', function() {
+
+  $('body').delegate('.messages-reactions', 'click', function() {
     var id = $( this ).attr( 'data-message-id' );
     setTimeout( function () {
-      $('.reactions-box-container-'+id).fadeIn(50);
+      $('.reactions-box-container-'+id).fadeIn(50, function() {
+          $(this).css('display', 'flex');
+      });
     }, 300);
   });
+
   $('body').delegate('.messages-reactions','mouseleave', function() {
     var id = $( this ).attr( 'data-message-id' );
       setTimeout( function () {
@@ -769,7 +782,6 @@ function SendSeen(recipient_id) {
 function ChangeQtyapos(self,product_id,prod_co) {
   if (product_id){
       $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bdd_pos', {value: product_id,color:prod_co}, function (data) {
-        console.log(data)
         if (data.status==200) {
           $('#qty_'+self).html(data.total_cantidad_prod);
           $('#stok_pos_produc_list_'+self).html(data.total_stock);
@@ -793,7 +805,6 @@ function ChangeQtyapos(self,product_id,prod_co) {
 function ChangeQtybpos(self,product_id,prod_co) {
   if (product_id){
       $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bdd_del_pos', {value: product_id,color:prod_co}, function (data) {
-        console.log(data)
         if (data.status==200) {
           $('#qty_'+self).html(data.total_cantidad_prod);
           $('#stok_pos_produc_list_'+self).html(data.total_stock);
@@ -827,8 +838,6 @@ function ChangeQtyapos_col(self,product_id,prod_co,atributo) {
       data['color'] = prod_co;
 
       $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bddc_pos', data, function (data) {
-        console.log(data)
-        console.log(self)
         if (data.status==200) {
           $('#qty_'+self).html(data.total_cantidad_prod);
           $('#stok_pos_produc_list_'+self).html(data.total_stock);
@@ -857,11 +866,10 @@ function ChangeQtybpos_col(self,product_id,prod_co,atributo) {
       data['producto'] = product_id;
       data['color'] = prod_co;
       $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bddc_del_pos', data, function (data) {
-        console.log(data)
         if (data.status==200) {
           $('#qty_'+self).html(data.total_cantidad_prod);
           $('#stok_pos_produc_list_'+self).html(data.total_stock);
-          $('.stock_'+self).html('Stock: '+data.total_stock);
+          $('.stock_'+self).html(data.total_stock);
           $('#items_prod_pos-'+self).html(data.total_listos_pos);
           $('.total_items_order_perdido_pos').html(data.total_lista);
 
@@ -873,7 +881,15 @@ function ChangeQtybpos_col(self,product_id,prod_co,atributo) {
           $('#increment_'+self).removeAttr('disabled');
         }
         if (data.total_cantidad_prod==0) {
-          $('#item_dats_invoice-'+self).slideUp();
+          var $item = $('#item_dats_invoice-' + self);
+          if ($item.length) {
+            $item.slideUp(function() {
+              $(this).remove();
+              $('#scriptd0_'+self).remove();
+              $('#scriptd1_'+self).remove();
+            });
+          }
+
         }
       });
   }
@@ -881,20 +897,16 @@ function ChangeQtybpos_col(self,product_id,prod_co,atributo) {
 }
 //// agrgar items al carrito pos
 function ChangeQtyapos_col_add(self,product_id,prod_co,atributo) {
-  console.log(product_id)
   if (product_id){
     var atribut = atributo;
     var data = atribut;
       data['producto'] = product_id;
       data['color'] = prod_co;
-      console.log(data)
       $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bddc_pos', data, function (data) {
-        console.log(data)
-        console.log(self)
         if (data.status==200) {
           $('#qty_'+self).html(data.total_cantidad_prod);
           $('#stok_pos_produc_list_'+self).html(data.total_stock);
-          $('.stock_'+self).html('Stock: '+data.total_stock);
+          $('.stock_'+self).html(data.total_stock);
           $('#items_prod_pos-'+self).html(data.total_listos_pos);
           $('.total_items_order_perdido_pos').html(data.total_lista);
 
@@ -921,12 +933,13 @@ function ChangeQtyapos_col_add_atr(identificador_unico, product_id, color, atrib
         data['producto'] = product_id;
         data['color'] = color;
         $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bddc_pos', data, function (data) {
-            console.log(data);
             if (data.status == 200) {
-              $('#qty_' + identificador_unc).html(data.total_cantidad_prod);
-              $('#stok_pos_produc_list_' + identificador_unc).html(data.total_stock);
-              $('.stock_'+identificador_unc).html('Stock: '+data.total_stock);
-              $('#items_prod_pos-' + identificador_unc).html(data.total_listos_pos);
+              $('#qty_' + identificador_unico).html(data.total_cantidad_prod);
+              
+              $('#stok_pos_produc_list_' + identificador_unico).html(data.total_stock);
+              $('.stock_'+identificador_unico).html(data.total_stock);
+
+              $('#items_prod_pos-' + identificador_unico).html(data.total_listos_pos);
               $('.total_items_order_perdido_pos').html(data.total_lista);
 
               $('.sub_total_pos_pedido_' + data.currency).html(data.total_precio_sub);
@@ -937,7 +950,7 @@ function ChangeQtyapos_col_add_atr(identificador_unico, product_id, color, atrib
               }
             }
             if (data.sin_stock == 1) {
-                $('#increment_' + identificador_unc).attr('disabled', "disabled");
+                $('#increment_' + identificador_unico).attr('disabled', "disabled");
             }
         });
     }
@@ -949,17 +962,14 @@ function Buscar_col_add_atr(product_id, color, atributosSeleccionados,identifica
   }else{
     var colorSelec = '_' +color;
   }
-    console.log(atributosSeleccionados)
   if (product_id) {
     var seleccionads = product_id + colorSelec;
       var data = JSON.parse(JSON.stringify(atributosSeleccionados)); // Crear una copia de atributosSeleccionados
       data['producto'] = product_id;
       data['color'] = color;
-
       $.post(Wo_Ajax_Requests_File() + '?f=product_compra_list_bddc_pos_search', data, function (data) {
-        console.log(data);
-        $('#precio_pos_produc_list_lista_'+seleccionads).html('<strong class="precio_'+identificador_unc+'">Precio: '+data.precio_tols+'</strong>');
-        $('#stok_pos_produc_list_lista_'+seleccionads).html('<strong class="stock_'+identificador_unc+'">Stock: '+data.total_stock+'</strong>');
+        $('#precio_pos_produc_list_lista_'+seleccionads).html('Precio: <strong class="precio_'+data.update+'">'+data.precio_tols+'</strong>');
+        $('#stok_pos_produc_list_lista_'+seleccionads).html('Stock: <strong class="stock_'+data.update+'">'+data.total_stock+'</strong>');
       });
 
       
@@ -1013,6 +1023,7 @@ function Seleccionados_atributos(compraId, productId) {
     });
     return idsOpcionesSeleccionadas;
 }
+
 function Seleccionados_atributosc(compraId, colorId, productId) {
     var idsOpcionesSeleccionadas = compraId + '_' + productId;
 
@@ -1192,7 +1203,6 @@ function order_pl(current,lista) {
     data: {lista: lista},
     type: 'POST',
     success: function (data) {
-      console.log(data)
     }
   })
 }
@@ -1201,7 +1211,6 @@ function order_pl_add(current) {
     url: Wo_Ajax_Requests_File() + '?f=comprar_producto_b&s='+current+'&hash=' + $('.main_session').val(), 
     type: 'POST',
     success: function (data) {
-      console.log(data)
     }
   })
 }
@@ -1212,7 +1221,6 @@ function order_pl_addres_type(current) {
     data: {modo_compra:docs},
     type: 'POST',
     success: function (data) {
-      console.log(data)
     }
   })
   LoadCheckout();
@@ -1250,7 +1258,6 @@ function order_pl_end(current) {
       url: Wo_Ajax_Requests_File() + '?f=comprar_producto_b&s=opcion_compra_end&hash=' + $('.main_session').val(),
       type: 'POST',
       success: function (data){
-        console.log(data)
         if(data.status==200){
           setTimeout(() => {
             button.removeClass('animatebtncompra');
@@ -1267,6 +1274,32 @@ function order_pl_end(current) {
     })   
   }
 }
+function MostrarAlertaLuislopez(message, duration = 5000, type = 'info') {
+    // Create alert element
+    let alert = document.createElement('div');
+    alert.className = `alert-message alerta-${type}`;
+    alert.innerHTML = `<span>${message}</span>`;
+
+    // Create progress bar element
+    let progressBar = document.createElement('div');
+    progressBar.className = 'alert-progress';
+    progressBar.style.animationDuration = duration + 'ms';
+
+    // Append progress bar to alert
+    alert.appendChild(progressBar);
+
+    // Append alert to the container
+    document.getElementById('alert-container').appendChild(alert);
+
+    // Set timeout to remove alert after the duration
+    setTimeout(function () {
+        alert.style.opacity = '0';
+        setTimeout(function () {
+            alert.remove();
+        }, 500); // Match this time with CSS transition time
+    }, duration);
+}
+
 function changue_order_page(hash){
   $.post(Wo_Ajax_Requests_File() + '?f=comprar_producto_b&s=change_order_pend&hash=' + $('.main_session').val(), {hash_id: hash});
 }
@@ -1280,6 +1313,81 @@ function changue_order_pages(hash,opcion){
     }
   });
 }
+function changue_order_pages_pos(hash,opcion){
+  $.post(Wo_Ajax_Requests_File() + '?f=comprar_producto_b&s=change_orders_pen&hash=' + $('.main_session').val(), {hash_id: hash,opcion_data:opcion}, function(data, textStatus, xhr) {
+    if (data.status==200) {
+      LoadPoslp();
+    }
+    if (data.status==400) {
+      if (data.status_ad==1) {
+        MostrarAlertaLuislopez(data.message, 10000,'error');
+      }else{
+        LoadPoslp();
+      }
+      
+    }
+  });
+}
+
+function changue_order_pages_pos_entr(hash, opcion) {
+    let metodosdepagos = {}; // Object to group payment methods by currency
+    let allCheckboxes = document.querySelectorAll('input[name="metodo_pago"]');
+    
+    // Initialize the metodosdepagos object for all available currencies
+    allCheckboxes.forEach(function(checkbox) {
+        let tipoMoneda = checkbox.getAttribute('data-moneda');
+        if (!metodosdepagos[tipoMoneda]) {
+            metodosdepagos[tipoMoneda] = {
+                totalMonto: 0,
+                hasSelected: 0 // Track if there's at least one payment method selected
+            };
+        }
+    });
+
+    // Process selected checkboxes
+    let selectedCheckboxes = document.querySelectorAll('input[name="metodo_pago"]:checked');
+    selectedCheckboxes.forEach(function(checkbox) {
+        let metodo = checkbox.value;
+        let inputValue = parseFloat(document.querySelector(`#monto_${metodo}`).value) || 0;
+        let tipoMoneda = checkbox.getAttribute('data-moneda');
+
+        metodosdepagos[tipoMoneda].totalMonto += inputValue;
+        metodosdepagos[tipoMoneda][metodo] = inputValue;
+        metodosdepagos[tipoMoneda].hasSelected = 1; // Mark as selected
+    });
+
+    // Now send the data with $.post
+    $.post(Wo_Ajax_Requests_File() + '?f=comprar_producto_b&s=change_orders_pen&hash=' + $('.main_session').val(), 
+    {
+        hash_id: hash,
+        opcion_data: opcion,
+        metodosdepagos: metodosdepagos // Grouped data by currency
+    }, 
+    function(data, textStatus, xhr) {
+        if (data.status == 400) {
+          Object.keys(data).forEach(function(key) {
+            if (key !== 'status') {
+              let mensajeElemento = $('.alerta_mensaje_pay_' + key);
+              let mensajeHTML = '<p>' + data[key].message + '</p>';
+
+              // Mostrar el mensaje
+              mensajeElemento.html(mensajeHTML);
+              setTimeout(function () {
+                  mensajeElemento.html('');
+              }, 20000); // 20 segundos
+            }
+          });
+          
+        }
+        if (data.status == 200) {
+             LoadPoslp();
+        }
+    });
+}
+
+
+
+
 function changue_order_pages_b(hash,opcion){
   $.post(Wo_Ajax_Requests_File() + '?f=comprar_producto_b&s=change_orders_pen&hash=' + $('.main_session').val(), {hash_id: hash,opcion_data:opcion});
 }
@@ -1406,6 +1514,25 @@ function BuyProducts_efectivo(type = 'show',price) {
       $('#buy_product_modal_tres').find('.modal_product_pay_alert').html("<div class='alert alert-danger bg-danger'><i class='fa fa-info-circle'></i> "+data.message+"</div>");
     }
   });
+}
+
+function DownloadPurchasedzz(id, type = 'order') {
+    if (type == 'order') {
+        var url = '?f=pdfsave&hash=' + $('.main_session').val();
+    }
+    $.post(Wo_Ajax_Requests_File() + url, {id: id}, function(data, textStatus, xhr) {
+        if (data.status === 200 && data.pdf_url) {
+            // Redirigir directamente a la URL del archivo para forzar la descarga
+            window.location.href = data.pdf_url;
+        } else {
+            // Manejar errores
+            console.error(data.message || 'Error desconocido');
+        }
+    }, 'json');
+}
+
+function goBack() {
+  history.back();
 }
 
 function DownloadPurchased(id,type = 'order') {
@@ -1654,5 +1781,18 @@ function Wo_OpenBannedMenu(type = 'notification'){
     $('#requests-list').html("<div class='empty_state'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'><path d='M14 14.252v2.09A6 6 0 0 0 6 22l-2-.001a8 8 0 0 1 10-7.748zM12 13c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm7 6.586l2.121-2.122 1.415 1.415L20.414 19l2.122 2.121-1.415 1.415L19 20.414l-2.121 2.122-1.415-1.415L17.586 19l-2.122-2.121 1.415-1.415L19 17.586z' fill='currentColor'/></svg><?php echo($wo['lang']['your_requests_because_you_were_banned']); ?></div>");
   }
 }
+
+document.addEventListener('click', function(event) {
+  const contactButton = document.getElementById('contact-button');
+  const contactMenu = document.getElementById('contact-menu');
+  if (contactButton && event.target.id === 'contact-button') {
+    contactMenu.classList.add('open');
+    contactButton.classList.add('hidden');
+  }
+  if (contactMenu && event.target.classList.contains('close-btn')) {
+    contactMenu.classList.remove('open');
+    contactButton.classList.remove('hidden');
+  }
+});
 
 </script>

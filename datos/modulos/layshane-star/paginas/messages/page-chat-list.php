@@ -142,8 +142,3 @@ if ($page_info['user_id'] != $wo['message']['from_id']) {
 
 </div>
 <div class="clear"></div>
-<script type="text/javascript">
-  $(function () {
-$('[data-toggle="tooltip"]').tooltip();
-});
-</script>

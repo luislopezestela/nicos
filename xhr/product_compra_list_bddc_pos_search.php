@@ -11,7 +11,7 @@ if($f == 'product_compra_list_bddc_pos_search') {
 	if (isset($_POST['producto'])) {
 		$producto = lui_GetProduct($_POST['producto']);
 		$comprapendiente = $db->where('id_del_vendedor',lui_Secure($wo['user']['user_id']))->where('completado','2')->where('estado_venta', 3)->getOne(T_VENTAS);
-		$comprapendiente_ids = $comprapendiente->id;
+		$comprapendiente_ids = $comprapendiente['id'];
 		// Procesar los atributosaddcc y opciones seleccionadas
 		$atributosaddcc = $db->objectbuilder()->where('id_producto',$_POST['producto'])->get('atributos');
 		$attributeOptions = [];
@@ -28,8 +28,8 @@ if($f == 'product_compra_list_bddc_pos_search') {
 		$uniqueIdentifier = $comprapendiente_ids . '_' . $_POST['producto'] . '_' . $attributeString;
 		if ($_POST['color']!="") {
 			$sku_colors_product = $db->where('id_producto',$producto['id'])->where('id_color',$_POST['color'])->getOne('lui_opcion_de_colores_productos');
-			if (!empty($sku_colors_product->precio_adicional)) {
-				$precio_subtotal_producto = $sku_colors_product->precio_adicional+$producto['price'];
+			if (!empty($sku_colors_product['precio_adicional'])) {
+				$precio_subtotal_producto = $sku_colors_product['precio_adicional']+$producto['price'];
 			}else{
 				$precio_subtotal_producto = $producto['price'];
 			}
@@ -44,7 +44,7 @@ if($f == 'product_compra_list_bddc_pos_search') {
 			        $opcionesSeleccionadas = $_POST[$nombreCampo];
 			        foreach ($opcionesSeleccionadas as $opcion) {
 			        	$opcionesdatos = $db->where('id',$opcion)->getOne('atributos_opciones');
-						$precio_de_atributos += $opcionesdatos->precio_adicional;
+						$precio_de_atributos += $opcionesdatos['precio_adicional'];
 			        }
 			    }
 			}
@@ -66,7 +66,7 @@ if($f == 'product_compra_list_bddc_pos_search') {
 			        $opcionesSeleccionadas = $_POST[$nombreCampo];
 			        foreach ($opcionesSeleccionadas as $opcion) {
 			        	$opcionesdatos = $db->where('id',$opcion)->getOne('atributos_opciones');
-						$precio_de_atributos += $opcionesdatos->precio_adicional;
+						$precio_de_atributos += $opcionesdatos['precio_adicional'];
 			        }
 			    }
 			}
@@ -93,16 +93,16 @@ if($f == 'product_compra_list_bddc_pos_search') {
 			        }
 			    }
 			}
-		    $cantidad_prod = $db->rawQueryOne($sql)->cantidad;
+		    $cantidad_prod = $db->rawQueryOne($sql)['cantidad'];
 		    $cantidad_productos = ($cantidad_prod !== null) ? $cantidad_prod : 0;
 		} else{
 			if ($_POST['color']!="") {
 				$sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE color = {$_POST['color']} AND producto = {$producto['id']} AND (estado = 1 OR estado = 2)";			   
-				$productos_stock_disponibles = $db->rawQueryOne($sql)->cantidad;
+				$productos_stock_disponibles = $db->rawQueryOne($sql)['cantidad'];
 				$cantidad_productos = ($productos_stock_disponibles !== null) ? $productos_stock_disponibles : 0;
 			}else{
 				$sql = "SELECT SUM(CASE WHEN anulado = 0 THEN CASE WHEN modo = 'ingreso' THEN cantidad WHEN modo = 'salida' THEN -cantidad ELSE 0 END ELSE 0 END) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND (estado = 1 OR estado = 2)";			   
-				$productos_stock_disponibles = $db->rawQueryOne($sql)->cantidad;
+				$productos_stock_disponibles = $db->rawQueryOne($sql)['cantidad'];
 				$cantidad_productos = ($productos_stock_disponibles !== null) ? $productos_stock_disponibles : 0;
 			}
 		}
@@ -114,7 +114,8 @@ if($f == 'product_compra_list_bddc_pos_search') {
 		$data = array(
             'status' => 200,
             'total_stock' => $productos_stock_disponible,
-            'precio_tols' => $actualizar_precio
+            'precio_tols' => $actualizar_precio,
+            'update' => $uniqueIdentifier
         );
          
 

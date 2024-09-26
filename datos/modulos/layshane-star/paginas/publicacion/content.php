@@ -69,7 +69,7 @@
 		<div class="columns">
 			<div class="column main_columnas">
 				<div name="bvSeoContainer" itemscope itemtype="https://schema.org/Product" itemid="<?=$wo['config']['site_url']."/item/".$wo['itemsdata']['id_publicacion'].$wo['itemsdata']['product']['coloreds']; ?>" style="padding:10px;">
-	        <meta itemprop="name" content="<?= isset($wo['itemsdata']['product']['name']) ? htmlspecialchars($wo['itemsdata']['product']['name']) : '' ?>">
+		        	<meta itemprop="name" content="<?= isset($wo['itemsdata']['product']['name']) ? htmlspecialchars($wo['itemsdata']['product']['name']) : '' ?>">
 					<meta itemprop="sku" content="<?= isset($wo['itemsdata']['product']['sku']) ? htmlspecialchars($wo['itemsdata']['product']['sku']) : '' ?>">
 					<meta itemprop="GTIN" content="<?= isset($wo['itemsdata']['product']['gtin']) ? htmlspecialchars($wo['itemsdata']['product']['gtin']) : '' ?>">
 					<meta itemprop="mpn" content="<?= isset($wo['itemsdata']['product']['sku']) ? htmlspecialchars($wo['itemsdata']['product']['sku']) : '' ?>">
@@ -80,14 +80,14 @@
 					        <meta itemprop="name" content="<?= htmlspecialchars($marca) ?>">
 					    </div>
 					<?php endif ?>
-					
-			    <div itemprop="offers" itemtype="https://schema.org/Offer" itemscope="">
-		        <meta itemprop="itemCondition" content="https://schema.org/<?= isset($condicion) ? htmlspecialchars($condicion) : '' ?>">
-		        <meta itemprop="price" content="<?= isset($wo['itemsdata']['product']['price_format']) ? htmlspecialchars($wo['itemsdata']['product']['price_format']) : '' ?>">
-		        <meta itemprop="priceCurrency" content="<?= isset($text) ? htmlspecialchars($text) : '' ?>">
-		        <meta itemprop="itemOffered" content="<?= isset($wo['itemsdata']['product']['name']) ? htmlspecialchars($wo['itemsdata']['product']['name']) : '' ?>">
-		        <meta itemprop="availability" content="http://schema.org/<?= isset($disponibilidad) ? htmlspecialchars($disponibilidad) : '' ?>">
-		        <meta itemprop="url" content="<?= isset($wo['config']['site_url']) && isset($wo['itemsdata']['id_publicacion']) ? htmlspecialchars($wo['config']['site_url'] . "/item/" . $wo['itemsdata']['id_publicacion'].$wo['itemsdata']['product']['coloreds']) : '' ?>">
+						
+				    <div itemprop="offers" itemtype="https://schema.org/Offer" itemscope="">
+			        <meta itemprop="itemCondition" content="https://schema.org/<?= isset($condicion) ? htmlspecialchars($condicion) : '' ?>">
+			        <meta itemprop="price" content="<?= isset($wo['itemsdata']['product']['price_format']) ? htmlspecialchars($wo['itemsdata']['product']['price_format']) : '' ?>">
+			        <meta itemprop="priceCurrency" content="<?= isset($text) ? htmlspecialchars($text) : '' ?>">
+			        <meta itemprop="itemOffered" content="<?= isset($wo['itemsdata']['product']['name']) ? htmlspecialchars($wo['itemsdata']['product']['name']) : '' ?>">
+			        <meta itemprop="availability" content="http://schema.org/<?= isset($disponibilidad) ? htmlspecialchars($disponibilidad) : '' ?>">
+			        <meta itemprop="url" content="<?= isset($wo['config']['site_url']) && isset($wo['itemsdata']['id_publicacion']) ? htmlspecialchars($wo['config']['site_url'] . "/item/" . $wo['itemsdata']['id_publicacion'].$wo['itemsdata']['product']['coloreds']) : '' ?>">
 			      <?php if (isset($offerta)): ?>
 			      	<meta itemprop="priceValidUntil" content="">
 			      <?php endif ?>
@@ -195,7 +195,7 @@
 								<?php if (!empty($wo['itemsdata']['product']['marca'])): ?>
 									<span style="text-transform:uppercase;"><?=$wo['lang']['brand'].': '.$wo['itemsdata']['product']['marca']; ?></span>
 								<?php endif ?>
-								<?php if (!empty($wo['itemsdata']['product']['marca'])): ?>
+								<?php if (!empty($wo['itemsdata']['product']['modelo'])): ?>
 									<span style="text-transform:uppercase;"><?=$wo['lang']['modelo'].': '.$wo['itemsdata']['product']['modelo']; ?></span>
 								<?php endif ?>
 								<span class="<?=$condicion;?>"><?=$condicions;?></span>
@@ -278,8 +278,8 @@
 											<?php $nombreColorMostrado = false; foreach ($opciones_del_producto as $color => $valorcolor): $seleccionadocoloor='';?>
 												<?php if (!empty($valorcolor['id_atributo'])): ?>
 													<?php $atributo = $db->where('id',$valorcolor['id_atributo'])->getOne('atributos'); ?>
-													<?php if ($atributo->nombre=='Color' && !$nombreColorMostrado): ?>
-														<span><?=$atributo->nombre;?></span>
+													<?php if ($atributo['nombre']=='Color' && !$nombreColorMostrado): ?>
+														<span><?=$atributo['nombre'];?></span>
 														<?php $nombreColorMostrado = true; ?>
 													<?php endif ?>
 													<?php $buscar_el_color_por_id = lui_buscar_color_en_colores($valorcolor['id_color'])?>
@@ -318,7 +318,9 @@
 											   $attributeOptions[] = $wo['itemsdata']['product']['elcolorseleccionadourl'];
 										?>
 									<?php else: $atributos_opciones = Mostrar_Opciones_Atributos_producto($wo['atributos']['id']);?>
-										<span><?=$wo['atributos']['nombre'];?></span>
+										<h3 class="option_group_header">
+											<span><?=$wo['atributos']['nombre'];?></span>
+										</h3>
 										<div class="contenido_opciones_atriburts">
 											<?php foreach ($atributos_opciones as $wo['opt_atributos']): ?>
 												<?php $isChecked = '';
@@ -346,7 +348,17 @@
 												} ?>
 												<div class="lista_de_opciones_de_atributes">
 													<input class="seleccted_atributes_s" type="radio" name="opcion<?=$wo['atributos']['id'];?>" id="atr_opt_list<?=$wo['opt_atributos']['id'];?>" <?=$isChecked; ?> value="<?=$wo['opt_atributos']['precio_adicional']; ?>" data-atributo="<?=$wo['atributos']['id'];?>" data-opcion="<?=$wo['opt_atributos']['id'];?>" onchange="updateSelection()">
-													<label for="atr_opt_list<?=$wo['opt_atributos']['id'];?>"><?=$wo['opt_atributos']['nombre'];?></label>
+													<label for="atr_opt_list<?=$wo['opt_atributos']['id'];?>">
+														<span class="luislopezselector_opt">
+															<span class="selectores_luislopz_left">
+																<span class="selectores_luislopz_title"><?=$wo['opt_atributos']['nombre'];?></span>
+															</span>
+															<span class="selectores_luislopz_rigth">
+																<span class="selectores_luislopz_precio">
+																</span>
+															</span>
+														</span>
+													</label>
 												</div>
 											<?php endforeach ?>
 										</div>
@@ -362,7 +374,7 @@
 								            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
 								        }
 								    }
-								    $cantidad_prod = $db->rawQueryOne($sql)->cantidad;
+								    $cantidad_prod = $db->rawQueryOne($sql)['cantidad'];
 								    $cantidad_productos = ($cantidad_prod !== null) ? $cantidad_prod : 0;
 								} else{
 									if ($s_photo_color_id) {
@@ -404,8 +416,8 @@
 												}
 												?>
 												<?php if (!empty($comprapendiente)): ?>
-													<?php $atributos_producto_en_carrito = $comprapendiente->id . '_' .$uniqueIdentifier;?>
-													<?php $total_productos_listas_stok = $db->where('estado','0')->where('atributo', $atributos_producto_en_carrito)->where('id_comprobante_v',$comprapendiente->id)->getValue('imventario','COUNT(*)'); ?>
+													<?php $atributos_producto_en_carrito = $comprapendiente['id'] . '_' .$uniqueIdentifier;?>
+													<?php $total_productos_listas_stok = $db->where('estado','0')->where('atributo', $atributos_producto_en_carrito)->where('id_comprobante_v',$comprapendiente['id'])->getValue('imventario','COUNT(*)'); ?>
 													<?php if ($total_productos_listas_stok < $cantidad_productos): ?>
 													<?php else: ?>
 														<?php $producto_agotado = 'disabled'; ?>
@@ -435,8 +447,8 @@
 												?>
 
 												<?php if (!empty($comprapendiente)): ?>
-													<?php $atributos_producto_en_carrito = $comprapendiente->id . '_' .$uniqueIdentifier;?>
-													<?php $total_productos_listas_stok = $db->where('estado','0')->where('atributo', $atributos_producto_en_carrito)->where('id_comprobante_v',$comprapendiente->id)->getValue('imventario','COUNT(*)'); ?>
+													<?php $atributos_producto_en_carrito = $comprapendiente['id'] . '_' .$uniqueIdentifier;?>
+													<?php $total_productos_listas_stok = $db->where('estado','0')->where('atributo', $atributos_producto_en_carrito)->where('id_comprobante_v',$comprapendiente['id'])->getValue('imventario','COUNT(*)'); ?>
 													<?php if ($total_productos_listas_stok < $cantidad_productos): ?>
 													<?php else: ?>
 														<?php $producto_agotado = 'disabled'; ?>

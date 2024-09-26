@@ -6,9 +6,6 @@ $cuentas_corrientes_empresa = $db->where('es_empresa', 1)->get("cuentas_corrient
 $cuentas_corrientes_empre_a = $db->where('es_empresa', 1)->where('estado',0)->getOne("cuentas_corrientes");
 ?>
 <?php echo lui_LoadPage("sidebar/left-sidebar"); ?>
-<style type="text/css">
-	body{background-color:#F0F2FD;}
-</style>
 <script type="text/javascript">
 	var cuentas_a = document.querySelector('a[data-ajax="?link1=cuentas"]');
 </script>
@@ -41,7 +38,7 @@ $cuentas_corrientes_empre_a = $db->where('es_empresa', 1)->where('estado',0)->ge
 					</div>
 				</div>
 				<?php if(lui_IsAdmin()): ?>
-					<?php if(isset($cuentas_corrientes_empre_a->estado)): ?>
+					<?php if(isset($cuentas_corrientes_empre_a['estado'])): ?>
 						<button class="btn_prin_compra boton_add_nluis first add_del_acount_banck">Eliminar</button>
 					<?php else: ?>
 						<button class="btn_prin_compra boton_add_nluis first add_new_acount_banck">Agregar</button>
@@ -53,7 +50,7 @@ $cuentas_corrientes_empre_a = $db->where('es_empresa', 1)->where('estado',0)->ge
 			<br><br>
 			<?php if(lui_IsAdmin()): ?>
 				<?php if (!empty($cuentas_corrientes_empresa)): ?>
-					<?php if(isset($cuentas_corrientes_empre_a->estado)): ?>
+					<?php if(isset($cuentas_corrientes_empre_a['estado'])): ?>
 						<style type="text/css">
 							:root{--bs-columns:12;--bs-gap: 24px;}
 							.contenedor_add_cuenta_bk{display:grid;width:100%;gap: var(--bs-gap, 1.5rem);grid-template-rows: repeat(var(--bs-rows, 1), 1fr);margin:0 auto; grid-template-columns:repeat(var(--bs-columns), 12);position:relative;}
@@ -266,54 +263,43 @@ $cuentas_corrientes_empre_a = $db->where('es_empresa', 1)->where('estado',0)->ge
 							      <h2 class="m-auto">Cuentas</h2>
 							    </div>
 							    <div class="col slider-section">
-							      <div class="main-carousel" data-flickity="">
-							      	<?php
-										$cuenta_seleccionada = null;
-										$otras_cuentas = [];
+							      	<div class="main-carousel" data-flickity="">
+									    <?php
+									        $cuenta_seleccionada = null;
+									        $otras_cuentas = [];
 
-										foreach ($cuentas_corrientes_empresa as $key) {
-										    if ($wo['user']['banco_select'] == $key->id) {
-										        $cuenta_seleccionada = $key;
-										    } else {
-										        $otras_cuentas[] = $key;
-										    }
-										}
-										if (!is_null($cuenta_seleccionada)) {
-										    array_unshift($otras_cuentas, $cuenta_seleccionada);
-										}
-
-										?>
-							      	<?php foreach ($otras_cuentas as $key): ?>
-							      		<?php $indexdefault_currency = array_search($key->moneda, array_column($wo['currencies'], 'text')); ?>
-							      		<?php $cantida_dinero = $db->where('estado', '1')
-										                             ->where('id_cuenta_corriente', $key->id)
-										                             ->getValue('cuentas_corrientes_transactions', 'SUM(CASE WHEN tipo = 1 THEN monto WHEN tipo = 0 THEN -monto ELSE 0 END)');
-										 ?>
-							      		<?php if ($wo['user']['banco_select']==$key->id): ?>
-								      		<div class="carousel-cell">
-									          <div class="carousel-cover">
-									            <div class="carousel-content cuenta_seleccionado">
-									            	<div class="blob"><?php echo $key->banco_nombre_corto;?></div>
-									            	<p class="name_acount"><?php echo $key->tipo_de_cuenta;?> <?php echo $key->nombre_cuenta;?></p>
-									              	<h5> <?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $producto['currency'];?> <?= !empty($cantida_dinero) ? $cantida_dinero : 0; ?></h5>
-									              	<span class="btn_selected_back button3 btn-mat selectects_acount">Seleccionado</span>
+									        foreach ($cuentas_corrientes_empresa as $key) {
+									            if ($wo['user']['banco_select'] == $key['id']) {
+									                $cuenta_seleccionada = $key;
+									            } else {
+									                $otras_cuentas[] = $key;
+									            }
+									        }
+									        if (!is_null($cuenta_seleccionada)) {
+									            array_unshift($otras_cuentas, $cuenta_seleccionada);
+									        }
+									    ?>
+									    <?php foreach ($otras_cuentas as $key): ?>
+									        <?php $indexdefault_currency = array_search($key['moneda'], array_column($wo['currencies'], 'text')); ?>
+									        <?php $cantida_dinero = $db->where('estado', '1')
+									                                  ->where('id_cuenta_corriente', $key['id'])
+									                                  ->getValue('cuentas_corrientes_transactions', 'SUM(CASE WHEN tipo = 1 THEN monto WHEN tipo = 0 THEN -monto ELSE 0 END)'); ?>
+									        <div class="carousel-cell">
+									            <div class="carousel-cover">
+									                <div class="carousel-content <?= ($wo['user']['banco_select'] == $key['id']) ? 'cuenta_seleccionado' : ''; ?>">
+									                    <div class="blob"><?php echo $key['banco_nombre_corto']; ?></div>
+									                    <p class="name_acount"><?php echo $key['tipo_de_cuenta']; ?> <?php echo $key['nombre_cuenta']; ?></p>
+									                    <h5><?= (!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : ''; ?> <?= !empty($cantida_dinero) ? $cantida_dinero : 0; ?></h5>
+									                    <?php if ($wo['user']['banco_select'] == $key['id']): ?>
+									                        <span class="btn_selected_back button3 btn-mat selectects_acount">Seleccionado</span>
+									                    <?php else: ?>
+									                        <span class="btn_selected_back button3 btn-mat btn_selected_back_isset" data="<?php echo $key['id']; ?>">Seleccionar</span>
+									                    <?php endif ?>
+									                </div>
 									            </div>
-									          </div>
 									        </div>
-								   		<?php else: ?>
-								   			<div class="carousel-cell">
-									          <div class="carousel-cover">
-									            <div class="carousel-content">
-									            	<div class="blob"><?php echo $key->banco_nombre_corto;?></div>
-									            	<p class="name_acount"><?php echo $key->tipo_de_cuenta;?> <?php echo $key->nombre_cuenta;?></p>
-									              	<h5> <?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : '';?> <?= !empty($cantida_dinero) ? $cantida_dinero : 0; ?></h5>
-									              	<span class="btn_selected_back button3 btn-mat btn_selected_back_isset" data="<?php echo $key->id;?>">Seleccionar</span>
-									            </div>
-									          </div>
-									        </div>
-								        <?php endif ?>
-							      	<?php endforeach ?>
-							      </div>
+									    <?php endforeach ?>
+									</div>
 							    </div>
 							</div>
 						</div>
@@ -326,7 +312,7 @@ $cuentas_corrientes_empre_a = $db->where('es_empresa', 1)->where('estado',0)->ge
 						<?php $transacciones_bancarias = $db->where('estado', 1)->where('id_cuenta_corriente', $wo['user']['banco_select'])->orderBy('id', 'DESC')->get("cuentas_corrientes_transactions");?>
 						<?php $cuentas_corrientes_mov = $db->where('linea', 1)->where('tipo', 1)->where('estado',0)->where('usuario',lui_Secure($wo['user']['user_id']))->where('sucursal',$wo['user']['sucursal'])->where('id_cuenta_corriente',$wo['user']['banco_select'])->getOne("cuentas_corrientes_transactions"); ?>
 						<?php if(!empty($cuentas_corrientes_mov)): ?>
-							<?php $indexdefault_currencyns = array_search($c_selec_b->moneda, array_column($wo['currencies'], 'text')); ?>
+							<?php $indexdefault_currencyns = array_search($c_selec_b['moneda'], array_column($wo['currencies'], 'text')); ?>
 							<style type="text/css">
 								.new_transaction_in_page{display:flex;flex-wrap:wrap;gap:2rem;align-items:flex-end;background:#F0F2FD;border-radius:5px;padding:10px;}
 								.list_inputs_transactions span{display:flex;width:100%;justify-content:flex-start;align-items:center;}
@@ -428,19 +414,19 @@ $cuentas_corrientes_empre_a = $db->where('es_empresa', 1)->where('estado',0)->ge
 								<span style="width:100%;padding:10px;text-align:center;user-select:none;">LAYSHANE PERU E.I.R.L.</span>
 								<div class="cont_info_bac">
 									<span>BANCO :</span>
-									<span><?php echo $c_selec_b->banco_nombre_corto;?> - <?php echo $c_selec_b->banco_nombre;?> </span>
+									<span><?php echo $c_selec_b['banco_nombre_corto'];?> - <?php echo $c_selec_b['banco_nombre'];?> </span>
 								</div>
 								<div class="cont_info_bac">
 									<span>CUENTA :</span>
-									<span><?php echo $c_selec_b->tipo_de_cuenta;?> <?=$c_selec_b->nombre_cuenta; ?></span>
+									<span><?php echo $c_selec_b['tipo_de_cuenta'];?> <?=$c_selec_b['nombre_cuenta']; ?></span>
 								</div>
 								<div class="cont_info_bac">
 									<span>NUMERO CUENTA :</span>
-									<span><?=$c_selec_b->numero_de_cuenta; ?></span>
+									<span><?=$c_selec_b['numero_de_cuenta']; ?></span>
 								</div>
 								<div class="cont_info_bac">
 									<span>CCI :</span>
-									<span><?=$c_selec_b->cci; ?></span>
+									<span><?=$c_selec_b['cci']; ?></span>
 								</div>
 							</div>
 							<br><br>
@@ -473,7 +459,7 @@ $cuentas_corrientes_empre_a = $db->where('es_empresa', 1)->where('estado',0)->ge
 							<div class="movimientos_contenedor">
 								<?php foreach ($transacciones_bancarias as $movib): ?>
 									<?php
-									$timestamp = strtotime($movib->fecha_transaccion);
+									$timestamp = strtotime($movib['fecha_transaccion']);
 									$dia = date("d", $timestamp);
 									$mes = date("F", $timestamp);
 									$anio = date("Y", $timestamp);
@@ -482,18 +468,18 @@ $cuentas_corrientes_empre_a = $db->where('es_empresa', 1)->where('estado',0)->ge
 									$fecha_formateada = "$dia $mes_espanol $anio";
 									?>
 
-									<div class="transaction_list <?=($movib->tipo == 0) ? 'nueva_linea_ac_l' : '' ?>">
+									<div class="transaction_list <?=($movib['tipo'] == 0) ? 'nueva_linea_ac_l' : '' ?>">
 										<div class="document_transaction"><span>B</span></div>
 										<div class="detalles_transaction">
 											<div class="details">
-												<span class="detalles_de_transaction"><?=$movib->nota;?></span>
-												<span class="detalles_de_transaction"><?=$movib->numero_operacion;?></span>
+												<span class="detalles_de_transaction"><?=$movib['nota'];?></span>
+												<span class="detalles_de_transaction"><?=$movib['numero_operacion'];?></span>
 												<span class="date_transaction"><?=$fecha_formateada;?></span>
 											</div>
 										</div>
 										
 										<div class="amount">
-											<span><?=($movib->tipo == 0) ? ' <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-minus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /></svg> ' : '' ?><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : '';?> <?php echo sprintf('%.2f',$movib->monto);?></span>
+											<span><?=($movib['tipo'] == 0) ? ' <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-minus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /></svg> ' : '' ?><?=(!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : '';?> <?php echo sprintf('%.2f',$movib['monto']);?></span>
 										</div>
 									</div>
 								<?php endforeach ?>
@@ -563,91 +549,6 @@ $cuentas_corrientes_empre_a = $db->where('es_empresa', 1)->where('estado',0)->ge
 										isProcessing = false;
 									}
 								})
-							});
-							
-
-							var $carousel = jQuery(".main-carousel").flickity({
-							 contain: false,
-							 imagesLoaded: true,
-							 percentPosition: false,
-							 wrapAround: true,
-							 freeScroll: false,
-							 prevNextButtons: false,
-							 groupCells:false,
-							 imagesLoaded: true,
-							 percentPosition: true,
-							 setGallerySize: true,
-							 accessibility: false,
-							 cellAlign: 'left',
-							 pageDots: false,
-							 selectedAttraction:0.015,
-							 initialIndex: 0
-							});
-							$(document).ready(function() {
-							var $imgs = $carousel.find(".carousel-cover .carousel-content");
-							var docStyle = document.documentElement.style;
-							var transformProp = typeof docStyle.transform == "string" ? "transform" : "WebkitTransform";
-							var flckty = $carousel.data("flickity");
-							function applyTransformations() {
-							$carousel.on("scroll.flickity", function () {
-							  
-							  if ( jQuery(window).width() < 960 ) {
-							    return;
-							  }
-							  
-							  
-							 flckty.slides.forEach(function (slide, i) {
-							   var img = $imgs[i];
-							   var $SlideWidth = jQuery(".carousel-cover").outerWidth() + 52;
-							   var $scaleAmt = 1;
-							   var $translateXVal = 0;
-							   var $rotateVal = 0;
-							   var $slideZIndex = 10;
-							   var $opacityVal = 1;
-
-							   var vw = jQuery(window).width()
-							   var w2 = jQuery(".slider-section").outerWidth();
-							   var w3 = jQuery(".slider-container").outerWidth();
-							   var $extraWindowSpace = (w3-w2) + ((vw - w3)/2);
-							   
-							   var $slideOffset = jQuery(slide.cells[0].element).offset().left;
-							   var flkSlider = jQuery(".main-carousel .carousel-cell:nth-child(" + (i + 1) + ")");
-
-							   if ($slideOffset - $extraWindowSpace < 0 && $slideOffset - $extraWindowSpace > $SlideWidth * -1) {
-						            var $opacityVal = 1 + ($slideOffset - $extraWindowSpace + 1) / 200;
-						            var $scaleAmt = 1 + ($slideOffset - $extraWindowSpace) / 1500;
-						            $translateXVal = ($slideOffset - $extraWindowSpace) * -1;
-						            var $rotateVal = (($slideOffset - $extraWindowSpace) / 25) * -1;
-						        }
-							 
-							   if ($slideOffset + 5 - $extraWindowSpace < 0 && $slideOffset - $extraWindowSpace > $SlideWidth * -1) {
-							     $slideZIndex = 5;
-							   } else {
-							     $slideZIndex = 7;
-							   }
-
-							   
-							   flkSlider.css({
-							     "z-index": $slideZIndex,
-							   });
-
-							   
-							   // img.parent().hasClass("is-selected")
-							    if( jQuery(img).parent().hasClass("is-selected") ){ }
-							   jQuery(img)
-							     .parent()
-							     .css({
-							       transform: "perspective(500px) translateX(" + $translateXVal + "px) rotateY(" + $rotateVal + "deg) translateZ(0)",
-							       opacity: $opacityVal,
-							     });
-							   jQuery(img).css({
-							     transform: "scale(" + $scaleAmt + ") translateZ(0)",
-							   });
-							 });
-
-							});
-							}
-							applyTransformations();
 							});
 						</script>
 					<?php endif ?>

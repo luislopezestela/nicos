@@ -4,138 +4,169 @@ function layshane_carousel_views() {
   var CONTROLS_SELECTOR = '.carousel__controls';
   var CONTENT_SELECTOR = '.carousel__content';
   var components = document.querySelectorAll( COMPONENT_SELECTOR );
-  for ( let i = 0; i < components.length; i++ ) {
-    const component = components[ i ];
-    const content = component.querySelector( CONTENT_SELECTOR );
-    let isDragStart = false, isDragging = false;
-    let x = 0;
-    let mx = 0;
-    const maxScrollWidth = content.scrollWidth - content.clientWidth / 2 - content.clientWidth / 2;
-    const nextButton = component.querySelector( '.arrow-next' );
-    const prevButton = component.querySelector( '.arrow-prev' );
+  var componentestar = document.querySelector(COMPONENT_SELECTOR);
+  if (componentestar) {
+    for ( let i = 0; i < components.length; i++ ) {
+      const component = components[ i ];
+      const content = component.querySelector( CONTENT_SELECTOR );
+      let isDragStart = false, isDragging = false;
+      let x = 0;
+      let mx = 0;
+      const maxScrollWidth = content.scrollWidth - content.clientWidth / 2 - content.clientWidth / 2;
+      const nextButton = component.querySelector( '.arrow-next' );
+      const prevButton = component.querySelector( '.arrow-prev' );
 
-    if ( maxScrollWidth !== 0 ) {
-      component.classList.add( 'has-arrows' );
-    }
-
-    if ( nextButton ) {
-      nextButton.addEventListener( 'click', function ( event ) {
-        event.preventDefault();
-        x = content.clientWidth / 2 + content.scrollLeft + 0;
-        content.scroll( {
-          left: x,
-          behavior: 'smooth',
-        } );
-      } );
-    }
-
-    if ( prevButton ) {
-      prevButton.addEventListener( 'click', function ( event ) {
-        event.preventDefault();
-        x = content.clientWidth / 2 - content.scrollLeft + 0;
-        content.scroll( {
-          left: -x,
-          behavior: 'smooth',
-        } );
-      } );
-    }
-
-    /**
-     * @param {object} e event object.
-     */
-    const mousemoveHandler = ( e ) => {
-      if(!isDragStart) return;
-      e.preventDefault();
-      isDragging = true;
-      content.classList.add("dragging");
-      content.classList.add("no-click");
-      const mx2 = e.pageX - content.offsetLeft;
-      if ( mx ) {
-        content.scrollLeft = content.sx + mx - mx2;
+      if ( maxScrollWidth !== 0 ) {
+        component.classList.add( 'has-arrows' );
       }
-    };
 
-    /**
-     * @param {object} e event object. 
-     */
-    const mousedownHandler = ( e ) => {
-      isDragStart = true;
-      content.sx = content.scrollLeft;
-      mx = e.pageX - content.offsetLeft;
-    };
-
-    const scrollHandler = () => {
-      toggleArrows();
-    };
-    const toggleArrows = () => {
-      if ( content.scrollLeft > maxScrollWidth - 10 ) {
-        nextButton.classList.add( 'disabled' );
-        content.classList.remove("more_its");
-      } else if ( content.scrollLeft < 10 ) {
-        prevButton.classList.add( 'disabled' );
-        content.classList.add("more_its");
-      } else {
-        content.classList.add("more_its");
-        nextButton.classList.remove( 'disabled' );
-        prevButton.classList.remove( 'disabled' );
+      if ( nextButton ) {
+        nextButton.addEventListener( 'click', function ( event ) {
+          event.preventDefault();
+          x = content.clientWidth / 2 + content.scrollLeft + 0;
+          content.scroll( {
+            left: x,
+            behavior: 'smooth',
+          } );
+        } );
       }
-    };
-    const mouseupHandler = () => {
-      isDragStart = false;
-      mx = 0;
-      content.classList.remove( 'dragging' );
-      content.classList.remove("no-click");
-      if(!isDragging) return;
-      isDragging = false;
-    };
 
-    /**
-     * @param {object} e event object.
-     */
-    const touchmoveHandler = (e) => {
-        if (!isDragStart) return;
+      if ( prevButton ) {
+        prevButton.addEventListener( 'click', function ( event ) {
+          event.preventDefault();
+          x = content.clientWidth / 2 - content.scrollLeft + 0;
+          content.scroll( {
+            left: -x,
+            behavior: 'smooth',
+          } );
+        } );
+      }
+
+      /**
+       * @param {object} e event object.
+       */
+      const mousemoveHandler = ( e ) => {
+        if(!isDragStart) return;
         e.preventDefault();
         isDragging = true;
         content.classList.add("dragging");
         content.classList.add("no-click");
-        const mx2 = e.touches[0].pageX - content.offsetLeft;
-        if (mx) {
-            content.scrollLeft = content.sx + mx - mx2;
+        const mx2 = e.pageX - content.offsetLeft;
+        if ( mx ) {
+          content.scrollLeft = content.sx + mx - mx2;
         }
-    };
+      };
 
-    /**
-     * @param {object} e event object. 
-     */
-    const touchstartHandler = (e) => {
+      /**
+       * @param {object} e event object. 
+       */
+      const mousedownHandler = ( e ) => {
         isDragStart = true;
         content.sx = content.scrollLeft;
-        mx = e.touches[0].pageX - content.offsetLeft;
-    };
+        mx = e.pageX - content.offsetLeft;
+      };
 
-    content.addEventListener('touchstart', touchstartHandler,{passive: true});
-    content.addEventListener('touchmove', touchmoveHandler);
-    content.addEventListener( 'mousedown', mousedownHandler);
-    document.addEventListener( 'mousemove', mousemoveHandler);
-    if ( component.querySelector( CONTROLS_SELECTOR ) !== undefined ) {
-      content.addEventListener( 'scroll', scrollHandler );
-    }
-    document.addEventListener( 'mouseup', mouseupHandler );
-    content.addEventListener( 'touchend', mouseupHandler);
-    document.addEventListener('mouseleave', () => {
+      const scrollHandler = () => {
+        toggleArrows();
+      };
+      const toggleArrows = () => {
+        if ( content.scrollLeft > maxScrollWidth - 10 ) {
+          nextButton.classList.add( 'disabled' );
+          content.classList.remove("more_its");
+        } else if ( content.scrollLeft < 10 ) {
+          prevButton.classList.add( 'disabled' );
+          content.classList.add("more_its");
+        } else {
+          content.classList.add("more_its");
+          nextButton.classList.remove( 'disabled' );
+          prevButton.classList.remove( 'disabled' );
+        }
+      };
+      const mouseupHandler = () => {
         isDragStart = false;
+        mx = 0;
+        content.classList.remove( 'dragging' );
+        content.classList.remove("no-click");
+        if(!isDragging) return;
         isDragging = false;
-    });
-    content.addEventListener('wheel', function(e) {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-          content.style.pointerEvents = 'none';
-          setTimeout(function() {
-              content.style.pointerEvents = 'auto';
-          }, 100); // Restablece las interacciones después de 100 ms
+      };
+
+      /**
+       * @param {object} e event object.
+       */
+      const touchmoveHandler = (e) => {
+          if (!isDragStart) return;
+          e.preventDefault();
+          isDragging = true;
+          content.classList.add("dragging");
+          content.classList.add("no-click");
+          const mx2 = e.touches[0].pageX - content.offsetLeft;
+          if (mx) {
+              content.scrollLeft = content.sx + mx - mx2;
+          }
+      };
+
+      /**
+       * @param {object} e event object. 
+       */
+      const touchstartHandler = (e) => {
+          isDragStart = true;
+          content.sx = content.scrollLeft;
+          mx = e.touches[0].pageX - content.offsetLeft;
+      };
+
+      content.addEventListener('touchstart', touchstartHandler,{passive: true});
+      content.addEventListener('touchmove', touchmoveHandler);
+      content.addEventListener( 'mousedown', mousedownHandler);
+      document.addEventListener( 'mousemove', mousemoveHandler);
+      if ( component.querySelector( CONTROLS_SELECTOR ) !== undefined ) {
+        content.addEventListener( 'scroll', scrollHandler );
       }
-    }, { passive: false });
+      document.addEventListener( 'mouseup', mouseupHandler );
+      content.addEventListener( 'touchend', mouseupHandler);
+      document.addEventListener('mouseleave', () => {
+          isDragStart = false;
+          isDragging = false;
+      });
+      content.addEventListener('wheel', function(e) {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+            content.style.pointerEvents = 'none';
+            setTimeout(function() {
+                content.style.pointerEvents = 'auto';
+            }, 100); // Restablece las interacciones después de 100 ms
+        }
+      }, { passive: false });
+    }
+
+    const openMenuButton = document.getElementById('openMenuButton');
+    const categoryMenu = document.getElementById('categoryMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const buttons = document.querySelectorAll('.categoryButton');
+
+    if (categoryMenu) {
+      openMenuButton.addEventListener('click', function () {
+          categoryMenu.classList.toggle('open');
+          menuOverlay.classList.toggle('visible');
+      });
+
+      menuOverlay.addEventListener('click', function () {
+          categoryMenu.classList.remove('open');
+          menuOverlay.classList.remove('visible');
+      });
+
+      buttons.forEach(button => {
+          button.addEventListener('click', function () {
+              const category = this.getAttribute('data-category');
+              buttons.forEach(btn => btn.classList.remove('active'));
+              this.classList.add('active');
+              categoryMenu.classList.remove('open');
+              menuOverlay.classList.remove('visible');
+          });
+      });
+    }
   }
 };
+
 function view_images_prod() {
   var lightboxEnabled = true;
   var flkty_1 = new Flickity('.wo_post_prod_full_img', {
@@ -174,4 +205,75 @@ function view_images_prod() {
       };
   }
 }
+
+function view_carrucel_ide() {
+  var $carousel = jQuery(".main-carousel").flickity({
+    contain: false,
+    imagesLoaded: true,
+    percentPosition: false,
+    wrapAround: true,
+    freeScroll: false,
+    prevNextButtons: false,
+    groupCells: false,
+    setGallerySize: true,
+    accessibility: false,
+    cellAlign: 'left',
+    pageDots: false,
+    selectedAttraction: 0.015,
+    initialIndex: 0
+  });
+
+  var $imgs = $carousel.find(".carousel-cover .carousel-content");
+  var docStyle = document.documentElement.style;
+  var transformProp = typeof docStyle.transform == "string" ? "transform" : "WebkitTransform";
+  var flckty = $carousel.data("flickity");
+
+  function applyTransformations() {
+    $carousel.on("scroll.flickity", function () {
+      if (jQuery(window).width() < 960) {
+        return;
+      }
+
+      flckty.slides.forEach(function (slide, i) {
+        var img = $imgs[i];
+        var $SlideWidth = jQuery(".carousel-cover").outerWidth() + 52;
+        var $scaleAmt = 1;
+        var $translateXVal = 0;
+        var $rotateVal = 0;
+        var $slideZIndex = 10;
+        var $opacityVal = 1;
+
+        var vw = jQuery(window).width();
+        var w2 = jQuery(".slider-section").outerWidth();
+        var w3 = jQuery(".slider-container").outerWidth();
+        var $extraWindowSpace = (w3 - w2) + ((vw - w3) / 2);
+         
+        var $slideOffset = jQuery(slide.cells[0].element).offset().left;
+        var flkSlider = jQuery(".main-carousel .carousel-cell:nth-child(" + (i + 1) + ")");
+
+        if ($slideOffset - $extraWindowSpace < 0 && $slideOffset - $extraWindowSpace > $SlideWidth * -1) {
+          $opacityVal = 1 + ($slideOffset - $extraWindowSpace + 1) / 200;
+          $scaleAmt = 1 + ($slideOffset - $extraWindowSpace) / 1500;
+          $translateXVal = ($slideOffset - $extraWindowSpace) * -1;
+          $rotateVal = (($slideOffset - $extraWindowSpace) / 25) * -1;
+        } 
+        $slideZIndex = ($slideOffset + 5 - $extraWindowSpace < 0 && $slideOffset - $extraWindowSpace > $SlideWidth * -1) ? 5 : 7;
+
+        flkSlider.css({
+          "z-index": $slideZIndex,
+        });
+
+        jQuery(img).parent().css({
+          transform: "perspective(500px) translateX(" + $translateXVal + "px) rotateY(" + $rotateVal + "deg) translateZ(0)",
+          opacity: $opacityVal,
+        });
+        jQuery(img).css({
+          transform: "scale(" + $scaleAmt + ") translateZ(0)",
+        });
+      });
+    });
+  }
+  applyTransformations();
+}
+
 </script>

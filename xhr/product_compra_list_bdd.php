@@ -23,20 +23,20 @@ if($f == 'product_compra_list_bdd') {
             $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->getOne(T_VENTAS);
 		}else{
 			$comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->getOne(T_VENTAS);
-			$comprapendiente_ids = $comprapendiente->id;
+			$comprapendiente_ids = $comprapendiente['id'];
 		}
 
 		$uniqueIdentifier = $comprapendiente_ids . '_' . $_POST['value'];
 		$item_producrto = $db->where('atributo', $uniqueIdentifier)->where('estado','0')->where('id_comprobante_v',$comprapendiente_ids)->getOne('imventario');
 		if(!empty($item_producrto)){
-			$actualizar_precio = $item_producrto->precio;
+			$actualizar_precio = $item_producrto['precio'];
 		}else{
 			$actualizar_precio = $producto['price'];
 		}
 		
 		$lastGroupNumberRow = $db->orderBy('orden', 'desc')->where('id_comprobante_v',$comprapendiente_ids)->getOne('imventario', 'orden');
 		if($lastGroupNumberRow){
-		    $lastGroupNumber = $lastGroupNumberRow->orden;
+		    $lastGroupNumber = $lastGroupNumberRow['orden'];
 		} else{
 		    $lastGroupNumber = null;
 		}
@@ -45,7 +45,7 @@ if($f == 'product_compra_list_bdd') {
 		} else{
 		    $sameIdentifierProducts = $db->where('atributo', $uniqueIdentifier)->where('id_comprobante_v',$comprapendiente_ids)->get('imventario');
 		    if($sameIdentifierProducts) {
-		        $nextGroupNumber = $sameIdentifierProducts[0]->orden;
+		        $nextGroupNumber = $sameIdentifierProducts[0]['orden'];
 		    }else{
 		        $nextGroupNumber = $lastGroupNumber + 1;
 		    }
@@ -145,7 +145,7 @@ if($f == 'product_compra_list_bdd') {
 				
 				$el_producto_inventario = $db->where('id',$productID)->where('estado','0')->where('id_sucursal',$wo['user']['sucursal'])->where('id_comprobante_v',$comprapendiente_ids)->getOne('imventario');
 				if (isset($el_producto_inventario)) {
-					$wo['product']['precio'] = $el_producto_inventario->precio;
+					$wo['product']['precio'] = $el_producto_inventario['precio'];
 				}else{
 					$wo['product']['precio'] = '0.00';
 				}

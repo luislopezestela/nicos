@@ -477,6 +477,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                     case 'orders':
                         include('sources/orders.php');
                         break;
+                    case 'caja':
+                        include('sources/caja.php');
+                        break;
                     case 'order':
                         include('sources/order.php');
                         break;
@@ -1168,6 +1171,9 @@ if ((!$wo['loggedin'] || ($wo['loggedin'] && $wo['user']['banned'] != 1))) {
                 break;
             case 'orders':
                 include('sources/orders.php');
+                break;
+            case 'caja':
+                include('sources/caja.php');
                 break;
             case 'order':
                 include('sources/order.php');

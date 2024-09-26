@@ -1,5 +1,5 @@
 <?php
-$estadodeventa = estadodeventaVendedor($wo['ventas']->estado_venta);
+$estadodeventa = estadodeventaVendedor($wo['ventas']['estado_venta']);
 ?>
 <?php echo lui_LoadPage("sidebar/left-sidebar"); ?>
 
@@ -20,13 +20,13 @@ $estadodeventa = estadodeventaVendedor($wo['ventas']->estado_venta);
 		        	<div class="wo_page_hdng_innr big_size">
 		        		<span style="color:#3498db;">
 							<svg xmlns="http://www.w3.org/2000/svg" style="fill:none;" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M9 13h-2" /><path d="M13 10h-6" /><path d="M11 7h-4" /></svg>
-						</span> Pedido: #<?php echo $wo['ventas']->hash_id;?>
+						</span> Pedido: #<?php echo $wo['ventas']['hash_id'];?>
 		        	</div>
 		        </div>
 		    </div>
 		    <br><br>
 		    <section>
-		    	<a id="pedido_abiertos_bs" hidden="hidden" href="<?php echo lui_SeoLink('index.php?link1=order&id='.$wo['ventas']->hash_id); ?>" data-ajax="<?php echo ('?link1=order&id='.$wo['ventas']->hash_id); ?>">Pedido actual</a>
+		    	<a id="pedido_abiertos_bs" hidden="hidden" href="<?php echo lui_SeoLink('index.php?link1=order&id='.$wo['ventas']['hash_id']); ?>" data-ajax="<?php echo ('?link1=order&id='.$wo['ventas']['hash_id']); ?>">Pedido actual</a>
 				
 <style type="text/css">
 	.comprobante {
@@ -375,12 +375,21 @@ table{
     border-radius: 4px;
     border: 2px #ccc dashed;outline:none;transition:all .5s;}
 .text_justificacion_anular_compra:focus{border-color:#5989c8;}
-
+.mostras_modos_pagos{gap:0.5rem;width:100%;display:grid;padding:5px;
+  grid-template-columns:repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+}
+.listamodospagoss{display:flex;flex-direction:column;justify-content:space-between;height:100%;flex-wrap:wrap;}
+.comp_listas_pagos{display:flex;justify-content:space-between;flex-wrap:wrap;}
 </style>
 <div class="comprobante">
 	<div class="comprobante_number">
-		<h2 class="numdoc_line"><?=$wo['documento']->documento.'-'.$wo['documento']->num_doc;?></h2>
-		<span class="typenumber_nop_viewp"><?=$wo['numero_documento_a'];?></span>
+    <?php if ($wo['documento']['numero_documento']==0): ?>
+      <h2 class="numdoc_line">Nuevo pedido</h2>
+    <?php else: ?>
+      <h2 class="numdoc_line"><?=$wo['documento']['num_doc'];?></h2>
+      <span class="typenumber_nop_viewp"><?=$wo['numero_documento_a'];?></span>
+    <?php endif ?>
+		
 	</div>
 
 	<div class="datos_proveedor_box" style="user-select:none;">
@@ -389,27 +398,70 @@ table{
 	</div>
 
 	<div class="address_data_proveedor" style="user-select:none;">
-		<?php $tienda_sucursal_entrega = $db->where('id',$wo['documento']->sucursal_entrega)->getOne("lui_sucursales"); ?>
+		<?php $tienda_sucursal_entrega = $db->where('id',$wo['documento']['sucursal_entrega'])->getOne("lui_sucursales"); ?>
 		<?php if($tienda_sucursal_entrega): ?>
-			<span><strong>Sucursal de entrega:</strong> <?=$tienda_sucursal_entrega->nombre;?> </span><p><?=$tienda_sucursal_entrega->direccion;?>,<?=$tienda_sucursal_entrega->ciudad;?>,<?=$tienda_sucursal_entrega->pais;?>,<?=$tienda_sucursal_entrega->referencia;?></p>
+			<span><strong>Sucursal de entrega:</strong> <?=$tienda_sucursal_entrega['nombre'];?> </span><p><?=$tienda_sucursal_entrega['direccion'];?>,<?=$tienda_sucursal_entrega['ciudad'];?>,<?=$tienda_sucursal_entrega['pais'];?>,<?=$tienda_sucursal_entrega['referencia'];?></p>
 		<?php endif ?>
 	</div>
 
-	<div class="address_data_proveedor" style="user-select:none;">
-		<?php if($wo['documento']->donde_paga==1): ?>
-			<span><strong>Forma de pago:</strong> El pago se realizara en tienda. </span>
+	
+		<?php if($wo['documento']['donde_paga']==1): ?>
+      <?php if($wo['documento']['pago']==0): ?>
+        <div class="address_data_proveedor" style="user-select:none;">
+          <span><strong>Forma de pago:</strong> El pago se realizara en tienda. </span>
+        </div>
+      <?php elseif($wo['documento']['pago']==1): ?>
+        <?php $mostrar_pagos = $db->where('id_venta', $wo['documento']['id'])->get('cash_registro') ?>
+        <div class="mostras_modos_pagos">
+          <?php foreach ($mostrar_pagos as $moneda_r): ?>
+            <div class="address_data_proveedor" style="user-select:none;margin:0;">
+              <div class="listamodospagoss">
+                <div>
+                  <strong>Forma de pago <?=$moneda_r['moneda'] ?>:</strong>
+                  <?php
+                    $metodos_pago = json_decode($moneda_r['metodo'], true);
+                    unset($metodos_pago['hasSelected']);
+                  ?>
+
+                  <?php foreach ($metodos_pago as $montomet => $dmontos):
+                    if ($montomet == 'totalMonto') {continue;}
+                      $simboymoneda = array_search($moneda_r['moneda'], array_column($wo['currencies'], 'text'));
+                      $partestextmone = explode('_', $montomet);
+                      $primera_parte_moneda = $partestextmone[0];
+                      $string_con_espacios = preg_replace('/(?<!^)([A-Z])/', ' $1', $primera_parte_moneda);
+                      $resultadotextmoneda = ucfirst(strtolower($string_con_espacios));
+                    ?>
+                    <p class="comp_listas_pagos"><strong><?=$resultadotextmoneda ?>:</strong> <span><?=(!empty($wo['currencies'][$simboymoneda]['symbol'])) ? $wo['currencies'][$simboymoneda]['symbol'] : $moneda_r['moneda']; ?><?=number_format($dmontos, '2','.','');?></span></p>
+                  <?php endforeach;?>
+                </div>
+                
+                <div>
+                  <hr>
+                  <?php if (isset($metodos_pago['totalMonto'])):$total_monto = $metodos_pago['totalMonto'];?>
+                    <p class="comp_listas_pagos"><strong>Total monto:</strong> <span><?=(!empty($wo['currencies'][$simboymoneda]['symbol'])) ? $wo['currencies'][$simboymoneda]['symbol'] : $moneda_r['moneda']; ?><?=number_format($total_monto, '2','.','');?></span></p>
+                  <?php endif; ?>
+                </div>
+              </div>
+            </div>
+          <?php endforeach ?>
+        </div>
+      <?php endif ?>
+			
 		<?php endif ?>
-	</div>
-	<div class="address_data_proveedor" style="user-select:none;">
-		<?php if($wo['documento']->pago==0): ?>
-			<span><strong>Pago:</strong> Pendiente. </span>
-		<?php endif ?>
-	</div>
+	
 
 	<div class="date_comprovante_compra" style="user-select:none;">
 		<span style="width:20%;">Fecha de compra </span>
-		<span><?=date('Y-m-d', strtotime($wo['documento']->fecha)) ?></span>
+		<span><?=date('Y-m-d', $wo['documento']['time']) ?></span>
 	</div>
+
+  <div class="date_comprovante_compra" style="user-select:none;">
+    <span style="width:20%;">Fecha de entrega </span>
+    <?php if ($wo['documento']['fecha']): ?>
+      <span><?=date('Y-m-d', strtotime($wo['documento']['fecha'])) ?></span>
+    <?php endif ?>
+  </div>
+
 	<style type="text/css">
 		.contenido_currensy_order{display:flex;padding:10px;position:relative;width:100%;flex-wrap:wrap;gap:0.5em;margin-bottom:2rem;}
 		.contenido_currensy_order span{display:block;width:100%;user-select:none;}
@@ -423,7 +475,8 @@ table{
 		.opcione_contenidos_bt{display:flex;gap:1rem;flex-wrap:wrap;padding:10px;}
 		.boton_de_venta{
 		  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-		  width: 320px;
+      width:100%;
+		  max-width: 320px;
 		  padding: 12px;
 		  display: flex;
 		  flex-direction: row;
@@ -460,27 +513,52 @@ table{
 	</style>
 
 	<div class="opcione_contenidos_bt">
-		<?php if ($wo['ventas']->estado_venta==2): ?>
-			<a class="boton_de_venta" style="background-color:<?=$estadodeventa['boton_fondo']; ?>" onClick="changue_order_pages_b('<?=$wo['ventas']->hash_id;?>','<?=$estadodeventa['boton_action']; ?>')" href="<?=lui_SeoLink('index.php?link1=pos');?>" data-ajax="<?=('?link1=pos'); ?>">
+		<?php if ($wo['ventas']['estado_venta']==2): ?>
+			<a class="boton_de_venta" style="background-color:<?=$estadodeventa['boton_fondo']; ?>" onClick="changue_order_pages_b('<?=$wo['ventas']['hash_id'];?>','<?=$estadodeventa['boton_action']; ?>')" href="<?=lui_SeoLink('index.php?link1=pos');?>" data-ajax="<?=('?link1=pos'); ?>">
 			    <div class="boton_de_venta_icon"><?=$estadodeventa['icono_uno']; ?></div>
 			    <div class="boton_de_venta_title"><?=$estadodeventa['boton_texto']; ?></div>
 			    <div class="boton_de_venta_close"><?=$estadodeventa['icono_dos']; ?></div>
 			</a>
-		<?php elseif ($wo['ventas']->estado_venta==3): ?>
+		<?php elseif ($wo['ventas']['estado_venta']==3): ?>
 			<a href="<?=lui_SeoLink('index.php?link1=pos');?>" data-ajax="<?=('?link1=pos'); ?>" class="boton_de_venta" style="background-color:<?=$estadodeventa['boton_fondo']; ?>">
-			    <div class="boton_de_venta_icon"><?=$estadodeventa['icono_uno']; ?></div>
-			    <div class="boton_de_venta_title"><?=$estadodeventa['boton_texto']; ?></div>
+			    <div class="boton_de_venta_title">Preparar el pedido</div>
 			    <div class="boton_de_venta_close"><?=$estadodeventa['icono_dos']; ?></div>
 			</a>
+    <?php elseif ($wo['ventas']['estado_venta']==5): ?>
+      <?php if ($wo['ventas']['pago']==0): ?>
+        <span style="display:inline-block;background-color:rgba(241, 196, 15,0.17);color:#f39c12;padding:10px;border-radius:5px;">Falta de pago</span>
+        <a href="<?=lui_SeoLink('index.php?link1=pos');?>" data-ajax="<?=('?link1=pos'); ?>" class="boton_de_venta" style="background-color:<?=$estadodeventa['boton_fondo']; ?>">
+          <div class="boton_de_venta_title">Pasar a caja</div>
+          <div class="boton_de_venta_close"><?=$estadodeventa['icono_dos']; ?></div>
+        </a>
+      <?php else: ?>
+        <a href="<?=lui_SeoLink('index.php?link1=pos');?>" data-ajax="<?=('?link1=pos'); ?>" class="boton_de_venta" style="background-color:<?=$estadodeventa['boton_fondo']; ?>">
+          <div class="boton_de_venta_title"><?=$estadodeventa['boton_texto']; ?></div>
+          <div class="boton_de_venta_close"><?=$estadodeventa['icono_dos']; ?></div>
+        </a>
+      <?php endif ?>
+      
+      
 		<?php else: ?>
-			<div class="boton_de_venta" style="background-color:<?=$estadodeventa['boton_fondo']; ?>" onClick="changue_order_pages('<?=$wo['ventas']->hash_id;?>','<?=$estadodeventa['boton_action']; ?>')">
-			    <div class="boton_de_venta_icon"><?=$estadodeventa['icono_uno']; ?></div>
-			    <div class="boton_de_venta_title"><?=$estadodeventa['boton_texto']; ?></div>
-			    <div class="boton_de_venta_close"><?=$estadodeventa['icono_dos']; ?></div>
-			</div>
+      <?php if ($estadodeventa['boton_action']): ?>
+  			<div class="boton_de_venta" style="background-color:<?=$estadodeventa['boton_fondo']; ?>" onClick="changue_order_pages('<?=$wo['ventas']['hash_id'];?>','<?=$estadodeventa['boton_action']; ?>')">
+  			    <div class="boton_de_venta_icon"><?=$estadodeventa['icono_uno']; ?></div>
+  			    <div class="boton_de_venta_title"><?=$estadodeventa['boton_texto']; ?></div>
+  			    <div class="boton_de_venta_close"><?=$estadodeventa['icono_dos']; ?></div>
+  			</div>
+      <?php else: ?>
+        <div class="boton_de_venta" style="background-color:<?=$estadodeventa['boton_fondo']; ?>">
+            <div class="boton_de_venta_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">
+                  <path d="M17 3.33782C15.5291 2.48697 13.8214 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 11.3151 21.9311 10.6462 21.8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                  <path d="M8 12.5C8 12.5 9.5 12.5 11.5 16C11.5 16 17.0588 6.83333 22 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+        </div>
+      <?php endif ?>
 		<?php endif ?>
-		<?php if ($wo['ventas']->estado_venta==1): ?>
-			<div class="boton_de_venta" style="background-color:#ac1c1ced;" onClick="changue_order_pages('<?=$wo['ventas']->hash_id;?>','rechazar_orden')">
+		<?php if ($wo['ventas']['estado_venta']==1): ?>
+			<div class="boton_de_venta" style="background-color:#ac1c1ced;" onClick="changue_order_pages('<?=$wo['ventas']['hash_id'];?>','rechazar_orden')">
 			    <div class="boton_de_venta_icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="m6.72 5.66 11.62 11.62A8.25 8.25 0 0 0 6.72 5.66Zm10.56 12.68L5.66 6.72a8.25 8.25 0 0 0 11.62 11.62ZM5.105 5.106c3.807-3.808 9.98-3.808 13.788 0 3.808 3.807 3.808 9.98 0 13.788-3.807 3.808-9.98 3.808-13.788 0-3.808-3.807-3.808-9.98 0-13.788Z" clip-rule="evenodd" /></svg>
 			    </div>
 			    <div class="boton_de_venta_title">Rechazar la compra</div>

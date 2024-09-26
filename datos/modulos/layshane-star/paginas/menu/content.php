@@ -131,23 +131,23 @@ footer{background:transparent!important;}
 		?>
 		<?php $idioma = $db->where('iso',$wo['lang_attr'])->getOne(T_LANG_ISO); ?>
 			<span class="flex"  style="padding:5px;">
-				<i class="<?=ucfirst($idioma->lang_name);?>">
+				<i class="<?=ucfirst($idioma['lang_name']);?>">
 					<span class="language_initial" rel="nofollow">
-						<?php if (ucfirst($idioma->lang_name)=='English'): ?>
+						<?php if (ucfirst($idioma['lang_name'])=='English'): ?>
 							<img height="30" width="30" src="<?php echo $wo['config']['theme_url']; ?>/img/flags/united-states.svg" alt="layshane">
-						<?php elseif (ucfirst($idioma->lang_name)=='Italian'): ?>
+						<?php elseif (ucfirst($idioma['lang_name'])=='Italian'): ?>
 							<img height="30" width="30" src="<?php echo $wo['config']['theme_url']; ?>/img/flags/italy.svg" alt="layshane">
-						<?php elseif (ucfirst($idioma->lang_name)=='Portuguese'): ?>
+						<?php elseif (ucfirst($idioma['lang_name'])=='Portuguese'): ?>
 							<img height="30" width="30" src="<?php echo $wo['config']['theme_url']; ?>/img/flags/portugal.svg" alt="layshane">
-						<?php elseif (ucfirst($idioma->lang_name)=='Spanish'): ?>
+						<?php elseif (ucfirst($idioma['lang_name'])=='Spanish'): ?>
 							<img height="30" width="30" src="<?php echo $wo['config']['theme_url']; ?>/img/flags/peru.svg" alt="layshane">
-						<?php elseif (ucfirst($idioma->lang_name)=='Quechua'): ?>
+						<?php elseif (ucfirst($idioma['lang_name'])=='Quechua'): ?>
 							<img height="30" width="30" src="<?php echo $wo['config']['theme_url']; ?>/img/flags/peru.svg" alt="layshane">
 						<?php endif ?>
 					</span>
 				</i>
 			</span>
-			<?=ucfirst($wo['lang'][ucfirst($idioma->lang_name).'_'.$idioma->iso]); ?>
+			<?=ucfirst($wo['lang'][ucfirst($idioma['lang_name']).'_'.$idioma['iso']]); ?>
 	</a>
 	<hr>
 	<?php if ($wo['loggedin'] == true): ?>

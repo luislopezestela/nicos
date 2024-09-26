@@ -27,7 +27,7 @@ if($f == 'cuentas_a'){
 		if (!empty($_POST['hash'])){
 			$cuentas_corrientes_empresa = $db->where('es_empresa', 1)->where('estado',0)->getOne("cuentas_corrientes");
 			if(!empty($cuentas_corrientes_empresa)) {
-				$db->where('id', $cuentas_corrientes_empresa->id)->where('es_empresa', 1)->where('estado',0)->delete("cuentas_corrientes");
+				$db->where('id', $cuentas_corrientes_empresa['id'])->where('es_empresa', 1)->where('estado',0)->delete("cuentas_corrientes");
                 $data = array(
                 	'status' => 200
                 );
@@ -200,7 +200,7 @@ if($f == 'cuentas_a'){
                     $data['message'] = 'No se puede depositar el monto vacio o en 0.';
                 } else{
                 	$fechaHora = date("Y-m-d H:i:s");
-                	$numero_operacion_banco = $generator->getBarcodeArray($cuentas_corrientes_mov->id, 'EAN13');
+                	$numero_operacion_banco = $generator->getBarcodeArray($cuentas_corrientes_mov['id'], 'EAN13');
                 	$dataarrayinline = array(
                 		'estado'            => 1,
                 		'numero_operacion'  => $_POST['base'],
@@ -210,7 +210,7 @@ if($f == 'cuentas_a'){
 						'nota'              => 'DEPOSITO'
 					);
 
-					$db->where('id', $cuentas_corrientes_mov->id)->update('cuentas_corrientes_transactions', $dataarrayinline);
+					$db->where('id', $cuentas_corrientes_mov['id'])->update('cuentas_corrientes_transactions', $dataarrayinline);
                     $data = array(
                         'status' => 200
                     );
@@ -230,7 +230,7 @@ if($f == 'cuentas_a'){
 		if (!empty($_POST['hash'])){
 			$cuentas_corrientes_mov = $db->where('linea', 1)->where('tipo', 1)->where('estado',0)->where('usuario',lui_Secure($wo['user']['user_id']))->where('sucursal',$wo['user']['sucursal'])->where('id_cuenta_corriente',$wo['user']['banco_select'])->getOne("cuentas_corrientes_transactions");
 			if(!empty($cuentas_corrientes_mov)) {
-				$db->where('id', $cuentas_corrientes_mov->id)->where('estado',0)->delete("cuentas_corrientes_transactions");
+				$db->where('id', $cuentas_corrientes_mov['id'])->where('estado',0)->delete("cuentas_corrientes_transactions");
                 $data = array(
                 	'status' => 200
                 );

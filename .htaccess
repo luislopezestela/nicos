@@ -74,9 +74,14 @@ RewriteRule ^edit-product/([A-Za-z0-9_]+)$ index.php?link1=edit-product&id=$1 [N
 RewriteRule ^products(/?|)$ index.php?link1=products [NC,QSA]
 RewriteRule ^products/([A-Za-z0-9_-]+)$ index.php?link1=products&c_id=$1 [QSA]
 RewriteRule ^products/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$ index.php?link1=products&c_id=$1&sub_id=$2 [QSA]
+# Caso con solo sección
+RewriteCond %{QUERY_STRING} ^section=([A-Za-z0-9_-]+)$
+RewriteRule ^tienda$ index.php?link1=tienda&section=%1 [NC,QSA]
 RewriteRule ^tienda(/?|)$ index.php?link1=tienda [NC,QSA]
 RewriteRule ^tienda/([A-Za-z0-9_-]+)$ index.php?link1=tienda&c_id=$1 [QSA]
 RewriteRule ^tienda/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$ index.php?link1=tienda&c_id=$1&sub_id=$2 [QSA]
+
+
 RewriteRule ^my-products(/?|)$ index.php?link1=my-products [QSA]
 RewriteRule ^my-products/([A-Za-z0-9_-]+)$ index.php?link1=my-products&c_id=$1 [QSA]
 RewriteRule ^my-products/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)$ index.php?link1=my-products&c_id=$1&sub_id=$2 [QSA]
@@ -125,6 +130,7 @@ RewriteRule ^imv_ingredientes(/?|)$ index.php?link1=imv_ingredientes [NC,QSA]
 
 RewriteRule ^purchased(/?|)$ index.php?link1=purchased [NC,QSA]
 RewriteRule ^orders(/?|)$ index.php?link1=orders [NC,QSA]
+RewriteRule ^caja(/?|)$ index.php?link1=caja [NC,QSA]
 RewriteRule ^compras(/?|)$ index.php?link1=compras [NC,QSA]
 RewriteRule ^compras([^\/]+)(\/|)$ index.php?link1=compras&page-id=$1 [NC,QSA]
 RewriteRule ^customer_order/(.*)$ index.php?link1=customer_order&id=$1 [NC,QSA]
@@ -284,3 +290,14 @@ ExpiresDefault "access plus 1 month"
 <FilesMatch "\.(js|css|svg|woff2|webp|png|mp3)$">
     Header set Cache-Control "max-age=31536000, public"
 </FilesMatch>
+
+# Añadir encabezado de caché para archivos PHP
+<FilesMatch "\.(php)$">
+    Header set Cache-Control "max-age=600, must-revalidate"
+</FilesMatch>
+
+<FilesMatch "\.(?i:pdf)$">
+    ForceType application/octet-stream
+    Header set Content-Disposition attachment
+</FilesMatch>
+

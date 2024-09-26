@@ -115,6 +115,35 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
         echo json_encode($data);
         exit();
     }
+    if ($s == 'desactiva-product') {
+        if (!empty($_POST['id']) && is_numeric($_POST['id']) && $_POST['id'] > 0) {
+            $id      = lui_Secure($_POST['id']);
+            $product = lui_GetProduct($id);
+            if (empty($product)) {
+                $data['message'] = 'Por favor revise los detalles';
+            }
+            if (!empty($product)) {
+                $db->where('id', $id)->update(T_PRODUCTS, array(
+                    'active' => '0'
+                ));
+                $db->where('product_id', $id)->update(T_POSTS, array(
+                    'active' => 0
+                ));
+                $notification_data_array = array(
+                    'recipient_id' => $product['user_id'],
+                    'type' => 'admin_notification',
+                    'url' => 'index.php?link1=my-products',
+                    'text' => 'Producto desactivado',
+                    'type2' => 'approve_product'
+                );
+                lui_RegisterNotification($notification_data_array);
+            }
+            $data['status'] = 200;
+        }
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit();
+    }
     if ($s == 'delete-review') {
         if (!empty($_POST['id']) && is_numeric($_POST['id']) && $_POST['id'] > 0) {
             $id = lui_Secure($_POST['id']);
@@ -1853,7 +1882,8 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
                                     'type' => $_FILES["media_file"]["type"],
                                     'types' => 'jpg,png,gif,jpeg,webp',
                                 );
-                                $media    = lui_addImages_load_sinCrop($fileInfo);
+                                $media    = lui_ShareFile_categorias($fileInfo);
+                                //$media    = lui_addImages_load_sinCrop($fileInfo);
                             }elseif($themes=='restaurante-star'){
                                 $fileInfo = array(
                                     'file' => $_FILES["media_file"]["tmp_name"],
@@ -2003,7 +2033,9 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
                         'type' => $_FILES["media_file"]["type"],
                         'types' => 'jpg,png,gif,jpeg,webp',
                     );
-                    $media    = lui_addImages_load_sinCrop($fileInfo);
+                    
+                    $media    = lui_ShareFile_categorias($fileInfo,1);
+                    //$media    = lui_addImages_load_sinCrop($fileInfo);
                 }
                 if($themes=='restaurante-star'){
                     $fileInfo = array(
@@ -2027,7 +2059,7 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
                     $category_caata = $db->where('id', $lang_categoria)->getOne(T_PRODUCTS_CATEGORY);
                     if (!empty($category_caata)) {
 
-                        $link = $category_caata->logo;
+                        $link = $category_caata['logo'];
 
                         if($link=="upload/photos/d-avatar.jpg"){
                         }elseif($link=="upload/photos/n_layshane_peru.png") {
@@ -2628,15 +2660,15 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
                 $db->where('id', lui_Secure($_POST['post_id']))->update(T_POSTS, array(
                     'active' => 1
                 ));
-                if (!empty($post->blog_id)) {
-                    $db->where('id', $post->blog_id)->update(T_BLOG, array(
+                if (!empty($post['blog_id'])) {
+                    $db->where('id', $post['blog_id'])->update(T_BLOG, array(
                         'active' => '1'
                     ));
                 }
                 $notification_data_array = array(
-                    'recipient_id' => $post->user_id,
+                    'recipient_id' => $post['user_id'],
                     'type' => 'admin_notification',
-                    'url' => 'index.php?link1=post&id=' . $post->id,
+                    'url' => 'index.php?link1=post&id=' . $post['id'],
                     'text' => $wo['lang']['approve_post'],
                     'type2' => 'approve_post'
                 );
@@ -5864,8 +5896,8 @@ if ($f == 'admin_setting' AND (lui_IsAdmin() || lui_IsModerator())) {
             $producto       = lui_Secure($_POST['producto']);
             $colores_pruducto = $db->where('id_color', $id)->where('id_producto', $producto)->getOne('lui_opcion_de_colores_productos');
             if (!empty($colores_pruducto)) {
-                $wo['precio_adicional'] = $colores_pruducto->precio_adicional;
-                $wo['sku_color'] = $colores_pruducto->sku;
+                $wo['precio_adicional'] = $colores_pruducto['precio_adicional'];
+                $wo['sku_color'] = $colores_pruducto['sku'];
                 $data = array(
                     'precio' => $wo['precio_adicional'],
                     'sku' => $wo['sku_color'],

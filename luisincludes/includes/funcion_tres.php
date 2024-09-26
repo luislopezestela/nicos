@@ -615,6 +615,29 @@ function lui_ProductImageData($data = array()) {
     }
     return false;
 }
+function lui_GetCategoriasImages(int $id = 0) {
+    global $wo, $sqlConnect;
+    $data      = array();
+    $id        = lui_Secure($id);
+    $query_one = "SELECT `id`,`logo` FROM " . T_PRODUCTS_CATEGORY . " WHERE `id` = {$id} ORDER BY `id` DESC";
+    $sql       = mysqli_query($sqlConnect, $query_one);
+    if (mysqli_num_rows($sql)) {
+        while ($fetched_data = mysqli_fetch_assoc($sql)) {
+            $explora                   = explode('.', $fetched_data['logo']);
+            $explode2                  = end($explora);
+            $explode3                  = explode('.', $fetched_data['logo']);
+            $fetched_data['image_org'] = $explode3[0] . '_small.' . $explode2;
+            $fetched_data['image_org'] = lui_GetMedia($fetched_data['image_org']);
+
+            $fetched_data['image_mini'] = $explode3[0] . '_thumbnail.' . $explode2;
+            $fetched_data['image_mini'] = lui_GetMedia($fetched_data['image_mini']);
+
+            $fetched_data['logo']     = lui_GetMedia($fetched_data['logo']);
+            $data[]                    = $fetched_data;
+        }
+    }
+    return $data;
+}
 function lui_GetWelcomeFileds() {
     global $wo, $sqlConnect;
     $data      = array();
@@ -1086,6 +1109,29 @@ function lui_GetProducts($filter_data = array()) {
             $query_one .= " LIMIT {$limit}";
         }
     }
+    $sql = mysqli_query($sqlConnect, $query_one);
+    if (mysqli_num_rows($sql)) {
+        while ($fetched_data = mysqli_fetch_assoc($sql)) {
+            $products           = lui_GetProduct($fetched_data['id']);
+            $products['seller'] = lui_UserData($fetched_data['user_id']);
+            $data[]             = $products;
+        }
+    }
+    return $data;
+}
+function lui_GetProducts_news($filter_data = array()) {
+    global $wo, $sqlConnect;
+    $data      = array();
+    $query_one = " SELECT `id`, `user_id` FROM " . T_PRODUCTS . " WHERE status <> '1'";
+
+    if (!empty($filter_data['user_id'])) {
+        $user_id = lui_Secure($filter_data['user_id']);
+        $query_one .= " AND `user_id` = '{$user_id}'";
+    }
+
+
+    $query_one .= " AND `active` = '0' ";
+
     $sql = mysqli_query($sqlConnect, $query_one);
     if (mysqli_num_rows($sql)) {
         while ($fetched_data = mysqli_fetch_assoc($sql)) {
@@ -2295,7 +2341,7 @@ function lui_GetArticle($id = 0) {
             if ($wo['config']['second_post_button'] == 'reaction') {
                 $post = $db->where('blog_id', $fetched_data['id'])->getOne(T_POSTS);
                 if (!empty($post)) {
-                    $fetched_data['reaction'] = lui_GetPostReactionsTypes($post->id);
+                    $fetched_data['reaction'] = lui_GetPostReactionsTypes($post['id']);
                 }
             }
         }
@@ -9633,8 +9679,14 @@ function estadodeventaVendedor(int $estado): array {
             $texto_venta = 'Empaquetando pedido';
             break;
         case 5:
-            $estado_ventas = 'Listo para entregar';
-            $texto_venta = 'Pedido listo para entregar';
+            $estado_ventas = 'Entregar pedido';
+            $texto_venta = 'Entregar pedido';
+            $background = '#05983be3';
+            $boton_fondo = '#4e0598e3';
+            $boton_action = 'entregar_pedido';
+            $boton_texto  = 'Entregar';
+            $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6" stroke="currentColor"><path fill="currentColor" d="M7.493 18.5c-.425 0-.82-.236-.975-.632A7.48 7.48 0 0 1 6 15.125c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75A.75.75 0 0 1 15 2a2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23h-.777ZM2.331 10.727a11.969 11.969 0 0 0-.831 4.398 12 12 0 0 0 .52 3.507C2.28 19.482 3.105 20 3.994 20H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 0 1-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227Z" /></svg>';
+            $icono_dos = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>';
             break;
         case 6:
             $estado_ventas = 'En camino a destino';
@@ -9647,6 +9699,9 @@ function estadodeventaVendedor(int $estado): array {
         case 8:
             $estado_ventas = 'Entregado';
             $texto_venta = 'Pedido entregado';
+            $background = '#05983be3';
+            $boton_fondo = '#4e0598e3';
+            $boton_action = '';
             break;
         case 9:
             $estado_ventas = 'Cancelado';
@@ -9661,7 +9716,7 @@ function estadodeventaVendedor(int $estado): array {
             $texto_venta = 'Pedido rechazado';
             $background = '#b12020e3';
             $boton_fondo = '#05983be3';
-            $boton_action = 'aceptar_pedido';
+            $boton_action = 'reactivar_aceptar_pedido';
             $boton_texto  = 'Reactivar y Aceptar pedido';
             $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" /></svg>';
             $icono_dos = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>';
@@ -9682,7 +9737,111 @@ function estadodeventaVendedor(int $estado): array {
         'icono_dos' => $icono_dos
     ];
 }
-function estadodeventaCliente(int $estado): array {
+function estadodeventaCliente_tienda(int $estado): array {
+    $estado_ventas = '';
+    $texto_venta = '';
+    $background = '';
+    $icono_uno = '';
+    $icono_dos = '';
+    $step = '';
+    switch ($estado) {
+        case 0:
+            $estado_ventas = 'Pendiente';
+            $texto_venta = 'Su pedido esta en lista de espera';
+            $background = '#bf9f08';
+            $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100" color="currentColor" fill="none" class="clock">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"></circle>
+                        <!-- Minuto -->
+                        <path class="minute-hand" d="M12 12L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <!-- Hora -->
+                        <path class="hour-hand" d="M12 12L12 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>';
+            $step = 1;
+            break;
+        case 1:
+            $estado_ventas = 'Recibimos tu pedido';
+            $texto_venta = 'Tu pedido fue recibido por un acesor de ventas';
+            $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100" color="currentColor" fill="none" class="clock">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"></circle>
+                            <!-- Minuto -->
+                            <path class="minute-hand" d="M12 12L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <!-- Hora -->
+                            <path class="hour-hand" d="M12 12L12 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>';
+            $step = 2;
+            break;
+        case 2:
+            $estado_ventas = 'Tu pedido fue aceptado';
+            $texto_venta = 'Tu pedido fue aceptado por un acesor de ventas';
+            $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none">
+                            <path d="M12 22C11.1818 22 10.4002 21.6754 8.83693 21.0262C4.94564 19.4101 3 18.6021 3 17.2429V7.74463M12 22C12.8182 22 13.5998 21.6754 15.1631 21.0262C19.0544 19.4101 21 18.6021 21 17.2429V7.74463M12 22V12.1687M3 7.74463C3 8.3485 3.80157 8.72983 5.40472 9.49248L8.32592 10.8822C10.1288 11.7399 11.0303 12.1687 12 12.1687M3 7.74463C3 7.14076 3.80157 6.75944 5.40472 5.99678L7.5 5M21 7.74463C21 8.3485 20.1984 8.72983 18.5953 9.49248L15.6741 10.8822C13.8712 11.7399 12.9697 12.1687 12 12.1687M21 7.74463C21 7.14076 20.1984 6.75944 18.5953 5.99678L16.5 5M6 13.1518L8 14.135" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12.0037 2L12.0037 8.99995M12.0037 8.99995C12.2668 9.00351 12.5263 8.81972 12.7178 8.59534L14 7.06174M12.0037 8.99995C11.7499 8.99652 11.4929 8.81368 11.2897 8.59534L10 7.06174" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>';
+            $step = 3;
+            break;
+        case 3:
+            $estado_ventas = 'Se esta preparando tu pedido';
+            $texto_venta = 'Se esta preparando tu pedido ';
+            $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none">
+                            <path d="M11 22C10.1818 22 9.40019 21.6698 7.83693 21.0095C3.94564 19.3657 2 18.5438 2 17.1613C2 16.7742 2 10.0645 2 7M11 22L11 11.3548M11 22C11.3404 22 11.6463 21.9428 12 21.8285M20 7V11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M18 18.0005L18.9056 17.0949M22 18C22 15.7909 20.2091 14 18 14C15.7909 14 14 15.7909 14 18C14 20.2091 15.7909 22 18 22C20.2091 22 22 20.2091 22 18Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M7.32592 9.69138L4.40472 8.27785C2.80157 7.5021 2 7.11423 2 6.5C2 5.88577 2.80157 5.4979 4.40472 4.72215L7.32592 3.30862C9.12883 2.43621 10.0303 2 11 2C11.9697 2 12.8712 2.4362 14.6741 3.30862L17.5953 4.72215C19.1984 5.4979 20 5.88577 20 6.5C20 7.11423 19.1984 7.5021 17.5953 8.27785L14.6741 9.69138C12.8712 10.5638 11.9697 11 11 11C10.0303 11 9.12883 10.5638 7.32592 9.69138Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M5 12L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M16 4L6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>';
+            $step = 4;
+            break;
+        case 5:
+            $estado_ventas = 'Tu pedido esta listo para entregar';
+            $texto_venta = 'Tu pedido esta listo y ya puedes recogerlo';
+            $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none">
+                            <path d="M21 7V12M3 7C3 10.0645 3 16.7742 3 17.1613C3 18.5438 4.94564 19.3657 8.83693 21.0095C10.4002 21.6698 11.1818 22 12 22L12 11.3548" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M15 19C15 19 15.875 19 16.75 21C16.75 21 19.5294 16 22 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M8.32592 9.69138L5.40472 8.27785C3.80157 7.5021 3 7.11423 3 6.5C3 5.88577 3.80157 5.4979 5.40472 4.72215L8.32592 3.30862C10.1288 2.43621 11.0303 2 12 2C12.9697 2 13.8712 2.4362 15.6741 3.30862L18.5953 4.72215C20.1984 5.4979 21 5.88577 21 6.5C21 7.11423 20.1984 7.5021 18.5953 8.27785L15.6741 9.69138C13.8712 10.5638 12.9697 11 12 11C11.0303 11 10.1288 10.5638 8.32592 9.69138Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M6 12L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M17 4L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>';
+            $step = 5;
+            break;
+        case 8:
+            $estado_ventas = 'Tu pedido fue entregado';
+            $texto_venta = 'Tu pedido fue entregado con exito';
+            $icono_uno = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none">
+                            <path d="M18.9905 19H19M18.9905 19C18.3678 19.6175 17.2393 19.4637 16.4479 19.4637C15.4765 19.4637 15.0087 19.6537 14.3154 20.347C13.7251 20.9374 12.9337 22 12 22C11.0663 22 10.2749 20.9374 9.68457 20.347C8.99128 19.6537 8.52349 19.4637 7.55206 19.4637C6.76068 19.4637 5.63218 19.6175 5.00949 19C4.38181 18.3776 4.53628 17.2444 4.53628 16.4479C4.53628 15.4414 4.31616 14.9786 3.59938 14.2618C2.53314 13.1956 2.00002 12.6624 2 12C2.00001 11.3375 2.53312 10.8044 3.59935 9.73817C4.2392 9.09832 4.53628 8.46428 4.53628 7.55206C4.53628 6.76065 4.38249 5.63214 5 5.00944C5.62243 4.38178 6.7556 4.53626 7.55208 4.53626C8.46427 4.53626 9.09832 4.2392 9.73815 3.59937C10.8044 2.53312 11.3375 2 12 2C12.6625 2 13.1956 2.53312 14.2618 3.59937C14.9015 4.23907 15.5355 4.53626 16.4479 4.53626C17.2393 4.53626 18.3679 4.38247 18.9906 5C19.6182 5.62243 19.4637 6.75559 19.4637 7.55206C19.4637 8.55858 19.6839 9.02137 20.4006 9.73817C21.4669 10.8044 22 11.3375 22 12C22 12.6624 21.4669 13.1956 20.4006 14.2618C19.6838 14.9786 19.4637 15.4414 19.4637 16.4479C19.4637 17.2444 19.6182 18.3776 18.9905 19Z" stroke="currentColor" stroke-width="1.5" />
+                            <path d="M9 12.8929C9 12.8929 10.2 13.5447 10.8 14.5C10.8 14.5 12.6 10.75 15 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>';
+            $step = 6;
+            break;
+        case 10:
+            $estado_ventas = 'Tu pedido fue anulado';
+            $texto_venta = 'El pedido fue anulado por el area administrativa, Esto sucede si el cliente no recoge el pedido dentro del tiempo indicado al momento de realizar la compra -39 puntos agregados al record del cliente';
+            $icono_uno = '';
+            $step = 0;
+            break;
+        case 11:
+            $estado_ventas = 'Tu pedido fue rechazado';
+            $texto_venta = 'Tu pedido fue rechazado por el el acesor de ventas';
+            $icono_uno = '';
+            $step = 0;
+            break;
+        default:
+            $estado_ventas = 'Estado desconocido';
+            $texto_venta = 'Estado del pedido desconocido';
+            $icono_uno = '';
+            $step = 0;
+            break;
+    }
+    return [
+        'estado_ventas' => $estado_ventas,
+        'texto_venta' => $texto_venta,
+        'background' => $background,
+        'icono_uno' => $icono_uno,
+        'step' => $step,
+        'icono_dos' => $icono_dos
+    ];
+}
+
+function estadodeventaCliente_delivery(int $estado): array {
     $estado_ventas = '';
     $texto_venta = '';
     $background = '';
@@ -9751,14 +9910,107 @@ function estadodeventaCliente(int $estado): array {
         'icono_dos' => $icono_dos
     ];
 }
+function estadodeventaCliente_envio(int $estado): array {
+    $estado_ventas = '';
+    $texto_venta = '';
+    $background = '';
+    $icono_uno = '';
+    $icono_dos = '';
+    switch ($estado) {
+        case 0:
+            $estado_ventas = 'Pendiente';
+            $texto_venta = 'Su pedido esta en lista de espera';
+            $background = '#bf9f08';
+            break;
+        case 1:
+            $estado_ventas = 'Recibimos tu pedido';
+            $texto_venta = 'Tu pedido fue recibido por un acesor de ventas';
+            break;
+        case 2:
+            $estado_ventas = 'Tu pedido fue aceptado';
+            $texto_venta = 'Tu pedido fue aceptado por un acesor de ventas';
+            break;
+        case 3:
+            $estado_ventas = 'Se esta preparando tu pedido';
+            $texto_venta = 'Se esta preparando tu pedido ';
+            break;
+        case 4:
+            $estado_ventas = 'Tu pedido se esta empaquetando';
+            $texto_venta = 'Tu pedido esta en proceso de empaquetado y pronto estara listo';
+            break;
+        case 5:
+            $estado_ventas = 'Tu pedido esta listo para entregar';
+            $texto_venta = 'Tu pedido esta listo y ya puedes recogerlo';
+            break;
+        case 6:
+            $estado_ventas = 'Tu pedido esta en camino';
+            $texto_venta = 'Tu pedido ya esta en camino';
+            break;
+        case 7:
+            $estado_ventas = 'Tu pedido a llegado';
+            $texto_venta = 'Tu pedido ya esta en el lugar de entrega';
+            break;
+        case 8:
+            $estado_ventas = 'Tu pedido fue entregado';
+            $texto_venta = 'Tu pedido fue entregado con exito';
+            break;
+        case 9:
+            $estado_ventas = 'Tu pedido fue cancelado';
+            $texto_venta = 'Cancelaste el pedido, resta -29 puntos al acesor de ventas y -19 puntos al cliente';
+            break;
+        case 10:
+            $estado_ventas = 'Tu pedido fue anulado';
+            $texto_venta = 'El pedido fue anulado por el area administrativa, Esto sucede si el cliente no recoge el pedido dentro del tiempo indicado al momento de realizar la compra -39 puntos agregados al record del cliente';
+            break;
+        case 11:
+            $estado_ventas = 'Tu pedido fue rechazado';
+            $texto_venta = 'Tu pedido fue rechazado por el el acesor de ventas';
+            break;
+        default:
+            $estado_ventas = 'Estado desconocido';
+            $texto_venta = 'Estado del pedido desconocido';
+            break;
+    }
+    return [
+        'estado_ventas' => $estado_ventas,
+        'texto_venta' => $texto_venta,
+        'background' => $background,
+        'icono_uno' => $icono_uno,
+        'icono_dos' => $icono_dos
+    ];
+}
+function fechasCompra($timestamp) {
+  $diaSemana = array("domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado");
+  $meses = array("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
 
+  $dia = $diaSemana[date("w", $timestamp)];
+  $diaMes = date("j", $timestamp);
+  $mes = $meses[date("n", $timestamp) - 1];
+  $anio = date("Y", $timestamp);
+
+  return "Pedido realizado: $dia, $diaMes de $mes de $anio";
+}
+
+function fechaEntrega($fecha) {
+  $diaSemana = array("domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado");
+  $meses = array("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
+
+  $datetime = new DateTime($fecha);
+  $dia = $diaSemana[$datetime->format("w")];
+  $diaMes = $datetime->format("j");
+  $mes = $meses[$datetime->format("n") - 1];
+  $anio = $datetime->format("Y");
+  $hora = $datetime->format("H:i");
+
+  return "Entregado: $dia, $diaMes de $mes a las $hora";
+}
 function generarNumeroDocumento($tipo) {
     global $wo, $sqlConnect, $db;
-    $lastNumDocRow = $db->orderBy('num_doc', 'desc')
+    $lastNumDocRow = $db->orderBy('numero_documento', 'desc')
                         ->where('documento', $tipo)
-                        ->getOne(T_VENTAS, 'num_doc');
+                        ->getOne(T_VENTAS, 'numero_documento');
     if ($lastNumDocRow) {
-        $lastNumDoc = (int)$lastNumDocRow->num_doc;
+        $lastNumDoc = (int)$lastNumDocRow['numero_documento'];
     } else {
         $lastNumDoc = 0;
     }

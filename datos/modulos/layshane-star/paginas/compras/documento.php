@@ -1,9 +1,9 @@
-<?php if($wo['documento']->documento=='BS'): ?>
-	<?php $numero_documento_a = $wo['documento']->num_doc;?>
-<?php elseif($wo['documento']->documento=='B'): ?>
-	<?php $numero_documento_a = $wo['documento']->numero_documento;?>
-<?php elseif($wo['documento']->documento=='F'): ?>
-	<?php $numero_documento_a = $wo['documento']->numero_documento;?>
+<?php if($wo['documento']['documento']=='BS'): ?>
+	<?php $numero_documento_a = $wo['documento']['num_doc'];?>
+<?php elseif($wo['documento']['documento']=='B'): ?>
+	<?php $numero_documento_a = $wo['documento']['numero_documento'];?>
+<?php elseif($wo['documento']['documento']=='F'): ?>
+	<?php $numero_documento_a = $wo['documento']['numero_documento'];?>
 <?php endif ?>
 <style type="text/css">
 	.typenumber_nop_viewp{text-align: center;
@@ -15,32 +15,32 @@
 </style>
 <div class="comprobante">
 	<div class="comprobante_number">
-		<h2 class="numdoc_line"><?=$wo['documento']->documento.'-'.$wo['documento']->num_doc;?></h2>
+		<h2 class="numdoc_line"><?=$wo['documento']['documento'].'-'.$wo['documento']['num_doc'];?></h2>
 		<span class="typenumber_nop_viewp"><?=$numero_documento_a;?></span>
 	</div>
 
 	<div class="datos_proveedor_box datos_proveedor_box_ad" style="user-select:none;">
-		<?php $proveedor_ver = $db->where('id',$wo['documento']->proveedor)->getOne("lui_proveedores"); ?>
+		<?php $proveedor_ver = $db->where('id',$wo['documento']['proveedor'])->getOne("lui_proveedores"); ?>
 		<?php if($proveedor_ver): ?>
-			<h5><?=$proveedor_ver->razon_social; ?></h5>
-			<p>R.U.C. <?=$proveedor_ver->ruc; ?></p>
+			<h5><?=$proveedor_ver['razon_social']; ?></h5>
+			<p>R.U.C. <?=$proveedor_ver['ruc']; ?></p>
 		<?php endif ?>
 	</div>
 
 	<div class="address_data_proveedor datos_proveedor_box_direccion" style="user-select:none;">
-		<?php $proveedor_sucursal_view = $db->where('id',$wo['documento']->proveedor_sucursal)->getOne("sucursal_proveedor"); ?>
+		<?php $proveedor_sucursal_view = $db->where('id',$wo['documento']['proveedor_sucursal'])->getOne("sucursal_proveedor"); ?>
 		<?php if($proveedor_sucursal_view): ?>
-			<span><?=$proveedor_sucursal_view->direccion;?>,<?=$proveedor_sucursal_view->distrito;?>,<?=$proveedor_sucursal_view->departamento;?></span>
+			<span><?=$proveedor_sucursal_view['direccion'];?>,<?=$proveedor_sucursal_view['distrito'];?>,<?=$proveedor_sucursal_view['departamento'];?></span>
 		<?php endif ?>
 	</div>
 
 	<div class="date_comprovante_compra" style="user-select:none;">
 		<span style="width: 20%;">Fecha de compra </span>
-		<span><?= date('Y-m-d', strtotime($wo['documento']->fecha)) ?></span>
+		<span><?= date('Y-m-d', strtotime($wo['documento']['fecha'])) ?></span>
 	</div>
 	<div class="contenido_guia_remicion_con ">
-		<div class="contenido_guia_remicion <?php if($wo['documento']->guia!=1){echo "disabled_provedores_list";} ?>">
-			<input type="number" name="numero_de_guia" placeholder="Numero guia" value="<?=$wo['documento']->numero_guia;?>">
+		<div class="contenido_guia_remicion <?php if($wo['documento']['guia']!=1){echo "disabled_provedores_list";} ?>">
+			<input type="number" name="numero_de_guia" placeholder="Numero guia" value="<?=$wo['documento']['numero_guia'];?>">
 		</div>
 	</div>
 	<style type="text/css">
@@ -52,7 +52,7 @@
 		<span><?php echo $wo['lang']['currency']; ?></span>
 		<span name="currency" class="selected_curremcy_order">
 			<?php foreach ($wo['currencies'] as $key => $currency) { ?>
-				<?php if($wo['documento']->currency==$currency['text']): ?>
+				<?php if($wo['documento']['currency']==$currency['text']): ?>
 					<span style="user-select:none;"><?php echo  $currency['text'] ?> (<?php echo  $currency['symbol'] ?>)</span>
 				<?php else: ?>
 				<?php endif ?>
@@ -130,8 +130,8 @@
 								</thead>
 								<tbody class="table__tbody contet_items_de_doc_compr">
 									<?php 
-									$items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante',$wo['documento']->id)->get('imventario');
-									$indexdefault_currency = array_search($wo['documento']->currency, array_column($wo['currencies'], 'text'));
+									$items_compra = $db->orderBy('orden', 'asc')->objectbuilder()->where('id_comprobante',$wo['documento']['id'])->get('imventario');
+									$indexdefault_currency = array_search($wo['documento']['currency'], array_column($wo['currencies'], 'text'));
 									$htmldocumento = "";
 									$productos_vistos = [];
 									foreach ($items_compra as $value) {
@@ -151,7 +151,7 @@
 										foreach ($atributos as $atributo) {
 											$variantes_atributos[$atributo->id_atributo][] = $atributo->id_atributo_opciones;
 										}
-										$identificador_unico = $wo['documento']->id . '_' . $producto_id;
+										$identificador_unico = $wo['documento']['id'] . '_' . $producto_id;
 										foreach ($variantes_atributos as $atributo => $opciones) {
 											$identificador_unico .= '_' . implode('_', $opciones);
 										}
@@ -166,22 +166,22 @@
 										$wo['product']['name'] = $producto['name'];
 										$wo['product']['modelo'] = $producto['modelo'];
 										$wo['product']['sku'] = $producto['sku'];
-										$wo['product']['comprap'] = $wo['documento']->id;
+										$wo['product']['comprap'] = $wo['documento']['id'];
 										$wo['product']['symbol'] = (!empty($wo['currencies'][$indexdefault_currency]['symbol'])) ? $wo['currencies'][$indexdefault_currency]['symbol'] : $producto['currency'];
 										$wo['product']['inventario'] = $variantes_color[0]->id;
 										$wo['product']['color'] = $variantes_color[0]->color;
 										$wo['product']['precio'] = $variantes_color[0]->precio;
 										$cantidad_productos = 0;
 										if (!empty($variantes_atributos)) {
-											$sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante = {$wo['documento']->id}";
+											$sql = "SELECT COUNT(*) AS cantidad FROM imventario WHERE producto = {$producto['id']} AND id_comprobante = {$wo['documento']['id']}";
 											foreach ($variantes_atributos as $atributo => $opciones) {
 												foreach ($opciones as $opcion) {
 													$sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
 												}
 											}
-											$cantidad_productos = $db->rawQueryOne($sql)->cantidad;
+											$cantidad_productos = $db->rawQueryOne($sql)['cantidad'];
 										} else{
-											$cantidad_productos = $db->where('id_comprobante', $wo['documento']->id)->where('producto', $wo['product']['id'])->where('color', $wo['product']['color'])->getValue('imventario', 'COUNT(*)');
+											$cantidad_productos = $db->where('id_comprobante', $wo['documento']['id'])->where('producto', $wo['product']['id'])->where('color', $wo['product']['color'])->getValue('imventario', 'COUNT(*)');
 										}
 										$wo['product']['cantidad'] = $cantidad_productos;
 										$htmldocumento .= lui_LoadPage('compras/lista_documento');
@@ -205,25 +205,25 @@
 						$total_productos_grupo = 0;
 						$total_productos_lista = 0;
 						$total_productos_price = 0.00;
-						$total_productos_grupo = $db->where('estado','1')->where('id_comprobante',$wo['documento']->id)->getValue('imventario','COUNT(DISTINCT orden)');
-						$total_productos_lista = $db->where('estado','1')->where('id_comprobante',$wo['documento']->id)->getValue('imventario','COUNT(*)');
+						$total_productos_grupo = $db->where('estado','1')->where('id_comprobante',$wo['documento']['id'])->getValue('imventario','COUNT(DISTINCT orden)');
+						$total_productos_lista = $db->where('estado','1')->where('id_comprobante',$wo['documento']['id'])->getValue('imventario','COUNT(*)');
 						if ($total_productos_lista>0) {
-							$total_productos_price = $db->where('estado','1')->where('id_comprobante',$wo['documento']->id)->getValue('imventario','SUM(precio)');
+							$total_productos_price = $db->where('estado','1')->where('id_comprobante',$wo['documento']['id'])->getValue('imventario','SUM(precio)');
 						}
-						if($wo['documento']->garantia_m == 0) {
+						if($wo['documento']['garantia_m'] == 0) {
 							$cantidad_de_garantia = 0;
 							$end_date_de_garantia = false;
 						}else{
-							$cantidad_de_garantia = $wo['documento']->garantia_m;
-							$end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($wo['documento']->garantia);
+							$cantidad_de_garantia = $wo['documento']['garantia_m'];
+							$end_date_de_garantia = 'La garantia finalizara en: '.fecha_restante($wo['documento']['garantia']);
 						}
 						?>
 						<div class="contenido_ct_footer_document_order">
-							<?php if ($wo['documento']->anulado == 1): ?>
+							<?php if ($wo['documento']['anulado'] == 1): ?>
 								<div class="footer_document_order" style="gap:0.2em;">
 									<p style="width:100%;color:#dc2121;font-weight:bold;text-transform:uppercase;letter-spacing:3px;font-size:25px;" class="result_m_text_gar">ANULADO</p><br>
-									<p style="width:100%;">Nota: <?=$wo['documento']->justificacion_anulado;?></p><br>
-									<p style="width:100%;">Anulado: <?=$wo['documento']->fecha_anulado;?></p>
+									<p style="width:100%;">Nota: <?=$wo['documento']['justificacion_anulado'];?></p><br>
+									<p style="width:100%;">Anulado: <?=$wo['documento']['fecha_anulado'];?></p>
 								</div>
 							<?php else: ?>
 								<div class="footer_document_order" style="gap:0.2em;">

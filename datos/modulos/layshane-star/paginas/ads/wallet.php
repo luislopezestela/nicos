@@ -8,7 +8,6 @@
 <?php $loadPage = lui_LoadPage('thirdparty/paypal-demo'); echo(!empty($loadPage)) ? $loadPage : '';?>
 <?php echo lui_LoadPage("sidebar/left-sidebar"); ?>
 <style type="text/css">
-	body{background-color:#F0F2FD;}
 	.wow_main_blogs{background-color:#fff;box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);border-radius:6px;margin-bottom:30px;}
 .view-blog{color:#666;font-size:14.5px;line-height:17px;}
 .wow_main_blogs .avatar{display:block;position:relative;padding-bottom:80%;}

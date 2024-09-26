@@ -1817,7 +1817,7 @@ function Wo_DeleteFollowRequest(user_id) {
 
 
 // open chat tab
-function Wo_OpenChatTab(recipient_id, group_id = 0,product_id = 0,page_id = 0,page_user_id = 0,story_id = 0) {
+function Wo_OpenChatTab(recipient_id, group_id,product_id = 0,page_id = 0,page_user_id = 0,story_id = 0) {
   CheckIfCanUse();
 
   if ($(".chat_"+recipient_id).length > 0 && story_id == 0) {
@@ -1848,7 +1848,7 @@ function Wo_OpenChatTab(recipient_id, group_id = 0,product_id = 0,page_id = 0,pa
       if ($('body').attr('chat-off')) {
       length = $('body').attr('chat-off').length;
       }
-      if(current_width < 768 || length > 0) {
+      if(current_width < 720 || length > 0) {
         if (page_id > 0) {
           document.location = websiteUrl+"/messages/"+page_user_id+"&page="+page_id;
         }
@@ -1864,7 +1864,7 @@ function Wo_OpenChatTab(recipient_id, group_id = 0,product_id = 0,page_id = 0,pa
       }
     });
   }
-  if(current_width < 768) {
+  if(current_width < 720) {
     $.get(Wo_Ajax_Requests_File(), {
       f: 'chat',
       s: 'close_chat',
@@ -1931,7 +1931,9 @@ function Wo_OpenChatTab(recipient_id, group_id = 0,product_id = 0,page_id = 0,pa
       }
       if (page_id > 0) {
         setTimeout(function () {
+
           $('.page-messages-wrapper-'+page_id).scrollTop($('.page-messages-wrapper-'+page_id)[0].scrollHeight);
+
         }, 1000);
 
       }
@@ -1947,12 +1949,12 @@ function Wo_OpenChatTab(recipient_id, group_id = 0,product_id = 0,page_id = 0,pa
           product_id: product_id
         }, function (data) {
           Wo_intervalUpdates();
-          if(data.messages.length > 0){
+          if (data.messages.length > 0) {
              $('.chat-tab').find('.chat_' + recipient_id).find('.chat-messages').html(data.messages);
           } else {
             $('.chat_' + recipient_id).find('.chat-user-desc').addClass('chat-user-desc-show');
           }
-          if(node_socket_flow === "1"){
+          if (node_socket_flow === "1") {
             var chat_container = $('.chat-tab').find('.chat_main_' + recipient_id);
             var last_id = chat_container.find('.messages-text:last').attr('data-message-id');
             socket.emit("is_chat_on", {
@@ -1961,10 +1963,13 @@ function Wo_OpenChatTab(recipient_id, group_id = 0,product_id = 0,page_id = 0,pa
               recipient_id: recipient_id
             })
           }
-          if ($('.chat-messages-wrapper').length > 0){
+          if ($('.chat-messages-wrapper').length > 0) {
+
             setTimeout(function () {
+
               $('.chat-messages-wrapper').scrollTop($('.chat-messages-wrapper')[0].scrollHeight);
-            }, 1000); 
+
+            }, 1000);
           }
           if (node_socket_flow == "1") {
             socket.emit("count_unseen_messages", { user_id: _getCookie("user_id") });

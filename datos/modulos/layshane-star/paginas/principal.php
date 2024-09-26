@@ -85,8 +85,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
 <?php } ?>
 
 <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-3.7.0.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
-<link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/boots.js?version=<?php echo $wo['config']['version']; ?>" as="script">
-<link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/scripts.min.js?version=<?php echo $wo['config']['version']; ?>" as="script">
+<link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/scripts.js?version=<?php echo $wo['config']['version']; ?>" as="script">
 <link rel="preload" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane.css';?><?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>" as="style">
 <link rel="preload" href="<?=$wo['config']['theme_url'].'/stylesheet/layshane_b.css';?>?version=<?php echo $wo['config']['version']; ?>" as="style">
 <?php echo (!empty($wo['config']['tagManager_head'])) ? $wo['config']['tagManager_head'] : ''; ?>
@@ -119,6 +118,11 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
   <link class="style_pag_css_item" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/publications_style.css?version=<?php echo $wo['config']['version']; ?>">
 <?php endif ?>
 
+<?php if($wo['page'] == 'caja'): ?>
+  <link id="s_pag_loop" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/cas_regist.css?version=<?php echo $wo['config']['version']; ?>" as="style">
+  <link class="style_pag_css_caja" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/cas_regist.css?version=<?php echo $wo['config']['version']; ?>">
+<?php endif ?>
+
 <?php if($wo['page'] == 'tienda'): ?>
   <link id="s_pag_loop" rel="preload" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css?version=<?php echo $wo['config']['version']; ?>" as="style">
   <link class="style_pag_css_tienda" rel="stylesheet" href="<?php echo $wo['config']['theme_url'];?>/stylesheet/layshane_t.css?version=<?php echo $wo['config']['version']; ?>">
@@ -129,7 +133,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
 .count_items_carrito span{padding:3px;}
 .header_no_ap_go_lie{bottom:-6px;background-size:1px 7px;background-repeat:repeat-x;right:0;box-sizing:border-box;pointer-events:none;z-index:0;left:0;height:7px;position:absolute;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAOBAMAAAD3WtBsAAAAFVBMVEUAAAAAAAAAAAAAAAAAAAAAAAD29va1cB7UAAAAB3RSTlMCCwQHGBAaZf6MKAAAABpJREFUCNdjSGNIY3BhCGUQBEJjIFQCQigAACyJAjLNW4w5AAAAAElFTkSuQmCC);}
 </style>
-<?php if($wo['config']['classified'] == 13){ ?>
+<?php if($wo['config']['classified'] == 1){ ?>
   <script src="<?php echo $wo['config']['theme_url'];?>/javascript/html2pdf.bundle.js?version=<?php echo $wo['config']['version']; ?>"></script>
   <script src="<?php echo $wo['config']['theme_url'];?>/javascript/qrcode.js?version=<?php echo $wo['config']['version']; ?>"></script>
 <?php } ?>
@@ -228,8 +232,25 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
             }
             var urlsssss = $(this).attr('href');
             var segments = urlsssss.split('/').filter(Boolean);
+
+            function getCurrentPage() {
+              var urlParams = new URLSearchParams(window.location.search);
+              var link1 = urlParams.get('link1');
+              var section = urlParams.get('section');
+              
+              // Usa el valor de `segments[2]` si está disponible
+              var currentPage = null;
+              if (typeof segments !== 'undefined' && segments.length > 2) {
+                  currentPage = segments[2].split('?')[0]; // Extraer la parte antes del '?'
+              }
+       
+              return currentPage;
+            }
+
             function removePreviousStylesheet() {
-              var currentClass = 'style_pag_css_' + segments[2];
+              var currentPages = getCurrentPage();
+              var currentClass = 'style_pag_css_' + currentPages;
+              //var currentClass = 'style_pag_css_' + segments[2];
               var previousStylesheets = document.querySelectorAll('link[class^="style_pag_css_"]');
               previousStylesheets.forEach(function(stylesheet) {
                 if (!stylesheet.classList.contains(currentClass)) {
@@ -237,20 +258,23 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                 }
               });
             }
-
+            
             var styles = {
               'tienda': 'layshane_t.css',
               'checkout': 'carrito_estilos.css',
               'item': 'publications_style.css',
+              'caja': 'cas_regist.css'
             };
 
+
+
             function ensureUniqueStylesheet() {
-              var currentPage = segments[2];
+              var currentPage = getCurrentPage();
+              //var currentPage = segments[2];
               if (currentPage in styles) {
                 var styleName = styles[currentPage];
                 var currentClass = 'style_pag_css_' + currentPage;
                 var existingStylesheet = document.querySelector('link.' + currentClass);
-
                 if (!existingStylesheet) {
                   var newStylesheet = document.createElement('link');
                   newStylesheet.rel = 'stylesheet';
@@ -272,7 +296,8 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
               });
             }
             var scripts = {
-              'item': 'flickity.pkgd.min.js',
+              'item': 'flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>',
+              'cuentas': 'flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>',
             };
 
             function ensureUniqueScripitss() {
@@ -293,28 +318,11 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
               }
             }
             if(segments[2] == 'item') {
-                ensureUniqueScripitss();
-              }
+              ensureUniqueScripitss();
+            }
 
             if (segments[2] == 'cuentas'){
-                var sucjs  = document.createElement('script');
-                sucjs.id   = 'scripts_page';
-                sucjs.src = "<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>";
-                document.head.appendChild(sucjs);
-                sucjs.onload = function() {
-                var currentScriptsje = document.getElementById('scripts_page');
-                  if (currentScriptsje) {
-                      currentScriptsje.parentNode.removeChild(currentScriptsje);
-                  }
-                };
-
-            }else{
-              if ($('#scripts_page').length) {
-                $('#scripts_page').remove();
-              }
-              if ($('#scripts_page_load').length) {
-                $('#scripts_page_load').remove();
-              }
+              ensureUniqueScripitss();
             }
          
 
@@ -374,6 +382,9 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
            
               if(json_data.page == 'home') {
                 window.history.pushState({state:'new'},'', websiteUrl);
+                $(document).ready(function() {
+                  initializeSlider();
+                });
               }else{
                 if (json_data.page === 'checkout') {
                   if (carritoAbierto===false) {
@@ -398,6 +409,10 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
               if(json_data.page == 'tienda') {
                 layshane_carousel_views();
               }
+              if(json_data.page == 'my_products') {
+                layshane_carousel_views();
+              }
+              
 
               $('.postText').autogrow({vertical: true, horizontal: false, height: 200});
 
@@ -416,6 +431,9 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
               }
               
               $(document).ready(function(){
+                if(json_data.page == 'cuentas') {
+                  view_carrucel_ide();
+                }
                 if(json_data.page == 'publicacion') {
                   view_images_prod()
                 }
@@ -432,6 +450,10 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
                   }
                 }
               });
+
+
+
+
               $('#users-reacted-modal').modal("hide");
               contnet
             }).fail(function() {
@@ -443,19 +465,7 @@ if(!empty($_SERVER) && !empty($_SERVER['REQUEST_URI'])){
           }
         });
     });
-function appendImageToElement(elementSelector, imagePath, altText){
-  var element = document.querySelector(elementSelector);
-  if(element){
-    var newSpan = document.createElement("span");
-    newSpan.classList.add("language_initial");
-    newSpan.setAttribute("rel", "nofollow");
-    var newImg = document.createElement("img");
-    newImg.setAttribute("src", imagePath);
-    newImg.setAttribute("alt", altText);
-    newSpan.appendChild(newImg);
-    element.appendChild(newSpan);
-  }
-}
+
   </script>
   <?php echo (!empty($wo['config']['googleAnalytics'])) ? $wo['config']['googleAnalytics'] : ''; ?>
   <?php echo lui_LoadPage('style') ?>
@@ -464,7 +474,7 @@ function appendImageToElement(elementSelector, imagePath, altText){
   <?php } ?>
   <?php if($wo['config']['googleLogin'] != 0): ?>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <?php endif; ?>
+  <?php endif; ?>
 
     <script src="<?php echo $wo['config']['theme_url'];?>/javascript/socket.io.js?version=<?php echo $wo['config']['version']; ?>" defer></script>
       <script>
@@ -657,6 +667,7 @@ function appendImageToElement(elementSelector, imagePath, altText){
               }
           }
         })
+
         var new_current_messages = 0;
         socket.on("private_message", (data)=>{
           $('#chat_' + data.sender).find('.online-toggle-hdr').addClass('white_online');;
@@ -753,19 +764,77 @@ function appendImageToElement(elementSelector, imagePath, altText){
 .titulo_loader_w{width:100%;max-width:200px;display:block;height:30.42px;border-radius:20px;margin:10px 0;}
   </style>
   <style type="text/css">
-    /*Footer*/
-.footer_page_list_l hr{width:100%;border-color:#e9e9e9;}
-footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;width:100%;background:#fff;-webkit-background:#fff;-moz-background:#fff;font-family:sans-serif;}
-.footer_page_list_l{width:100%;position:relative;font-size:14px;display:flex;flex-wrap:wrap;justify-content:center;}
-.footer_page_list_l .footer-powered{display:flex;align-items:center;justify-content:center;color:#333;-webkit-color:#333;-moz-color:#333;user-select:none;padding:5px;flex-wrap:wrap;width:100%;}
-.footer_page_list_l .footer-powered .list-inline{margin:0;padding-left:0;color:#333;-webkit-color:#333;-moz-color:#333;display:flex;flex-wrap:wrap;justify-content:center;width:100%;}
-.footer_page_list_l .footer-powered .list-inline>li{display:inline-flex;padding-right:8px;padding-left:8px;justify-content:center;align-items:center;}
-.footer_page_list_l .footer-powered .list-inline li .language_select,
-.footer_page_list_l .footer-powered .list-inline li a{color:#333;-webkit-color:#333;-moz-color:#333;padding:15px;display:block;font-size:18px;cursor:pointer;}
-.footer_page_list_l span{ margin:0;font-size:18px;width:100%;padding:4px;text-align:center;}
-.footer-wrapper-sidebar {font-size: 14.5px;}
-.footer-wrapper-sidebar .footer-powered{display:flex;align-items: center;justify-content:space-between;color:#858585;-webkit-color:#858585;-moz-color:#858585;font-size:13px;}
-.footer-wrapper-sidebar .footer-powered span, .footer-wrapper .footer-powered span{margin:0;}
+ /* Footer Styles */
+footer {
+    display: block;
+    width: 100%;
+    background: #f9f9f9;
+    font-family: 'Arial', sans-serif;
+    padding: 20px 0;
+    border-top: 1px solid #e9e9e9;
+}
+
+.footer_page_list_l {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    font-size: 14px;
+}
+
+.footer-powered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    padding: 10px 0;
+}
+
+.footer-powered .list-inline {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.footer-powered .list-inline > li {
+    margin: 0 10px;
+}
+
+.footer-powered .list-inline li a, 
+.footer-powered .list-inline li .language_select {
+    color: #333;
+    padding: 5px 10px;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.footer-powered .list-inline li a:hover, 
+.footer-powered .list-inline li .language_select:hover {
+    color: var(--boton-fondo);
+    transform: scale(1.1);
+}
+
+.footer-powered span {
+    display: block;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 10px;
+    color: #555;
+}
+
+/* Estilos adicionales para la versión del proyecto */
+.footer_page_list_l .project-version {
+    font-size: 14px;
+    color:var(--boton-color);
+    padding:10px;
+    border-radius:4px;
+    margin-top:20px;
+    background-color:var(--boton-fondo);
+}
+
 .posts-count{z-index:99;padding:10px 15px;text-align:center;position:fixed;transition:all .2s ease;top:115px;left:50%;transform:translate(-50%,-50%);border-radius:20px;box-shadow:0 2px 2px rgba(0,0,0,.2)!important;background:#008aff;color:#fff;}
 .posts-count:empty{padding:0;border:0;box-shadow:none!important}
 .posts-count:hover{background-color:#0062b6;}
@@ -797,7 +866,7 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
     ?>
     <footer>
       <?php
-      if($wo['page'] != 'welcome' && $wo['page'] != 'register' && $wo['page'] != 'get_news_feed' && $wo['page'] != 'forum' && $wo['page'] != 'messages' && $wo['page'] != 'jobs') {
+      if($wo['page'] != 'welcome' && $wo['page'] != 'register' && $wo['page'] != 'get_news_feed' && $wo['page'] != 'forum' && $wo['page'] != 'messages') {
         echo lui_LoadPage('footer/content');
       }
       ?>
@@ -834,7 +903,7 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
           <?php if ($wo['loggedin'] == true) {
             $comprapendiente = $db->where('user_id',lui_Secure($wo['user']['user_id']))->where('completado','0')->getOne(T_VENTAS);
             if (!empty($comprapendiente)) {
-              $totalcarrito = $db->where('estado','0')->where('id_comprobante_v',$comprapendiente->id)->getValue('imventario','COUNT(*)');
+              $totalcarrito = $db->where('estado','0')->where('id_comprobante_v',$comprapendiente['id'])->getValue('imventario','COUNT(*)');
             }
             //$items = $db->where('user_id',$wo['user']['user_id'])->get(T_USERCARD);
             //if(!empty($items)){
@@ -880,7 +949,7 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
       </nav>
     </footer>
     <div class="extra">
-      <?php
+      <?php 
       if($wo['loggedin'] == true && $wo['page'] != 'maintenance') {
         if ($wo['config']['chatSystem'] == 1 && $wo['page'] != 'get_news_feed' && $wo['page'] != 'sharer' && $wo['page'] != 'video-api' && $wo['page'] != 'messages'){
           echo lui_LoadPage('chat/content');
@@ -915,12 +984,19 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
           const node_socket_flow = "0"
           </script>
       <?php } ?>
-      <?php if($wo['page'] == 'cuentas'): ?>
-        <script id="scripts_page" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
-      <?php endif ?>
+      
       <div id="var_data_script_a"></div>
+      <?php if($wo['page'] == 'cuentas'): ?>
+        <script type="text/javascript">
+          document.addEventListener("DOMContentLoaded", function() {
+            view_carrucel_ide()
+          });
+        </script>
+        <script class="script_pag_js_cuentas" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+        
+      <?php endif ?>
       <?php if($wo['page'] == 'publicacion'): ?>
-        <script id="scripts_page" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
+        <script class="script_pag_js_publicacion" src="<?php echo $wo['config']['theme_url'];?>/javascript/flickity.pkgd.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
         <script type="text/javascript">
           document.addEventListener("DOMContentLoaded", function() {
             view_images_prod()
@@ -943,24 +1019,30 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
         </script>
       <?php endif ?>
 
+      <?php if($wo['page'] == 'my_products'): ?>
+        <script type="text/javascript">
+          document.addEventListener("DOMContentLoaded", function() {
+          layshane_carousel_views();
+          });
+        </script>
+      <?php endif ?>
+
       <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function() {
-          var script = document.createElement('script');
-          script.src = "<?php echo $wo['config']['theme_url'];?>/javascript/scripts.min.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>";
-          script.defer = true;
-          var targetElement = document.getElementById('var_data_script');
-          targetElement.parentNode.insertBefore(script, targetElement.nextSibling);
-        });
+        var corousel_Datas = document.getElementById('carousel__content');
+        if (corousel_Datas) {
+          if(document.body.contains(corousel_Datas)){
+            restaurarPosicionHorizontal();
+          }
+        }
       </script>
-      <div id="var_data_script"></div>
-      
+      <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/scripts.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/styck.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/jqueryform.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/autogrow.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
+      <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/boots.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <?php if($wo['page'] == 'start_up'): ?>
         <script src="<?php echo $wo['config']['theme_url'];?>/javascript/jquery-ui.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
       <?php endif ?>
-      <script defer type="text/javascript" src="<?php echo $wo['config']['theme_url'];?>/javascript/boots.js<?php echo $wo['update_cache']; ?>?version=<?php echo $wo['config']['version']; ?>"></script>
       <?php if($wo['page'] == 'create_blog' || $wo['page'] == 'edit-blog' || $wo['page'] == 'edit_product') { ?>
         <script src="<?php echo $wo['config']['theme_url'];?>/javascript/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.min.js?version=<?php echo $wo['config']['version']; ?>"></script>
       <?php } ?>
@@ -969,18 +1051,20 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
       <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $wo['config']['google_map_api'];?>&libraries=places"></script>
       <?php } ?>
       <?php } ?>
-      <link rel="preload" href="<?php echo $wo['config']['theme_url'];?>/javascript/audioRecord/record.js?version=<?php echo $wo['config']['version']; ?>" as="script">
-      <script src="<?php echo $wo['config']['theme_url'];?>/javascript/audioRecord/record.js?version=<?php echo $wo['config']['version']; ?>"></script>
-      <script src="<?php echo $wo['config']['theme_url'];?>/javascript/audioRecord/recorder.js?version=<?php echo $wo['config']['version']; ?>"></script>
+      <script defer src="<?php echo $wo['config']['theme_url'];?>/javascript/audioRecord/record.js?version=<?php echo $wo['config']['version']; ?>"></script>
+      <script defer src="<?php echo $wo['config']['theme_url'];?>/javascript/audioRecord/recorder.js?version=<?php echo $wo['config']['version']; ?>"></script>
       <?php if ($wo['page'] == 'timeline' && $wo['loggedin'] == true && $wo['config']['css_upload'] == 1) { ?>
       <?php if (!empty($wo['user_profile']['css_file']) && file_exists($wo['user_profile']['css_file'])) {?>
       <link class="styled-profile" rel="stylesheet" href="<?php echo lui_GetMedia($wo['user_profile']['css_file']);?>">
       <?php echo $wo['css_file_header'];?>
       <?php } } ?>
       <div class="extra-css"></div>
-      <?php if ($wo['page'] != 'welcome') { ?>
-        <script>$(function() {$('div.leftcol').theiaStickySidebar({additionalMarginTop:55});});</script>
-        <script type="text/javascript">$(function() {jQuery('.custom-fixed-element').theiaStickySidebar({additionalMarginTop:55});});</script>
+      <?php if ($wo['page'] == 'home') { ?>
+        <script type="text/javascript">
+          $(document).ready(function() {
+              initializeSlider();
+          });
+        </script>
       <?php }?>
       <!-- End 'JS FILES' -->
       <?php echo lui_LoadPage('timeago/content'); ?>
@@ -1072,38 +1156,14 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
          }
 
         
-      <?php echo $wo['config']['footer_cc']; ?>
+    <?php echo $wo['config']['footer_cc']; ?>
     </script>
     <?php if ($wo['page'] != 'get_news_feed') { ?>
-      <style type="text/css">
-        .cc-color-override--1246177171 .cc-btn{border:none!important;}
-        .cc-color-override--1246177171 .cc-link{color:initial!important;}
-      </style>
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          window.addEventListener("load", function(){
-          window.cookieconsent.initialise({
-            "palette": {
-              "popup": {
-                "background": "<?=$wo['config']['header_background'];?>",
-                "text": "#000"
-              },
-              "button": {
-                "background": "#000",
-                "text": "#fff"
-              }
-            },
-            "theme": "edgeless",
-            "position": "bottom-right",
-            "content": {
-              "message": "<?=$wo['lang']['cookie_message']?>",
-              "dismiss": "<?=$wo['lang']['cookie_dismiss']?>",
-              "link": "<?=$wo['lang']['cookie_link']?>",
-              "href": "<?=lui_SeoLink('index.php?link1=terms&type=privacy-policy');?>"
-            }
-          })});
-        });
-      </script>
+      <div id="cookieConsent" style="display:none; position:fixed; bottom:0; width:100%; background:#000; color:#fff; text-align:center; padding:10px;">
+        <p>Este sitio web utiliza cookies para mejorar su experiencia. <a href="your-privacy-policy-link" style="color:#fff;">Leer más</a>
+        <button id="acceptCookies" style="background:#fff; color:#000; margin-left:20px;">Aceptar</button>
+        </p>
+      </div>
     <?php } ?>
     <!-- HTML NOTIFICATION POPUP -->
     <div id="notification-popup"></div>
@@ -1121,9 +1181,31 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
                   $language = $wo['langs'];
                   $languages_name = ucfirst($wo['langs']);
                   $link = ($wo['config']['seoLink'] == 1) ? '?lang=' . $language: '?&lang=' . $language;?>
-                  <?php if($idioma->lang_name == $wo['langs']): ?>
+                  <?php if($idioma['lang_name'] == $wo['langs']): ?>
                     <?php else: ?>
-                      <span class="language_select"><a href="<?=$link;?>" rel="nofollow" class="<?=$languages_name;?>"><?=$languages_name;?></a></span>
+                      <?php
+                      switch ($languages_name) {
+                          case 'English':
+                              $imagen_language = '<span class="language_initial" rel="nofollow"><img alt="English" src="'.$wo['config']['theme_url'].'/img/flags/united-states.svg"></span>';
+                              break;
+                          case 'Italian':
+                              $imagen_language = '<span class="language_initial" rel="nofollow"><img alt="Italian" src="'.$wo['config']['theme_url'].'/img/flags/italy.svg"></span>';
+                              break;
+                          case 'Portuguese':
+                              $imagen_language = '<span class="language_initial" rel="nofollow"><img alt="Portuguese" src="'.$wo['config']['theme_url'].'/img/flags/portugal.svg"></span>';
+                              break;
+                          case 'Spanish':
+                              $imagen_language = '<span class="language_initial" rel="nofollow"><img alt="Spanish" src="'.$wo['config']['theme_url'].'/img/flags/peru.svg"></span>';
+                              break;
+                          case 'Quechua':
+                              $imagen_language = '<span class="language_initial" rel="nofollow"><img alt="Quechua" src="'.$wo['config']['theme_url'].'/img/flags/peru.svg"></span>';
+                              break;
+                          default:
+                              $imagen_language = '<span class="language_initial" rel="nofollow"><img alt="Spanish" src="'.$wo['config']['theme_url'].'/img/flags/peru.svg"></span>';
+                              break;
+                      }
+                      ?>
+                      <span class="language_select"><a href="<?=$link;?>" rel="nofollow" class="<?=$languages_name;?>"><?=$imagen_language ?> <?=$languages_name;?></a></span>
                   <?php endif ?>
           <?php } } } ?>
         </div>
@@ -1131,16 +1213,9 @@ footer{display:block;position:relative;align-self:flex-end;align-items:flex-end;
     </div>
     <script type="text/javascript">
       $(window).on("popstate", function (e) {
-          location.reload();
-        });
-      /*Language Select*/
-      document.addEventListener("DOMContentLoaded", function(){
-        appendImageToElement(".language_select .English", "<?php echo $wo['config']['theme_url']; ?>/img/flags/united-states.svg", "layshane");
-        appendImageToElement(".language_select .Italian", "<?php echo $wo['config']['theme_url']; ?>/img/flags/italy.svg", "layshane");
-        appendImageToElement(".language_select .Portuguese", "<?php echo $wo['config']['theme_url']; ?>/img/flags/portugal.svg", "layshane");
-        appendImageToElement(".language_select .Spanish", "<?php echo $wo['config']['theme_url']; ?>/img/flags/peru.svg", "layshane");
-        appendImageToElement(".language_select .Quechua", "<?php echo $wo['config']['theme_url']; ?>/img/flags/peru.svg", "layshane");
+        location.reload();
       });
+
     </script>
    </body>
 </html>

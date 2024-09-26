@@ -4,17 +4,12 @@
    exit();
 }?>
 <style type="text/css">
-	body{background-color:#F0F2FD;}
+	footer{padding:0;border:0;background:transparent;}
 .wow_main_blogs{background-color:#fff;box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);border-radius:6px;margin-bottom:30px;}
 .view-blog{color:#666;font-size:14.5px;line-height:17px;}
 .wow_main_blogs .avatar{display:block;position:relative;padding-bottom:80%;}
 .wow_main_blogs .avatar > img{width:100%;border-radius:6px;position:absolute;top:0;right:0;bottom:0;left:0;height:100%;object-fit:cover;vertical-align:middle;}
-.wo_my_products{padding-right:10px;padding-left:10px;margin-bottom:20px;}
-.wo_my_products a{background:#fff;display:block;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,0.2);}
-.wo_my_products .avatar img, .wo_sidebar_products .avatar img{width:100%;vertical-align:middle;}
-.wo_my_products .produc_info, .wo_sidebar_products .produc_info{padding:7px 10px;word-break:break-word;}
-.wo_my_products .produc_info span, .wo_sidebar_products .produc_info span{font-size:16px;display:block;word-break:break-all;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-wrap:break-word;}
-.wo_my_products .produc_info h4, .wo_sidebar_products .produc_info h4{font-size:14.5px;color:#4CAF50;font-weight:700;letter-spacing:.3px;margin:7px 0 0;display:block;word-break:break-all;overflow:hidden;text-overflow:ellipsis;word-wrap:break-word;}
+
 </style>
 <style type="text/css">
 .colores_activados_prod{display:block;border:3px dashed rgba(8, 8, 8, 0.32);transition:all .5s;border-radius:6px;padding:8px;}
@@ -74,27 +69,21 @@
 }
 .carousel .carousel__wrapper .carousel__content .carousel__item a img {
   aspect-ratio: 1/1;
-  width: 100%;
-  height: 100%;
+  width: 100px;
+  height: 100px;
   object-fit:contain;
   -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
   user-drag: none;
-  margin-bottom: 16px;
-  border-radius: clamp(0px, ((100vw - 4px) - 100%) * 9999, 4px);
 }
 .carousel h3 {
   font-size:16px;
   width:100%;
   display:flex;
   justify-content:center;
-  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 0%, rgb(0 0 0 / 39%) 35%, rgb(0 0 0 / 57%) 75%, rgb(0 0 0 / 63%) 100%);
-  padding: 10px 3px;
-  align-items: flex-end;
-  padding:10px 3px;padding-bottom:20px;
-  text-align:center;
+  color:#444;
 }
 .carousel .dragging a {
   user-select: none;
@@ -124,10 +113,9 @@
   display: flex;
   -webkit-overflow-scrolling: touch;
   cursor:grab;
-  grid-gap:24px;
+  grid-gap:5px;
   list-style: none;
-  padding:20px 10px;
-  padding-left:15px;
+  padding:10px 5px;
   margin:auto -20px;
   background:#f0f2f5;
 }
@@ -136,14 +124,11 @@
 }
 
 .carousel .carousel__item{
-	aspect-ratio: 1/1;
 	flex:0 0 auto;
 	display:inline-flex;
+	justify-content:center;
 	width:calc(100% / 5 - 1.31rem);
-	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.123);
-  	border-radius: 20px;
-  	background: rgb(245, 245, 245);
-  	overflow:hidden;
+	padding:10px;
 }
 @media only screen and (max-width: 1500px) {
   .carousel .carousel__item{width:calc(100% / 4 - 1.31rem);}
@@ -165,14 +150,20 @@
   .carousel .carousel__item{width:calc(100% / 1 - 0.5rem)}
 }
 
-.carousel .carousel__item .carousel__description{width:100%;position:absolute;bottom:0;display:flex;top:50%;}
+.carousel .carousel__item .carousel__description{width:100%;display:flex;}
 .carousel .carousel__item a {
   position: relative;
   user-select: none;
   width:100%;
   cursor: pointer;
-  overflow:hidden;
-  
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.carousel .carousel__item a svg{
+	width:60px;
+	height:60px;
 }
 .carousel .carousel__controls {
   display: grid;
@@ -209,6 +200,323 @@
   color: #fff;
 }
 .load-produts .load-more button{width:auto}
+</style>
+<style type="text/css">
+	.con_layshane_tbles{
+	margin-top:30px;
+  display:block;
+  height:100%;
+  width:100%;
+  color: #252a3b;
+  background-color: #f8f8f8;
+  overflow-x:auto;
+}
+.con_layshane_tbles .container{
+	white-space:nowrap;
+}
+.table{
+  width:100%;
+  max-width:100%;
+  margin-bottom:20px;
+}
+table{
+  background-color: transparent;
+}
+table{
+  border-spacing:0;
+  border-collapse:collapse;
+}
+.row--top-20{
+  margin-top:20px;
+}
+.table__th{
+  color:#9eabb4;
+  font-weight:500;
+  font-size:12px;
+  text-transform:uppercase;
+  cursor:pointer;
+  border:0 !important;
+  padding:15px 8px !important;
+  text-align:start;
+}
+.table-row{
+  border-bottom:1px solid #e4e9ea;
+  background-color:#fff;
+}
+.table__th:hover{
+  color:#01b9d1;
+}
+.table--select-all{
+  width:18px;
+  height:18px;
+  padding:0 !important;
+  border-radius:50%;
+  border:2px solid #becad2;
+}
+.table-row__td{
+  padding:12px 8px !important;
+  vertical-align:middle !important;
+  color:#53646f;
+  font-size:13px;
+  font-weight: 400;
+  position:relative;
+  line-height: 18px !important;
+  border:0 !important;
+}
+.table-row__img{
+  width:36px;
+  height:36px;
+  display:inline-block;
+  border-radius:50%;
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  vertical-align:middle;
+}
+.table-row__info{
+  display:inline-block;
+  padding-left:12px;
+  vertical-align:middle;
+}
+.table-row__name{
+  color:#53646f;
+  font-size:14px;
+  font-weight:400;
+  line-height:18px;
+  margin-bottom:0px;
+}
+.table-row__small{
+  color:#9eabb4;
+  font-weight:300;
+  font-size:12px;
+}
+.table-row__policy{
+  color:#53646f;
+  font-size:13px;
+  font-weight: 400;
+  line-height: 18px;
+  margin-bottom: 0px;
+}
+.table-row__p-status{
+  margin-bottom:0;
+  font-size:13px;
+  vertical-align:middle;
+  display:inline-block;
+  color:#9eabb4;
+}
+.table-row__status{
+  margin-bottom:0;
+  font-size:13px;
+  vertical-align:middle;
+  display:inline-block;
+  color:#9eabb4;
+}
+.table-row__progress{
+  margin-bottom:0;
+  font-size:13px;
+  vertical-align:middle;
+  display:inline-block;
+  color:#9eabb4;
+}
+.status:before{
+  content:'';
+  margin-bottom:0;
+  width:9px;
+  height:9px;
+  display:inline-block;
+  margin-right:7px;
+  border-radius:50%; 
+}
+.status--red:before{background-color:#e36767;}
+.status--red{color:#e36767;}
+.status--blue:before{background-color:#3fd2ea;}
+.status--blue{color:#3fd2ea;}
+.status--yellow:before{background-color:#ecce4e;}
+.status--yellow{color:#ecce4e;}
+.status--green{color:#6cdb56;}
+.status--green:before{background-color:#6cdb56;}
+.status--grey{color:#9eabb4;}
+.status--grey:before{background-color:#9eabb4;}
+.table-row--overdue{width:3px;background-color:#e36767;display:inline-block;
+  position:absolute;height:calc(100% - 24px);top:50%;
+  left:0;
+  transform: translateY(-50%);
+}
+.table-row--overdue_yellow{width:3px;background-color:#e36767;display:inline-block;
+  position:absolute;height:calc(100% - 24px);top:50%;
+  left:0;
+  transform: translateY(-50%);
+}
+.table-row--overdue_green{width:3px;background-color:#2ecc71;display:inline-block;
+  position:absolute;height:calc(100% - 24px);top:50%;
+  left:0;
+  transform: translateY(-50%);
+}
+.table-row--overdue_gris {
+    width: 3px;
+    background-color: #a9bbb1;
+    display: inline-block;
+    position: absolute;
+    height: calc(100% - 24px);
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+.table-row__edit{
+  width:46px;
+  padding:3px 10px;
+  display:inline-block;
+  background-color:#daf3f8;
+  border-radius:18px;
+  vertical-align:middle;
+  margin-right:10px;
+  cursor:pointer;
+}
+.table-row__bin{
+  width:16px;
+  display:inline-block;
+  vertical-align:middle;
+  cursor:pointer;
+}
+.table-row--yellow{background-color:#ffa0004a;}
+.table-row--red{background-color:#fff2f2;}
+.table-row--green{background-color:rgba(46, 204, 113,0.13);}
+@media screen and (max-width: 991px){
+  .con_layshane_tbles{overflow:initial;}
+  .con_layshane_tbles .container{white-space:initial;}
+  .table__thead{display:none;}
+  .table-row{
+    display:inline-block;
+    border:0;
+    background-color:#fff;
+    width:calc(33.3% - 13px);
+    margin-right:10px;
+    margin-bottom:10px;
+  }
+  .table-row__img{
+    width:42px;
+    height:42px;
+    margin-bottom:10px;
+  }
+  .table-row__td:before{
+    content:attr(data-column);
+    color:#9eabb4;
+    font-weight:500;
+    font-size:12px;
+    text-transform:uppercase;
+    display:block;
+  }
+  .table-row__info{
+    display:block;
+    padding-left:0;
+  }
+  .table-row__td{
+    display:block;
+    text-align:center;
+    padding:8px !important;
+  }
+  .table-row--red{background-color:#fff2f2;}
+  .table-row--overdue{
+  	width:100%;
+    top:0;
+    left:0;
+    transform:translateY(0%);
+    height:4px;
+  }
+}
+@media screen and (max-width: 680px){
+  .table-row{width: calc(50% - 13px);}
+}
+@media screen and (max-width: 480px){
+  .table-row{width: 100%;}
+}
+.table__select-row{
+    appearence: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    -webkit-appearance: none;
+    width:17px;
+    height:17px;
+    margin:0 0 0 5px !important;
+    vertical-align:middle;border:2px solid #beccd7;border-radius: 50%;cursor:pointer;
+}
+.table__select-row:hover{border-color:#01b9d1;}
+.table__select-row:checked{
+    background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDI2IDI2IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNiAyNiIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCI+CiAgPHBhdGggZD0ibS4zLDE0Yy0wLjItMC4yLTAuMy0wLjUtMC4zLTAuN3MwLjEtMC41IDAuMy0wLjdsMS40LTEuNGMwLjQtMC40IDEtMC40IDEuNCwwbC4xLC4xIDUuNSw1LjljMC4yLDAuMiAwLjUsMC4yIDAuNywwbDEzLjQtMTMuOWgwLjF2LTguODgxNzhlLTE2YzAuNC0wLjQgMS0wLjQgMS40LDBsMS40LDEuNGMwLjQsMC40IDAuNCwxIDAsMS40bDAsMC0xNiwxNi42Yy0wLjIsMC4yLTAuNCwwLjMtMC43LDAuMy0wLjMsMC0wLjUtMC4xLTAuNy0wLjNsLTcuOC04LjQtLjItLjN6IiBmaWxsPSIjMDFiOWQxIi8+Cjwvc3ZnPgo=);
+    background-position: center;
+    background-size: 7px;
+    background-repeat: no-repeat;
+    border-color: #01b9d1;
+}
+.conten_footer_tabla_layshane{display:grid;flex-wrap:wrap;width:100%;gap:1.3rem;grid-template-columns:repeat(auto-fit, minmax(min(16rem, 100%), 1fr));padding:10px;}
+.dropdown_losproductosLista{right:0!important;left:auto!important;
+top:initial;!important}
+
+.dropdown_losproductosContenido {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown_losproductosContenido .dropdown-toggle {
+  background-color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.dropdown_losproductosContenido .dropdown-toggle svg {
+  width: 24px;
+  height: 24px;
+  fill: #666;
+}
+
+.dropdown_losproductosContenido .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: none;
+  width: 150px;
+}
+
+.dropdown_losproductosContenido .dropdown_losproductosContenido:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown_losproductosContenido .dropdown-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown_losproductosContenido .dropdown-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #333;
+}
+
+.dropdown_losproductosContenido .dropdown-menu li:hover {
+  background-color: #f5f5f5;
+}
+.dropdown_losproductosContenido .dropdown-menu li span{padding-right:7px;}
+.dropdown_losproductosContenido .dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  right: 12px;
+  border-bottom: 10px solid #fff;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
 </style>
 <?php echo lui_LoadPage("sidebar/left-sidebar"); ?>
 <?php if($wo['layshane']['sucursal']): ?>
@@ -251,21 +559,7 @@
 						          <button class="carousel__arrow arrow-next"></button>
 						        </div>
 						    </div>
-						    <script type="text/javascript">
-								function guardarPosicionHorizontal() {
-							      var miDiv = document.getElementById('carousel__content');
-							      sessionStorage.setItem('scrollLeft', miDiv.scrollLeft);
-							    }
-							    function restaurarPosicionHorizontal() {
-							      var miDiv = document.getElementById('carousel__content');
-							      var scrollLeft = sessionStorage.getItem('scrollLeft') || 0;
-							      miDiv.scrollLeft = scrollLeft;
-							    }
-							    
-							    window.onbeforeunload = guardarPosicionHorizontal;
-							    window.onload = restaurarPosicionHorizontal;
-
-							</script>
+						    
 						    <ul class="carousel__content" id="carousel__content">
 						    	<?php if($category_id==0): ?>
 						    		<?php foreach ($wo['products_categories'] as $category){
@@ -294,7 +588,7 @@
 						    			$cat_nombre_producs = $wo["lang"][$category["lang_key"]];?>
 						    			<?php if(!empty($wo['products_sub_categories'][$_GET['c_id']])): if($all_categorie){ ?>
 						    				<li class="carousel__item <?php echo $active?>">
-						    					<a href="<?php echo lui_SeoLink('index.php?link1=my-products');?>" data-ajax="?link1=my-products"><svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" viewBox="0 0 512 512" style="padding:50px;" fill="#2097ef"><path d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z"/></svg>
+						    					<a href="<?php echo lui_SeoLink('index.php?link1=my-products');?>" data-ajax="?link1=my-products"><svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" viewBox="0 0 512 512" fill="#2097ef"><path d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z"/></svg>
 						    					</a>
 						    				</li>
 						    			<?php } ?>
@@ -328,7 +622,6 @@
 						    		<?php } ?>
 						    	<?php endif ?>
 						    </ul>
-						  
 						</div>
 					</div>
 				</section>
@@ -364,25 +657,44 @@
 					<?php
 						$data['limit'] = 10;
 						$products = lui_GetProducts($data);
+						$productsc = lui_GetProducts_news();
 						?>
-						<div id="products" class="productos_en_cuadros">
-						<?php
-						if (count($products) > 0) {
-							foreach ($products as $wo['product']) {
-								echo lui_LoadPage('products/product-style');
-							}
-						} else {
-							echo '<h5 class="search-filter-center-text empty_state"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> ' . $wo['lang']['no_available_products'] . '</h5>';
-						}?>
-						</div>
+
+
+						<div class="table-container">
+              <table class="table" style='user-select:none;'>
+                <thead class="table__thead">
+                  <tr>
+                    <th class="table__th">Producto</th>
+                    <th class="table__th">Precio venta</th>
+                    <th class="table__th"></th>
+                  </tr>
+                </thead>
+                <tbody class="table__tbody" id="products">
+                	<?php
+										if (count($productsc) > 0) {
+											foreach ($productsc as $wo['product']) {
+												echo lui_LoadPage('products/product-style');
+											}
+										}
+										if (count($products) > 0) {
+											foreach ($products as $wo['product']) {
+												echo lui_LoadPage('products/product-style');
+											}
+										} else {
+											echo '<h5 class="search-filter-center-text empty_state"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> ' . $wo['lang']['no_available_products'] . '</h5>';
+										}?>
+              	</tbody>
+            	</table>
+          	</div>
 				</div>
 
 				<div class="posts_load load-produts">
-				    <?php if (count($products) > 0): ?>
-					<div class="load-more">
-	                    <button class="btn btn-default text-center pointer" onclick="Wo_LoadProducts();"><?php echo $wo['lang']['load_more_products'] ?></button>
-	                </div>
-	                <?php endif ?>
+			    <?php if (count($products) > 0): ?>
+						<div class="load-more">
+	            <button class="btn btn-default text-center pointer" onclick="Wo_LoadProducts();"><?php echo $wo['lang']['load_more_products'] ?></button>
+	          </div>
+          <?php endif ?>
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -407,7 +719,44 @@
 		</div>
 	</div>
 </div>
-
+<div class="modal fade" id="ActivateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModal1Label">Activar producto?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Estas seguro que deseas activar el producto?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Activar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="DesactivaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModal1Label">Activar producto?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Estas seguro que deseas desactivar el producto?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Desactivar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
 function Wo_LoadProducts() {
 	$('.load-produts').html('<div class="white-loading list-group"><div class="cs-loader"><div class="cs-loader-inner"><label> ●</label><label> ●</label><label> ●</label><label> ●</label><label> ●</label><label> ●</label></div></div></div>');
@@ -426,91 +775,34 @@ function Wo_LoadProducts() {
 		}
 	});
 }
-	var COMPONENT_SELECTOR = '.carousel__wrapper';
-	var CONTROLS_SELECTOR = '.carousel__controls';
-	var CONTENT_SELECTOR = '.carousel__content';
-
-	var components = document.querySelectorAll( COMPONENT_SELECTOR );
-
-	for ( let i = 0; i < components.length; i++ ) {
-		const component = components[ i ];
-		const content = component.querySelector( CONTENT_SELECTOR );
-		let x = 0;
-		let mx = 0;
-		const maxScrollWidth = content.scrollWidth - content.clientWidth / 2 - content.clientWidth / 2;
-		const nextButton = component.querySelector( '.arrow-next' );
-		const prevButton = component.querySelector( '.arrow-prev' );
-
-		if ( maxScrollWidth !== 0 ) {
-			component.classList.add( 'has-arrows' );
-		}
-
-		if ( nextButton ) {
-			nextButton.addEventListener( 'click', function ( event ) {
-				event.preventDefault();
-				x = content.clientWidth / 2 + content.scrollLeft + 0;
-				content.scroll( {
-					left: x,
-					behavior: 'smooth',
-				} );
-			} );
-		}
-
-		if ( prevButton ) {
-			prevButton.addEventListener( 'click', function ( event ) {
-				event.preventDefault();
-				x = content.clientWidth / 2 - content.scrollLeft + 0;
-				content.scroll( {
-					left: -x,
-					behavior: 'smooth',
-				} );
-			} );
-		}
-
-		/**
-		 * @param {object} e event object.
-		 */
-		const mousemoveHandler = ( e ) => {
-			const mx2 = e.pageX - content.offsetLeft;
-			if ( mx ) {
-				content.scrollLeft = content.sx + mx - mx2;
-			}
-		};
-
-		/**
-		 * @param {object} e event object.
-		 */
-		const mousedownHandler = ( e ) => {
-			content.sx = content.scrollLeft;
-			mx = e.pageX - content.offsetLeft;
-			content.classList.add( 'dragging' );
-		};
-		const scrollHandler = () => {
-			toggleArrows();
-		};
-		const toggleArrows = () => {
-			if ( content.scrollLeft > maxScrollWidth - 10 ) {
-				nextButton.classList.add( 'disabled' );
-			} else if ( content.scrollLeft < 10 ) {
-				prevButton.classList.add( 'disabled' );
-			} else {
-				nextButton.classList.remove( 'disabled' );
-				prevButton.classList.remove( 'disabled' );
-			}
-		};
-		const mouseupHandler = () => {
-			mx = 0;
-			content.classList.remove( 'dragging' );
-		};
-
-		content.addEventListener( 'mousemove', mousemoveHandler );
-		content.addEventListener( 'mousedown', mousedownHandler );
-		if ( component.querySelector( CONTROLS_SELECTOR ) !== undefined ) {
-			content.addEventListener( 'scroll', scrollHandler );
-		}
-		content.addEventListener( 'mouseup', mouseupHandler );
-		content.addEventListener( 'mouseleave', mouseupHandler );
-	}
+function ActivateProduct(id,type = 'show') {
+    if (!id) {
+   return false;
+  }
+  if (type == 'hide') {
+      $('#ActivateModal').find('.btn-primary').attr('onclick', "ActivateProduct('"+id+"')");
+      $('#ActivateModal').modal('show');
+      return false;
+    }
+    $("#ActivateModal").modal('hide');
+    $.post(Wo_Ajax_Requests_File() + "?f=admin_setting&s=activate-product",{id: id}, function(data, textStatus, xhr) {
+        location.reload()
+    });
+}
+function DesactivarProduct(id,type = 'show') {
+    if (!id) {
+   return false;
+  }
+  if (type == 'hide') {
+      $('#DesactivaModal').find('.btn-primary').attr('onclick', "DesactivarProduct('"+id+"')");
+      $('#DesactivaModal').modal('show');
+      return false;
+    }
+    $("#DesactivaModal").modal('hide');
+    $.post(Wo_Ajax_Requests_File() + "?f=admin_setting&s=desactiva-product",{id: id}, function(data, textStatus, xhr) {
+        location.reload()
+    });
+}
 </script>
 <script type="text/javascript">
 	function RemoveUserProduct(id,type = 'show') {
