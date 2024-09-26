@@ -1272,7 +1272,7 @@ pre, textarea {
 	    max-width: 100%;
 	}
 	.text-sender-container {
-	    height: 100%;
+        position:initial;
 	}
 	.text-sender-container .messagejoint{
 		height: calc(100vh - 83px);
@@ -1291,7 +1291,8 @@ pre, textarea {
 	    left:0;
 	    z-index:20000;
 	}
-
+    .text-sender-container .msg_usr_info_top_list{position:sticky;top:0;right:0;left:0;}
+    .text-sender-container .messagejoint{position:fixed;bottom:0;right:0;left:0;}
 }
 @media (max-width: 600px){
 	#wo_msg_right_prt .text-sender-container .sendMessages .input-group {
@@ -1336,7 +1337,9 @@ pre, textarea {
 :root {
     --plyr-color-main: var(--boton-fondo);
 }
+.message-text a.hash{color: #a84849 !important;}
 </style>
+
 <?php
 if ($wo['loggedin'] == false) {
     header("Location: " . lui_SeoLink('index.php?link1=home'));
@@ -1431,8 +1434,8 @@ if (!empty($_GET['user']) && empty($_GET['page'])) {
 		</div>
    
 		<div class="mobileleftpane <?=(!empty($_GET['user']) ? '' : 'no_visible') ?>" id="wo_msg_right_prt" >
-			<ul class="list-group text-sender-container">
-				<li class="list-group-item msg_usr_info_top_list text-muted" contenteditable="false">
+			<div class="list-group text-sender-container">
+				<div class="list-group-item msg_usr_info_top_list text-muted" contenteditable="false">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left mobilemsgclose"><polyline points="15 18 9 12 15 6"></polyline></svg>
 					<div class="msg_usr_cht_usr_data">
 						<span id="user-avatar-right">
@@ -1449,8 +1452,8 @@ if (!empty($_GET['user']) && empty($_GET['page'])) {
 						<span class="delete-icon" title="Delete Conversation"></span>
 					</span>
 					<div class="msg_progress"><div class="indeterminate"></div></div>
-				</li>
-				<li class="messages-load-more-messages view-more-wrapper hidden nav-down"></li>
+				</div>
+				<div class="messages-load-more-messages view-more-wrapper hidden nav-down"></div>
 				<div class="messagejoint">
 					<div class="messages-container">
 						<div class="no-messages empty_state">
@@ -1556,7 +1559,7 @@ if (!empty($_GET['user']) && empty($_GET['page'])) {
 						<input type="hidden" name="chatSticker" id="chatStickerMessage">
 					</form>
 				</div>
-			</ul>
+			</div>
 			<div class="wo_msg_user_dtl">
 				<div class="wo_msg_dtl_top">
 					<span class="user_nm" id="user-name-right"></span>
@@ -2076,22 +2079,6 @@ $(function () {
       })
     }
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   }
   return false
   })
@@ -3302,14 +3289,7 @@ jQuery(document).ready(function($) {
 !function($){$.fn.extend({limit:function(limit,element){var interval,f,self=$(this);$(this).focus(function(){interval=window.setInterval(substring,100)}),$(this).blur(function(){clearInterval(interval),substring()}),substringFunction="function substring(){ var val = $(self).val();var length = val.length;if(length > limit){$(self).val($(self).val().substring(0,limit));}",void 0!==element&&(substringFunction+="if($(element).html() != limit-length){$(element).html((limit-length<=0)?'0':limit-length);}"),substringFunction+="}",eval(substringFunction),substring()}})}(jQuery);
 
 </script>
-<style>.message-text a.hash{color: #a84849 !important;}</style>
 
-<style>
-@media(max-width:992px){
-.text-sender-container{height:100%;}
-.text-sender-container .messagejoint{position: fixed;bottom: 0;right: 0;left: 0;}
-}
-</style>
 
 
 <div class="modal fade" id="create_group_chat" role="dialog">
