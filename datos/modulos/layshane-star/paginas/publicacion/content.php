@@ -374,7 +374,12 @@
 								            $sql .= " AND id IN (SELECT id_imventario FROM imventario_atributos WHERE id_atributo = {$atributo} AND id_atributo_opciones = {$opcion})";
 								        }
 								    }
-								    $cantidad_prod = $db->rawQueryOne($sql)['cantidad'];
+								    if (empty($sql)) {
+								    	$cantidad_prod = $db->rawQueryOne($sql)['cantidad'];
+								    }else{
+								    	$cantidad_prod = 0;
+								    }
+								    
 								    $cantidad_productos = ($cantidad_prod !== null) ? $cantidad_prod : 0;
 								} else{
 									if ($s_photo_color_id) {
