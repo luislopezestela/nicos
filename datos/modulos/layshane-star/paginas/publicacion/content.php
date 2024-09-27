@@ -517,7 +517,17 @@
 			</div>
 		</div>
 	</main>
-	<a href="<?=$wo['config']['site_url']."/item/".$wo['itemsdata']['id_publicacion'].$wo['itemsdata']['product']['coloreds']; ?>" data-ajax="?link1=item&items=<?=$wo['itemsdata']['product']['seo_id'].$wo['itemsdata']['product']['coloreds_b'];?>" id="load_proeducto_item" style="display: none;"></a>
+	<?php if (empty($wo['itemsdata']['product']['coloreds'])): ?>
+		<?php $mostrarelcolot = ''; ?>
+	<?php else: ?>
+		<?php $mostrarelcolot = $wo['itemsdata']['product']['coloreds']; ?>
+	<?php endif ?>
+	<?php if (empty($wo['itemsdata']['product']['coloreds_b'])): ?>
+		<?php $mostrarelcolotb = ''; ?>
+	<?php else: ?>
+		<?php $mostrarelcolotb = $wo['itemsdata']['product']['coloreds_b']; ?>
+	<?php endif ?>
+	<a href="<?=$wo['config']['site_url']."/item/".$wo['itemsdata']['id_publicacion'].$mostrarelcolot; ?>" data-ajax="?link1=item&items=<?=$wo['itemsdata']['product']['seo_id'].$mostrarelcolotb;?>" id="load_proeducto_item" style="display: none;"></a>
 </div>
 <script type="text/javascript">
 
